@@ -1,2 +1,2 @@
 # ebinterface-plugin
-ebInterface Word Plugin
+ebInterface Word Plugin - Update
