@@ -1345,7 +1345,6 @@ namespace ebIViewModels.ViewModels
             }
             else
             {
-                // string fn = @"C:\Users\jbogad\Documents\eRechnung\Vorlagen\2013-0010-StandardBund.XML";
                 _openDlg.InitialDirectory = PlugInSettings.Default.PathToInvoiceTemplates;
                 _openDlg.Filter = "Vorlagen (*.xmlt,*.xml)|*.xmlt;*xml|All files (*.*)|*.*";
                 DialogResult rc = _dlg.ShowOpenFileDialog(_openDlg);
