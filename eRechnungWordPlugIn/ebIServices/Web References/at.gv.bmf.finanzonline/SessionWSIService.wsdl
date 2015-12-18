@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:SessionWSIService" targetNamespace="urn:SessionWSIService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" targetNamespace="urn:SessionWSIService">
+      <xsd:element name="GetVersion">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetVersionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Version" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Login">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="tid" type="xsd:string" />
+            <xsd:element name="benid" type="xsd:string" />
+            <xsd:element name="pin" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="LoginResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Result" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Logout">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string" />
+            <xsd:element name="tid" type="xsd:string" />
+            <xsd:element name="benid" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="LogoutResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Result" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetVersionResponse">
+    <wsdl:part name="parameters" element="tns:GetVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginResponse">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionRequest">
+    <wsdl:part name="parameters" element="tns:GetVersion" />
+  </wsdl:message>
+  <wsdl:message name="LoginRequest">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LogoutResponse">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutRequest">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:portType name="SessionWSI">
+    <wsdl:operation name="GetVersion">
+      <wsdl:input name="GetVersionRequest" message="tns:GetVersionRequest" />
+      <wsdl:output name="GetVersionResponse" message="tns:GetVersionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input name="LoginRequest" message="tns:LoginRequest" />
+      <wsdl:output name="LoginResponse" message="tns:LoginResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input name="LogoutRequest" message="tns:LogoutRequest" />
+      <wsdl:output name="LogoutResponse" message="tns:LogoutResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SessionWSIServiceSoapBinding" type="tns:SessionWSI">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVersion">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetVersionRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetVersionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="" />
+      <wsdl:input name="LoginRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="LoginResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="" />
+      <wsdl:input name="LogoutRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="LogoutResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SessionWSIService">
+    <wsdl:port name="SessionWSI" binding="tns:SessionWSIServiceSoapBinding">
+      <soap:address location="https://finanzonline.bmf.gv.at:443/fon/services/SessionWSI" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Language>
+        <english>FinalSettlement</english>
+        <german>Schlußrechnung</german>
+    </Language>
+    <Language>
+        <english>CreditMemo</english>
+        <german>Gutschrift</german>
+    </Language>
+    <!--<Language>
+		<english>SelfBilling</english>
+		<german>Gutschriftverfahren</german>
+	</Language>-->
+    <!--<Language>
+		<english>SubsequentDebit</english>
+		<german>Nachbelastung</german>
+	</Language>
+	<Language>
+		<english>SubsequentCredit</english>
+		<german>Nachentlastung</german>
+	</Language>-->
+    <Language>
+        <english>Invoice</english>
+        <german>Rechnung</german>
+    </Language>
+    <Language>
+        <english>InvoiceForPartialDelivery</english>
+        <german>Rechnung zu Teillieferung</german>
+    </Language>
+    <Language>
+        <english>InvoiceForAdvancePayment</english>
+        <german>Vorauszahlung</german>
+    </Language>
+    <Language>
+        <english>CancelInvoice</english>
+        <german>Storno einer Rechnung</german>
+    </Language>
+    <Language>
+        <english>CancelCreditMemo</english>
+        <german>Storno einer Gutschrift</german>
+    </Language>
+</Root>

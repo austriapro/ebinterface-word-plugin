@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding ="utf-8"?>
+<sl:CreateXMLSignatureRequest xmlns:sl='http://www.buergerkarte.at/namespaces/securitylayer/1.2#' xmlns:dsig='http://www.w3.org/2000/09/xmldsig#'>
+  <sl:KeyboxIdentifier>SecureSignatureKeypair</sl:KeyboxIdentifier>
+  <sl:DataObjectInfo Structure='detached'>
+    <sl:DataObject Reference=''/>
+    <sl:TransformsInfo>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm='http://www.w3.org/2000/09/xmldsig#enveloped-signature'/>
+      </dsig:Transforms>
+      <sl:FinalDataMetaInfo>
+        <sl:MimeType>text/html</sl:MimeType>
+      </sl:FinalDataMetaInfo>
+    </sl:TransformsInfo>
+  </sl:DataObjectInfo>
+  <sl:SignatureInfo>
+    <sl:SignatureEnvironment>
+      <sl:XMLContent>
+      </sl:XMLContent>
+    </sl:SignatureEnvironment>
+    <sl:SignatureLocation Index='0'>/eb:Invoice</sl:SignatureLocation>
+  </sl:SignatureInfo>
+</sl:CreateXMLSignatureRequest>

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <row>
+    <ErrorID>0</ErrorID>
+    <Text>
+      Die UID des Erwerbers ist gültig.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>1</ErrorID>
+    <Text>
+      Die UID des Erwerbers ist nicht gültig.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>3</ErrorID>
+    <Text>
+      Die UID-Nummer des Antragstellers ist ungültig.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>4</ErrorID>
+    <Text>
+      Die UID-Nummer des Erwerbers ist falsch.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>5</ErrorID>
+    <Text>
+      Die UID-Nummer des Antragstellers ist ungültig.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>6</ErrorID>
+    <Text>
+      Der angegebene Mitgliedstaat ist derzeit nicht erreichbar.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>7</ErrorID>
+    <Text>
+      Der angegebene Mitgliedstaat ist derzeit nicht erreichbar.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>8</ErrorID>
+    <Text>
+      Anfragen sind derzeit nicht möglich.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>9</ErrorID>
+    <Text>
+      Name und Anschrift des Erwerbers sind derzeit nicht ermittelbar.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>101</ErrorID>
+    <Text>
+      Die UID des Antragstellers muss mit "ATU" beginnen.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>102</ErrorID>
+    <Text>
+      Bei "Stufe" ist nur "1" oder "2" zulässig.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>103</ErrorID>
+    <Text>
+      Die angefragte UID-Nummer kann im FinanzOnline nur in Stufe 1 bestätigt werden, da diese UID-Nummer zu einer Unternehmensgruppe (Umsatzsteuergruppe) gehört.
+      Aus technischen Gründen werden aus Tschechien keine Firmendaten angezeigt. Für eine gültige Stufe 2 Abfrage ist es daher erforderlich,
+      dass Sie sich unter http://adisreg.mfcr.cz die Daten der CZ-Umsatzsteuergruppe aufrufen und
+      kontrollieren, ob das angefragte Unternehmen auch tatsächlich zu dieser Gruppe
+      gehört. Bitte bewahren Sie den Ausdruck dieser Anfrage in Ihren Unterlagen als
+      Beleg gemäß § 132 BAO auf. Für jede Anfrage Stufe 2 ist sowohl das
+      Bestätigungsverfahren in Stufe 1 im FinanzOnline als auch das Gruppenregister im
+      anderen Mitgliedsstaat laut o.a. Link zu konsultieren. Im Falle von Fragen wenden
+      Sie sich bitte schriftlich oder per Fax an das UID-Büro in 4975 Suben 25 -
+      Faxnummer 0810/005012.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>104</ErrorID>
+    <Text>
+      Die angefragte UID-Nummer kann im FinanzOnline nur in Stufe 1 bestätigt werden,
+      da diese UID-Nummer zu einer Unternehmensgruppe (Umsatzsteuergruppe) gehört.
+      Aus technischen Gründen werden aus der Slowakei keine Firmendaten angezeigt.
+      Für eine gültige Stufe 2 Abfrage ist es daher erforderlich, dass Sie sich unter
+      http://www.drsr.sk die Daten der SK-Umsatzsteuergruppe aufrufen und kontrollieren,
+      ob das angefragte Unternehmen auch tatsächlich zu dieser Gruppe gehört. Bitte
+      bewahren Sie den Ausdruck dieser Anfrage in Ihren Unterlagen als Beleg gemäß §
+      132 BAO auf. Für jede Anfrage Stufe 2 ist sowohl das Bestätigungsverfahren in
+      Stufe 1 im FinanzOnline als auch das Gruppenregister im anderen Mitgliedsstaat laut
+      o.a. Link zu konsultieren. Im Falle von Fragen wenden Sie sich bitte schriftlich oder
+      per Fax an das UID-Büro in 4975 Suben 25 - Faxnummer 0810/005012.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>999</ErrorID>
+    <Text>
+      Nicht alle erforderlichen Parameter wurden angegeben.
+    </Text>
+  </row>
+  <row>
+    <ErrorID>1511</ErrorID>
+    <Text>
+      Der angegebene Mitgliedstaat ist derzeit nicht erreichbar
+    </Text>
+  </row>
+</Root>

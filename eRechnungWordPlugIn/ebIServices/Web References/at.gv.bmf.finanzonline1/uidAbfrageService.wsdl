@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://finanzonline.bmf.gv.at/fon/ws/uid" name="uidAbfrageService" targetNamespace="https://finanzonline.bmf.gv.at/fon/ws/uid" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="https://finanzonline.bmf.gv.at/fon/ws/uid" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="uidAbfrageRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sessionid" type="xs:string" />
+            <xs:element name="tid" type="xs:string" />
+            <xs:element name="benid" type="xs:string" />
+            <xs:element name="uid_tn" type="xs:string" />
+            <xs:element name="uid" type="xs:string" />
+            <xs:element name="stufe" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="uidAbfrageResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="rc" type="xs:string" />
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="adrz1" type="xs:string" />
+            <xs:element name="adrz2" type="xs:string" />
+            <xs:element name="adrz3" type="xs:string" />
+            <xs:element name="adrz4" type="xs:string" />
+            <xs:element name="adrz5" type="xs:string" />
+            <xs:element name="adrz6" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="uidAbfrageRequest">
+    <part name="parameters" element="tns:uidAbfrageRequest" />
+  </message>
+  <message name="uidAbfrageResponse">
+    <part name="parameters" element="tns:uidAbfrageResponse" />
+  </message>
+  <portType name="uidAbfragePort">
+    <operation name="uidAbfrage">
+      <input name="uidAbfrageRequest" message="tns:uidAbfrageRequest" />
+      <output name="uidAbfrageResponse" message="tns:uidAbfrageResponse" />
+    </operation>
+  </portType>
+  <binding name="uidAbfrageBinding" type="tns:uidAbfragePort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="uidAbfrage">
+      <soap:operation soapAction="uidAbfrage" />
+      <input name="uidAbfrageRequest">
+        <soap:body use="literal" />
+      </input>
+      <output name="uidAbfrageResponse">
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="uidAbfrageService">
+    <port name="uidAbfrage" binding="tns:uidAbfrageBinding">
+      <soap:address location="https://finanzonline.bmf.gv.at:443/fon/ws/uidAbfrageService/" />
+    </port>
+  </service>
+</definitions>

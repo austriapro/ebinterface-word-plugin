@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DsInvoice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TblMWST>
+    <SpMwSt>20</SpMwSt>
+    <SpBeschreibung>Normalsteuersatz</SpBeschreibung>
+  </TblMWST>
+  <TblMWST>
+    <SpMwSt>10</SpMwSt>
+    <SpBeschreibung>ermäßigter Steuersatz </SpBeschreibung>
+  </TblMWST>
+  <TblMWST>
+    <SpMwSt>0</SpMwSt>
+    <SpBeschreibung>Steuerfrei</SpBeschreibung>
+  </TblMWST>
+  <TblMWST>
+    <SpMwSt>12</SpMwSt>
+    <SpBeschreibung>Weinumsätze</SpBeschreibung>
+  </TblMWST>
+  <TblMWST>
+    <SpMwSt>19</SpMwSt>
+    <SpBeschreibung>Jungholz</SpBeschreibung>
+  </TblMWST>
+  <TblMWST>
+    <SpMwSt>8</SpMwSt>
+    <SpBeschreibung>Zusatzsteuer</SpBeschreibung>
+  </TblMWST>
+  <TblMWST>
+    <SpMwSt>-1</SpMwSt>
+    <SpBeschreibung>Steuerbefreit</SpBeschreibung>
+  </TblMWST>
+</DsInvoice>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eb:Invoice xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sv="http://www.ebinterface.at/schema/4p1/extensions/sv" xmlns:ext="http://www.ebinterface.at/schema/4p1/extensions/ext" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" xmlns:eb="http://www.ebinterface.at/schema/4p1/" eb:GeneratingSystem="ebInterface Word PlugIn an die Wirtschaft V4p1">
+  <Vorlage>Das ist eine Vorlage für das ebinterface Word PlugIn und kann nicht als eRechnung eingebracht werden.</Vorlage>
+  <eb:InvoiceNumber>2014-500</eb:InvoiceNumber>
+  <eb:InvoiceDate>2014-03-19</eb:InvoiceDate>
+  <eb:Delivery>
+    <eb:Date>2014-03-19</eb:Date>
+  </eb:Delivery>
+  <eb:Biller>
+    <eb:VATIdentificationNumber>ATU62612345</eb:VATIdentificationNumber>
+    <eb:Address>
+      <eb:Name>BPC</eb:Name>
+      <eb:Street>Testgasse 5</eb:Street>
+      <eb:Town>Irgendwo</eb:Town>
+      <eb:ZIP>4711</eb:ZIP>
+      <eb:Country eb:CountryCode="AT">Österreich</eb:Country>
+      <eb:Email>michi@musterfrau.at</eb:Email>
+      <eb:Contact>Michaela Musterfrau</eb:Contact>
+    </eb:Address>
+    <eb:InvoiceRecipientsBillerID>123456789</eb:InvoiceRecipientsBillerID>
+  </eb:Biller>
+  <eb:InvoiceRecipient>
+    <eb:VATIdentificationNumber>00000000</eb:VATIdentificationNumber>
+    <eb:OrderReference>
+      <eb:OrderID>Z01</eb:OrderID>
+    </eb:OrderReference>
+    <eb:Address>
+      <eb:Name>Bundesministerium</eb:Name>
+      <eb:Street>Platz</eb:Street>
+      <eb:Town>Wien</eb:Town>
+      <eb:ZIP>1010</eb:ZIP>
+      <eb:Country eb:CountryCode="AT">Österreich</eb:Country>
+    </eb:Address>
+    <eb:BillersInvoiceRecipientID>K100</eb:BillersInvoiceRecipientID>
+  </eb:InvoiceRecipient>
+  <eb:Details>
+    <eb:HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</eb:HeaderDescription>
+    <eb:ItemList>
+      <eb:ListLineItem>
+        <eb:PositionNumber>1</eb:PositionNumber>
+        <eb:Description>Beratung</eb:Description>
+        <eb:ArticleNumber>100</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="Tag">1.00</eb:Quantity>
+        <eb:UnitPrice>1200.0000</eb:UnitPrice>
+        <eb:VATRate>20.00</eb:VATRate>
+        <eb:DiscountFlag>true</eb:DiscountFlag>
+        <eb:ReductionAndSurchargeListLineItemDetails>
+          <eb:ReductionListLineItem>
+            <eb:BaseAmount>1200.00</eb:BaseAmount>
+            <eb:Percentage>10.00</eb:Percentage>
+          </eb:ReductionListLineItem>
+        </eb:ReductionAndSurchargeListLineItemDetails>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>Z01</eb:OrderID>
+          <eb:OrderPositionNumber>1</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>1080.00</eb:LineItemAmount>
+      </eb:ListLineItem>
+      <eb:ListLineItem>
+        <eb:PositionNumber>2</eb:PositionNumber>
+        <eb:Description>Verpflegung Seminar</eb:Description>
+        <eb:ArticleNumber>200</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="Stk">5.00</eb:Quantity>
+        <eb:UnitPrice>10.0000</eb:UnitPrice>
+        <eb:VATRate>10.00</eb:VATRate>
+        <eb:DiscountFlag>false</eb:DiscountFlag>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>Z01</eb:OrderID>
+          <eb:OrderPositionNumber>2</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>50.00</eb:LineItemAmount>
+      </eb:ListLineItem>
+      <eb:ListLineItem>
+        <eb:PositionNumber>3</eb:PositionNumber>
+        <eb:Description>Portoauslagen</eb:Description>
+        <eb:ArticleNumber>300</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="pauschal">1.00</eb:Quantity>
+        <eb:UnitPrice>20.0000</eb:UnitPrice>
+        <eb:VATRate>0.00</eb:VATRate>
+        <eb:DiscountFlag>false</eb:DiscountFlag>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>Z01</eb:OrderID>
+          <eb:OrderPositionNumber>3</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>20.00</eb:LineItemAmount>
+      </eb:ListLineItem>
+      <eb:ListLineItem>
+        <eb:PositionNumber>4</eb:PositionNumber>
+        <eb:Description>Seminarunterlagen</eb:Description>
+        <eb:ArticleNumber>400</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="Stk">5.00</eb:Quantity>
+        <eb:UnitPrice>5.0000</eb:UnitPrice>
+        <eb:VATRate>20.00</eb:VATRate>
+        <eb:DiscountFlag>false</eb:DiscountFlag>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>Z01</eb:OrderID>
+          <eb:OrderPositionNumber>4</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>25.00</eb:LineItemAmount>
+      </eb:ListLineItem>
+    </eb:ItemList>
+    <eb:FooterDescription>Wir danken für Ihren Auftrag.</eb:FooterDescription>
+  </eb:Details>
+  <eb:Tax>
+    <eb:VAT>
+      <eb:VATItem>
+        <eb:TaxedAmount>1105.00</eb:TaxedAmount>
+        <eb:VATRate>20.00</eb:VATRate>
+        <eb:Amount>221.00</eb:Amount>
+      </eb:VATItem>
+      <eb:VATItem>
+        <eb:TaxedAmount>50.00</eb:TaxedAmount>
+        <eb:VATRate>10.00</eb:VATRate>
+        <eb:Amount>5.00</eb:Amount>
+      </eb:VATItem>
+      <eb:VATItem>
+        <eb:TaxedAmount>20.00</eb:TaxedAmount>
+        <eb:VATRate>0.00</eb:VATRate>
+        <eb:Amount>0.00</eb:Amount>
+      </eb:VATItem>
+    </eb:VAT>
+  </eb:Tax>
+  <eb:TotalGrossAmount>1401.00</eb:TotalGrossAmount>
+  <eb:PayableAmount>1401.00</eb:PayableAmount>
+  <eb:PaymentMethod>
+    <eb:UniversalBankTransaction>
+      <eb:BeneficiaryAccount>
+        <eb:BankName>Musterbank</eb:BankName>
+        <eb:BIC>NABAATWW</eb:BIC>
+        <eb:IBAN>AT611904300234573201</eb:IBAN>
+        <eb:BankAccountOwner>Musterfirma</eb:BankAccountOwner>
+      </eb:BeneficiaryAccount>
+    </eb:UniversalBankTransaction>
+  </eb:PaymentMethod>
+  <eb:PaymentConditions>
+    <eb:DueDate>2014-04-19</eb:DueDate>
+    <eb:Discount>
+      <eb:PaymentDate>2014-03-24</eb:PaymentDate>
+      <eb:Percentage>3.00</eb:Percentage>
+      <eb:Amount>42.03</eb:Amount>
+    </eb:Discount>
+    <eb:Discount>
+      <eb:PaymentDate>2014-03-29</eb:PaymentDate>
+      <eb:Percentage>2.00</eb:Percentage>
+      <eb:Amount>28.02</eb:Amount>
+    </eb:Discount>
+  </eb:PaymentConditions>
+  <eb:PresentationDetails>
+    <eb:URL>http://www.austriapro.at</eb:URL>
+    <eb:SuppressZero>true</eb:SuppressZero>
+  </eb:PresentationDetails>
+</eb:Invoice>

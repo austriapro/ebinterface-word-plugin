@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ebIServices.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ebIServices_at_gv_bmf_finanzonline_SessionWSIService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://finanzonline.bmf.gv.at:443/fon/services/SessionWSI</Value>
+    </Setting>
+    <Setting Name="ebIServices_at_gv_bmf_finanzonline1_uidAbfrageService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://finanzonline.bmf.gv.at:443/fon/ws/uidAbfrageService/</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
