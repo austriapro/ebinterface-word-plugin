@@ -140,6 +140,10 @@
       <Project>{da41f877-c6c7-48e8-a5b3-7f126c657af0}</Project>
       <Name>ebIViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\eRechnung\eRechnung.csproj">
+      <Project>{dea4bf2b-be0a-4f5e-a8a5-67c81d7727c7}</Project>
+      <Name>eRechnung</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ExtensionMethods\ExtensionMethods.csproj">
       <Project>{4fd6055e-92d6-485a-8473-18978eb0669e}</Project>
       <Name>ExtensionMethods</Name>

@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <OfficeApplication>Word</OfficeApplication>
-    <ProjectGuid>{22970813-1A67-4506-A7BC-9047AEC3BAAD}</ProjectGuid>
+    <ProjectGuid>{DEA4BF2B-BE0A-4F5E-A8A5-67C81D7727C7}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -363,7 +363,7 @@
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
-        <ProjectProperties HostName="eRechnung.dotx" HostPackage="{18A3A5AC-5778-4778-901C-ADAAC08E910A}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="DOT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE" DebugInfoCommandLine="/w /z&quot;[$OUTPUT]eRechnung.dotx&quot;" />
+        <ProjectProperties HostName="eRechnung.dotx" HostPackage="{18A3A5AC-5778-4778-901C-ADAAC08E910A}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="DOT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files\Microsoft Office\Office15\WINWORD.EXE" DebugInfoCommandLine="/w /z&quot;[$OUTPUT]eRechnung.dotx&quot;" />
         <Host Name="Word Document" Path=".\eRechnung.dotx" GeneratedCodeNamespace="eRechnung4p1" PublishedHash="CFECFF3FB805E9A295392C4C85A42160CA201773">
           <HostItem Name="ThisDocument" Code="ThisDocument.cs" CanonicalName="ThisDocument" PublishedHash="E11EBB49CAC14D2E66341964CC142747308BAF5E" Blueprint="ThisDocument.Designer.xml" GeneratedCode="ThisDocument.Designer.cs" />
         </Host>
