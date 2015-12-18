@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA41F877-C6C7-48E8-A5B3-7F126C657AF0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ebIViewModels</RootNamespace>
+    <AssemblyName>ebIViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEbug32|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DEbug32\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEbug32|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DEbug32\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Validation">
+      <HintPath>..\packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Validation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms">
+      <HintPath>..\packages\EnterpriseLibrary.Validation.Integration.WinForms.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RibbonViewModels\AboutViewModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RibbonViewModels\UidBestaetigungViewModel.cs" />
+    <Compile Include="RibbonViews\FrmUidBestaetigung.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RibbonViews\FrmUidBestaetigung.Designer.cs">
+      <DependentUpon>FrmUidBestaetigung.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ViewModelBaseExtension.cs" />
+    <Compile Include="Services\MiscEventArgs.cs" />
+    <Compile Include="Services\UpdateViewEventArgs.cs" />
+    <Compile Include="ViewModels\DetailsEditViewModel.cs" />
+    <Compile Include="Converters\DetailsListConverter.cs" />
+    <Compile Include="ViewModels\DetailsViewModel.cs" />
+    <Compile Include="ViewModels\DetailsViewModels.cs" />
+    <Compile Include="ViewModels\InvoiceViewModel.cs" />
+    <Compile Include="Services\DropDownListViewModel.cs" />
+    <Compile Include="ViewModels\ProgressViewModel.cs" />
+    <Compile Include="RibbonViewModels\RibbonViewModel.cs" />
+    <Compile Include="ErrorView\ErrorActionPaneViewModel.cs" />
+    <Compile Include="ErrorView\ErrorViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DropDownListViewModels.cs" />
+    <Compile Include="ViewModels\RelatedDocumentViewModel.cs" />
+    <Compile Include="ViewModels\SkontoViewModel.cs" />
+    <Compile Include="ViewModels\SkontoViewModels.cs" />
+    <Compile Include="ViewModels\UnitOfMeasureViewModel.cs" />
+    <Compile Include="ViewModels\UpdateInvoiceViewModel.cs" />
+    <Compile Include="ViewModels\VatViewModel.cs" />
+    <Compile Include="ViewModels\VatViewModels.cs" />
+    <Compile Include="RibbonViews\FrmAboutView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RibbonViews\FrmAboutView.designer.cs">
+      <DependentUpon>FrmAboutView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmDetailsEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmDetailsEdit.Designer.cs">
+      <DependentUpon>FrmDetailsEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmDetailsList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmDetailsList.Designer.cs">
+      <DependentUpon>FrmDetailsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmShowProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmShowProgress.Designer.cs">
+      <DependentUpon>FrmShowProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmSkontoEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmSkontoEdit.Designer.cs">
+      <DependentUpon>FrmSkontoEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmSkontoList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmSkontoList.Designer.cs">
+      <DependentUpon>FrmSkontoList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmUpdateInvoiceView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmUpdateInvoiceView.designer.cs">
+      <DependentUpon>FrmUpdateInvoiceView.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\ebIViewModels.RibbonViewModels.AboutViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.RibbonViewModels.UidBestaetigungViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.Services.DropDownListViewModels.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.SettingsViewModels.RechnungsstellerSettingsViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.ViewModels.DetailsEditViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.ViewModels.DetailsListViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.ViewModels.DetailsViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.ViewModels.DetailsViewModels.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.ViewModels.SkontoListViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.ViewModels.SkontoViewModel.datasource" />
+    <None Include="Properties\DataSources\ebIViewModels.ViewModels.SkontoViewModels.datasource" />
+    <None Include="Properties\DataSources\SettingsManager.VatDefaultValue.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ebIModels\ebIModels.csproj">
+      <Project>{62a897ba-5a82-429f-b18a-2f77c0c1d9e3}</Project>
+      <Name>ebIModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ebIServices\ebIServices.csproj">
+      <Project>{e38986b2-3b1b-4d39-9266-eae34d8aa7bd}</Project>
+      <Name>ebIServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ebiValidation\ebiValidation.csproj">
+      <Project>{5167232e-bf87-42f7-b5af-53b5066db7e8}</Project>
+      <Name>ebiValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventBrokerExtension\EventBrokerExtension.csproj">
+      <Project>{7afcae67-5f08-4807-b7f4-c121f5776616}</Project>
+      <Name>EventBrokerExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
+      <Project>{4fd6055e-92d6-485a-8473-18978eb0669e}</Project>
+      <Name>ExtensionMethods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{7d98e229-22d4-46b2-a09e-30d70426c54e}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SettingsEditor\SettingsEditor.csproj">
+      <Project>{14be6058-1828-41a1-bd24-7499e146a682}</Project>
+      <Name>SettingsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SettingsManager\SettingsManager.csproj">
+      <Project>{814080c9-2377-4766-b516-a4e4d66d34a5}</Project>
+      <Name>SettingsManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleEventBroker\SimpleEventBroker.csproj">
+      <Project>{bd8b6873-6371-411b-a373-cbe97ad32f9f}</Project>
+      <Name>SimpleEventBroker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinFormsMvvm\WinFormsMvvm.csproj">
+      <Project>{2c9ccb95-9e62-419f-bed1-27623eae81e3}</Project>
+      <Name>WinFormsMvvm</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RibbonViews\FrmAboutView.resx">
+      <DependentUpon>FrmAboutView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RibbonViews\FrmUidBestaetigung.resx">
+      <DependentUpon>FrmUidBestaetigung.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmDetailsEdit.resx">
+      <DependentUpon>FrmDetailsEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmDetailsList.resx">
+      <DependentUpon>FrmDetailsList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmShowProgress.resx">
+      <DependentUpon>FrmShowProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmSkontoEdit.resx">
+      <DependentUpon>FrmSkontoEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmSkontoList.resx">
+      <DependentUpon>FrmSkontoList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmUpdateInvoiceView.resx">
+      <DependentUpon>FrmUpdateInvoiceView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bpc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ebInterface-Logo.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AustriaPro-LOGO-klein.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AustriaPro-LOGO.gif" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eb:Invoice xmlns:ext="http://www.ebinterface.at/schema/4p1/extensions/ext" xmlns:sv="http://www.ebinterface.at/schema/4p1/extensions/sv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" xmlns:eb="http://www.ebinterface.at/schema/4p1/" eb:GeneratingSystem="ebInterface Word PlugIn an den Bund V4p1">
+  <Vorlage>Das ist eine Vorlage für das ebinterface Word PlugIn und kann nicht als eRechnung eingebracht werden.</Vorlage>
+  <eb:InvoiceDate>2014-05-26</eb:InvoiceDate>
+  <eb:Details>
+    <eb:ItemList>
+      <eb:ListLineItem>
+        <eb:PositionNumber>1</eb:PositionNumber>
+        <eb:Description>vcvbcvb asd&amp;/&lt;&gt;</eb:Description>
+        <eb:ArticleNumber>ertertasd&amp;/&lt;&gt;</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="NAR">0</eb:Quantity>
+        <eb:UnitPrice>0</eb:UnitPrice>
+        <eb:VATRate>10</eb:VATRate>
+        <eb:LineItemAmount>0</eb:LineItemAmount>
+      </eb:ListLineItem>
+    </eb:ItemList>
+  </eb:Details>
+  <eb:Tax>
+    <eb:VAT>
+      <eb:VATItem>
+        <eb:TaxedAmount>0</eb:TaxedAmount>
+        <eb:VATRate>10</eb:VATRate>
+        <eb:Amount>0</eb:Amount>
+      </eb:VATItem>
+    </eb:VAT>
+  </eb:Tax>
+  <eb:TotalGrossAmount>0</eb:TotalGrossAmount>
+  <eb:PayableAmount>0</eb:PayableAmount>
+  <eb:PaymentConditions>
+    <eb:DueDate>2014-05-26</eb:DueDate>
+  </eb:PaymentConditions>
+  <eb:PresentationDetails>
+    <eb:URL>http://www.austriapro.at</eb:URL>
+    <eb:SuppressZero>true</eb:SuppressZero>
+  </eb:PresentationDetails>
+</eb:Invoice>

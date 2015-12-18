@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{14BE6058-1828-41A1-BD24-7499E146A682}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SettingsEditor</RootNamespace>
+    <AssemblyName>SettingsEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Validation">
+      <HintPath>..\packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Validation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms">
+      <HintPath>..\packages\EnterpriseLibrary.Validation.Integration.WinForms.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CurrencyListViewModel.cs" />
+    <Compile Include="Service\CurrencyListViewModels.cs" />
+    <Compile Include="ViewModels\BillerSettingsViewModel.cs" />
+    <Compile Include="ViewModels\HandySignSettingsViewModel.cs" />
+    <Compile Include="ViewModels\KontoSettingsViewModel.cs" />
+    <Compile Include="ViewModels\MailSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SaveLocationSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\UidAbfrageSettingsViewModel.cs" />
+    <Compile Include="ViewModels\ZustellSettingsViewModel.cs" />
+    <Compile Include="Views\FrmBillerSettingsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmBillerSettingsView.Designer.cs">
+      <DependentUpon>FrmBillerSettingsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmHandySignSettingsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmHandySignSettingsView.Designer.cs">
+      <DependentUpon>FrmHandySignSettingsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmKontoSettingsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmKontoSettingsView.Designer.cs">
+      <DependentUpon>FrmKontoSettingsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmMailSettingsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmMailSettingsView.Designer.cs">
+      <DependentUpon>FrmMailSettingsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmSaveLocationView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmSaveLocationView.Designer.cs">
+      <DependentUpon>FrmSaveLocationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmUidAbfrageSettingsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmUidAbfrageSettingsView.Designer.cs">
+      <DependentUpon>FrmUidAbfrageSettingsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmZustellSettingsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmZustellSettingsView.Designer.cs">
+      <DependentUpon>FrmZustellSettingsView.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\FrmBillerSettingsView.resx">
+      <DependentUpon>FrmBillerSettingsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmHandySignSettingsView.resx">
+      <DependentUpon>FrmHandySignSettingsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmKontoSettingsView.resx">
+      <DependentUpon>FrmKontoSettingsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmMailSettingsView.resx">
+      <DependentUpon>FrmMailSettingsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmSaveLocationView.resx">
+      <DependentUpon>FrmSaveLocationView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmUidAbfrageSettingsView.resx">
+      <DependentUpon>FrmUidAbfrageSettingsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmZustellSettingsView.resx">
+      <DependentUpon>FrmZustellSettingsView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ebiValidation\ebiValidation.csproj">
+      <Project>{5167232e-bf87-42f7-b5af-53b5066db7e8}</Project>
+      <Name>ebiValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{7d98e229-22d4-46b2-a09e-30d70426c54e}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleEventBroker\SimpleEventBroker.csproj">
+      <Project>{bd8b6873-6371-411b-a373-cbe97ad32f9f}</Project>
+      <Name>SimpleEventBroker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ebIModels\ebIModels.csproj">
+      <Project>{62a897ba-5a82-429f-b18a-2f77c0c1d9e3}</Project>
+      <Name>ebIModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ebIServices\ebIServices.csproj">
+      <Project>{e38986b2-3b1b-4d39-9266-eae34d8aa7bd}</Project>
+      <Name>ebIServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventBrokerExtension\EventBrokerExtension.csproj">
+      <Project>{7afcae67-5f08-4807-b7f4-c121f5776616}</Project>
+      <Name>EventBrokerExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
+      <Project>{4fd6055e-92d6-485a-8473-18978eb0669e}</Project>
+      <Name>ExtensionMethods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SettingsManager\SettingsManager.csproj">
+      <Project>{814080c9-2377-4766-b516-a4e4d66d34a5}</Project>
+      <Name>SettingsManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinFormsMvvm\WinFormsMvvm.csproj">
+      <Project>{2c9ccb95-9e62-419f-bed1-27623eae81e3}</Project>
+      <Name>WinFormsMvvm</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\SettingsEditor.ViewModels.HandySignSettingsViewModel.datasource" />
+    <None Include="Properties\DataSources\SettingsEditor.ViewModels.MailSettingsViewModel.datasource" />
+    <None Include="Properties\DataSources\SettingsEditor.ViewModels.SaveLocationSettingsViewModel.datasource" />
+    <None Include="Properties\DataSources\SettingsEditor.ViewModels.UidAbfrageSettingsViewModel.datasource" />
+    <None Include="Properties\DataSources\SettingsEditor.ViewModels.ZustellSettingsViewModel.datasource" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

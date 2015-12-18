@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="UnitOfMeasure"
+    targetNamespace="http://tempuri.org/UnitOfMeasure.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/UnitOfMeasure.xsd"
+    xmlns:mstns="http://tempuri.org/UnitOfMeasure.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="UnitOfMeasuresType" />
+  <xs:complexType name="UnitOfMeasures">
+    <xs:sequence>
+      <xs:element ref="UnitOfMeasure" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnitOfMeasure">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Entries" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Gruppe" type="xs:string"/>
+              <xs:element name="ID" type="xs:string"/>
+              <xs:element name="BeschreibungDE" type="xs:string"/>
+              <xs:element name="BeschreibungEN" type="xs:string"/>
+              <xs:element name="Anmerkung" type="xs:string"/>
+              <xs:element name="dtAbk" type="xs:string"/>
+              <xs:element name="ZUGFeRD" type="xs:string"/>
+              <xs:element name="Reihenfolge" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
