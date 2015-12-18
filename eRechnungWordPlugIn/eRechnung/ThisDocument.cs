@@ -433,7 +433,7 @@ namespace eRechnung
         {
             Log.TraceWrite("Adding: " + propertyName);
             AddToContainer(ctrl, baseObject, propertyName);
-            var binding = new Binding("Text", bSrc, propertyName, true, DataSourceUpdateMode.OnPropertyChanged,
+            var binding = new Binding("Text", bSrc, propertyName, true, DataSourceUpdateMode.OnValidation, // DataSourceUpdateMode.OnPropertyChanged,
                  parms);
             if (ctrl is PlainTextContentControl)
             {

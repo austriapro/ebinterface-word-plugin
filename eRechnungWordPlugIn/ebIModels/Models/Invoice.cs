@@ -637,6 +637,7 @@ namespace ebIModels.Models
         }
         public override ebInterfaceResult Save(string file)
         {
+            // ToDo: V4p2
             Schema.ebInterface4p1.InvoiceType inv = MappingServiceVmTo4p1.MapModelToV4p1(this);
             return inv.Save(file);
         }
@@ -645,6 +646,7 @@ namespace ebIModels.Models
 
         public override void SaveTemplate(string filename)
         {
+            // ToDo: V4p2
             Schema.ebInterface4p1.InvoiceType inv = MappingServiceVmTo4p1.MapModelToV4p1(this);
             inv.SaveTemplate(filename);
         }
@@ -1262,6 +1264,7 @@ namespace ebIModels.Models
     }
     public partial class PaymentConditionsType
     {
+        // ToDo: Allow nullable datetime
         private System.DateTime dueDateField;
         private List<DiscountType> discountField;
         private decimal? minimumPaymentField;

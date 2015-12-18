@@ -145,6 +145,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Schema\ebInterface4p1\InvoiceInitializer.cs" />
+    <Compile Include="Schema\ebInterface4p2\Invoice.cs">
+      <DependentUpon>Invoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Schema\ebInterface4p2\InvoiceHelperMethods.cs" />
     <Compile Include="Schema\ebInterfaceResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -200,6 +204,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Schema\xml.xsdbase" />
     <EmbeddedResource Include="Schema\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schema\ebInterface4p2\ebInterfaceExtension.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schema\ebInterface4p2\ebInterfaceExtension_SV.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schema\ebInterface4p2\Invoice.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Schema\xmldsig-core-schema.xsx">

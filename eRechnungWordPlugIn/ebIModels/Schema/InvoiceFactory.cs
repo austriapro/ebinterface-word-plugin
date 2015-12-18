@@ -19,16 +19,16 @@ namespace ebIModels.Schema
 
         private static readonly Dictionary<string, ebInterfaceVersion> InvoiceTypes = new Dictionary<string, ebInterfaceVersion>
         {
-                {"http://www.ebinterface.at/schema/3p02/", 
-                    new ebInterfaceVersion
-                    {
-                            // SchemaPath = "ebInterfaceApi.Schema.ebInterface3p02.", 
-                            Version = Schema.InvoiceType.ebIVersion.V3P02,
-                            // Uri = "http://www.ebinterface.at/schema/3p02/",
-                            VersionType = typeof(Schema.ebInterface3p02.InvoiceType)                            
+                //{"http://www.ebinterface.at/schema/3p02/", 
+                    //new ebInterfaceVersion
+                    //{
+                    //        // SchemaPath = "ebInterfaceApi.Schema.ebInterface3p02.", 
+                    //        Version = Schema.InvoiceType.ebIVersion.V3P02,
+                    //        // Uri = "http://www.ebinterface.at/schema/3p02/",
+                    //        VersionType = typeof(Schema.ebInterface3p02.InvoiceType)                            
 
-                        }},
-                {"http://www.ebinterface.at/schema/4p0/", 
+                    //    }},
+                {"http://www.ebinterface.at/schema/4p0/",
                     new ebInterfaceVersion
                         {
                             // SchemaPath = "ebInterfaceApi.Schema.ebInterface4p0.", 
@@ -36,7 +36,7 @@ namespace ebIModels.Schema
                             // Uri = "http://www.ebinterface.at/schema/4p0/",
                             VersionType = typeof(Schema.ebInterface4p0.InvoiceType)
                         }},
-                {"http://www.ebinterface.at/schema/4p1/", 
+                {"http://www.ebinterface.at/schema/4p1/",
                     new ebInterfaceVersion
                         {
                             // SchemaPath = "ebInterfaceApi.Schema.ebInterface4p1.", 
@@ -44,6 +44,13 @@ namespace ebIModels.Schema
                             // Uri = "http://www.ebinterface.at/schema/4p0/",
                             VersionType = typeof(Schema.ebInterface4p1.InvoiceType)
                         }},
+                                {"http://www.ebinterface.at/schema/4p2/",
+                    new ebInterfaceVersion
+                        {
+                            Version = Schema.InvoiceType.ebIVersion.V4P2, 
+                            VersionType = typeof(Schema.ebInterface4p2.InvoiceType)
+                        }},
+
             };
 
         /// <summary>
@@ -77,14 +84,17 @@ namespace ebIModels.Schema
             Schema.InvoiceType invoice = null;
             switch (version)
             {
-                case Schema.InvoiceType.ebIVersion.V3P02:
-                    invoice = new Schema.ebInterface3p02.InvoiceType();
-                    break;
+                //case Schema.InvoiceType.ebIVersion.V3P02:
+                //    invoice = new Schema.ebInterface3p02.InvoiceType();
+                //    break;
                 case Schema.InvoiceType.ebIVersion.V4P0:
                     invoice = new Schema.ebInterface4p0.InvoiceType();
                     break;
                 case Schema.InvoiceType.ebIVersion.V4P1:
                     invoice = new Schema.ebInterface4p1.InvoiceType();
+                    break;
+                case Schema.InvoiceType.ebIVersion.V4P2:
+                    invoice = new Schema.ebInterface4p2.InvoiceType();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("version");
@@ -109,7 +119,7 @@ namespace ebIModels.Schema
             invoice.Biller.VATIdentificationNumber = VatIdDefault;
             invoice.InvoiceRecipient.VATIdentificationNumber = VatIdDefault;
             invoice.DocumentType = DocumentTypeType.Invoice;
-            invoice.InvoiceSubtype = InvoiceSubtypes.GetSubtype(InvoiceSubtypes.ValidationRuleSet.Government);           
+            invoice.InvoiceSubtype = InvoiceSubtypes.GetSubtype(InvoiceSubtypes.ValidationRuleSet.Government);
             return invoice;
         }
 
@@ -124,15 +134,15 @@ namespace ebIModels.Schema
             ebInterfaceVersion version = GetVersion(xmlInvoice);
             Schema.InvoiceType inv = Deserialize(xmlInvoice, version.VersionType);
             Models.IInvoiceType invModel;
-            
+
             switch (inv.Version)
             {
-                case Schema.InvoiceType.ebIVersion.V3P02:
-                    throw new NotImplementedException("Version 3p02 derzeit nicht unterstützt");
+                //case Schema.InvoiceType.ebIVersion.V3P02:
+                //    throw new NotImplementedException("Version 3p02 derzeit nicht unterstützt");
                 // break;
                 case Schema.InvoiceType.ebIVersion.V4P0:
                     invModel = MappingService4p0ToVm.MapV4p0ToModel(inv as Schema.ebInterface4p0.InvoiceType);
-                    invModel.Version= InvoiceType.ebIVersion.V4P0;
+                    invModel.Version = InvoiceType.ebIVersion.V4P0;
                     return invModel;
                 // break;
                 case Schema.InvoiceType.ebIVersion.V4P1:
@@ -249,7 +259,7 @@ namespace ebIModels.Schema
             foreach (XmlAttribute att in attrColl)
             {
                 string uri = att.Value.ToLower();
-                if (uri.StartsWith("http://www.ebinterface.at/schema/") && (att.OwnerElement.LocalName=="Invoice"))
+                if (uri.StartsWith("http://www.ebinterface.at/schema/") && (att.OwnerElement.LocalName == "Invoice"))
                 {
                     return;
                 }

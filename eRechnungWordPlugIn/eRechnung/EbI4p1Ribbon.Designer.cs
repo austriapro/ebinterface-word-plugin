@@ -35,7 +35,6 @@
         private void InitializeComponent()
         {
             this.tab1 = this.Factory.CreateRibbonTab();
-            this.group5 = this.Factory.CreateRibbonGroup();
             this.group7 = this.Factory.CreateRibbonGroup();
             this.btnNewInvoice = this.Factory.CreateRibbonButton();
             this.BtnSave = this.Factory.CreateRibbonButton();
@@ -81,11 +80,11 @@
             this.group6.SuspendLayout();
             this.group4.SuspendLayout();
             this.group3.SuspendLayout();
+            this.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
-            this.tab1.Groups.Add(this.group5);
             this.tab1.Groups.Add(this.group7);
             this.tab1.Groups.Add(this.group2);
             this.tab1.Groups.Add(this.group1);
@@ -96,12 +95,6 @@
             this.tab1.Groups.Add(this.group3);
             this.tab1.Label = "AUSTRIAPRO";
             this.tab1.Name = "tab1";
-            // 
-            // group5
-            // 
-            this.group5.Label = "group5";
-            this.group5.Name = "group5";
-            this.group5.Visible = false;
             // 
             // group7
             // 
@@ -453,6 +446,7 @@
             this.group4.PerformLayout();
             this.group3.ResumeLayout(false);
             this.group3.PerformLayout();
+            this.ResumeLayout(false);
 
         }
 
@@ -494,7 +488,6 @@
         private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnSaveLoc;
         private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnZustellung;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSendByMail;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group5;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnChangeFormType;
     }
 
