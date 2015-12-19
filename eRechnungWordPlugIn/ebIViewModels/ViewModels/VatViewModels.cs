@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ebIModels.Models;
 using WinFormsMvvm;
+using SettingsManager;
 
 namespace ebIViewModels.ViewModels
 {
@@ -64,6 +65,17 @@ namespace ebIViewModels.ViewModels
         public static VatViewModels Load(TaxType taxType)
         {
             VatViewModels vatView = new VatViewModels();
+            if (!PlugInSettings.Default.VStBerechtigt)
+            {
+                VatViewModel vatModel = new VatViewModel();
+                vatModel.TaxExemption = true;
+                vatModel.TaxCodeText = PlugInSettings.Default.VStText;
+                vatModel.VatAmount = 0;
+                vatModel.VatPercent = 0;
+                vatModel.TaxCode = null;
+                vatView.VatViewList.Add(vatModel);
+                return vatView;
+            }
             if (taxType == null)
             {
                 return vatView;

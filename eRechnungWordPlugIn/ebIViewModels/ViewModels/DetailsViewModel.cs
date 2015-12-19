@@ -19,6 +19,7 @@ using SimpleEventBroker;
 using WinFormsMvvm;
 using WinFormsMvvm.Controls;
 using WinFormsMvvm.DialogService;
+using ExtensionMethods;
 
 namespace ebIViewModels.ViewModels
 {
@@ -47,8 +48,8 @@ namespace ebIViewModels.ViewModels
         /// Artikelbezeichung
         /// </summary>
         // [Required(AllowEmptyStrings = false, ErrorMessage = "Es muss eine Bezeichnung angegeben werden.")]
-        [StringLengthValidator(1, 255, MessageTemplate = "DT00024 Die Artikelbezeichnung ist erforderlich.")]
-        [StringLengthValidator(1, 255, MessageTemplate = "DT00024 Die Artikelbezeichnung ist erforderlich.", Ruleset = "BestPosRequired")]
+        [StringLengthValidator(1, 255, MessageTemplate = "DT00024 Die Artikelbezeichnung ist erforderlich und darf max. {5} Zeichen lang sein.")]
+        [StringLengthValidator(1, 255, MessageTemplate = "DT00024 Die Artikelbezeichnung ist erforderlich und darf max. {5} Zeichen lang sein.", Ruleset = "BestPosRequired")]
         public string Bezeichnung
         {
             get { return _bezeichnung; }
@@ -74,7 +75,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_menge == value)
                     return;
-                _menge = value;
+                _menge = value.FixedFraction(4);
                 OnPropertyChanged();
                 UpdateTotals();
             }
@@ -84,9 +85,17 @@ namespace ebIViewModels.ViewModels
         {
             get
             {
-                var abk = UomEntries.FirstOrDefault(p => p.ID == _einheit);
-                if (abk == null) return Einheit;
-                return abk.dtAbk;
+                //var abk = UomEntries.FirstOrDefault(p => p.ID == _einheit);
+                //if (abk == null) return Einheit;
+                //return abk.dtAbk;
+                if (_uomSelected == null)
+                {
+                    return "??";
+                }
+                else
+                {
+                    return _uomSelected.Description;
+                }
             }
         }
 
@@ -136,7 +145,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_einzelPreis == value)
                     return;
-                _einzelPreis = value;
+                _einzelPreis = value.FixedFraction(4);
                 OnPropertyChanged();
                 UpdateTotals();
             }
@@ -274,7 +283,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_gesamtNetto == value)
                     return;
-                _gesamtNetto = value;
+                _gesamtNetto = value.FixedFraction(2);
                 OnPropertyChanged();
             }
         }
@@ -290,7 +299,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_gesamtMwStBetrag == value)
                     return;
-                _gesamtMwStBetrag = value;
+                _gesamtMwStBetrag = value.FixedFraction(2);
                 OnPropertyChanged();
             }
         }
@@ -306,7 +315,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_gesamtBruttoBetrag == value)
                     return;
-                _gesamtBruttoBetrag = value;
+                _gesamtBruttoBetrag = value.FixedFraction(2);
                 OnPropertyChanged();
             }
         }
@@ -322,7 +331,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_rabattBetrag == value)
                     return;
-                _rabattBetrag = value;
+                _rabattBetrag = value.FixedFraction(2);
                 OnPropertyChanged();
             }
         }
@@ -335,7 +344,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_nettoBasisBetrag == value)
                     return;
-                _nettoBasisBetrag = value;
+                _nettoBasisBetrag = value.FixedFraction(2);
                 OnPropertyChanged();
             }
         }

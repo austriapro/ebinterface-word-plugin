@@ -11,6 +11,7 @@ using WinFormsMvvm;
 
 namespace ebIViewModels.ViewModels
 {
+// ToDo: Taxexemption
     public class DetailsListConverter
     {
         private BindingList<DetailsViewModel> _detailsList = new BindingList<DetailsViewModel>();

@@ -115,6 +115,7 @@ namespace ebIViewModels.ViewModels
             InvoiceDatesChangedEventArgs args = new InvoiceDatesChangedEventArgs();
             args.InvoiceDate = VmInvDate;
             args.InvoiceDueDate = VmInvDueDate;
+            _invoice.CalculateTotals();
             args.BaseAmount = VmInvTotalAmountDecimal;
 
             if (handler != null)
@@ -448,7 +449,8 @@ namespace ebIViewModels.ViewModels
                 }
                 else
                 {
-                    _invoice.InvoiceRecipient.OrderReference.OrderID = value.ToUpper();
+                    _invoice.InvoiceRecipient.OrderReference.OrderID =
+                        CurrentSelectedValidation == InvoiceSubtypes.ValidationRuleSet.Government ? value.ToUpper() : value;
                     string msg;
                     bool isReq = IsBestPosRequired;
                     var x = _invoice.InvoiceRecipient.OrderReference.OrderID.IsValidOrderRefBund(out msg, out isReq);
@@ -724,13 +726,13 @@ namespace ebIViewModels.ViewModels
 
         public string VmInvTaxText
         {
-            get { return PlugInSettings.Default.VStBerechtigt ? _reText2[0] : PlugInSettings.Default.VStText; }
+            get { return PlugInSettings.Default.VStBerechtigt ? _reText2[0] : string.Format(_reText2[1], PlugInSettings.Default.VStText); }
 
         }
 
         public string VmInvTaxAmount
         {
-            get { return ((_invoice.TaxAmount ?? 0).Decimal2()); }
+            get { return PlugInSettings.Default.VStBerechtigt ? ((_invoice.TaxAmount ?? 0).Decimal2()):"0,00"; }
         }
 
         public string VmInvTotalAmountText
@@ -1052,7 +1054,7 @@ namespace ebIViewModels.ViewModels
                 //    return;
                 //_detailsView = value;
                 _invoice.Details.ItemList = DetailsListConverter.ConvertToItemList(value, VmOrderReference);
-                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList);
+                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList,!PlugInSettings.Default.VStBerechtigt,PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
                 //OnUpdateDocTable(value);
                 //OnUpdateDocTable(VatView, "VatView");
@@ -1152,7 +1154,7 @@ namespace ebIViewModels.ViewModels
         #endregion
         #region Private Objekte
         private readonly string[] _reText1 = { "Rechnungsbetrag exkl. MwSt", "Rechnungsbetrag" };
-        private readonly string[] _reText2 = { "Summe MwSt", "Keine VSt Abzugsberechtigung: {0} MwSt daher" };
+        private readonly string[] _reText2 = { "Summe MwSt", "{0}: Summe MwSt" };
         private readonly string[] _reText3 = { "Rechnungsbetrag inkl. MwSt", "Gesamt" };
 
         internal IInvoiceType _invoice;
@@ -1243,7 +1245,7 @@ namespace ebIViewModels.ViewModels
             else
             {
                 _saveDlg.InitialDirectory = PlugInSettings.Default.PathToUnsignedInvoices;
-                _saveDlg.Filter = "ebInterface XML (*.xml)|*xml|All files (*.*)|*.*";
+                _saveDlg.Filter = "ebInterface XML (*.xml)|*.xml|Alle Dateien (*.*)|*.*";
                 _saveDlg.DefaultExt = "xml";
                 _saveDlg.FileName = MakeFileName("Rechng-", _saveDlg.DefaultExt);
                 DialogResult rc = _dlg.ShowSaveFileDialog(_saveDlg);
@@ -1319,7 +1321,7 @@ namespace ebIViewModels.ViewModels
             else
             {
                 _saveDlg.InitialDirectory = PlugInSettings.Default.PathToInvoiceTemplates;
-                _saveDlg.Filter = "Vorlagen (*.xmlt,*.xml)|*.xmlt;*xml|All files (*.*)|*.*";
+                _saveDlg.Filter = "Vorlagen (*.xmlt,*.xml)|*.xmlt;*.xml|Alle Dateien (*.*)|*.*";
                 _saveDlg.DefaultExt = "xmlt";
                 _saveDlg.FileName = MakeFileName("Vorlage-", _saveDlg.DefaultExt);
                 DialogResult rc = _dlg.ShowSaveFileDialog(_saveDlg);
@@ -1641,7 +1643,7 @@ namespace ebIViewModels.ViewModels
 
                 workerReportProgress(worker);
                 _vmDocType = _invoice.DocumentType.ToString();
-                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList);
+                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
                 _bankTx = GetBankTx();
                 // _paymentConditions = _uc.Resolve<SkontoViewModels>(new ParameterOverride("invoice", _invoice));
@@ -1838,7 +1840,7 @@ namespace ebIViewModels.ViewModels
         internal virtual void UpdateView(bool updateTables)
         {
             Log.TraceWrite("updateTables={0}", updateTables);
-            _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList);
+            _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
             _invoice.CalculateTotals();
             _bankTx = GetBankTx();
             CurrentSelectedValidation = _invoice.InvoiceSubtype.VariantOption;

@@ -31,6 +31,12 @@ namespace ebIModels.Models
                         nettoBetrag += (vatItem.TaxedAmount ?? 0);
                         amount += (vatItem.Amount ?? 0);
                     }
+                    if (vatItem.Item is TaxExemptionType)
+                    {
+                        gesamtBetrag += (vatItem.TaxedAmount ?? 0);
+                        nettoBetrag += (vatItem.TaxedAmount ?? 0);
+                        //amount += (vatItem.Amount ?? 0);
+                    }
                 }
 
             }
@@ -94,10 +100,19 @@ namespace ebIModels.Models
         /// </summary>
         /// <param name="itemList">Liste der Detailzeilenlisten</param>
         /// <returns>TaxType</returns>
-        public static TaxType GetTaxTypeList(List<ItemListType> itemList)
+        public static TaxType GetTaxTypeList(List<ItemListType> itemList, bool isTaxExemption, string vatText)
         {
             TaxType tax = new TaxType();
             tax.VAT = new List<VATItemType>();
+            if (isTaxExemption)
+            {
+                TaxExemptionType taxEx = new TaxExemptionType()
+                {
+                    TaxExemptionCode = null,
+                    Value=vatText
+                };
+                
+            }
             if (itemList.Count == 0)
                 return tax;
             // Dictionary für alle USt Angaben
@@ -108,7 +123,7 @@ namespace ebIModels.Models
                 {
                     if (lineItem.Item != null)
                     {
-                        if (lineItem.Item is VATRateType)
+                        if (lineItem.Item is VATRateType && !isTaxExemption)
                         {
                             var taxValue = lineItem.Item as VATRateType;
                             decimal taxVal = taxValue.Value ?? -1;
@@ -123,6 +138,24 @@ namespace ebIModels.Models
                                 {
                                     Amount = (lineItem.LineItemAmount * taxValue.Value / 100),
                                     Item = new VATRateType() { TaxCode = taxValue.TaxCode, Value = taxValue.Value },
+                                    TaxedAmount = lineItem.LineItemAmount
+                                });
+                            }
+                        }
+                        if (lineItem.Item is TaxExemptionType)
+                        {
+                            decimal taxVal = 0;
+                            if (taxItems.ContainsKey(taxVal))
+                            {
+                                taxItems[taxVal].TaxedAmount += lineItem.LineItemAmount;
+                                taxItems[taxVal].Amount =0;
+                            }
+                            else
+                            {
+                                taxItems.Add(taxVal, new VATItemType()
+                                {
+                                    Amount = 0,
+                                    Item = new TaxExemptionType() { TaxExemptionCode=null, Value=vatText },
                                     TaxedAmount = lineItem.LineItemAmount
                                 });
                             }

@@ -25,6 +25,7 @@ namespace ebIModels.Mapping
             Invoice.InvoiceDate = source.InvoiceDate;
             Invoice.GeneratingSystem = source.GeneratingSystem;
             Invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
+            Invoice.DocumentTitle = source.DocumentTitle;
             Invoice.InvoiceCurrency = source.InvoiceCurrency.ConvertEnum<CurrencyType>();
             Invoice.Language = source.Language.ConvertEnum<LanguageType>();
             Invoice.Comment = source.Comment;
