@@ -51,7 +51,7 @@ namespace ebIModels.Schema.Tests
             string fn = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn);
             invoice.InvoiceSubtype = InvoiceSubtypes.GetSubtype(InvoiceSubtypes.ValidationRuleSet.Industries);
-            invoice.SaveTemplate(@"c:\temp\testTemplateInvoiceIndustry.xml");
+            invoice.SaveTemplate(@"Daten\testTemplateInvoiceIndustry.xml");
             Assert.IsNotNull(invoice);
         }
         [TestMethod()]
@@ -61,7 +61,7 @@ namespace ebIModels.Schema.Tests
             var invoice = InvoiceFactory.LoadTemplate(fn);
             invoice.InvoiceSubtype = InvoiceSubtypes.GetSubtype(InvoiceSubtypes.ValidationRuleSet.Industries);
             invoice.DocumentType = DocumentTypeType.CreditMemo;
-            invoice.SaveTemplate(@"c:\temp\testTemplateGutschriftIndustry.xml");
+            invoice.SaveTemplate(@"Daten\testTemplateGutschriftIndustry.xml");
             Assert.IsNotNull(invoice);
         }
         [TestMethod()]

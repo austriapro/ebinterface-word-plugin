@@ -13,6 +13,16 @@ namespace ExtensionMethods
 {
     public static class StringExtensions
     {
+        public static T ToEnum<T>(this string inString, T defaultValue) where T : struct, IConvertible
+        {
+            var outVal = defaultValue;
+            if (!Enum.TryParse<T>(inString, out outVal))
+            {
+                return defaultValue;
+            }
+            return outVal;
+        }
+
         public static T2 ConvertEnum<T2>(this Enum inp)
         {
             if (!(inp is Enum))

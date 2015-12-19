@@ -89,10 +89,12 @@ namespace ebIViewModelsTests.ViewModels
             Console.WriteLine("Test mit " + aRefBund[0]);
             invoiceView.VmOrderReference = aRefBund[0];
             bool result = invoiceView.IsInvoiceValid();
+            Cmn.ListResults(invoiceView.Results);
             Assert.AreEqual(true, result);
             Console.WriteLine("Test mit " + aRefBund[1]);
             invoiceView.VmOrderReference = aRefBund[1];
             result = invoiceView.IsInvoiceValid();
+            Cmn.ListResults(invoiceView.Results);
             Assert.AreEqual(true, result);
             const string fnBestPos = @"Daten\BestPosTest.xml";
             invoiceView.SaveEbinterfaceCommand.Execute(fnBestPos);

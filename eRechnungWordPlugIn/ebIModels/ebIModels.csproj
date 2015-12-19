@@ -111,8 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\V4P0ToModel.cs" />
+    <Compile Include="Mapping\V4P2ToModel.cs" />
     <Compile Include="Mapping\V4P1ToModel.cs" />
-    <Compile Include="Mapping\ModelToV4P1.cs" />
+    <Compile Include="Mapping\ModelToV4P2.cs" />
     <Compile Include="Models\CountryCodes.cs" />
     <Compile Include="Models\DocumentTypeModel.cs" />
     <Compile Include="Models\DocumentTypeModels.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Models\IInvoiceType.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceExtensions.cs" />
+    <Compile Include="Models\InvoiceHelperMethods.cs" />
     <Compile Include="Models\InvoiceSubtypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schema\ebInterface.cs">
@@ -149,6 +151,7 @@
       <DependentUpon>Invoice.xsd</DependentUpon>
     </Compile>
     <Compile Include="Schema\ebInterface4p2\InvoiceHelperMethods.cs" />
+    <Compile Include="Schema\ebInterface4p2\InvoiceInitializer.cs" />
     <Compile Include="Schema\ebInterfaceResult.cs">
       <SubType>Code</SubType>
     </Compile>

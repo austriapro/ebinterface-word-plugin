@@ -51,7 +51,7 @@ namespace ZustellDienstSample
             }
             XDocument xdoc = XDocument.Load(fn);
             XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
-            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p1/");
+            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
             var invNr = xdoc.XPathSelectElement(InvoiceNr, Nspc).Value;
             var billerName = xdoc.XPathSelectElement(BillerName, Nspc).Value;
             var billerMail = xdoc.XPathSelectElement(BillerMail, Nspc).Value;

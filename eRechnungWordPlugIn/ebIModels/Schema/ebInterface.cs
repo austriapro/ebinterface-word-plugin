@@ -94,7 +94,7 @@ namespace ebIModels.Schema
 
         private const string VorlageString =
             "Das ist eine Vorlage für das ebinterface Word PlugIn und kann nicht als eRechnung eingebracht werden.";
-        private  XNamespace NameSp = @"http://www.ebinterface.at/schema/4p1/";
+        //private  XNamespace NameSp = @"http://www.ebinterface.at/schema/4p1/";
         const string EbInvoiceNumber = "InvoiceNumber";
         /// <summary>
         /// Erzeugt ein XmlDocument aus dem ebInterface Objekt 

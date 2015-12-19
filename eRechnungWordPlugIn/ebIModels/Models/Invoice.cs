@@ -638,7 +638,7 @@ namespace ebIModels.Models
         public override ebInterfaceResult Save(string file)
         {
             // ToDo: V4p2
-            Schema.ebInterface4p1.InvoiceType inv = MappingServiceVmTo4p1.MapModelToV4p1(this);
+            Schema.ebInterface4p2.InvoiceType inv = MappingServiceVmTo4p2.MapModelToV4p2(this);
             return inv.Save(file);
         }
 
@@ -647,7 +647,7 @@ namespace ebIModels.Models
         public override void SaveTemplate(string filename)
         {
             // ToDo: V4p2
-            Schema.ebInterface4p1.InvoiceType inv = MappingServiceVmTo4p1.MapModelToV4p1(this);
+            Schema.ebInterface4p2.InvoiceType inv = MappingServiceVmTo4p2.MapModelToV4p2(this);
             inv.SaveTemplate(filename);
         }
     }

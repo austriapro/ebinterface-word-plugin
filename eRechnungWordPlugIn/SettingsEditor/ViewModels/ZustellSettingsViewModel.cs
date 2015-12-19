@@ -190,7 +190,7 @@ namespace SettingsEditor.ViewModels
                 return;
             }
             XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
-            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p1/");
+            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
             XDocument xDoc = XDocument.Load(fn);
             var bMail = GetMailAddress(xDoc, Nspc,BillerMail);
             var rMail = GetMailAddress(xDoc, Nspc, ReceipientMail);

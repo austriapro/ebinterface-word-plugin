@@ -58,7 +58,7 @@ namespace ebIViewModels.ViewModels.Tests
             invVm.SaveTemplateCommand.Execute(EmptyInvoice);
             XDocument xdoc = XDocument.Load(EmptyInvoice);
             var nspm = new XmlNamespaceManager(new NameTable());
-            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p1/");
+            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
             var xCode = xdoc.XPathSelectElement(BillerCountry, nspm);
             Assert.IsNotNull(xCode);
         }
@@ -220,7 +220,7 @@ namespace ebIViewModels.ViewModels.Tests
             var xName = xDoc.Root.DescendantsAndSelf().First(p => p.Name.LocalName == "BankName");
             Assert.AreEqual("TestBank AG", xName.Value);
             var nspm = new XmlNamespaceManager(new NameTable());
-            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p1/");
+            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
             var xOwner =
                 xDoc.XPathSelectElement(
                     "/eb:Invoice/eb:PaymentMethod/eb:UniversalBankTransaction/eb:BeneficiaryAccount/eb:BankAccountOwner",
@@ -339,7 +339,7 @@ namespace ebIViewModels.ViewModels.Tests
             InvVm.SaveTemplateCommand.Execute(SaveCommentTest);
             XDocument xdoc = XDocument.Load(SaveCommentTest);
             var nspm = new XmlNamespaceManager(new NameTable());
-            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p1/");
+            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
             var xCode = xdoc.XPathSelectElement(CommentPath, nspm);
             Assert.AreEqual(Comment, xCode.Value,"Comment has been saved in Template.");
             InvVm.VmComment = "";

@@ -49,7 +49,7 @@ namespace ZustellDienstWindowSample
                 return;
             }
             XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
-            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p1/");
+            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
             txtReNr.Text = GetXmlValue(xdoc,Nspc,InvoiceNr);
             txtReceipient.Text = GetXmlValue(xdoc, Nspc, RecMail);
             txtBiller.Text = GetXmlValue(xdoc, Nspc, BillerMail);

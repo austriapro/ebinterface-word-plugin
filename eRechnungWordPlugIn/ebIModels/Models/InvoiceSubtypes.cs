@@ -18,8 +18,12 @@ namespace ebIModels.Models
         private const string PlugInWordOld = "ebInterface 4.0 Beta 4 Word PlugIn";
 
         private const string PlugInBund4p1a = "ebInterface Word PlugIn an den Bund V4p1";
-        private const string PlugInBund = "ebInterface Word PlugIn an die öffentl. Verwaltung V4p1";
-        private const string PlugInWord = "ebInterface Word PlugIn an die Wirtschaft V4p1";
+        private const string PlugInBund4p1 = "ebInterface Word PlugIn an die öffentl. Verwaltung V4p1";
+        private const string PlugInWord4p1 = "ebInterface Word PlugIn an die Wirtschaft V4p1";
+
+        private const string PlugInBund4p2 = "ebInterface Word PlugIn an die öffentl. Verwaltung V4p2";
+        private const string PlugInWord4p2 = "ebInterface Word PlugIn an die Wirtschaft V4p2";
+
 
         public enum ValidationRuleSet
         {
@@ -35,10 +39,21 @@ namespace ebIModels.Models
                FriendlyName = "Wirtschaft",
                VariantOption = InvoiceSubtypes.ValidationRuleSet.Industries,
                FileName = "DocumentTypeStandard.xml",
-               DocTypeAlt = PlugInWordOld, 
+               DocTypeAlt = PlugInWordOld,
                DocTypeVorlageAlt = VorlageWordOld,
-               DocTypeNew = PlugInWord
-               
+               DocTypeNew = PlugInWord4p2
+
+            },
+
+                        new InvoiceSubtype()
+            {
+               FriendlyName = "Wirtschaft",
+               VariantOption = InvoiceSubtypes.ValidationRuleSet.Industries,
+               FileName = "DocumentTypeStandard.xml",
+               DocTypeAlt = PlugInWord4p1,
+               DocTypeVorlageAlt = VorlageWordOld,
+               DocTypeNew = PlugInWord4p2
+
             },
 
             new InvoiceSubtype()
@@ -48,8 +63,9 @@ namespace ebIModels.Models
                 FileName = "DocumentTypeBund.xml",
                 DocTypeAlt = PlugInBundOld,
                 DocTypeVorlageAlt = VorlageBundOld,
-                DocTypeNew = PlugInBund
+                DocTypeNew = PlugInBund4p2
             },
+
             new InvoiceSubtype()
             {
                 FriendlyName = "öffentl. Verwaltung",
@@ -57,7 +73,17 @@ namespace ebIModels.Models
                 FileName = "DocumentTypeBund.xml",
                 DocTypeAlt = PlugInBund4p1a,
                 DocTypeVorlageAlt = VorlageBundOld,
-                DocTypeNew = PlugInBund
+                DocTypeNew = PlugInBund4p2
+            },
+
+                        new InvoiceSubtype()
+            {
+                FriendlyName = "öffentl. Verwaltung",
+                VariantOption = InvoiceSubtypes.ValidationRuleSet.Government,
+                FileName = "DocumentTypeBund.xml",
+                DocTypeAlt = PlugInBund4p1,
+                DocTypeVorlageAlt = VorlageBundOld,
+                DocTypeNew = PlugInBund4p2
             },
 
             //new InvoiceSubtype()
@@ -74,7 +100,7 @@ namespace ebIModels.Models
 
         public static InvoiceSubtypes.ValidationRuleSet GetVariant(string friedlyName)
         {
-            
+
             var res = from v in Variants where v.FriendlyName == friedlyName select v;
             if (!res.Any())
             {
@@ -97,9 +123,9 @@ namespace ebIModels.Models
         public static InvoiceSubtype GetSubtype(InvoiceSubtypes.ValidationRuleSet tgt)
         {
             InvoiceSubtype defaultSubtype = Variants[0];
-           // if (tgt == ValidationRuleSet.Invalid) return defaultSubtype;
+            // if (tgt == ValidationRuleSet.Invalid) return defaultSubtype;
             var res = Variants.Find(v => v.VariantOption == tgt);
-            if (res==null)
+            if (res == null)
             {
                 // throw new ArgumentException("Target not found");
                 return defaultSubtype;
@@ -125,7 +151,7 @@ namespace ebIModels.Models
                 foreach (InvoiceSubtype invoiceVariant in Variants)
                 {
                     if (docType.StartsWith(invoiceVariant.DocTypeAlt) ||
-                        docType.StartsWith(invoiceVariant.DocTypeVorlageAlt)||
+                        docType.StartsWith(invoiceVariant.DocTypeVorlageAlt) ||
                         docType.StartsWith(invoiceVariant.DocTypeNew))
                     {
                         InvoiceSubtype it = new InvoiceSubtype()
@@ -137,7 +163,7 @@ namespace ebIModels.Models
                             FriendlyName = invoiceVariant.FriendlyName,
                             VariantOption = invoiceVariant.VariantOption
                         };
-                        
+
                         return it;
                     }
                 }

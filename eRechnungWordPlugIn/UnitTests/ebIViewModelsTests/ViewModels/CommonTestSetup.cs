@@ -19,7 +19,7 @@ namespace ebIViewModelsTests.ViewModels
         internal Common Cmn = new Common(Common.InvTemplate);
         internal InvoiceViewModel InvVm;
         internal ErrorActionPaneViewModel ErrorActionPane;
-        private string _testData = @"C:\TFS\eRechnung\eRechnung-Business\Testdaten\Billersettings.xml";
+        private string _testData = @"C:\TFS\eRechnung-Business\Testdaten\Billersettings.xml";
         internal BillerSettingsViewModel BillerSettings; // 
         internal XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
 
@@ -34,7 +34,7 @@ namespace ebIViewModelsTests.ViewModels
             InvVm = Cmn.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", Cmn.Invoice));
             InvVm.NoUpdatePrompt = true;
             ErrorActionPane = Cmn.UContainer.Resolve<ErrorActionPaneViewModel>();
-            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p1/");
+            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
         }
 
         internal void SetupSettings()
