@@ -26,11 +26,20 @@ namespace ebIModels.Mapping
             Invoice.GeneratingSystem = source.GeneratingSystem;
             Invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
             Invoice.InvoiceCurrency = source.InvoiceCurrency.ToEnum(CurrencyType.EUR); // source.InvoiceCurrency.ConvertEnum<CurrencyType>();
-            Invoice.Language = source.Language.ToEnum(LanguageType.ger);//source.Language.ConvertEnum<LanguageType>();
+            if (!string.IsNullOrEmpty(source.Language))
+            {
+                Invoice.Language = source.Language.ToEnum(LanguageType.ger);  //source.Language.ConvertEnum<LanguageType>();
+                Invoice.LanguageSpecified = true;
+            }
+            else
+            {
+                Invoice.LanguageSpecified = false;
+                Invoice.Language = LanguageType.ger;
+            }
             Invoice.Comment = source.Comment;
             if (source.CancelledOriginalDocument == null)
             {
-                Invoice.CancelledOriginalDocument = null; 
+                Invoice.CancelledOriginalDocument = null;
             }
             else
             {
@@ -105,7 +114,7 @@ namespace ebIModels.Mapping
             Invoice.Biller.Address.Country.CountryCode =
                 source.Biller.Address.Country.CountryCode.ToEnum(CountryCodeType.AT);
             //Invoice.Biller.Address.Country.CountryCodeSpecified = source.Biller.Address.Country.CountryCodeSpecified;
-            if (source.Biller.Address.Country.Value!= null)
+            if (source.Biller.Address.Country.Value != null)
             {
                 Invoice.Biller.Address.Country.Text =
                     new List<string>() { source.Biller.Address.Country.Value };
@@ -224,7 +233,7 @@ namespace ebIModels.Mapping
                     }
                     Invoice.Details.BelowTheLineItem.AddRange(belowItems);
                 }
-            } 
+            }
             #endregion
 
             #region Tax
@@ -265,7 +274,7 @@ namespace ebIModels.Mapping
                         BIC = txType.BeneficiaryAccount[0].BIC,
                         BankName = txType.BeneficiaryAccount[0].BankName,
                         IBAN = txType.BeneficiaryAccount[0].IBAN,
-                        BankAccountOwner = txType.BeneficiaryAccount[0].BankAccountOwner                        
+                        BankAccountOwner = txType.BeneficiaryAccount[0].BankAccountOwner
                     },
                 };
             }
@@ -296,7 +305,7 @@ namespace ebIModels.Mapping
             #endregion
             return Invoice;
         }
-        
+
         private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(V4P2.ReductionAndSurchargeListLineItemDetailsType srcRed)
         {
             if (srcRed.Items == null)
@@ -386,7 +395,7 @@ namespace ebIModels.Mapping
                     item.AddressIdentifierType1.ToString());
                     adId.AddressIdentifierType1Specified = true;
 
-                } 
+                }
                 adId.Value = item.Value;
                 adrOutList.Add(adId);
             }

@@ -16,6 +16,7 @@ namespace ebIServices.UidAbfrage.Tests
     [TestClass()]
     public class UidAbfrageServiceTests : Common
     {
+#if DEBUG
         private IUidAbfrageDienst _abfr;
         private string _webFile = @"C:\Util\BmfWebQuery.txt";
         private string _tln;
@@ -24,7 +25,6 @@ namespace ebIServices.UidAbfrage.Tests
         private string _billerUid;
         private string _okUid = "LU21025032";
         private string _notOkUid = "Lx21025032";
-#if DEBUG
         [TestInitialize]
         public void UidAbfrageServiceTestsInit()
         {

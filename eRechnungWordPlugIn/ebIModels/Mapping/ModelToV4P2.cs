@@ -27,7 +27,16 @@ namespace ebIModels.Mapping
             inv4P2.GeneratingSystem = source.GeneratingSystem;
             inv4P2.DocumentType = source.DocumentType.ConvertEnum<V4P2.DocumentTypeType>();
             inv4P2.InvoiceCurrency = source.InvoiceCurrency.ToString(); //.ConvertEnum<V4P2.CurrencyType>();
-            inv4P2.Language = source.Language.ToString();// .ConvertEnum<V4P2.LanguageType>();
+            if (source.LanguageSpecified)
+            {
+                inv4P2.Language = source.Language.ToString();// .ConvertEnum<V4P2.LanguageType>();
+
+            }
+            else
+            {
+                inv4P2.Language = null;
+            }
+
             inv4P2.Comment = source.Comment;
             inv4P2.CancelledOriginalDocument = null;
             if (source.CancelledOriginalDocument != null)

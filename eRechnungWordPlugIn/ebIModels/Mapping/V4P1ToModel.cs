@@ -28,6 +28,7 @@ namespace ebIModels.Mapping
             Invoice.DocumentTitle = source.DocumentTitle;
             Invoice.InvoiceCurrency = source.InvoiceCurrency.ConvertEnum<CurrencyType>();
             Invoice.Language = source.Language.ConvertEnum<LanguageType>();
+            Invoice.LanguageSpecified = source.LanguageSpecified;
             Invoice.Comment = source.Comment;
             if (source.CancelledOriginalDocument == null)
             {
@@ -354,6 +355,10 @@ namespace ebIModels.Mapping
         private static List<ArticleNumberType> GetArtikelList(V4P1.ArticleNumberType[] srcArticle)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
+            if (srcArticle==null)
+            {
+                return artNrList;
+            }
             foreach (V4P1.ArticleNumberType articleNumberType in srcArticle)
             {
                 ArticleNumberType art = new ArticleNumberType();
