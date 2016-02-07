@@ -41,7 +41,7 @@ namespace ebIViewModels.Services
 
         public void OnUpdateSelection(string value, [CallerMemberName]string property = null)
         {
-            Log.TraceWrite("Property: {0}", property);
+            Log.TraceWrite(CallerInfo.Create(),"Property: {0}", property);
             EventHandler handler = UpdateDropDownSelectionEvent;
             if (handler != null)
             {
@@ -57,7 +57,7 @@ namespace ebIViewModels.Services
 
         public void OnProtectedPropertyChanged(string value, [CallerMemberName] string property = null)
         {
-            Log.TraceWrite("Property: {0}", property);
+            Log.TraceWrite(CallerInfo.Create(),"Property: {0}", property);
             EventHandler handler = UpdateProtectedPropertyEvent;
             if (handler != null)
             {
@@ -74,7 +74,7 @@ namespace ebIViewModels.Services
 
         public void OnUpdateDocTable(object value, [CallerMemberName] string property = null)
         {
-            Log.TraceWrite("Property: {0}", property);
+            Log.TraceWrite(CallerInfo.Create(),"Property: {0}", property);
             EventHandler handler = UpdateDocTableEvent;
 
             if (handler != null)
@@ -90,7 +90,7 @@ namespace ebIViewModels.Services
         }
         public void PublishToPanel(string description)
         {
-            Log.TraceWrite("desc=" + description);
+            Log.TraceWrite(CallerInfo.Create(),"desc=" + description);
             PublishToPanel("", "", "", description);
         }
 
@@ -98,7 +98,7 @@ namespace ebIViewModels.Services
         {
             if (field != "")
             {
-                Log.TraceWrite("field={0},desc={1}", field, description);
+                Log.TraceWrite(CallerInfo.Create(),"field={0},desc={1}", field, description);
             }
             PublishToPanel("", field, "", description);
         }

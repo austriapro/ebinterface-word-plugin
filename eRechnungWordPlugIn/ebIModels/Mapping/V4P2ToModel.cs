@@ -24,6 +24,7 @@ namespace ebIModels.Mapping
             Invoice.InvoiceNumber = source.InvoiceNumber;
             Invoice.InvoiceDate = source.InvoiceDate;
             Invoice.GeneratingSystem = source.GeneratingSystem;
+            Invoice.DocumentTitle = source.DocumentTitle;
             Invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
             Invoice.InvoiceCurrency = source.InvoiceCurrency.ToEnum(CurrencyType.EUR); // source.InvoiceCurrency.ConvertEnum<CurrencyType>();
             if (!string.IsNullOrEmpty(source.Language))
@@ -106,28 +107,7 @@ namespace ebIModels.Mapping
             #region Biller
             Invoice.Biller.VATIdentificationNumber = source.Biller.VATIdentificationNumber;
             Invoice.Biller.InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID;
-            Invoice.Biller.Address.Name = source.Biller.Address.Name;
-            Invoice.Biller.Address.Street = source.Biller.Address.Street;
-            Invoice.Biller.Address.Town = source.Biller.Address.Town;
-            Invoice.Biller.Address.ZIP = source.Biller.Address.ZIP;
-            Invoice.Biller.Address.Email = source.Biller.Address.Email;
-            Invoice.Biller.Address.Country.CountryCode =
-                source.Biller.Address.Country.CountryCode.ToEnum(CountryCodeType.AT);
-            //Invoice.Biller.Address.Country.CountryCodeSpecified = source.Biller.Address.Country.CountryCodeSpecified;
-            if (source.Biller.Address.Country.Value != null)
-            {
-                Invoice.Biller.Address.Country.Text =
-                    new List<string>() { source.Biller.Address.Country.Value };
-            }
-            List<string> list = new List<string>();
-            if (source.Biller.Address.Country.Value != null)
-            {
-                //foreach (string s in source.Biller.Address.Country.Text)
-                //    list.Add(s);
-                list.Add(source.Biller.Address.Country.Value);
-            }
-            Invoice.Biller.Address.Country.Text = list;
-            Invoice.Biller.Address.AddressIdentifier = GetAddressIdentifier(source.Biller.Address.AddressIdentifier);
+            Invoice.Biller.Address = GetAddress(source.Biller.Address);
             Invoice.Biller.FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification);
 
             #endregion
@@ -135,21 +115,7 @@ namespace ebIModels.Mapping
             #region InvoiceRecipient
             Invoice.InvoiceRecipient.BillersInvoiceRecipientID = source.InvoiceRecipient.BillersInvoiceRecipientID;
             Invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
-            Invoice.InvoiceRecipient.Address.Name = source.InvoiceRecipient.Address.Name;
-            Invoice.InvoiceRecipient.Address.Contact = source.InvoiceRecipient.Address.Contact;
-            Invoice.InvoiceRecipient.Address.Email = source.InvoiceRecipient.Address.Email;
-            Invoice.InvoiceRecipient.Address.Salutation = source.InvoiceRecipient.Address.Salutation;
-            Invoice.InvoiceRecipient.Address.Street = source.InvoiceRecipient.Address.Street;
-            Invoice.InvoiceRecipient.Address.Country.CountryCode =
-                source.InvoiceRecipient.Address.Country.CountryCode.ToEnum(CountryCodeType.AT);
-            if (source.InvoiceRecipient.Address.Country.Value != null)
-            {
-                Invoice.InvoiceRecipient.Address.Country.Text =
-                    new List<string>() { source.InvoiceRecipient.Address.Country.Value };
-            }
-            Invoice.InvoiceRecipient.Address.AddressIdentifier = GetAddressIdentifier(source.InvoiceRecipient.Address.AddressIdentifier);
-            Invoice.InvoiceRecipient.Address.ZIP = source.InvoiceRecipient.Address.ZIP;
-            Invoice.InvoiceRecipient.Address.Town = source.InvoiceRecipient.Address.Town;
+            Invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
 
             Invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
             Invoice.InvoiceRecipient.FurtherIdentification = GetFurtherIdentification(source.InvoiceRecipient.FurtherIdentification);
@@ -305,7 +271,56 @@ namespace ebIModels.Mapping
             #endregion
             return Invoice;
         }
+        private static AddressType GetAddress(V4P2.AddressType address)
+        {
 
+            if (address == null)
+            {
+                return null;
+            }
+            AddressType addrNew = new AddressType();
+            addrNew.Name = address.Name;
+            addrNew.Contact = address.Contact;
+            addrNew.Phone = address.Phone;
+            addrNew.POBox = address.POBox;
+            addrNew.Email = address.Email;
+            addrNew.Salutation = address.Salutation;
+            addrNew.Street = address.Street;
+            addrNew.Country = GetCountry(address.Country);
+            addrNew.ZIP = address.ZIP;
+            addrNew.Town = address.Town;
+            addrNew.AddressIdentifier = GetAddressIdentifier(address.AddressIdentifier);
+            return addrNew;
+        }
+        private static CountryType GetCountry(V4P2.CountryType countryType)
+        {
+            if (countryType == null)
+                return null;
+            CountryType cty = new CountryType();
+            if (countryType.Value == null)
+            {
+                cty.CountryCode = CountryCodeType.AT;
+                //cty.CountryCodeSpecified = true;
+                //cty.Text = new string[] { "Österreich" };
+                cty.Text = new List<string>(){ "Österreich"};
+            }
+            else
+            {
+                cty.CountryCode = countryType.CountryCode.ToEnum(CountryCodeType.AT); //.ConvertEnum<V4P2.CountryCodeType>();
+                //cty.CountryCodeSpecified = true; // This is always true!
+                //cty.Text = countryType.Text.ToArray();
+                if (!string.IsNullOrEmpty(countryType.Value))
+                {
+                    cty.Text = new List<string>() { countryType.Value };
+                }
+                else
+                {
+                    cty.Text = new List<string>() { CountryCodes.GetFromCode(cty.CountryCode.ToString()).Country };
+                }
+
+            }
+            return cty;
+        }
         private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(V4P2.ReductionAndSurchargeListLineItemDetailsType srcRed)
         {
             if (srcRed.Items == null)
@@ -364,6 +379,10 @@ namespace ebIModels.Mapping
         private static List<ArticleNumberType> GetArtikelList(V4P2.ArticleNumberType[] srcArticle)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
+            if (srcArticle==null)
+            {
+                return artNrList;
+            }
             foreach (V4P2.ArticleNumberType articleNumberType in srcArticle)
             {
                 ArticleNumberType art = new ArticleNumberType();

@@ -55,11 +55,11 @@ namespace WinFormsMvvm.DialogService
         public DialogResult ShowDialog<T>(object viewModel) where T : FormService
         {
             // Form form2Show = form as Form;
-            Log.TraceWrite("entering");
+            Log.TraceWrite(CallerInfo.Create(),"entering");
             var form2Show = _uc.Resolve<T>(new ParameterOverride("viewModel", viewModel));
             form2Show.SetBindingSource(viewModel);
             var rc = form2Show.ShowDialog();
-            Log.TraceWrite("exiting rc={0}", rc.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"exiting rc={0}", rc.ToString());
             return rc;
         }
 

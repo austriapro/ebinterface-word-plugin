@@ -42,7 +42,7 @@ namespace ExtensionMethods
         public static string EscapeXml(this string s)
         {
             string xml = s;
-            Log.TraceWrite("Before:" + xml);
+            Log.TraceWrite(CallerInfo.Create(),"Before:" + xml);
             if (!string.IsNullOrEmpty(xml))
             {
                 // replace literal values with entities
@@ -52,7 +52,7 @@ namespace ExtensionMethods
                 xml = xml.Replace("\"", "&quot;");
                 xml = xml.Replace("'", "&apos;");
             }
-            Log.TraceWrite("After:" + xml);
+            Log.TraceWrite(CallerInfo.Create(),"After:" + xml);
             return xml;
         }
 
@@ -64,7 +64,7 @@ namespace ExtensionMethods
         public static string UnescapeXml(this string s)
         {
             string unxml = s;
-            Log.TraceWrite("Before:" + unxml);
+            Log.TraceWrite(CallerInfo.Create(),"Before:" + unxml);
 
             if (!string.IsNullOrEmpty(unxml))
             {
@@ -75,7 +75,7 @@ namespace ExtensionMethods
                 unxml = unxml.Replace("&lt;", "<");
                 unxml = unxml.Replace("&amp;", "&");
             }
-            Log.TraceWrite("After:" + unxml);
+            Log.TraceWrite(CallerInfo.Create(),"After:" + unxml);
             return unxml;
         }
         /// <summary>

@@ -51,7 +51,7 @@ namespace ebIViewModels.Views
 
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Log.TraceWrite("completed");
+            Log.TraceWrite(CallerInfo.Create(),"completed");
             DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
         }

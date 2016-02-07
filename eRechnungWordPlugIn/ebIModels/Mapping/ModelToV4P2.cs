@@ -26,6 +26,7 @@ namespace ebIModels.Mapping
             inv4P2.InvoiceDate = source.InvoiceDate;
             inv4P2.GeneratingSystem = source.GeneratingSystem;
             inv4P2.DocumentType = source.DocumentType.ConvertEnum<V4P2.DocumentTypeType>();
+            inv4P2.DocumentTitle = source.DocumentTitle;
             inv4P2.InvoiceCurrency = source.InvoiceCurrency.ToString(); //.ConvertEnum<V4P2.CurrencyType>();
             if (source.LanguageSpecified)
             {
@@ -114,6 +115,11 @@ namespace ebIModels.Mapping
                 inv4P2.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
                 inv4P2.InvoiceRecipient.OrderReference = new V4P2.OrderReferenceType();
                 inv4P2.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
+                if (source.InvoiceRecipient.OrderReference.ReferenceDateSpecified)
+                {
+                    inv4P2.InvoiceRecipient.OrderReference.ReferenceDate = source.InvoiceRecipient.OrderReference.ReferenceDate;
+                    inv4P2.InvoiceRecipient.OrderReference.ReferenceDateSpecified = source.InvoiceRecipient.OrderReference.ReferenceDateSpecified;
+                }                
                 inv4P2.InvoiceRecipient.AccountingArea = source.InvoiceRecipient.AccountingArea;
                 inv4P2.InvoiceRecipient.SubOrganizationID = source.InvoiceRecipient.SubOrganizationID;
                 inv4P2.InvoiceRecipient.FurtherIdentification = GetFurtherIdentification(source.InvoiceRecipient.FurtherIdentification);
@@ -375,6 +381,8 @@ namespace ebIModels.Mapping
             V4P2.AddressType addrNew = new V4P2.AddressType();
             addrNew.Name = address.Name;
             addrNew.Contact = address.Contact;
+            addrNew.Phone = address.Phone;
+            addrNew.POBox = address.POBox;
             addrNew.Email = address.Email;
             addrNew.Salutation = address.Salutation;
             addrNew.Street = address.Street;

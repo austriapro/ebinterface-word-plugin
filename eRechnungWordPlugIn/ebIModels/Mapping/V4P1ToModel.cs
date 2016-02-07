@@ -28,7 +28,6 @@ namespace ebIModels.Mapping
             Invoice.DocumentTitle = source.DocumentTitle;
             Invoice.InvoiceCurrency = source.InvoiceCurrency.ConvertEnum<CurrencyType>();
             Invoice.Language = source.Language.ConvertEnum<LanguageType>();
-            Invoice.LanguageSpecified = source.LanguageSpecified;
             Invoice.Comment = source.Comment;
             if (source.CancelledOriginalDocument == null)
             {
@@ -99,27 +98,7 @@ namespace ebIModels.Mapping
             #region Biller
             Invoice.Biller.VATIdentificationNumber = source.Biller.VATIdentificationNumber;
             Invoice.Biller.InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID;
-            Invoice.Biller.Address.Name = source.Biller.Address.Name;
-            Invoice.Biller.Address.Street = source.Biller.Address.Street;
-            Invoice.Biller.Address.Town = source.Biller.Address.Town;
-            Invoice.Biller.Address.ZIP = source.Biller.Address.ZIP;
-            Invoice.Biller.Address.Email = source.Biller.Address.Email;
-            Invoice.Biller.Address.Country.CountryCode =
-                source.Biller.Address.Country.CountryCode.ConvertEnum<CountryCodeType>();
-            Invoice.Biller.Address.Country.CountryCodeSpecified = source.Biller.Address.Country.CountryCodeSpecified;
-            if (source.Biller.Address.Country.Text != null)
-            {
-                Invoice.Biller.Address.Country.Text =
-                    new List<string>(source.Biller.Address.Country.Text.ToList());
-            }
-            List<string> list = new List<string>();
-            if (source.Biller.Address.Country.Text != null)
-            {
-                foreach (string s in source.Biller.Address.Country.Text)
-                    list.Add(s);
-                Invoice.Biller.Address.Country.Text = list;
-            }
-            Invoice.Biller.Address.AddressIdentifier = GetAddressIdentifier(source.Biller.Address.AddressIdentifier);
+            Invoice.Biller.Address = GetAddress(source.Biller.Address);
             Invoice.Biller.FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification);
 
             #endregion
@@ -127,24 +106,14 @@ namespace ebIModels.Mapping
             #region InvoiceRecipient
             Invoice.InvoiceRecipient.BillersInvoiceRecipientID = source.InvoiceRecipient.BillersInvoiceRecipientID;
             Invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
-            Invoice.InvoiceRecipient.Address.Name = source.InvoiceRecipient.Address.Name;
-            Invoice.InvoiceRecipient.Address.Contact = source.InvoiceRecipient.Address.Contact;
-            Invoice.InvoiceRecipient.Address.Email = source.InvoiceRecipient.Address.Email;
-            Invoice.InvoiceRecipient.Address.Salutation = source.InvoiceRecipient.Address.Salutation;
-            Invoice.InvoiceRecipient.Address.Street = source.InvoiceRecipient.Address.Street;
-            Invoice.InvoiceRecipient.Address.Country.CountryCode =
-                source.InvoiceRecipient.Address.Country.CountryCode.ConvertEnum<CountryCodeType>();
-            if (source.InvoiceRecipient.Address.Country.Text != null)
-            {
-                Invoice.InvoiceRecipient.Address.Country.Text =
-                    new List<string>(source.InvoiceRecipient.Address.Country.Text.ToList());
-            }
-            Invoice.InvoiceRecipient.Address.AddressIdentifier = GetAddressIdentifier(source.InvoiceRecipient.Address.AddressIdentifier);
-            Invoice.InvoiceRecipient.Address.ZIP = source.InvoiceRecipient.Address.ZIP;
-            Invoice.InvoiceRecipient.Address.Town = source.InvoiceRecipient.Address.Town;
+            Invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
 
             Invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
+            Invoice.InvoiceRecipient.OrderReference.ReferenceDateSpecified = source.InvoiceRecipient.OrderReference.ReferenceDateSpecified;
+            Invoice.InvoiceRecipient.OrderReference.ReferenceDate = source.InvoiceRecipient.OrderReference.ReferenceDate;
             Invoice.InvoiceRecipient.FurtherIdentification = GetFurtherIdentification(source.InvoiceRecipient.FurtherIdentification);
+            Invoice.InvoiceRecipient.SubOrganizationID = source.InvoiceRecipient.SubOrganizationID;
+            Invoice.InvoiceRecipient.AccountingArea = source.InvoiceRecipient.AccountingArea;
             #endregion
 
             #region Details
@@ -297,6 +266,34 @@ namespace ebIModels.Mapping
             #endregion
             return Invoice;
         }
+        private static AddressType GetAddress(V4P1.AddressType sourceAddr)
+        {
+            var addr = new AddressType();
+            addr.Name = sourceAddr.Name;
+            addr.Street = sourceAddr.Street;
+            addr.Town = sourceAddr.Town;
+            addr.ZIP = sourceAddr.ZIP;
+            addr.Email = sourceAddr.Email;
+            addr.Phone = sourceAddr.Phone;
+            addr.Contact = sourceAddr.Contact;   
+            addr.Country.CountryCode =
+                sourceAddr.Country.CountryCode.ConvertEnum<CountryCodeType>();
+            addr.Country.CountryCodeSpecified = sourceAddr.Country.CountryCodeSpecified;
+            if (sourceAddr.Country.Text != null)
+            {
+                addr.Country.Text =
+                    new List<string>(sourceAddr.Country.Text.ToList());
+            }
+            List<string> list = new List<string>();
+            if (sourceAddr.Country.Text != null)
+            {
+                foreach (string s in sourceAddr.Country.Text)
+                    list.Add(s);
+                addr.Country.Text = list;
+            }
+            addr.AddressIdentifier = GetAddressIdentifier(sourceAddr.AddressIdentifier);
+            return addr;
+        }
         private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(V4P1.ReductionAndSurchargeListLineItemDetailsType srcRed)
         {
             if (srcRed.Items == null)
@@ -355,7 +352,7 @@ namespace ebIModels.Mapping
         private static List<ArticleNumberType> GetArtikelList(V4P1.ArticleNumberType[] srcArticle)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
-            if (srcArticle==null)
+            if (srcArticle == null)
             {
                 return artNrList;
             }

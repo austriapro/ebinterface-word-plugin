@@ -55,8 +55,8 @@ namespace eRechnung
 
             Globals.ThisDocument.RegisterSingleEventSubscriber(InvoiceViewModel.InvoiceValidationOptionChanged, OnInvoiceValidationOptionChanged);
 
-            Log.TraceWrite("Ribbon Load");
-            Log.TraceWrite("group7 vibility is " + group7.Visible.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Ribbon Load");
+            Log.TraceWrite(CallerInfo.Create(),"group7 vibility is " + group7.Visible.ToString());
             group7.Visible = true;
             #region Invoice -> InvoiceViewModel
             // RibbonButton btnNewInvoice;
@@ -123,25 +123,25 @@ namespace eRechnung
                 // It is not Word 2007
                 this.Base.Ribbon.RibbonUI.ActivateTabMso("TabAddIns");
             }
-            Log.TraceWrite("Ribbon Load finished");
+            Log.TraceWrite(CallerInfo.Create(),"Ribbon Load finished");
         }
 
         private void RelatedViewPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             RelatedDocumentViewModel relDoc = sender as RelatedDocumentViewModel;
-            Log.TraceWrite("entering, property=" + e.PropertyName);
+            Log.TraceWrite(CallerInfo.Create(),"entering, property=" + e.PropertyName);
             string prop = e.PropertyName;
             if (prop == "RefDocTypes")
             {
                 Globals.ThisDocument.FillRefDocType();
             }
-            Log.TraceWrite("exiting");
+            Log.TraceWrite(CallerInfo.Create(),"exiting");
         }
 
         private void InvoiceViewOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             InvoiceViewModel invoice = sender as InvoiceViewModel;
-            Log.TraceWrite("entering, property="+e.PropertyName);
+            Log.TraceWrite(CallerInfo.Create(),"entering, property="+e.PropertyName);
             string prop = e.PropertyName;
             if (prop == "CurrentSelectedValidation")
             {
@@ -151,12 +151,12 @@ namespace eRechnung
             {
                 Globals.ThisDocument.FillDocType();
             }
-            Log.TraceWrite("exiting");
+            Log.TraceWrite(CallerInfo.Create(),"exiting");
         }
 
         private void SetRibbonVisibility(InvoiceSubtypes.ValidationRuleSet validation)
         {
-            Log.TraceWrite("entering, CurrentSelectedValidation=" + validation.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"entering, CurrentSelectedValidation=" + validation.ToString());
             btnSignAndMail.Visible = false;
             BtnSignatur.Visible = false;
             btnVerifySignature.Visible = false;
@@ -184,13 +184,13 @@ namespace eRechnung
                     btnChangeFormType.Label = "Wechsel zu " + _invoiceView.InvoiceVariantList.GetText(InvoiceSubtypes.ValidationRuleSet.Industries.ToString());
                     break;
                 case InvoiceSubtypes.ValidationRuleSet.Invalid:
-                    Log.TraceWrite("Ruleset invalid");
+                    Log.TraceWrite(CallerInfo.Create(),"Ruleset invalid");
                     break;
                 default:
-                    Log.TraceWrite("selection sot found");
+                    Log.TraceWrite(CallerInfo.Create(),"selection sot found");
                     throw new ArgumentOutOfRangeException();
             }
-            Log.TraceWrite("exiting");
+            Log.TraceWrite(CallerInfo.Create(),"exiting");
 
         }
 
@@ -208,7 +208,7 @@ namespace eRechnung
         {
             string msg = "Registering: " + button.Name+", visible="+button.Visible+", parent="+button.Parent.Name;
 
-            Log.TraceWrite(msg);
+            Log.TraceWrite(CallerInfo.Create(),msg);
             
             _ribbonCommands.Add(button.Id, new RibbonCommandBinding()
             {
@@ -248,7 +248,7 @@ namespace eRechnung
             {
                 throw new NotImplementedException(e.Control.Id + " ist nicht registriert.");
             }
-            Log.TraceWrite("Button clicked:{0}", _ribbonCommands[e.Control.Id].Button.Name);
+            Log.TraceWrite(CallerInfo.Create(),"Button clicked:{0}", _ribbonCommands[e.Control.Id].Button.Name);
             ExecuteRibbonCommandButton(_ribbonCommands[e.Control.Id].Command, _ribbonCommands[e.Control.Id].PropagateInvoice);
         }
 
@@ -271,13 +271,13 @@ namespace eRechnung
         public void OnInvoiceValidationOptionChanged(object sender, EventArgs args)
         {
             InvIndustryEventArgs arg = args as InvIndustryEventArgs;
-            Log.TraceWrite("Event: " + InvoiceViewModel.InvoiceValidationOptionChanged);
+            Log.TraceWrite(CallerInfo.Create(),"Event: " + InvoiceViewModel.InvoiceValidationOptionChanged);
             SetRibbonVisibility(((InvoiceViewModel)sender).CurrentSelectedValidation);
         }
 
         private void btnToggleBund_Click(object sender, RibbonControlEventArgs e)
         {
-            Log.TraceWrite("Entering, CurrentSelectedValidation=" + Globals.ThisDocument.InvoiceViewModel.CurrentSelectedValidation.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Entering, CurrentSelectedValidation=" + Globals.ThisDocument.InvoiceViewModel.CurrentSelectedValidation.ToString());
             if (Globals.ThisDocument.InvoiceViewModel.CurrentSelectedValidation == InvoiceSubtypes.ValidationRuleSet.Government)
             {
                 SetRibbonVisibility(InvoiceSubtypes.ValidationRuleSet.Industries);

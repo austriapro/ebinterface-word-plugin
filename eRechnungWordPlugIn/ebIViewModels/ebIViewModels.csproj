@@ -15,6 +15,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <AssemblyVersion>4.2.0.2</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -236,6 +237,10 @@
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{7d98e229-22d4-46b2-a09e-30d70426c54e}</Project>
       <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductVersion\ProductVersion.csproj">
+      <Project>{72b8a5f0-8e2e-4c47-86b1-948ca6d00014}</Project>
+      <Name>ProductVersion</Name>
     </ProjectReference>
     <ProjectReference Include="..\SettingsEditor\SettingsEditor.csproj">
       <Project>{14be6058-1828-41a1-bd24-7499e146a682}</Project>

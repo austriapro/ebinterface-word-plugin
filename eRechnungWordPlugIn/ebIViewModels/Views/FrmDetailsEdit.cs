@@ -47,13 +47,13 @@ namespace ebIViewModels.Views
             //  var viewModel = ViewModel as DetailsViewModel;
             //  viewModel.SaveCommand.Execute(null);
             // WriteAllValues();
-            Log.TraceWrite(textBox10.Text + "-" + ((DetailsViewModel)ViewModel).BestellBezug);
+            Log.TraceWrite(CallerInfo.Create(),textBox10.Text + "-" + ((DetailsViewModel)ViewModel).BestellBezug);
             var var2 = this.ValidateChildren();
-            Log.TraceWrite(textBox10.Text + "-" + ((DetailsViewModel)ViewModel).BestellBezug);
+            Log.TraceWrite(CallerInfo.Create(),textBox10.Text + "-" + ((DetailsViewModel)ViewModel).BestellBezug);
             if (detailsViewValidationProvider.IsValid)
             {
                 // this.BindingContext[bindingSource1].UpdateDataBoundObject();
-                Log.TraceWrite(textBox10.Text + "-" + ((DetailsViewModel)ViewModel).BestellBezug);
+                Log.TraceWrite(CallerInfo.Create(),textBox10.Text + "-" + ((DetailsViewModel)ViewModel).BestellBezug);
                 // this.BindingContext[bindingSource1].ResumeTwoWayBinding();
                 DialogResult = DialogResult.OK;
                 ((ViewModelBase)ViewModel).ChangePending = false;

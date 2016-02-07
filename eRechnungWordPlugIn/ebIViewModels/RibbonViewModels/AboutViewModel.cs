@@ -1,12 +1,14 @@
 ﻿using System.Reflection;
 using ebIModels.Services;
 using WinFormsMvvm;
+using WinFormsMvvm.DialogService;
+using SettingsManager;
 
 namespace ebIViewModels.RibbonViewModels
 {
     public class AboutViewModel : ViewModelBase
     {
-        public AboutViewModel()
+        public AboutViewModel(IDialogService dialog):base(dialog)
         {
             string info = string.Empty;
             Assembly asm = Assembly.GetExecutingAssembly();
@@ -19,10 +21,11 @@ namespace ebIViewModels.RibbonViewModels
                 svnInfo = descriptionAttribute.Description;
 
             }
-            var prod = ProductInfo.GetProductInfo();
-            _productInfo = prod.Title + " Vers. " + prod.Version;
-            _releaseInfo = ProductInfo.GetTfsInfoString();
-            _versionInfo = GetRunningVersion();
+            var prod = new ProductInfo().VersionInfo;
+            _productInfo = prod.Title + ", Open Source Version";
+            _releaseInfo = prod.Version; // ProductInfo.GetTfsInfoString();
+            _versionInfo = prod.Version; // GetRunningVersion();
+
             //svnInfo = ebDoc.ThisDocument.GetAsmTitle();
             //this.lblProduct.Text = svnInfo;
             //svnInfo = ebDoc.ThisDocument.GetSVNInfo();

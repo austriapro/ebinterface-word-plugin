@@ -130,7 +130,7 @@ namespace eRechnung
 
             //foreach (var reg in uc.Registrations)
             //{
-            //    Log.LogWrite("Name:" + reg.Name + ", mapped to:" + reg.MappedToType.Name);
+            //    Log.LogWrite(CallerInfo.Create(),"Name:" + reg.Name + ", mapped to:" + reg.MappedToType.Name);
             //}
             return uc;
         }

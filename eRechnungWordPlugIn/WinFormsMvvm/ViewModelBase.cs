@@ -89,12 +89,12 @@ namespace WinFormsMvvm
         private bool _changePending;
         public bool ChangePending {
             get {
-                Log.TraceWrite("Changepending={0}", _changePending.ToString());
+                Log.TraceWrite(CallerInfo.Create(),"Changepending={0}", _changePending.ToString());
                 return _changePending; 
             }
             set {
                 _changePending = value;
-                Log.TraceWrite("Changepending={0}", _changePending.ToString());
+                Log.TraceWrite(CallerInfo.Create(),"Changepending={0}", _changePending.ToString());
             } 
         }
 
@@ -107,8 +107,8 @@ namespace WinFormsMvvm
         {
             //  this.VerifyPropertyName(propertyName);
 
-            //Log.LogWrite("entered for " + (propertyName ?? "(null)"));
-            Log.TraceWrite("entered for '{0}'", propertyName);
+            //Log.LogWrite(CallerInfo.Create(),"entered for " + (propertyName ?? "(null)"));
+            Log.TraceWrite(CallerInfo.Create(),"entered for '{0}'", propertyName);
             PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null)
             {
@@ -123,7 +123,7 @@ namespace WinFormsMvvm
             bool cancelClose = false;
             if (_dlg == null)
             {
-                Log.LogWrite(Log.LogPriority.High, "IDialogService not initialized, Form='{0}'", title);
+                Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, "IDialogService not initialized, Form='{0}'", title);
                 return false;
             }
             if (resultFromForm == DialogResult.OK)
@@ -173,7 +173,7 @@ namespace WinFormsMvvm
         ~ViewModelBase()
         {
             //string msg = string.Format("{0} ({1}) ({2}) Finalized", this.GetType().Name, this.DisplayName, this.GetHashCode());
-            //Log.TraceWrite(msg);
+            //Log.TraceWrite(CallerInfo.Create(),msg);
         }
 #endif
 

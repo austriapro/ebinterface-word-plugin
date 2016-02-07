@@ -784,16 +784,41 @@ namespace ebIViewModels.ViewModels
 
         #region Payment Conditions
 
-        [Validation.PropertyComparisonValidator("VmInvDate", ComparisonOperator.GreaterThanEqual, MessageTemplate = "RF00049 Das Fälligkeitsdatum darf nicht vor dem Rechnungsdatum liegen.", Tag = "Fälligkeitsdatum")]
+        public DateTime? VmInvDueDateNullable
+        {
+            get
+            {
+                if (VmInvDueDate==DateTime.MinValue)
+                {
+                    return null;
+                }
+                return VmInvDueDate;
+            }
+            set
+            {
+                VmInvDueDate = value ?? DateTime.MinValue;
+            }
+        }
+
+        //[Validation.PropertyComparisonValidator("VmInvDate", ComparisonOperator.GreaterThanEqual, 
+        //    MessageTemplate = "RF00049 Das Fälligkeitsdatum darf nicht vor dem Rechnungsdatum liegen.", Tag = "Fälligkeitsdatum")]
+        //[Validation.PropertyComparisonValidator("Today", ComparisonOperator.GreaterThanEqual, 
+        //    MessageTemplate = "RF00049 Das Fälligkeitsdatum darf nicht vor dem heutigen Tag liegen.", Tag = "Fälligkeitsdatum")]
         public DateTime VmInvDueDate
         {
             get
             {
+                if (_paymentConditions == null)
+                {
+                    return new DateTime();
+                }
+ 
                 return _paymentConditions.InvoiceDueDate;
             }
             set
             {
-                if (_paymentConditions.InvoiceDueDate == value) return;
+                // if (_paymentConditions.InvoiceDueDate == value) return;
+
                 _paymentConditions.InvoiceDueDate = value;
                 OnPropertyChanged();
                 InvDatesChangedFire();
@@ -1427,7 +1452,7 @@ namespace ebIViewModels.ViewModels
             string headLine = "Datenprüfung" + (CurrentSelectedValidation == InvoiceSubtypes.ValidationRuleSet.Government ? " für den Bund" : "");
             foreach (ValidationResult result in results)
             {
-                Log.LogWrite(Log.LogPriority.Low, "{0}; {1} ({3}); {2}", headLine,
+                Log.LogWrite(CallerInfo.Create(),Log.LogPriority.Low, "{0}; {1} ({3}); {2}", headLine,
                      string.IsNullOrEmpty(result.Tag) ? tagDefault : result.Tag, result.Message, result.Key);
                 PublishToPanel(headLine, string.IsNullOrEmpty(result.Tag) ? tagDefault : result.Tag, "",
                     result.Message);
@@ -1517,7 +1542,7 @@ namespace ebIViewModels.ViewModels
         public bool NoUpdatePrompt = false;
         internal virtual void LoadTemplateWithProgressBar(string filename)
         {
-            Log.TraceWrite("entering filename={0}", filename ?? "(null)");
+            Log.TraceWrite(CallerInfo.Create(),"entering filename={0}", filename ?? "(null)");
             InvoiceType inv = InvoiceFactory.LoadTemplate(filename) as InvoiceType;
 
             DialogResult rc;
@@ -1833,13 +1858,13 @@ namespace ebIViewModels.ViewModels
         }
         internal void UpdateView()
         {
-            Log.TraceWrite("Update View");
+            Log.TraceWrite(CallerInfo.Create(),"Update View");
             UpdateView(true);
         }
 
         internal virtual void UpdateView(bool updateTables)
         {
-            Log.TraceWrite("updateTables={0}", updateTables);
+            Log.TraceWrite(CallerInfo.Create(),"updateTables={0}", updateTables);
             _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
             _invoice.CalculateTotals();
             _bankTx = GetBankTx();
@@ -1865,7 +1890,7 @@ namespace ebIViewModels.ViewModels
 
         private void workerReportProgress(BackgroundWorker worker)
         {
-            Log.TraceWrite("Update progress");
+            Log.TraceWrite(CallerInfo.Create(),"Update progress");
             if (worker != null) worker.ReportProgress(1);
         }
 
@@ -1874,7 +1899,7 @@ namespace ebIViewModels.ViewModels
             try
             {
                 BackgroundWorker worker = (BackgroundWorker)sender;
-                Log.TraceWrite("entering with worker {0} null", (worker == null ? "==" : "!="));
+                Log.TraceWrite(CallerInfo.Create(),"entering with worker {0} null", (worker == null ? "==" : "!="));
                 bool updateTables = true;
                 if (e != null && e.Argument != null && e.Argument is bool)
                 {
@@ -1976,14 +2001,14 @@ namespace ebIViewModels.ViewModels
         private void OnInvoiceValidationOptionChanged()
         {
             EventHandler handler = InvoiceValidationOptionChangedEvent;
-            Log.TraceWrite("Entering, handler=" + (handler == null ? "not null" : "null"));
+            Log.TraceWrite(CallerInfo.Create(),"Entering, handler=" + (handler == null ? "not null" : "null"));
             if (handler != null)
             {
-                Log.TraceWrite("Firing Event ");
+                Log.TraceWrite(CallerInfo.Create(),"Firing Event ");
                 var args = new InvIndustryEventArgs();
                 args.Industry = CurrentSelectedValidation;
                 handler(this, args);
-                Log.TraceWrite("Event finished");
+                Log.TraceWrite(CallerInfo.Create(),"Event finished");
             }
         }
 

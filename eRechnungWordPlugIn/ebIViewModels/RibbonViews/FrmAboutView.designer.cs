@@ -39,8 +39,6 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
             this.lblProduct = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblRelease = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -58,7 +56,7 @@
             this.lblHeadline.Name = "lblHeadline";
             this.lblHeadline.Size = new System.Drawing.Size(448, 24);
             this.lblHeadline.TabIndex = 4;
-            this.lblHeadline.Text = "AUSTRIAPRO - Word PlugIn für ebInterface 4.1";
+            this.lblHeadline.Text = "AUSTRIAPRO - Word PlugIn für ebInterface 4.2";
             // 
             // label2
             // 
@@ -73,11 +71,12 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "VersionInfo", true));
-            this.lblVersion.Location = new System.Drawing.Point(92, 73);
+            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.Location = new System.Drawing.Point(92, 99);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(35, 13);
+            this.lblVersion.Size = new System.Drawing.Size(45, 13);
             this.lblVersion.TabIndex = 6;
-            this.lblVersion.Text = "label3";
+            this.lblVersion.Text = "4.2.x.y";
             // 
             // aboutViewModelBindingSource
             // 
@@ -108,9 +107,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 73);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Versionsinfo:";
+            this.label4.Text = "Produkt:";
             // 
             // linkLabel2
             // 
@@ -128,38 +127,20 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 99);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
+            this.label5.Size = new System.Drawing.Size(42, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "Produktinfo:";
+            this.label5.Text = "Version";
             // 
             // lblProduct
             // 
             this.lblProduct.AutoSize = true;
             this.lblProduct.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "ProductInfoText", true));
-            this.lblProduct.Location = new System.Drawing.Point(92, 99);
+            this.lblProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProduct.Location = new System.Drawing.Point(92, 73);
             this.lblProduct.Name = "lblProduct";
-            this.lblProduct.Size = new System.Drawing.Size(35, 13);
+            this.lblProduct.Size = new System.Drawing.Size(112, 13);
             this.lblProduct.TabIndex = 11;
-            this.lblProduct.Text = "label3";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 125);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Releaseinfo:";
-            // 
-            // lblRelease
-            // 
-            this.lblRelease.AutoSize = true;
-            this.lblRelease.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "ReleaseInfo", true));
-            this.lblRelease.Location = new System.Drawing.Point(92, 125);
-            this.lblRelease.Name = "lblRelease";
-            this.lblRelease.Size = new System.Drawing.Size(35, 13);
-            this.lblRelease.TabIndex = 14;
-            this.lblRelease.Text = "label6";
+            this.lblProduct.Text = "ebInterface PlugIn";
             // 
             // pictureBox3
             // 
@@ -195,8 +176,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(470, 246);
-            this.Controls.Add(this.lblRelease);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblProduct);
             this.Controls.Add(this.linkLabel2);
@@ -210,7 +189,6 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Name = "FrmAboutView";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Über AUSTRIAPRO ebInterface Word Vorlage";
             ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -235,8 +213,6 @@
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblProduct;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblRelease;
         private System.Windows.Forms.BindingSource aboutViewModelBindingSource;
     }
 }

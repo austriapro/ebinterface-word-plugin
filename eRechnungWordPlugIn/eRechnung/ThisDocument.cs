@@ -118,7 +118,7 @@ namespace eRechnung
             }
             catch (Exception ex)
             {
-                Log.LogWrite(Log.LogPriority.High, ex.ToString());
+                Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, ex.ToString());
                 throw;
             }            // System.Windows.Forms.Application.Idle += OnIdle;
 
@@ -133,7 +133,7 @@ namespace eRechnung
 
         private void ThisDocument_Shutdown(object sender, System.EventArgs e)
         {
-            Log.LogWrite(Log.LogPriority.High, "exiting....");
+            Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, "exiting....");
         }
 
         #region Vom VSTO-Designer generierter Code
@@ -217,11 +217,11 @@ namespace eRechnung
         {
             Tools.Word.Document doc = Globals.Factory.GetVstoObject(ThisApplication.ActiveDocument);
             
-            Log.TraceWrite("Protection:" + doc.ProtectionType.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Protection:" + doc.ProtectionType.ToString());
             foreach (Word.ContentControl cc in doc.ContentControls)
             {
 
-                Log.TraceWrite("ID:{0},type:{4},LockContentControl:{1},LockContents:{2},Text:{3},PlaceHolderText:{5}", 
+                Log.TraceWrite(CallerInfo.Create(),"ID:{0},type:{4},LockContentControl:{1},LockContents:{2},Text:{3},PlaceHolderText:{5}", 
                     cc.ID, cc.LockContentControl, cc.LockContents, cc.Range.Text, cc.Type.ToString(), cc.PlaceholderText.Value);
                 bool lockState = cc.LockContents;
                 cc.LockContents = false;
@@ -243,7 +243,7 @@ namespace eRechnung
 
             foreach (Word.Bookmark bkmk in doc.Bookmarks)
             {
-                Log.TraceWrite(string.Format("Bookmark Name:{0}", bkmk.Name));
+                Log.TraceWrite(CallerInfo.Create(),string.Format("Bookmark Name:{0}", bkmk.Name));
 
                 if (!bkmk.Name.StartsWith("DoNotHide"))
                 {
@@ -340,14 +340,14 @@ namespace eRechnung
 
         private void AddNullableDateBinding(ContentControlBase ctrl, BindingSource bSrc, Type baseObject, string propertyName, params object[] parms)
         {
-            Log.TraceWrite("Adding: " + propertyName);
+            Log.TraceWrite(CallerInfo.Create(),"Adding: " + propertyName);
             AddToContainer(ctrl, baseObject, propertyName);
             var binding = new Binding("Text", bSrc, propertyName, true, DataSourceUpdateMode.OnPropertyChanged, parms);
             binding.Parse += bindingNullableDateParse;
             binding.Format += bindingNullableString;
             ctrl.Exiting += ctrl_Exiting;
             ctrl.DataBindings.Add(binding);
-            Log.TraceWrite("Added: " + propertyName);
+            Log.TraceWrite(CallerInfo.Create(),"Added: " + propertyName);
         }
 
         void bindingNullableString(object sender, ConvertEventArgs e)
@@ -384,7 +384,7 @@ namespace eRechnung
         // Business Start   
         private void AddDecimalBinding(ContentControlBase ctrl, BindingSource bSrc, Type baseObject, string propertyName, params object[] parms)
         {
-            Log.TraceWrite("Adding: " + propertyName);
+            Log.TraceWrite(CallerInfo.Create(),"Adding: " + propertyName);
             AddToContainer(ctrl, baseObject, propertyName);
             var binding = ctrl.DataBindings.Add("Text", bSrc, propertyName, true, DataSourceUpdateMode.OnPropertyChanged,
                  parms);
@@ -393,7 +393,7 @@ namespace eRechnung
                 binding.Format += bindingDecimalFormat2;
                 binding.Parse += bindingDecimalParse;
             }
-            Log.TraceWrite("Added: " + propertyName);
+            Log.TraceWrite(CallerInfo.Create(),"Added: " + propertyName);
         }
 
         private void bindingDecimalParse(object sender, ConvertEventArgs e)
@@ -431,7 +431,7 @@ namespace eRechnung
 
         private void AddBinding(ContentControlBase ctrl, BindingSource bSrc, Type baseObject, string propertyName, params object[] parms)
         {
-            Log.TraceWrite("Adding: " + propertyName);
+            Log.TraceWrite(CallerInfo.Create(),"Adding: " + propertyName);
             AddToContainer(ctrl, baseObject, propertyName);
             var binding = new Binding("Text", bSrc, propertyName, true, DataSourceUpdateMode.OnValidation, // DataSourceUpdateMode.OnPropertyChanged,
                  parms);
@@ -449,12 +449,12 @@ namespace eRechnung
             //}
             
             ctrl.DataBindings.Add(binding);
-            Log.TraceWrite("Added: " + propertyName);
+            Log.TraceWrite(CallerInfo.Create(),"Added: " + propertyName);
         }
 
         void ctrl_Exiting(object sender, ContentControlExitingEventArgs e)
         {
-            Log.TraceWrite("set hidden: ", ((ContentControlBase)sender).ID);
+            Log.TraceWrite(CallerInfo.Create(),"set hidden: ", ((ContentControlBase)sender).ID);
             SetHidden(sender);
         }
 
@@ -528,7 +528,7 @@ namespace eRechnung
             AddBinding(CC_SubOrganisation, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmSubOrganisation");
             AddBinding(CC_AcctArea, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmAcctArea");
             AddNullableDateBinding(CC_LieferDatum, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmLieferDatum", "", "d");
-            AddBinding(CC_InvDueDate, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmInvDueDate", string.Empty, "d");
+            AddNullableDateBinding(CC_InvDueDate, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmInvDueDate", "", "d");
             AddBinding(CC_DocComment, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmComment", "");
             AddBinding(CC_Kopftext, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmKopfText", "");
             AddBinding(CC_Fusstext, invoiceViewModelBindingSource, typeof(InvoiceViewModel), "VmFussText");
@@ -582,7 +582,7 @@ namespace eRechnung
         /// <param name="targetType"></param>
         private void FillDropDownList(DropDownListContentControl ddCtrl, DropDownListViewModels dropdown, string toSelect, string propertyName, Type targetType)
         {
-            Log.TraceWrite("Registering: " + propertyName + string.Format(" adding {0} elements.", dropdown.DropDownList.Count));
+            Log.TraceWrite(CallerInfo.Create(),"Registering: " + propertyName + string.Format(" adding {0} elements.", dropdown.DropDownList.Count));
             RegisterContentControl(ddCtrl, dropdown, propertyName, null, targetType);
             UpdateDropDownList(ddCtrl, dropdown, toSelect);
         }
@@ -633,13 +633,13 @@ namespace eRechnung
         public void UpdateBookmarks(object sender, EventArgs args)
         {
             InvIndustryEventArgs arg = args as InvIndustryEventArgs;
-            Log.TraceWrite("@entry, switch to Industry {0}", arg.Industry);
+            Log.TraceWrite(CallerInfo.Create(),"@entry, switch to Industry {0}", arg.Industry);
             UnprotectPlugIn();
             try
             {
             string formText = InvoiceViewModel.InvoiceVariantList.GetText(arg.Industry.ToString());
-            Log.TraceWrite("Text={0}", formText);
-            Log.TraceWrite("bkmk={0}, id={1}", bkmkFormular.Name,bkmkFormular.ID);
+            Log.TraceWrite(CallerInfo.Create(),"Text={0}", formText);
+            Log.TraceWrite(CallerInfo.Create(),"bkmk={0}, id={1}", bkmkFormular.Name,bkmkFormular.ID);
             bkmkFormular.Text = formText;
             if (arg != null)
                 switch (arg.Industry)
@@ -665,14 +665,14 @@ namespace eRechnung
             }
             catch (Exception ex)
             {
-                Log.LogWrite(Log.LogPriority.High, ex.Message);
-                Log.LogWrite(Log.LogPriority.High, ex.StackTrace);
+                Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, ex.Message);
+                Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, ex.StackTrace);
             } 
             ProtectPlugIn();
         }
         private void setBkmkFontSize(Tools.Word.Bookmark bkmk, float size)
         {
-            Log.TraceWrite("Bookmark={0}, Size={1}", bkmk.Name, size);
+            Log.TraceWrite(CallerInfo.Create(),"Bookmark={0}, Size={1}", bkmk.Name, size);
             bkmk.Font.Size = size;
         }
         [SubscribesTo(UpdatePropertyEventArgs.ShowPanelEvent)]
@@ -711,7 +711,7 @@ namespace eRechnung
             UnprotectPlugIn();
             ContentControlContainer ccEntry = CcContainer[arg.PropertyName];
             PlainTextContentControl plainTextCc = (PlainTextContentControl)ccEntry.CcControl;
-            Log.TraceWrite("Update Protected Property: '{0}', Property:{1}, Value='{2}'", plainTextCc.Title, arg.PropertyName, ((string)arg.Value));
+            Log.TraceWrite(CallerInfo.Create(),"Update Protected Property: '{0}', Property:{1}, Value='{2}'", plainTextCc.Title, arg.PropertyName, ((string)arg.Value));
             plainTextCc.LockContents = false;
             plainTextCc.Text = (string)arg.Value;
             plainTextCc.LockContents = true;
@@ -737,7 +737,7 @@ namespace eRechnung
         public void UpdateDocTable(object sender, EventArgs args)
         {
             UpdatePropertyEventArgs arg = args as UpdatePropertyEventArgs;
-            Log.TraceWrite("entering for {0}", arg.PropertyName);
+            Log.TraceWrite(CallerInfo.Create(),"entering for {0}", arg.PropertyName);
             if (arg != null)
             {
                 UnprotectDocument();
@@ -766,7 +766,7 @@ namespace eRechnung
                 //Application.ScreenUpdating = true;
                 //Application.ScreenRefresh();
                 ProtectPlugIn();
-                Log.TraceWrite("exiting");
+                Log.TraceWrite(CallerInfo.Create(),"exiting");
             }
         }
 
@@ -817,7 +817,7 @@ namespace eRechnung
             // Word.Row cRow = skontoTable.Rows[2];
             for (int i = 0; i < skontoList.Count-1; i++)
             {
-                Log.TraceWrite("Add row# {0}", i + 1);
+                Log.TraceWrite(CallerInfo.Create(),"Add row# {0}", i + 1);
                 skontoTable.Rows.Add();
             }
             int newRows = skontoList.Count - 1;
@@ -844,12 +844,12 @@ namespace eRechnung
                 // cRow = skontoTable.Rows.Add();
             }
             // cRow.Delete();
-            Log.TraceWrite("finished.");
+            Log.TraceWrite(CallerInfo.Create(),"finished.");
         }
 
         private void UpdateDetailsTable(UpdatePropertyEventArgs arg)
         {
-            Log.TraceWrite("entering");
+            Log.TraceWrite(CallerInfo.Create(),"entering");
             // DetailsListViewModel det = (DetailsListViewModel)arg.Value;
             // BindingList<DetailsViewModel> bindDetails = (BindingList<DetailsViewModel>)arg.Value;
             var details = new List<DetailsViewModel>((BindingList<DetailsViewModel>)arg.Value);
@@ -861,25 +861,25 @@ namespace eRechnung
             Word.Table detailsTab = FindTable(DocDetailsId);
             //Word.Row cRow = detailsTab.Rows[iRow];
             Word.Rows rows = detailsTab.Rows;
-            Log.TraceWrite("Anzahl Zeilen vor Update: {0}", rows.Count);
+            Log.TraceWrite(CallerInfo.Create(),"Anzahl Zeilen vor Update: {0}", rows.Count);
             // UnprotectPlugIn();
             detailsTab.Select();
            // var xx = 
             for (int i = 0; i < details.Count - 1; i++)
             {
-                Log.TraceWrite("Add row# {0}", i + 1);
+                Log.TraceWrite(CallerInfo.Create(),"Add row# {0}", i + 1);
 
                 // detailsTab.Rows.Add();
 
                 var xx = rows.Add(rows[2]);
-                Log.TraceWrite("Added {0} cells", xx.Cells.Count);
+                Log.TraceWrite(CallerInfo.Create(),"Added {0} cells", xx.Cells.Count);
 
             }
             int newRows = details.Count - 1;
             // cRow = detailsTab.Rows[iRow];
             foreach (DetailsViewModel detail in details)
             {
-                Log.TraceWrite("Processing row {0}", iRow);
+                Log.TraceWrite(CallerInfo.Create(),"Processing row {0}", iRow);
                 // cRow.Select();
                 // Word.Cells cells = cRow.Cells;
                 string pos = (iRow - 1).ToString();
@@ -897,14 +897,14 @@ namespace eRechnung
                 if (newRows < 0)
                     break;
                 // Hier ist das Problem. Word 2007 
-                //Log.TraceWrite("vor Add");
+                //Log.TraceWrite(CallerInfo.Create(),"vor Add");
                 //cRow = detailsTab.Rows.Add(cRow);
-                //Log.TraceWrite("nach Add");
+                //Log.TraceWrite(CallerInfo.Create(),"nach Add");
                 iRow++;
             }
 
             // cRow.Delete();
-            Log.TraceWrite("finished");
+            Log.TraceWrite(CallerInfo.Create(),"finished");
 
         }
 
@@ -943,22 +943,25 @@ namespace eRechnung
         private void FillCell(Word.Cell cell, string text)
         {
             Word.Cell c = cell;
-            Log.TraceWrite("cell: {0}, text: {1}", c.ColumnIndex, text);
-            
-            c.Range.Text = text.Trim();
+            Log.TraceWrite(CallerInfo.Create(),"cell: {0}, text: {1}", c.ColumnIndex, text);
+            c.Range.Text = "";
+            if (!string.IsNullOrEmpty(text))
+            {
+                c.Range.Text = text.Trim();
+            }
         }
         private Word.Table FindTable(string searchText)
         {
-            Log.TraceWrite("entering for {0}", searchText);
+            Log.TraceWrite(CallerInfo.Create(),"entering for {0}", searchText);
             var requiredTable = Tables.Cast<Word.Table>().FirstOrDefault(t => t.Range.Text.Contains(searchText));
-            Log.TraceWrite(requiredTable.Rows[1].Range.Text);
+            Log.TraceWrite(CallerInfo.Create(),requiredTable.Rows[1].Range.Text);
             return requiredTable;
         }
 
         private void DeleteAllRows(Word.Table tab, int keepRows)
         {
             int tabRows = tab.Rows.Count;
-            Log.TraceWrite("entering, keepRows:{0}, Row Count:{1}", keepRows, tabRows);
+            Log.TraceWrite(CallerInfo.Create(),"entering, keepRows:{0}, Row Count:{1}", keepRows, tabRows);
             int totalRowsToRemove = tabRows - keepRows;
             for (int i = totalRowsToRemove; i > 2; i--)
             {
@@ -969,7 +972,7 @@ namespace eRechnung
             {
                 cell.Range.Text = "";
             }
-            Log.TraceWrite("exiting");
+            Log.TraceWrite(CallerInfo.Create(),"exiting");
         }
         #endregion
 
@@ -1010,15 +1013,15 @@ namespace eRechnung
 
         //private void CC_FormValidationType_Validating(object sender, CancelEventArgs e)
         //{
-        //    Log.LogWrite("entering");
+        //    Log.LogWrite(CallerInfo.Create(),"entering");
         //    e.Cancel = false;
         //}
 
         //private void CC_FormValidationType_Validated(object sender, EventArgs e)
         //{
-        //    Log.LogWrite("entering, old=" + InvoiceViewModel.CurrentSelectedValidation.ToString() + ", new=" + CC_FormValidationType.Text);
+        //    Log.LogWrite(CallerInfo.Create(),"entering, old=" + InvoiceViewModel.CurrentSelectedValidation.ToString() + ", new=" + CC_FormValidationType.Text);
         //    InvoiceViewModel.CurrentSelectedValidation = InvoiceSubtypes.GetVariant(CC_FormValidationType.Text);
-        //    Log.LogWrite("exiting, old=" + InvoiceViewModel.CurrentSelectedValidation.ToString() + ", new=" + CC_FormValidationType.Text);
+        //    Log.LogWrite(CallerInfo.Create(),"exiting, old=" + InvoiceViewModel.CurrentSelectedValidation.ToString() + ", new=" + CC_FormValidationType.Text);
         //}
 
         private void CC_InvoiceDocType_Validating(object sender, CancelEventArgs e)
@@ -1075,7 +1078,7 @@ namespace eRechnung
             object password = System.String.Empty;
             object useIRM = false;
             object enforceStyleLock = false;
-            Log.TraceWrite("Protect: Status={0}", this.ProtectionType.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Protect: Status={0}", this.ProtectionType.ToString());
             if (ProtectionType == Word.WdProtectionType.wdNoProtection)
             {
                 this.Protect(Word.WdProtectionType.wdAllowOnlyFormFields,
@@ -1085,7 +1088,7 @@ namespace eRechnung
 
         private void UnprotectPlugIn()
         {
-            Log.TraceWrite("Unprotect: Status={0}", this.ProtectionType.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Unprotect: Status={0}", this.ProtectionType.ToString());
 
             if (ProtectionType != Word.WdProtectionType.wdNoProtection)
             {
@@ -1097,13 +1100,13 @@ namespace eRechnung
 
         protected override void ProtectDocument()
         {
-            Log.TraceWrite("Protect: Status={0}", this.ProtectionType.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Protect: Status={0}", this.ProtectionType.ToString());
                 ProtectPlugIn();
             }
 
         protected override void UnprotectDocument()
         {
-            Log.TraceWrite("Unprotect: Status={0}", this.ProtectionType.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Unprotect: Status={0}", this.ProtectionType.ToString());
             UnprotectPlugIn();
         }
         public int GetOfficeVersion()
@@ -1272,7 +1275,7 @@ namespace eRechnung
 
         private void ThisDocument_BeforeSave(object sender, SaveEventArgs e)
         {
-            Log.TraceWrite("at Entry");
+            Log.TraceWrite(CallerInfo.Create(),"at Entry");
             // var rc = Dialogs.ShowMessageBox("Die eRechnung ")
             // this.InvoiceViewModel.SaveEbinterfaceCommand.Execute(null);
             // UnprotectDocument();
@@ -1282,7 +1285,7 @@ namespace eRechnung
 
         private void ThisDocument_New()
         {
-            Log.TraceWrite("at Entry");
+            Log.TraceWrite(CallerInfo.Create(),"at Entry");
             //   MessageBox.Show("new");
             CachedString = "";
             // InvoiceViewModel.Clear();
@@ -1290,7 +1293,7 @@ namespace eRechnung
 
         private void ThisDocument_Open()
         {
-            Log.TraceWrite("at Entry");
+            Log.TraceWrite(CallerInfo.Create(),"at Entry");
             //     MessageBox.Show("Old");
             this.Application.ActiveWindow.View.ReadingLayout = false;
             //  CachedString = "Old";

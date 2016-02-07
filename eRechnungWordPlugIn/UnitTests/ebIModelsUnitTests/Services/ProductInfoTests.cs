@@ -13,14 +13,14 @@ namespace ebIModels.Services.Tests
         [TestMethod()]
         public void GetTfsInfoTest()
         {
-            var tfsInfo = ProductInfo.GetTfsInfoString();
-            Assert.IsNotNull(tfsInfo);
+            //var tfsInfo = ProductInfo.GetTfsInfoString();
+            //Assert.IsNotNull(tfsInfo);
         }
         [TestMethod()]
         public void GetProductInfoTest()
         {
-            var prod = ProductInfo.GetProductInfo();
-            Assert.IsNotNull(prod);
+            //var prod = ProductInfo.GetProductInfo();
+            //Assert.IsNotNull(prod);
         }
     }
 }

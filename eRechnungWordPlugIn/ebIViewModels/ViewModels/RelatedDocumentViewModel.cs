@@ -262,7 +262,7 @@ namespace ebIViewModels.ViewModels
             string ruleset = RefTypeSelected.ToString();
             var validator = ValidationFactory.CreateValidator<RelatedDocumentViewModel>(ruleset);
             Results = validator.Validate(this);
-            Log.LogWrite(Log.LogPriority.High, "ValidationResult IsVaild={0}, ErrorCount={1}",Results.IsValid,Results.Count);
+            Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, "ValidationResult IsVaild={0}, ErrorCount={1}",Results.IsValid,Results.Count);
             return Results.IsValid;
         }
 
@@ -271,7 +271,7 @@ namespace ebIViewModels.ViewModels
         public void OnInvoiceValidationOptionChanged(object sender, EventArgs args)
         {
             InvIndustryEventArgs arg = args as InvIndustryEventArgs;
-            Log.TraceWrite("Event: {0}, new Value={1}", InvoiceViewModel.InvoiceValidationOptionChanged,arg.Industry.ToString());
+            Log.TraceWrite(CallerInfo.Create(),"Event: {0}, new Value={1}", InvoiceViewModel.InvoiceValidationOptionChanged,arg.Industry.ToString());
             CurrentSelectedValidation = arg.Industry;
         }
     }

@@ -292,7 +292,7 @@ namespace ebIViewModels.ViewModels
 
         public void Update(InvoiceDatesChangedEventArgs arg)
         {
-            Log.TraceWrite("at Entry");
+            Log.TraceWrite(CallerInfo.Create(),"at Entry");
             int skontoTageSave = _skontoFaelligDate.Days(_invoiceDate); // Alte SKontotage
             InvoiceDate = arg.InvoiceDate;
             SkontoTage = skontoTageSave;

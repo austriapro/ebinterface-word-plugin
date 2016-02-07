@@ -134,7 +134,7 @@ namespace ebIViewModels.ViewModels
                 if (_countTracking == value)
                     return;
                 _countTracking = value;
-                Log.TraceWrite(value);
+                Log.TraceWrite(CallerInfo.Create(),value);
                 OnPropertyChanged();
             }
         }

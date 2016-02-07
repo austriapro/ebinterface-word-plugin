@@ -87,8 +87,8 @@ namespace ebIModels.Schema
         private static string GetTfsString()
         {
             string ret;
-            TfsInfo tfsInfo = ProductInfo.GetTfsInfo();
-            ret = string.Format(" CS{0} ({1}, {2:G})", tfsInfo.ChangeSetId, tfsInfo.CompiledAs, tfsInfo.CompileTime);
+            var vInfo = new ProductInfo();
+            ret = string.Format(" V{0} ({1}, {2:G})", vInfo.VersionInfo.ChangeSetId, vInfo.VersionInfo.BuildName, vInfo.VersionInfo.CompileTime);
             return ret;
         }
 

@@ -22,11 +22,12 @@
     <SolutionID>11fadaeb-6e23-40e8-bb45-a202930c10c1</SolutionID>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <AssemblyVersion>4.2.</AssemblyVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\trash\publish\Codeplex\V4p2\</PublishUrl>
+    <PublishUrl>C:\trash\publish\Codeplex\V4p2p3p0\</PublishUrl>
     <InstallUrl />
     <TargetCulture>de</TargetCulture>
-    <ApplicationVersion>4.2.0.155</ApplicationVersion>
+    <ApplicationVersion>4.2.3.161</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
@@ -38,12 +39,7 @@
     <OfficeApplicationDescription />
   </PropertyGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-	<!--
+    <!--
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -55,6 +51,16 @@
       <Install>false</Install>
     </BootstrapperPackage>
 	-->
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Visual Studio 2010-Tools für Office-Laufzeit %28x86 und x64%29</ProductName>
@@ -214,8 +220,6 @@
     <Compile Include="ThisDocument.cs">
       <DependentUpon>eRechnung.dotx</DependentUpon>
     </Compile>
-    <None Include="Make\MakeCodeplexUpload.bat" />
-    <None Include="Make\MakeInstaller.bat" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ebIViewModels.ErrorView.ErrorActionPaneViewModel.datasource" />
     <None Include="Properties\DataSources\ebIViewModels.ViewModels.InvoiceViewModel.datasource" />
@@ -376,7 +380,7 @@
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="eRechnung.dotx" HostPackage="{18A3A5AC-5778-4778-901C-ADAAC08E910A}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="DOT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE" DebugInfoCommandLine="/w /z&quot;[$OUTPUT]eRechnung.dotx&quot;" />
         <Host Name="Word Document" Path=".\eRechnung.dotx" GeneratedCodeNamespace="eRechnung" PublishedHash="CFECFF3FB805E9A295392C4C85A42160CA201773">
-          <HostItem Name="ThisDocument" Code="ThisDocument.cs" CanonicalName="ThisDocument" PublishedHash="7A8B52F5B12B20F0259861113BEC75694CC2F648" Blueprint="ThisDocument.Designer.xml" GeneratedCode="ThisDocument.Designer.cs" />
+          <HostItem Name="ThisDocument" Code="ThisDocument.cs" CanonicalName="ThisDocument" PublishedHash="45C6FF2C13CAA0165ACDA2BBC1C927CA55C82DCF" Blueprint="ThisDocument.Designer.xml" GeneratedCode="ThisDocument.Designer.cs" />
         </Host>
       </FlavorProperties>
     </VisualStudio>

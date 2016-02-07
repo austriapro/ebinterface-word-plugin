@@ -23,6 +23,7 @@ namespace ebIModels.Mapping
                 invoice.InvoiceDate = source.InvoiceDate;
                 invoice.GeneratingSystem = source.GeneratingSystem;
                 invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
+                invoice.DocumentTitle = source.DocumentTitle;
                 invoice.InvoiceCurrency = source.InvoiceCurrency.ConvertEnum<CurrencyType>();
                 invoice.Language = source.Language.ConvertEnum<LanguageType>();
                 invoice.LanguageSpecified = source.LanguageSpecified;
@@ -31,7 +32,7 @@ namespace ebIModels.Mapping
                 #endregion
 
                 #region Delivery
-                if (source.Delivery.Item is PeriodType)
+                if (source.Delivery.Item is V4P0.PeriodType)
                 {
                     var deliveryType = new PeriodType();
                     deliveryType.FromDate = ((V4P0.PeriodType)source.Delivery.Item).FromDate;
@@ -68,7 +69,8 @@ namespace ebIModels.Mapping
                     if (source.InvoiceRecipient.OrderReference != null)
                     {
                         invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
-                        invoice.InvoiceRecipient.OrderReference.ReferenceDateSpecified = false;
+                        invoice.InvoiceRecipient.OrderReference.ReferenceDateSpecified = source.InvoiceRecipient.OrderReference.ReferenceDateSpecified;
+                        invoice.InvoiceRecipient.OrderReference.ReferenceDate = source.InvoiceRecipient.OrderReference.ReferenceDate;
                     }
                 }
 
@@ -103,6 +105,8 @@ namespace ebIModels.Mapping
                 invoice.Tax = new TaxType();
                 //invoice.Tax.VAT 
                 var vatItemList = new List<VATItemType>();
+                if ((source.Tax != null) && (source.Tax.VAT != null) && (source.Tax.VAT.Items != null))
+                {
                 foreach (var item in source.Tax.VAT.Items)
                 {
                     if (item is V4P0.ItemType)
@@ -135,6 +139,7 @@ namespace ebIModels.Mapping
 
                     }
                 }
+                } 
                 invoice.Tax.VAT = vatItemList;//.ToArray();
 
                 #endregion
@@ -191,6 +196,7 @@ namespace ebIModels.Mapping
                     }
                     invoice.PaymentConditions.Discount = discountList;
                 }
+                #endregion
             }
             catch (Exception ex)
             {
@@ -198,7 +204,7 @@ namespace ebIModels.Mapping
                 var ex1 = new FormatException("Fehler beim Erstellen der Invoice", ex);
                 throw ex1;
             }
-            #endregion
+            
             return invoice;
         }
 
@@ -248,6 +254,10 @@ namespace ebIModels.Mapping
 
                 // Auftragsreferenz
                 if (srcLineItem.InvoiceRecipientsOrderReference != null)
+                {
+                    lineItem.InvoiceRecipientsOrderReference = new OrderReferenceDetailType();
+                    if (srcLineItem.InvoiceRecipientsOrderReference != null)
+                    {
                     lineItem.InvoiceRecipientsOrderReference = new OrderReferenceDetailType()
                     {
                         OrderID = srcLineItem.InvoiceRecipientsOrderReference.OrderID,
@@ -255,8 +265,10 @@ namespace ebIModels.Mapping
                         
                     };
 
-
+                    }
+                }
                 // Rabatte / Zuschläge
+                lineItem.ReductionAndSurchargeListLineItemDetails = new ReductionAndSurchargeListLineItemDetailsType();
                 if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
                 {
                     var redItems = new List<object>();
@@ -313,7 +325,7 @@ namespace ebIModels.Mapping
             return artNrList;
         }
 
-        private static AddressType GetAddress(Schema.ebInterface4p0.AddressType address)
+        private static AddressType GetAddress(V4P0.AddressType address)
         {
 
             AddressType addrNew = new AddressType();
@@ -324,6 +336,7 @@ namespace ebIModels.Mapping
             addrNew.Name = address.Name;
             addrNew.Contact = address.Contact;
             addrNew.Email = address.Email;
+            addrNew.Phone = address.Phone;
             addrNew.Salutation = address.Salutation;
             addrNew.Street = address.Street;
             addrNew.Country = GetCountry(address.Country);

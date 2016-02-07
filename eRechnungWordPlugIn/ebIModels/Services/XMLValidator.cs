@@ -238,7 +238,7 @@ namespace ebIModels.Services
 
                     //if (validationReader.NodeType != XmlNodeType.Whitespace)
                     //{
-                    //    Log.LogWrite("'" + validationReader.Name + "';'" + validationReader.Value + "';" +
+                    //    Log.LogWrite(CallerInfo.Create(),"'" + validationReader.Name + "';'" + validationReader.Value + "';" +
                     //"'" + validationReader.ValueType.ToString() + "'");
 
                     //}

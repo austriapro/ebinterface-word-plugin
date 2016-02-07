@@ -53,14 +53,14 @@ namespace ebIViewModels.ViewModels
         {
             get
             {
-                //Log.LogWrite("Get SkontoList.Any={1}",_skontoList.Any());
+                //Log.LogWrite(CallerInfo.Create(),"Get SkontoList.Any={1}",_skontoList.Any());
                 return _skontoList.Any() || _hasSkontoElements;
             }
             set
             {
                 if (_hasSkontoElements == value)
                     return;
-                Log.TraceWrite("Set HasSkontoElements={0}", _hasSkontoElements);
+                Log.TraceWrite(CallerInfo.Create(),"Set HasSkontoElements={0}", _hasSkontoElements);
                 _hasSkontoElements = value;
                 OnPropertyChanged();
             }
@@ -113,7 +113,7 @@ namespace ebIViewModels.ViewModels
         {
             get
             {
-                Log.TraceWrite("InvoiceDate={0}", _invoiceDate);
+                Log.TraceWrite(CallerInfo.Create(),"InvoiceDate={0}", _invoiceDate);
                 return _invoiceDate;
             }
             set
@@ -139,7 +139,7 @@ namespace ebIViewModels.ViewModels
         {
             get
             {
-                Log.TraceWrite("InvoiceDueDate={0}", _invoiceDueDate);
+                Log.TraceWrite(CallerInfo.Create(),"InvoiceDueDate={0}", _invoiceDueDate);
                 return _invoiceDueDate;
             }
             set
@@ -149,7 +149,7 @@ namespace ebIViewModels.ViewModels
                 _invoiceDueDate = value.Date;
                 OnPropertyChanged();
                 _dueDays = _invoiceDueDate.Days(_invoiceDate);
-                Log.TraceWrite("@Duedate Duedate: {0:d}, Invoicedate:{1:d}, Days:{2}", _invoiceDueDate, _invoiceDate, _dueDays);
+                Log.TraceWrite(CallerInfo.Create(),"@Duedate Duedate: {0:d}, Invoicedate:{1:d}, Days:{2}", _invoiceDueDate, _invoiceDate, _dueDays);
                 OnPropertyChanged("InvoiceDueDays");
             }
         }
@@ -395,7 +395,7 @@ namespace ebIViewModels.ViewModels
 
         private void UpdateSkonto(SkontoViewModel model)
         {
-            Log.TraceWrite("at Entry");
+            Log.TraceWrite(CallerInfo.Create(),"at Entry");
             InvoiceDatesChangedEventArgs args = new InvoiceDatesChangedEventArgs();
             args.InvoiceDate = InvoiceDate;
             args.InvoiceDueDate = InvoiceDueDate;

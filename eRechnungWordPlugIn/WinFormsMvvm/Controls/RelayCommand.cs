@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Input;
+using System.Windows.Forms;
 
 namespace WinFormsMvvm.Controls
 {
@@ -16,7 +17,7 @@ namespace WinFormsMvvm.Controls
 
         internal readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;
-
+        
         #endregion // Fields
 
         #region Constructors
@@ -66,9 +67,17 @@ namespace WinFormsMvvm.Controls
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
-        }
+            try
+            {
+                _execute(parameter);
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                LogService.Log.LogWrite(LogService.CallerInfo.Create(), LogService.Log.LogPriority.High, "{0} {1}",ex.Message, ex.StackTrace);
+            }
+        }
         #endregion // ICommand Members
     }
 }

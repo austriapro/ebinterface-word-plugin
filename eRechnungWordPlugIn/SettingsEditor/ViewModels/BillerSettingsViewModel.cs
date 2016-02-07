@@ -404,7 +404,7 @@ namespace SettingsEditor.ViewModels
         {
             get
             {
-                Log.TraceWrite("get:" + (_currSelected != null ? _currSelected.Code : "null"));
+                Log.TraceWrite(CallerInfo.Create(),"get:" + (_currSelected != null ? _currSelected.Code : "null"));
                     return _currSelected;
             }
             set
@@ -413,7 +413,7 @@ namespace SettingsEditor.ViewModels
                 {
                     if (value != null)
                     {
-                        Log.TraceWrite("new:" + value.Code + ", old:" + _currSelected.Code);
+                        Log.TraceWrite(CallerInfo.Create(),"new:" + value.Code + ", old:" + _currSelected.Code);
                     }
                 }
                 if (_currSelected == value)

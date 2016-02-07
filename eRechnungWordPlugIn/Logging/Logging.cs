@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+
 
 namespace LogService
 {
@@ -61,51 +63,34 @@ namespace LogService
                 }
             }
         }
-        public static void LogWrite(LogPriority level, string format, params object[] parms)
+        public static void LogWrite(CallerInfo cInfo, LogPriority level, string format, params object[] parms)
         {
             if ((int)level < Settings.Default.LogPriority)
                 return;
-            StackTrace stackTrace = new StackTrace();
-            MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-            WriteToLog(level.ToString(), string.Format(format, parms), methodBase, GetCaller(stackTrace));
+            WriteToLog(level.ToString(), string.Format(format, parms), cInfo);
 
         }
         private static Mutex _semaphore = new Mutex();
-        public static void TraceWrite(string format, params object[] parms)
+        public static void TraceWrite(CallerInfo cInfo, string format, params object[] parms)
         {
             if (!_traceEnabled) return;
-            StackTrace stackTrace = new StackTrace();
-            MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-            WriteToLog("Trace", string.Format(format, parms), methodBase, GetCaller(stackTrace));
+            WriteToLog("Trace", string.Format(format, parms),cInfo);
         }
-        public static void TraceWrite(string message)
+        public static void TraceWrite(CallerInfo cInfo, string message)
         {
             if (!_traceEnabled) return;
-            StackTrace stackTrace = new StackTrace();
-            MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-            WriteToLog("Trace", message, methodBase, GetCaller(stackTrace));
+            WriteToLog("Trace", message, cInfo);
         }
-        private static string GetCaller(StackTrace stack)
-        {
-            if (stack.GetFrames().Count() > 2)
-            {
-                MethodBase methodBase = stack.GetFrame(2).GetMethod();
-                string caller = methodBase.DeclaringType.FullName + "." + methodBase.Name;
-                return caller;
-            }
-            return "-unknown-";
-        }
-
-        private static void WriteToLog(string level, string message, MethodBase methodBase, string caller)
+        private static void WriteToLog(string level, string message, CallerInfo cInfo )
             {
                 string msg = "";
-            msg = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss,ff\t") + level + "\t" + methodBase.DeclaringType.FullName + "\t" + methodBase.Name + "\t" + caller + "\t" + message;
+            msg = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss,ff\t") + level + "\t" + cInfo.CallerFilePath+ "\t" +cInfo.CallerMemberName+ "\t" + cInfo.CallerLineNumber + "\t" + message;
             if (_semaphore.WaitOne(100))
             {
                 if (string.IsNullOrEmpty(_logfn))
                 {
                     GetLogFn();
-                    string msg1 = "Timestamp\tType\tDeclaring Type\tMethod\tCaller\tMessage";
+                    string msg1 = "Timestamp\tType\tFile\tMethod\tLine\tMessage";
                     File.AppendAllLines(_logfn, new List<string> { msg1 });
                 }
                 File.AppendAllLines(_logfn, new List<string> { msg });
@@ -114,7 +99,7 @@ namespace LogService
             else
             {
                 // Silently skip
-                Debug.WriteLine("Semaphore ot acquired: '" + msg + "'");
+                Debug.WriteLine("Semaphore not acquired: '" + msg + "'");
             }            
             return;
         }
@@ -140,5 +125,28 @@ namespace LogService
             get { return (LogPriority)Settings.Default.LogPriority; }
         }
 
+    }
+    public class CallerInfo
+    {
+        public string CallerFilePath { get; private set; }
+
+        public string CallerMemberName { get; private set; }
+
+        public int CallerLineNumber { get; private set; }
+
+        private CallerInfo(string callerFilePath, string callerMemberName, int callerLineNumber)
+        {
+            this.CallerFilePath = callerFilePath;
+            this.CallerMemberName = callerMemberName;
+            this.CallerLineNumber = callerLineNumber;
+        }
+
+        public static CallerInfo Create(
+            [CallerFilePath] string callerFilePath = null,
+            [CallerMemberName] string callerMemberName = null,
+            [CallerLineNumber] int callerLineNumber = 0)
+        {
+            return new CallerInfo(Path.GetFileName(callerFilePath), callerMemberName, callerLineNumber);
+        }
     }
 }
