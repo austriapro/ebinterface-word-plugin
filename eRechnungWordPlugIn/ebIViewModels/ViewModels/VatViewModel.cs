@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsMvvm;
+using ExtensionMethods;
 
 namespace ebIViewModels.ViewModels
 {
@@ -24,7 +25,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_vatBaseAmount == value)
                     return;
-                _vatBaseAmount = value;
+                _vatBaseAmount = value.FixedFraction(2);
                 OnPropertyChanged();
                 VatTotalAmount = _vatBaseAmount + VatAmount;
             }
@@ -41,7 +42,7 @@ namespace ebIViewModels.ViewModels
             {
                 if (_vatAmount == value)
                     return;
-                _vatAmount = value;
+                _vatAmount = value.FixedFraction(2);
                 OnPropertyChanged();
                 VatTotalAmount = _vatAmount + VatBaseAmount;
             }

@@ -154,6 +154,7 @@
     <Compile Include="ViewModels\CommonTestSetup.cs" />
     <Compile Include="ViewModels\RelatedDocumentSaveLoadTests.cs" />
     <Compile Include="ViewModels\KontoTests.cs" />
+    <Compile Include="ViewModels\VatViewModelsTests.cs" />
     <Compile Include="ViewModels\ZustellDienstViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>

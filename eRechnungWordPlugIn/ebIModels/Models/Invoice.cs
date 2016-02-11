@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Xml.Serialization;
 using ebIModels.Mapping;
 using ebIModels.Schema;
-using ebIModels.Schema.ebInterface4p0;
+using ExtensionMethods;
 
 namespace ebIModels.Models
 {
@@ -316,13 +316,13 @@ namespace ebIModels.Models
                 {
                     if ((totalGrossAmountField.Equals(value) != true))
                     {
-                        this.totalGrossAmountField = value;
+                        this.totalGrossAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.totalGrossAmountField = value;
+                    this.totalGrossAmountField = value.FixedFraction(2);
 
                 }
             }
@@ -339,13 +339,13 @@ namespace ebIModels.Models
                 {
                     if ((payableAmountField.Equals(value) != true))
                     {
-                        this.payableAmountField = value;
+                        this.payableAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.payableAmountField = value;
+                    this.payableAmountField = value.FixedFraction(2);
 
                 }
             }
@@ -1155,13 +1155,13 @@ namespace ebIModels.Models
                 {
                     if ((baseAmountField.Equals(value) != true))
                     {
-                        this.baseAmountField = value;
+                        this.baseAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.baseAmountField = value;
+                    this.baseAmountField = value.FixedFraction(2);
 
                 }
             }
@@ -1233,13 +1233,13 @@ namespace ebIModels.Models
                 {
                     if ((amountField.Equals(value) != true))
                     {
-                        this.amountField = value;
+                        this.amountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.amountField = value;
+                    this.amountField = value.FixedFraction(2);
 
                 }
             }
@@ -2658,13 +2658,13 @@ namespace ebIModels.Models
                 {
                     if ((amountField.Equals(value) != true))
                     {
-                        this.amountField = value;
+                        this.amountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.amountField = value;
+                    this.amountField = value.FixedFraction(2);
 
                 }
             }
@@ -2688,13 +2688,13 @@ namespace ebIModels.Models
                 {
                     if ((taxedAmountField.Equals(value) != true))
                     {
-                        this.taxedAmountField = value;
+                        this.taxedAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.taxedAmountField = value;
+                    this.taxedAmountField = value.FixedFraction(2);
 
                 }
             }
@@ -2734,13 +2734,13 @@ namespace ebIModels.Models
                 {
                     if ((amountField.Equals(value) != true))
                     {
-                        this.amountField = value;
+                        this.amountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.amountField = value;
+                    this.amountField = value.FixedFraction(2);
 
                 }
             }
@@ -3134,13 +3134,13 @@ namespace ebIModels.Models
                 {
                     if ((baseAmountField.Equals(value) != true))
                     {
-                        this.baseAmountField = value;
+                        this.baseAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.baseAmountField = value;
+                    this.baseAmountField = value.FixedFraction(2);
 
                 }
             }
@@ -3196,13 +3196,13 @@ namespace ebIModels.Models
                 {
                     if ((amountField.Equals(value) != true))
                     {
-                        this.amountField = value;
+                        this.amountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.amountField = value;
+                    this.amountField = value.FixedFraction(2);
 
                 }
             }
@@ -3308,13 +3308,13 @@ namespace ebIModels.Models
                 {
                     if ((baseAmountField.Equals(value) != true))
                     {
-                        this.baseAmountField = value;
+                        this.baseAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.baseAmountField = value;
+                    this.baseAmountField = value.FixedFraction(2);
 
                 }
             }
@@ -3370,13 +3370,13 @@ namespace ebIModels.Models
                 {
                     if ((amountField.Equals(value) != true))
                     {
-                        this.amountField = value;
+                        this.amountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.amountField = value;
+                    this.amountField = value.FixedFraction(2);
 
                 }
             }
@@ -3537,13 +3537,13 @@ namespace ebIModels.Models
                 {
                     if ((lineItemAmountField.Equals(value) != true))
                     {
-                        this.lineItemAmountField = value;
+                        this.lineItemAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.lineItemAmountField = value;
+                    this.lineItemAmountField = value.FixedFraction(2);
 
                 }
             }
@@ -4059,7 +4059,7 @@ namespace ebIModels.Models
                 }
                 else
                 {
-                    this.baseQuantityField = value;
+                    this.baseQuantityField = value.FixedFraction(4);
 
                 }
             }
@@ -4508,13 +4508,13 @@ namespace ebIModels.Models
                 {
                     if ((lineItemAmountField.Equals(value) != true))
                     {
-                        this.lineItemAmountField = value;
+                        this.lineItemAmountField = value.FixedFraction(2);
 
                     }
                 }
                 else
                 {
-                    this.lineItemAmountField = value;
+                    this.lineItemAmountField = value.FixedFraction(2);
 
                 }
             }

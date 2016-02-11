@@ -3,6 +3,8 @@ using ebIModels.Services;
 using WinFormsMvvm;
 using WinFormsMvvm.DialogService;
 using SettingsManager;
+using System;
+
 
 namespace ebIViewModels.RibbonViewModels
 {
@@ -21,11 +23,17 @@ namespace ebIViewModels.RibbonViewModels
                 svnInfo = descriptionAttribute.Description;
 
             }
+ 
             var prod = new ProductInfo().VersionInfo;
             _productInfo = prod.Title + ", Open Source Version";
             _releaseInfo = prod.Version; // ProductInfo.GetTfsInfoString();
             _versionInfo = prod.Version; // GetRunningVersion();
 
+            if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+            {
+                System.Deployment.Application.ApplicationDeployment ad = System.Deployment.Application.ApplicationDeployment.CurrentDeployment;
+                _versionInfo = string.Format($"{ad.CurrentVersion.Major}.{ad.CurrentVersion.Minor}.{ad.CurrentVersion.Revision}.{ad.CurrentVersion.Build}");
+            }
             //svnInfo = ebDoc.ThisDocument.GetAsmTitle();
             //this.lblProduct.Text = svnInfo;
             //svnInfo = ebDoc.ThisDocument.GetSVNInfo();

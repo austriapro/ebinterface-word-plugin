@@ -23,10 +23,17 @@ namespace ExtensionMethods
         {
             return string.Format(FmtPercent2,value/100);
         }
-
+        public static decimal? FixedFraction(this decimal? value, int iFraction)
+        {
+            if (value==null)
+            {
+                return null;
+            }
+            return FixedFraction(value.Value, iFraction);
+        }
         public static decimal FixedFraction(this decimal value, int iFraction)
         {
-            var decFract = Math.Round(value, iFraction);
+            var decFract = Math.Round(value, iFraction,MidpointRounding.AwayFromZero);
             return decFract;
         }
     }
