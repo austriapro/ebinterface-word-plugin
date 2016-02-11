@@ -32,7 +32,7 @@ namespace ebIViewModels.RibbonViewModels
             if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
             {
                 System.Deployment.Application.ApplicationDeployment ad = System.Deployment.Application.ApplicationDeployment.CurrentDeployment;
-                _versionInfo = string.Format($"{ad.CurrentVersion.Major}.{ad.CurrentVersion.Minor}.{ad.CurrentVersion.Revision}.{ad.CurrentVersion.Build}");
+                _versionInfo = string.Format($"{ad.CurrentVersion.Major}.{ad.CurrentVersion.Minor}.{ad.CurrentVersion.Build}.{ad.CurrentVersion.Revision}");
             }
             //svnInfo = ebDoc.ThisDocument.GetAsmTitle();
             //this.lblProduct.Text = svnInfo;
