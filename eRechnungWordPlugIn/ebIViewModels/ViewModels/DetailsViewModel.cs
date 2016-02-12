@@ -140,7 +140,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal EinzelPreis
         {
-            get { return _einzelPreis; }
+            get { return _einzelPreis.FixedFraction(4); }
             set
             {
                 if (_einzelPreis == value)
@@ -278,7 +278,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal NettoBetragZeile
         {
-            get { return _gesamtNetto; }
+            get { return _gesamtNetto.FixedFraction(2); }
             private set
             {
                 if (_gesamtNetto == value)
@@ -294,7 +294,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal MwStBetragZeile
         {
-            get { return _gesamtMwStBetrag; }
+            get { return _gesamtMwStBetrag.FixedFraction(2); }
             private set
             {
                 if (_gesamtMwStBetrag == value)
@@ -310,7 +310,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal BruttoBetragZeile
         {
-            get { return _gesamtBruttoBetrag; }
+            get { return _gesamtBruttoBetrag.FixedFraction(2); }
             private set
             {
                 if (_gesamtBruttoBetrag == value)
@@ -326,7 +326,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal RabattBetragZeile
         {
-            get { return _rabattBetrag; }
+            get { return _rabattBetrag.FixedFraction(2); }
             private set
             {
                 if (_rabattBetrag == value)
@@ -339,7 +339,7 @@ namespace ebIViewModels.ViewModels
         private decimal _nettoBasisBetrag;
         public decimal NettoBasisBetrag
         {
-            get { return _nettoBasisBetrag; }
+            get { return _nettoBasisBetrag.FixedFraction(2); }
             private set
             {
                 if (_nettoBasisBetrag == value)

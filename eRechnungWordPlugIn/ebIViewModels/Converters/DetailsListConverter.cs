@@ -80,7 +80,7 @@ namespace ebIViewModels.ViewModels
                     lineItem.DiscountFlag = true;
                     lineItem.DiscountFlagSpecified = true;
                 }
-                lineItem.LineItemAmount = decimal.Round(details.NettoBetragZeile,2);
+                lineItem.LineItemAmount = details.NettoBetragZeile;
                 itemList.ListLineItem.Add(lineItem);
             }
             List<ItemListType> item = new List<ItemListType>();

@@ -308,7 +308,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.totalGrossAmountField;
+                return this.totalGrossAmountField.FixedFraction(2);
             }
             set
             {
@@ -331,7 +331,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.payableAmountField;
+                return this.payableAmountField.FixedFraction(2);
             }
             set
             {
@@ -1147,7 +1147,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.baseAmountField;
+                return this.baseAmountField.FixedFraction(2);
             }
             set
             {
@@ -1225,7 +1225,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.amountField;
+                return this.amountField.FixedFraction(2);
             }
             set
             {
@@ -2650,7 +2650,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.amountField;
+                return this.amountField.FixedFraction(2);
             }
             set
             {
@@ -2680,7 +2680,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.taxedAmountField;
+                return this.taxedAmountField.FixedFraction(2);
             }
             set
             {
@@ -2726,7 +2726,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.amountField;
+                return this.amountField.FixedFraction(2);
             }
             set
             {
@@ -3126,7 +3126,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.baseAmountField;
+                return this.baseAmountField.FixedFraction(2);
             }
             set
             {
@@ -3188,7 +3188,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.amountField;
+                return this.amountField.FixedFraction(2);
             }
             set
             {
@@ -3300,7 +3300,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.baseAmountField;
+                return this.baseAmountField.FixedFraction(2);
             }
             set
             {
@@ -3362,7 +3362,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.amountField;
+                return this.amountField.FixedFraction(2);
             }
             set
             {
@@ -3529,7 +3529,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.lineItemAmountField;
+                return this.lineItemAmountField.FixedFraction(2);
             }
             set
             {
@@ -4500,7 +4500,7 @@ namespace ebIModels.Models
         {
             get
             {
-                return this.lineItemAmountField;
+                return this.lineItemAmountField.FixedFraction(2);
             }
             set
             {
@@ -4542,7 +4542,18 @@ namespace ebIModels.Models
                 }
             }
         }
-
+        public void RecalcLineItem()
+        {
+            if (UnitPrice.Value== null)
+            {
+                return;
+            }
+            if (Quantity.Value == null)
+            {
+                return;
+            }
+            LineItemAmount = UnitPrice.Value * Quantity.Value;
+        }
     }
     public partial class DeliveryType
     {
@@ -5405,8 +5416,7 @@ namespace ebIModels.Models
 
                 }
             }
-        }
-
+        }        
     }
     public partial class DetailsType
     {
@@ -5461,7 +5471,7 @@ namespace ebIModels.Models
                 else
                 {
                     this.itemListField = value;
-
+                    
                 }
             }
         }
@@ -5508,6 +5518,17 @@ namespace ebIModels.Models
                 {
                     this.belowTheLineItemField = value;
 
+                }
+            }
+        }
+
+        public void RecalcItemList()
+        {
+            foreach (ItemListType item in ItemList)
+            {
+                foreach (ListLineItemType lineItem in item.ListLineItem)
+                {
+                    lineItem.RecalcLineItem();
                 }
             }
         }

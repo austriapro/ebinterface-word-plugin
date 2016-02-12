@@ -29,14 +29,15 @@ namespace ebIViewModels.ViewModels.Tests
             DetailsListConverter det = _common.UContainer.Resolve<DetailsListConverter>();
             var detv = new DetailsViewModel(null, null, false)
             {
-                EinzelPreis = 5,
-                Menge = 7,
+                EinzelPreis = new decimal(60.0125),
+                Menge = new decimal(10),
                 VatSatz = 20
             };
             // detv.UpdateTotals();
             det.DetailsList.Add(detv);
             var det2 = det.DetailsList[0];
-            Assert.AreEqual(det2.NettoBetragZeile, 35);
+            Assert.AreEqual((decimal)600.13,det2.NettoBetragZeile);
+            Assert.AreEqual((decimal)120.03,det2.MwStBetragZeile);
         }
 
         [TestMethod()]

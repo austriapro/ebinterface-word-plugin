@@ -236,6 +236,7 @@ namespace ebIModels.Schema
             Check4ebInterface(xmlClean);
             Models.IInvoiceType inv = LoadXmlVm(xmlClean);
             inv.InvoiceSubtype = InvoiceSubtypes.GetVariantFromGeneratingSystem(inv.GeneratingSystem);
+            inv.Details.RecalcItemList();
             return inv;
         }
 

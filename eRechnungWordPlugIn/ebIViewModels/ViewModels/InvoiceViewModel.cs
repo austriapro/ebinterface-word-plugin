@@ -732,7 +732,7 @@ namespace ebIViewModels.ViewModels
 
         public string VmInvTaxAmount
         {
-            get { return PlugInSettings.Default.VStBerechtigt ? ((_invoice.TaxAmount ?? 0).Decimal2()):"0,00"; }
+            get { return PlugInSettings.Default.VStBerechtigt ? ((_invoice.TaxAmount ?? 0).Decimal2()) : "0,00"; }
         }
 
         public string VmInvTotalAmountText
@@ -788,7 +788,7 @@ namespace ebIViewModels.ViewModels
         {
             get
             {
-                if (VmInvDueDate==DateTime.MinValue)
+                if (VmInvDueDate == DateTime.MinValue)
                 {
                     return null;
                 }
@@ -812,7 +812,7 @@ namespace ebIViewModels.ViewModels
                 {
                     return new DateTime();
                 }
- 
+
                 return _paymentConditions.InvoiceDueDate;
             }
             set
@@ -1020,7 +1020,11 @@ namespace ebIViewModels.ViewModels
 
         public VatViewModels VatView
         {
-            get { return VatViewModels.Load(_invoice.Tax); }
+            get {
+                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
+                _invoice.CalculateTotals();
+                return VatViewModels.Load(_invoice.Tax);
+            }
         }
 
 
@@ -1072,14 +1076,18 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public BindingList<DetailsViewModel> DetailsView
         {
-            get { return DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired).DetailsList; }
+            get
+            {
+                //_invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
+                return DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired).DetailsList;
+            }
             set
             {
                 //if (_detailsView == value)
                 //    return;
                 //_detailsView = value;
                 _invoice.Details.ItemList = DetailsListConverter.ConvertToItemList(value, VmOrderReference);
-                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList,!PlugInSettings.Default.VStBerechtigt,PlugInSettings.Default.VStText);
+                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
                 //OnUpdateDocTable(value);
                 //OnUpdateDocTable(VatView, "VatView");
@@ -1321,7 +1329,7 @@ namespace ebIViewModels.ViewModels
         private void EditDetails()
         {
             SetBestPosRequired(CurrentSelectedValidation);
-            var detailsViewModel = _uc.Resolve<DetailsViewModels>(new ParameterOverrides() { 
+            var detailsViewModel = _uc.Resolve<DetailsViewModels>(new ParameterOverrides() {
             { "bestPosRequired", IsBestPosRequired },
             {"currentRuleSet",CurrentSelectedValidation}
             });
@@ -1452,7 +1460,7 @@ namespace ebIViewModels.ViewModels
             string headLine = "Datenprüfung" + (CurrentSelectedValidation == InvoiceSubtypes.ValidationRuleSet.Government ? " für den Bund" : "");
             foreach (ValidationResult result in results)
             {
-                Log.LogWrite(CallerInfo.Create(),Log.LogPriority.Low, "{0}; {1} ({3}); {2}", headLine,
+                Log.LogWrite(CallerInfo.Create(), Log.LogPriority.Low, "{0}; {1} ({3}); {2}", headLine,
                      string.IsNullOrEmpty(result.Tag) ? tagDefault : result.Tag, result.Message, result.Key);
                 PublishToPanel(headLine, string.IsNullOrEmpty(result.Tag) ? tagDefault : result.Tag, "",
                     result.Message);
@@ -1542,7 +1550,7 @@ namespace ebIViewModels.ViewModels
         public bool NoUpdatePrompt = false;
         internal virtual void LoadTemplateWithProgressBar(string filename)
         {
-            Log.TraceWrite(CallerInfo.Create(),"entering filename={0}", filename ?? "(null)");
+            Log.TraceWrite(CallerInfo.Create(), "entering filename={0}", filename ?? "(null)");
             InvoiceType inv = InvoiceFactory.LoadTemplate(filename) as InvoiceType;
 
             DialogResult rc;
@@ -1668,7 +1676,7 @@ namespace ebIViewModels.ViewModels
 
                 workerReportProgress(worker);
                 _vmDocType = _invoice.DocumentType.ToString();
-                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
+                //_invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
                 _bankTx = GetBankTx();
                 // _paymentConditions = _uc.Resolve<SkontoViewModels>(new ParameterOverride("invoice", _invoice));
@@ -1858,14 +1866,14 @@ namespace ebIViewModels.ViewModels
         }
         internal void UpdateView()
         {
-            Log.TraceWrite(CallerInfo.Create(),"Update View");
+            Log.TraceWrite(CallerInfo.Create(), "Update View");
             UpdateView(true);
         }
 
         internal virtual void UpdateView(bool updateTables)
         {
-            Log.TraceWrite(CallerInfo.Create(),"updateTables={0}", updateTables);
-            _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
+            Log.TraceWrite(CallerInfo.Create(), "updateTables={0}", updateTables);
+            //_invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
             _invoice.CalculateTotals();
             _bankTx = GetBankTx();
             CurrentSelectedValidation = _invoice.InvoiceSubtype.VariantOption;
@@ -1890,7 +1898,7 @@ namespace ebIViewModels.ViewModels
 
         private void workerReportProgress(BackgroundWorker worker)
         {
-            Log.TraceWrite(CallerInfo.Create(),"Update progress");
+            Log.TraceWrite(CallerInfo.Create(), "Update progress");
             if (worker != null) worker.ReportProgress(1);
         }
 
@@ -1899,7 +1907,7 @@ namespace ebIViewModels.ViewModels
             try
             {
                 BackgroundWorker worker = (BackgroundWorker)sender;
-                Log.TraceWrite(CallerInfo.Create(),"entering with worker {0} null", (worker == null ? "==" : "!="));
+                Log.TraceWrite(CallerInfo.Create(), "entering with worker {0} null", (worker == null ? "==" : "!="));
                 bool updateTables = true;
                 if (e != null && e.Argument != null && e.Argument is bool)
                 {
@@ -2001,14 +2009,14 @@ namespace ebIViewModels.ViewModels
         private void OnInvoiceValidationOptionChanged()
         {
             EventHandler handler = InvoiceValidationOptionChangedEvent;
-            Log.TraceWrite(CallerInfo.Create(),"Entering, handler=" + (handler == null ? "not null" : "null"));
+            Log.TraceWrite(CallerInfo.Create(), "Entering, handler=" + (handler == null ? "not null" : "null"));
             if (handler != null)
             {
-                Log.TraceWrite(CallerInfo.Create(),"Firing Event ");
+                Log.TraceWrite(CallerInfo.Create(), "Firing Event ");
                 var args = new InvIndustryEventArgs();
                 args.Industry = CurrentSelectedValidation;
                 handler(this, args);
-                Log.TraceWrite(CallerInfo.Create(),"Event finished");
+                Log.TraceWrite(CallerInfo.Create(), "Event finished");
             }
         }
 

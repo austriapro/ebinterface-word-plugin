@@ -7,9 +7,24 @@ namespace ebIModels.Models
     public partial class InvoiceType
     {
 
-        public decimal? NetAmount { get; set; }
+        // public decimal? NetAmount { get; set; }
+        private decimal? _netAmount;
 
-        public decimal? TaxAmount { get; set; }
+        public decimal? NetAmount
+        {
+            get { return _netAmount.FixedFraction(2); }
+            set { _netAmount = value.FixedFraction(2); }
+        }
+
+
+        //public decimal? TaxAmount { get; set; }
+        private decimal? _taxAmount;
+
+        public decimal? TaxAmount
+        {
+            get { return _taxAmount.FixedFraction(2); }
+            set { _taxAmount = value.FixedFraction(2); }
+        }
 
 
 
@@ -41,9 +56,9 @@ namespace ebIModels.Models
                 }
 
             }
-            TotalGrossAmount = decimal.Round(gesamtBetrag,2);
+            TotalGrossAmount = gesamtBetrag;
             
-            PayableAmount = decimal.Round(gesamtBetrag,2);
+            PayableAmount = gesamtBetrag;
             if (Details.BelowTheLineItem.Count > 0)
             {
                 foreach (BelowTheLineItemType item in Details.BelowTheLineItem)
@@ -51,7 +66,7 @@ namespace ebIModels.Models
                     PayableAmount += item.LineItemAmount;
                 }
             }
-            NetAmount = decimal.Round(nettoBetrag,2);
+            NetAmount = nettoBetrag;
             TaxAmount = amount;
         }
     }
@@ -131,13 +146,13 @@ namespace ebIModels.Models
                             if (taxItems.ContainsKey(taxVal))
                             {
                                 taxItems[taxVal].TaxedAmount += lineItem.LineItemAmount;
-                                taxItems[taxVal].Amount += (lineItem.LineItemAmount * taxValue.Value / 100);
+                                //taxItems[taxVal].Amount += (lineItem.LineItemAmount * taxValue.Value / 100); // Bad Idea produces to differences
                             }
                             else
                             {
                                 taxItems.Add(taxVal, new VATItemType()
                                 {
-                                    Amount = (lineItem.LineItemAmount * taxValue.Value / 100),
+                                    //Amount = (lineItem.LineItemAmount * taxValue.Value / 100),
                                     Item = new VATRateType() { TaxCode = taxValue.TaxCode, Value = taxValue.Value },
                                     TaxedAmount = lineItem.LineItemAmount
                                 });
@@ -167,6 +182,11 @@ namespace ebIModels.Models
             }
             foreach (var taxItem in taxItems)
             {
+                if (taxItem.Value.Item is VATRateType)
+                {
+                    VATRateType vatRate = (VATRateType)taxItem.Value.Item;
+                    taxItem.Value.Amount = taxItem.Value.TaxedAmount * vatRate.Value / 100;
+                }
                 tax.VAT.Add(taxItem.Value);
             }
             return tax;

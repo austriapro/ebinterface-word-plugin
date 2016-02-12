@@ -20,7 +20,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal VatBaseAmount
         {
-            get { return _vatBaseAmount; }
+            get { return _vatBaseAmount.FixedFraction(2); }
             set
             {
                 if (_vatBaseAmount == value)
@@ -37,7 +37,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal VatAmount
         {
-            get { return _vatAmount; }
+            get { return _vatAmount.FixedFraction(2); }
             set
             {
                 if (_vatAmount == value)
@@ -54,7 +54,7 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal VatTotalAmount
         {
-            get { return _vatTotalAmount; }
+            get { return _vatTotalAmount.FixedFraction(2); }
             set
             {
                 if (_vatTotalAmount == value)
