@@ -52,9 +52,7 @@ namespace ebIViewModels.ViewModels.Tests
             _common.Invoice = InvoiceFactory.LoadTemplate(Common.InvTest);
             var det = DetailsListConverter.Load(_common.Invoice.Details.ItemList, _common.UContainer, false);
             Assert.IsNotNull(det);
-            Assert.AreEqual((int)4, det.DetailsList.Count);
-            Assert.AreEqual("DAY", det.DetailsList[0].Einheit);
-            Assert.AreEqual("LS", det.DetailsList[2].Einheit);
+
         }
 
         [TestMethod]

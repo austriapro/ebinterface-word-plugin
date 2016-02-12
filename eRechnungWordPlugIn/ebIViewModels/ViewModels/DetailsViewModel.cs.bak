@@ -155,17 +155,17 @@ namespace ebIViewModels.ViewModels
         /// <summary>
         /// Zeigt eine Steuerbefreiung an.
         /// </summary>
-        //public bool Taxexemption
-        //{
-        //    get { return _taxexemption; }
-        //    set
-        //    {
-        //        if (_taxexemption == value)
-        //            return;
-        //        _taxexemption = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public bool Taxexemption
+        {
+            get { return _taxexemption; }
+            set
+            {
+                if (_taxexemption == value)
+                    return;
+                _taxexemption = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _vatCode;
         /// <summary>

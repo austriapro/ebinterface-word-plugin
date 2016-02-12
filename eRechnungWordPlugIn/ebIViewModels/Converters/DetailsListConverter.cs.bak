@@ -8,7 +8,6 @@ using ebIModels.Models;
 using ExtensionMethods;
 using Microsoft.Practices.Unity;
 using WinFormsMvvm;
-using SettingsManager;
 
 namespace ebIViewModels.ViewModels
 {
@@ -52,20 +51,12 @@ namespace ebIViewModels.ViewModels
                 {
                     Value = details.EinzelPreis
                 };
-                if (PlugInSettings.Default.VStBerechtigt)
+                if (!details.Taxexemption)
                 {
                     VATRateType rate = new VATRateType();
                     rate.Value = details.VatSatz;
                     rate.TaxCode = details.VatCode;
                     lineItem.Item = rate;
-                }
-                else
-                {
-                    TaxExemptionType taxEx = new TaxExemptionType()
-                    {
-                        Value = PlugInSettings.Default.VStText
-                    };
-                    lineItem.Item = taxEx;
                 }
                 lineItem.Quantity = new UnitType()
                 {
@@ -130,14 +121,14 @@ namespace ebIViewModels.ViewModels
                 det.EinzelPreis = listLineItem.UnitPrice.Value ?? 0;
                 // det.GesamtBruttoBetrag = listLineItem.LineItemAmount ?? 0;
                 det.Menge = listLineItem.Quantity.Value ?? 0;
-                if (listLineItem.Item is TaxExemptionType || (!PlugInSettings.Default.VStBerechtigt))
+                if (listLineItem.Item is TaxExemptionType)
                 {
-                    //det.Taxexemption = true;
+                    det.Taxexemption = true;
                     det.VatSatz = 0;
                 }
                 else
                 {
-                    //det.Taxexemption = false;
+                    det.Taxexemption = false;
                     VATRateType rate = (VATRateType)listLineItem.Item;
                     if (rate != null)
                         det.VatSatz = rate.Value ?? 0;

@@ -1251,7 +1251,6 @@ namespace ebIViewModels.ViewModels
 
             }
             // FireProtectedPropertyChanged();
-            DetailsView = DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired).DetailsList;
             _paymentConditions = _uc.Resolve<SkontoViewModels>(new ParameterOverride("invVm", this)); // nötig, damit ein WErt vorhanden ...
             _paymentConditions.LoadFromInvoice(_invoice);
             _process.ProcessFinishedEvent += OnStartProcessDienstProcessFinished;

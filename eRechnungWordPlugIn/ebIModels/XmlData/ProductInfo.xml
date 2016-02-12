@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ProductInfo>
   <Title>ebInterface 4.2 Word PlugIn</Title>
-  <Version>4.2.3.1</Version>
-  <CompileInfo>Debug</CompileInfo>
-  <CompileTime>2016-02-12 14:39:39</CompileTime>
+  <Version>4.2.3.167</Version>
+  <CompileInfo>Release</CompileInfo>
+  <CompileTime>2016-02-12 18:08:28</CompileTime>
   <Branch>master</Branch>
-  <LastCommit>2016-02-12 14:39:38</LastCommit>
-  <ChangeSetId>b5e7169</ChangeSetId>
+  <LastCommit>2016-02-12 18:08:28</LastCommit>
+  <ChangeSetId>97941d7</ChangeSetId>
 </ProductInfo>
