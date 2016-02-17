@@ -2280,6 +2280,7 @@ namespace ebIViewModels.ViewModels
             }
             else
             {
+                string regEx = "^(?=(?:.{8}|.{11})$)[0-9A-Za-z]{8}([0-9A-Za-z]{3})?";
                 var reg = new Regex("[0-9A-Za-z]{8}([0-9A-Za-z]{3})?"); // ([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?) Pattern aus xsd
                 if (!reg.IsMatch(VmKtoBic))
                 {

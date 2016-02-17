@@ -69,6 +69,7 @@ namespace ebIViewModels.ErrorView
                 Severity = (e.Severity+" ").Substring(0,1),
                 FieldName = e.FieldName
             });
+            LogService.Log.LogWrite(LogService.CallerInfo.Create(), LogService.Log.LogPriority.High, $"{e.FieldName}: '{e.Description}'");
         }
 
         [SubscribesTo(ClearPanelEvent)]
