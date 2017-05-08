@@ -1020,7 +1020,8 @@ namespace ebIViewModels.ViewModels
 
         public VatViewModels VatView
         {
-            get {
+            get
+            {
                 _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
                 return VatViewModels.Load(_invoice.Tax);
@@ -1182,7 +1183,7 @@ namespace ebIViewModels.ViewModels
 
         #endregion
         #region Validierung
-        public ValidationResults Results { get; internal set; }
+        public ValidationResults Results { get; set; } = new ValidationResults();
         public List<string> ProcessMessages { get; internal set; }
         #endregion
         #region Private Objekte
@@ -2244,7 +2245,7 @@ namespace ebIViewModels.ViewModels
             #endregion
         }
 
-        private void CheckKontoVerbindung(ValidationResults results)
+        internal void CheckKontoVerbindung(ValidationResults results)
         {
             // mindestens ein Feld ist gefüllt.
             if (string.IsNullOrWhiteSpace(VmKtoBankName))
@@ -2256,11 +2257,7 @@ namespace ebIViewModels.ViewModels
             }
             else
             {
-#if DEBUG
-                const int maxBankName = 25;
-#else
                 const int maxBankName = 255;
-#endif
                 if (VmKtoBankName.Length > maxBankName)
                 {
                     results.AddResult(
@@ -2316,11 +2313,7 @@ namespace ebIViewModels.ViewModels
             else
             {
 
-#if DEBUG
-                const int maxOwnerName = 25;
-#else
                 const int maxOwnerName = 70;
-#endif
                 if (VmKtoOwner.Length > maxOwnerName)
                 {
                     results.AddResult(new ValidationResult(string.Format("KV00011 Kontoverbindung: Kontoinhaber darf max. {0} Zeichen enthalten.", maxOwnerName),
@@ -2329,11 +2322,7 @@ namespace ebIViewModels.ViewModels
             }
             if (!string.IsNullOrWhiteSpace(VmKtoReference))
             {
-#if DEBUG
-                const int maxRefLen = 25;
-#else
                 const int maxRefLen = 70;
-#endif
                 if (VmKtoReference.Length > maxRefLen)
                 {
                     results.AddResult(new ValidationResult(string.Format("KV00012 Kontoverbindung: Referenz darf max. {0} Zeichen enthalten.", maxRefLen),

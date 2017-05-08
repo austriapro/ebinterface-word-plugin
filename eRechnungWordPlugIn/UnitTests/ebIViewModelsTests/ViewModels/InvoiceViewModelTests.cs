@@ -96,17 +96,17 @@ namespace ebIViewModels.ViewModels.Tests
             var FromDateExpected = DateTime.Today.ToString("yyyy-MM-dd");// "2014-03-19";
 
             InvVm.LoadTemplateCommand.Execute(Common.InvTemplate);
-            Assert.IsInstanceOfType(Cmn.Invoice.Delivery.Item, typeof(PeriodType),"Delivery Item not null");
+            Assert.IsInstanceOfType(Cmn.Invoice.Delivery.Item, typeof(PeriodType), "Delivery Item not null");
             Assert.AreEqual(DateTime.Parse(FromDateExpected), InvVm.VmLieferDatum, "Check Fromdate in InvoiceView");
 
             // Lieferdatum
             InvVm.SaveTemplateCommand.Execute(DeliveryDateInvoice);
             XDocument xdoc = XDocument.Load(DeliveryDateInvoice);
-            var delDate = xdoc.XPathSelectElement(DeliveryDateXPath,Nspc);
-            Assert.IsNotNull(delDate,"Deliverydate nach Savetemplate");
-            Assert.AreEqual(FromDateExpected, delDate.Value,"Check Deliverydate");
+            var delDate = xdoc.XPathSelectElement(DeliveryDateXPath, Nspc);
+            Assert.IsNotNull(delDate, "Deliverydate nach Savetemplate");
+            Assert.AreEqual(FromDateExpected, delDate.Value, "Check Deliverydate");
             var fromDate = xdoc.XPathSelectElement(DeliveryFromDateXPath, Nspc);
-            Assert.IsNull(fromDate,"Kein Fromdate im XML");
+            Assert.IsNull(fromDate, "Kein Fromdate im XML");
             var toDate = xdoc.XPathSelectElement(DeliveryToDateXPath, Nspc);
             Assert.IsNull(fromDate, "Kein Todate im XML");
 
@@ -167,13 +167,13 @@ namespace ebIViewModels.ViewModels.Tests
         [TestMethod]
         public void SonderZeichenSaveTest()
         {
-            DetailsViewModel dView = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverrides() { 
+            DetailsViewModel dView = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverrides() {
             { "bestPosRequired", false },
             {"currentRuleSet",InvVm.CurrentSelectedValidation}
             });
             dView.ArtikelNr = "ertertasd&/<>";
             // ertertasd&amp;/&lt;&gt;
-            DetailsViewModels dModels = Cmn.UContainer.Resolve<DetailsViewModels>(new ParameterOverrides() { 
+            DetailsViewModels dModels = Cmn.UContainer.Resolve<DetailsViewModels>(new ParameterOverrides() {
             { "bestPosRequired", false },
             {"currentRuleSet",InvVm.CurrentSelectedValidation}
             });
@@ -341,10 +341,20 @@ namespace ebIViewModels.ViewModels.Tests
             var nspm = new XmlNamespaceManager(new NameTable());
             nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
             var xCode = xdoc.XPathSelectElement(CommentPath, nspm);
-            Assert.AreEqual(Comment, xCode.Value,"Comment has been saved in Template.");
+            Assert.AreEqual(Comment, xCode.Value, "Comment has been saved in Template.");
             InvVm.VmComment = "";
             InvVm.LoadTemplateCommand.Execute(Common.InvTest);
-            Assert.AreEqual(null, InvVm.VmComment,"Comment has been reloaded.");
+            Assert.AreEqual(null, InvVm.VmComment, "Comment has been reloaded.");
+        }
+
+        [TestMethod]
+        public void CheckKontoVerbindungTest()
+        {
+            InvVm.Results = new ValidationResults();
+            PrivateObject privateInv = new PrivateObject(InvVm);
+            privateInv.Invoke("CheckKontoVerbindung", InvVm.Results);
+            Assert.IsTrue(InvVm.Results.IsValid);
         }
     }
+
 }

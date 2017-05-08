@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIViewModels", "ebIViewModels\ebIViewModels.csproj", "{DA41F877-C6C7-48E8-A5B3-7F126C657AF0}"
 EndProject
@@ -26,8 +26,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsManager", "SettingsManager\SettingsManager.csproj", "{814080C9-2377-4766-B516-A4E4D66D34A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsManagerTests", "UnitTests\SettingsManagerTests\SettingsManagerTests.csproj", "{AF7075B3-8A49-46C6-A755-C1EC94AB286D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9C3C5121-DEF2-470E-89A9-54C46CCB69A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebICommonTestSetup", "UnitTests\ebICommonTestSetup\ebICommonTestSetup.csproj", "{49DC7CB2-DFE7-400E-9D94-7F93316A78C2}"
 EndProject
