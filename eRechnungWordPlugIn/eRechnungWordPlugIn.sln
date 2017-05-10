@@ -53,8 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIModelsTests", "ebIModels
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D602502B-6A6C-4823-A399-E82411132766}"
 	ProjectSection(SolutionItems) = preProject
-		Scripte\MakeCodeplexUpload.bat = Scripte\MakeCodeplexUpload.bat
-		Scripte\MakeInstaller.bat = Scripte\MakeInstaller.bat
+		Scripts\MakeCodeplexUpload.bat = Scripts\MakeCodeplexUpload.bat
+		Scripts\MakeInstaller.bat = Scripts\MakeInstaller.bat
 		Scripts\setVersion.ps1 = Scripts\setVersion.ps1
 		Scripts\Version.xml = Scripts\Version.xml
 	EndProjectSection
