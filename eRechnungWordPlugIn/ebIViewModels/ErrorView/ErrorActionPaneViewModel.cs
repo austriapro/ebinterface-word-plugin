@@ -3,6 +3,7 @@ using System.ComponentModel;
 using SimpleEventBroker;
 using WinFormsMvvm;
 using WinFormsMvvm.Controls;
+using ebIModels.Services;
 
 namespace ebIViewModels.ErrorView
 {
@@ -38,6 +39,34 @@ namespace ebIViewModels.ErrorView
             }
         }
 
+        #region IsNewReleaseAvailable - bool
+        private bool _IsNewReleaseAvailable;
+        public bool IsNewReleaseAvailable
+        {
+            get { return _IsNewReleaseAvailable; }
+            set
+            {
+                if (_IsNewReleaseAvailable == value)
+                    return;
+                _IsNewReleaseAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+        #region HtmlUrl - string
+        private Uri _HtmlUrl = new Uri("http://sample.url.com");
+        public Uri HtmlUrl
+        {
+            get { return _HtmlUrl; }
+            set
+            {
+                if (_HtmlUrl == value)
+                    return;
+                _HtmlUrl = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
 
         private RelayCommand _clearCommand;
         public RelayCommand ClearCommand
@@ -54,7 +83,13 @@ namespace ebIViewModels.ErrorView
             Message = "";
             ErrorList.Clear();
         }
-        
+        public ErrorActionPaneViewModel()
+        {
+            var prod = new ProductInfo();
+            _IsNewReleaseAvailable = prod.IsNewReleaseAvailable;
+            _HtmlUrl = new Uri(prod.LatestReleaseHtmlUrl);
+
+        }
         [SubscribesTo(PublishToPanelEvent)]
         public void OnErrorPublish(object sender, EventArgs ea)
         {

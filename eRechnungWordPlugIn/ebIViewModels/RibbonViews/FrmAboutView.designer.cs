@@ -32,7 +32,6 @@
             this.lblHeadline = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
-            this.aboutViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,9 +40,20 @@
             this.lblProduct = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.lblNewVersionAvailable = new System.Windows.Forms.Label();
+            this.lblNewVersion = new System.Windows.Forms.LinkLabel();
+            this.aboutViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.productDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.authorsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LicenseColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // lblHeadline
@@ -59,7 +69,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 149);
+            this.label2.Location = new System.Drawing.Point(12, 341);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(393, 13);
             this.label2.TabIndex = 5;
@@ -70,31 +80,27 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "VersionInfo", true));
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(92, 99);
+            this.lblVersion.Location = new System.Drawing.Point(92, 87);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(45, 13);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "4.2.x.y";
             // 
-            // aboutViewModelBindingSource
-            // 
-            this.aboutViewModelBindingSource.DataSource = typeof(ebIViewModels.RibbonViewModels.AboutViewModel);
-            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(92, 47);
+            this.linkLabel1.Location = new System.Drawing.Point(92, 45);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(198, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(372, 13);
             this.linkLabel1.TabIndex = 7;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "http://ebinterface.codeplex.com/license";
+            this.linkLabel1.Text = "https://github.com/austriapro/ebinterface-word-plugin/blob/master/LICENSE";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 47);
+            this.label3.Location = new System.Drawing.Point(12, 45);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 8;
@@ -103,7 +109,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 73);
+            this.label4.Location = new System.Drawing.Point(12, 66);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 9;
@@ -112,7 +118,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(84, 164);
+            this.linkLabel2.Location = new System.Drawing.Point(411, 341);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(107, 13);
             this.linkLabel2.TabIndex = 10;
@@ -123,7 +129,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 99);
+            this.label5.Location = new System.Drawing.Point(12, 87);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(42, 13);
             this.label5.TabIndex = 12;
@@ -134,16 +140,16 @@
             this.lblProduct.AutoSize = true;
             this.lblProduct.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "ProductInfoText", true));
             this.lblProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProduct.Location = new System.Drawing.Point(92, 73);
+            this.lblProduct.Location = new System.Drawing.Point(92, 66);
             this.lblProduct.Name = "lblProduct";
-            this.lblProduct.Size = new System.Drawing.Size(112, 13);
+            this.lblProduct.Size = new System.Drawing.Size(165, 13);
             this.lblProduct.TabIndex = 11;
-            this.lblProduct.Text = "ebInterface PlugIn";
+            this.lblProduct.Text = "ebInterface PlugIn für Word";
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = global::ebIViewModels.Properties.Resources.ebInterfaceLogo;
-            this.pictureBox2.Location = new System.Drawing.Point(309, 200);
+            this.pictureBox2.Location = new System.Drawing.Point(554, 305);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(149, 33);
             this.pictureBox2.TabIndex = 1;
@@ -153,17 +159,108 @@
             // 
             this.pictureBox1.Image = global::ebIViewModels.Properties.Resources.AustriaProLOGO;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 210);
+            this.pictureBox1.Location = new System.Drawing.Point(8, 315);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(149, 23);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.productDataGridViewTextBoxColumn,
+            this.authorsDataGridViewTextBoxColumn,
+            this.LicenseColumn});
+            this.dataGridView1.DataSource = this.bindingSource1;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 146);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(691, 153);
+            this.dataGridView1.TabIndex = 13;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
+            // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataMember = "NugetPackages";
+            this.bindingSource1.DataSource = this.aboutViewModelBindingSource;
+            // 
+            // lblNewVersionAvailable
+            // 
+            this.lblNewVersionAvailable.AutoSize = true;
+            this.lblNewVersionAvailable.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.aboutViewModelBindingSource, "IsNewReleaseAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblNewVersionAvailable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNewVersionAvailable.ForeColor = System.Drawing.Color.Red;
+            this.lblNewVersionAvailable.Location = new System.Drawing.Point(12, 110);
+            this.lblNewVersionAvailable.Name = "lblNewVersionAvailable";
+            this.lblNewVersionAvailable.Size = new System.Drawing.Size(145, 13);
+            this.lblNewVersionAvailable.TabIndex = 14;
+            this.lblNewVersionAvailable.Text = "Neue Version verfügbar:";
+            // 
+            // lblNewVersion
+            // 
+            this.lblNewVersion.AutoSize = true;
+            this.lblNewVersion.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "HtmlUrl", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblNewVersion.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.aboutViewModelBindingSource, "IsNewReleaseAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.lblNewVersion.Location = new System.Drawing.Point(159, 110);
+            this.lblNewVersion.Name = "lblNewVersion";
+            this.lblNewVersion.Size = new System.Drawing.Size(55, 13);
+            this.lblNewVersion.TabIndex = 15;
+            this.lblNewVersion.TabStop = true;
+            this.lblNewVersion.Text = "linkLabel3";
+            this.lblNewVersion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblNewVersion_LinkClicked);
+            // 
+            // aboutViewModelBindingSource
+            // 
+            this.aboutViewModelBindingSource.DataSource = typeof(ebIViewModels.RibbonViewModels.AboutViewModel);
+            // 
+            // productDataGridViewTextBoxColumn
+            // 
+            this.productDataGridViewTextBoxColumn.DataPropertyName = "Product";
+            this.productDataGridViewTextBoxColumn.HeaderText = "Package";
+            this.productDataGridViewTextBoxColumn.Name = "productDataGridViewTextBoxColumn";
+            this.productDataGridViewTextBoxColumn.ReadOnly = true;
+            this.productDataGridViewTextBoxColumn.Width = 200;
+            // 
+            // authorsDataGridViewTextBoxColumn
+            // 
+            this.authorsDataGridViewTextBoxColumn.DataPropertyName = "Authors";
+            this.authorsDataGridViewTextBoxColumn.HeaderText = "Author(en)";
+            this.authorsDataGridViewTextBoxColumn.Name = "authorsDataGridViewTextBoxColumn";
+            this.authorsDataGridViewTextBoxColumn.ReadOnly = true;
+            this.authorsDataGridViewTextBoxColumn.Width = 200;
+            // 
+            // LicenseColumn
+            // 
+            this.LicenseColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.LicenseColumn.DataPropertyName = "LicenseUrl";
+            this.LicenseColumn.HeaderText = "Lizenz";
+            this.LicenseColumn.Name = "LicenseColumn";
+            this.LicenseColumn.ReadOnly = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 130);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(167, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Verwendete Open Source Pakete";
+            // 
             // FrmAboutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 246);
+            this.ClientSize = new System.Drawing.Size(715, 363);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblNewVersion);
+            this.Controls.Add(this.lblNewVersionAvailable);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblProduct);
             this.Controls.Add(this.linkLabel2);
@@ -177,9 +274,11 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "FrmAboutView";
             this.Text = "Über AUSTRIAPRO ebInterface Word Vorlage";
-            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,5 +298,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblProduct;
         private System.Windows.Forms.BindingSource aboutViewModelBindingSource;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.Label lblNewVersionAvailable;
+        private System.Windows.Forms.LinkLabel lblNewVersion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn authorsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LicenseColumn;
+        private System.Windows.Forms.Label label1;
     }
 }

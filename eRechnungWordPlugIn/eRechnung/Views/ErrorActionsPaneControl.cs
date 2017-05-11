@@ -11,6 +11,7 @@ namespace eRechnung.Views
             InitializeComponent();
             ErrorActionPaneView = errorActionPaneView;
             errorViewModelBindingSource1.DataSource = ErrorActionPaneView;
+            
         }
 
         private void btnClear_Click(object sender, System.EventArgs e)
@@ -18,7 +19,10 @@ namespace eRechnung.Views
             ErrorActionPaneView.ClearCommand.Execute(null);
             
         }
-
+        private void lblNewVersion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(this.lblNewVersion.Text);
+        }
         private void kopierenToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (this.dataGridView1.GetCellCount(DataGridViewElementStates.Selected) > 0)

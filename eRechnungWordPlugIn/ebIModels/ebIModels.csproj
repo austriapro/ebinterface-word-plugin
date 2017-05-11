@@ -71,6 +71,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="McSherry.SemanticVersioning, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\McSherry.SemanticVersioning.1.2.1\lib\net45\McSherry.SemanticVersioning.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
       <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
@@ -179,6 +183,7 @@
     <Compile Include="Schema\ResultMessage.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\NugetPackages.cs" />
     <Compile Include="Services\IResourceService.cs" />
     <Compile Include="Services\ProductInfo.cs" />
     <Compile Include="Services\ResourceService.cs" />

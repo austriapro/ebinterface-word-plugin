@@ -4,12 +4,14 @@ using WinFormsMvvm;
 using WinFormsMvvm.DialogService;
 using SettingsManager;
 using System;
-
+using System.ComponentModel;
 
 namespace ebIViewModels.RibbonViewModels
 {
     public class AboutViewModel : ViewModelBase
     {
+
+
         public AboutViewModel(IDialogService dialog):base(dialog)
         {
             string info = string.Empty;
@@ -23,18 +25,67 @@ namespace ebIViewModels.RibbonViewModels
                 svnInfo = descriptionAttribute.Description;
 
             }
- 
-            var prod = new ProductInfo().VersionInfo;
-            _productInfo = prod.Title + ", Open Source Version";
-            _releaseInfo = prod.Version; // ProductInfo.GetTfsInfoString();
-            _versionInfo = prod.Version; // GetRunningVersion();
+
+            var prod = new ProductInfo(); // .VersionInfo;
+            _productInfo = prod.VersionInfo.Title + ", Open Source Version";
+            _releaseInfo = prod.VersionInfo.Version; // ProductInfo.GetTfsInfoString();
+            _versionInfo = prod.VersionInfo.Version; // GetRunningVersion();
 
             if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
             {
                 System.Deployment.Application.ApplicationDeployment ad = System.Deployment.Application.ApplicationDeployment.CurrentDeployment;
                 _versionInfo = string.Format($"{ad.CurrentVersion.Major}.{ad.CurrentVersion.Minor}.{ad.CurrentVersion.Build}.{ad.CurrentVersion.Revision}");
             }
+
+            _NugetPackages = new BindingList<NugetPackage>(new NugetPackages().Packages);
+            _IsNewReleaseAvailable = prod.IsNewReleaseAvailable;
+            _HtmlUrl = new Uri(prod.LatestReleaseHtmlUrl);
+            
         }
+
+        #region NugetPackages - NugetPackages
+        private BindingList<NugetPackage> _NugetPackages;
+        public BindingList<NugetPackage> NugetPackages
+        {
+            get { return _NugetPackages; }
+            set
+            {
+                if (_NugetPackages == value)
+                    return;
+                _NugetPackages = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+        #region IsNewReleaseAvailable - bool
+        private bool _IsNewReleaseAvailable;
+        public bool IsNewReleaseAvailable
+        {
+            get { return _IsNewReleaseAvailable; }
+            set
+            {
+                if (_IsNewReleaseAvailable == value)
+                    return;
+                _IsNewReleaseAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+        #region HtmlUrl - string
+        private Uri _HtmlUrl = new Uri("http://sample.url.com");
+        public Uri HtmlUrl
+        {
+            get { return _HtmlUrl; }
+            set
+            {
+                if (_HtmlUrl == value)
+                    return;
+                _HtmlUrl = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         private string _versionInfo;
         /// <summary>
         /// Comment

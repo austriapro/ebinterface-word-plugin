@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using ProductVersion;
 using Octokit;
 using System.Linq;
+using McSherry.SemanticVersioning;
 
 namespace ebIModels.Services
 {
@@ -12,8 +13,8 @@ namespace ebIModels.Services
     /// </summary>
     public class ProductInfo
     {
-        private string gitUser = "austriapro";
-        private string gitProject = "ebinterface-word-plugin";
+        private const string gitUser = "austriapro";
+        private const string gitProject = "ebinterface-word-plugin";
         private Release latestRelease;
         private bool _isNewReleaseAvailable = false;
         public bool IsNewReleaseAvailable
@@ -23,6 +24,7 @@ namespace ebIModels.Services
                 return _isNewReleaseAvailable;
             }
         }
+        public string LatestVersion { get { return latestRelease.TagName; } }
         public string LatestReleaseHtmlUrl { get { return latestRelease?.HtmlUrl; }}
         public ProductVersionInfo VersionInfo
         {
@@ -37,14 +39,20 @@ namespace ebIModels.Services
 
         private void getLatestReleaseFromGitHub()
         {
-            var client = new GitHubClient(new ProductHeaderValue("austriapro"));
-            var releases = client.Repository.Release.GetAll("austriapro", "ebinterface-word-plugin");
+            var client = new GitHubClient(new ProductHeaderValue(gitUser));
+            var releases = client.Repository.Release.GetAll(gitUser, gitProject);
             releases.Wait();
             var releaseItems = releases.Result.OrderByDescending(p => p.CreatedAt);
             if (releaseItems.Any())
             {
                 latestRelease = releaseItems.OrderByDescending(p=>p.CreatedAt).First();
-
+                
+                var latestVersion = SemanticVersion.Parse(latestRelease.TagName, ParseMode.AllowPrefix);
+                _isNewReleaseAvailable = false;
+                if (latestVersion > VersionInfo.SemVersion)
+                {
+                    _isNewReleaseAvailable = true;
+                }
             }
 
         }
