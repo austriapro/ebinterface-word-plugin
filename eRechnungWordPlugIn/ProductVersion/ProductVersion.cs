@@ -1,4 +1,5 @@
-﻿using System;
+﻿using McSherry.SemanticVersioning;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace ProductVersion
         public readonly DateTime CompileTime;
         public readonly string Title;
         public readonly string Version;
+        public readonly SemanticVersion SemVersion;
+
         /*
         <ProductInfo>
   <Title>eRechnung - Massenversand ({0})</Title>
@@ -52,7 +55,7 @@ namespace ProductVersion
 
             var xCSVersion = GetElement(xdoc, SVersion);
             Version = xCSVersion.Value;
-
+            SemVersion = SemanticVersion.Parse(Version);
         }
 
         private XElement GetElement(XElement xDoc, string name)
@@ -64,4 +67,5 @@ namespace ProductVersion
             return null;
         }
     }
+  
 }

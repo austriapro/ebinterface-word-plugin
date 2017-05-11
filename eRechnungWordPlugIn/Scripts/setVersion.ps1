@@ -26,6 +26,6 @@ $xml1.ProductInfo.CompileInfo = $cfgName;
 $xml1.ProductInfo.LastCommit = $gitd.tostring("yyyy-MM-dd HH:mm:ss");
 [string]$cmpTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss";
 $xml1.ProductInfo.CompileTime= $cmpTime;
-$xml1.ProductInfo.Version = $xmlVersion.Version.Actual.Release + "." + $xmlVersion.Version.Actual.Major +"." + $xmlVersion.Version.Actual.Minor +"."+ $xmlVersion.Version.Actual.Update;
+$xml1.ProductInfo.Version = $xmlVersion.Version.Actual.Release + "." + $xmlVersion.Version.Actual.Major +"." + $xmlVersion.Version.Actual.Minor +"+"+ $xmlVersion.Version.Actual.Update;
 $xml1.Save($ProductFile);
 # $xml1.Save("C:\Trash\prod.xml");

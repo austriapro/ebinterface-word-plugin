@@ -39,11 +39,9 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label5 = new System.Windows.Forms.Label();
             this.lblProduct = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -142,20 +140,10 @@
             this.lblProduct.TabIndex = 11;
             this.lblProduct.Text = "ebInterface PlugIn";
             // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::ebIViewModels.Properties.Resources.bpc;
-            this.pictureBox3.Location = new System.Drawing.Point(322, 193);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(116, 40);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 3;
-            this.pictureBox3.TabStop = false;
-            // 
             // pictureBox2
             // 
             this.pictureBox2.Image = global::ebIViewModels.Properties.Resources.ebInterfaceLogo;
-            this.pictureBox2.Location = new System.Drawing.Point(167, 200);
+            this.pictureBox2.Location = new System.Drawing.Point(309, 200);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(149, 33);
             this.pictureBox2.TabIndex = 1;
@@ -185,13 +173,11 @@
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblHeadline);
-            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Name = "FrmAboutView";
             this.Text = "Über AUSTRIAPRO ebInterface Word Vorlage";
             ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -203,7 +189,6 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lblHeadline;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblVersion;

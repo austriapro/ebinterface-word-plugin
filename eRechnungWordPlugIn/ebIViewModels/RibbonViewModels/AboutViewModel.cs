@@ -34,13 +34,6 @@ namespace ebIViewModels.RibbonViewModels
                 System.Deployment.Application.ApplicationDeployment ad = System.Deployment.Application.ApplicationDeployment.CurrentDeployment;
                 _versionInfo = string.Format($"{ad.CurrentVersion.Major}.{ad.CurrentVersion.Minor}.{ad.CurrentVersion.Build}.{ad.CurrentVersion.Revision}");
             }
-            //svnInfo = ebDoc.ThisDocument.GetAsmTitle();
-            //this.lblProduct.Text = svnInfo;
-            //svnInfo = ebDoc.ThisDocument.GetSVNInfo();
-            //this.lblVersion.Text = svnInfo;
-            //string TopLine = "AUSTRIAPRO - Word PlugIn für ebInterface " + InvoiceXML.ebInterface_Version.Replace("p", ".").Replace(@"/", "");
-            //lblHeadline.Text = TopLine;
-            //lblRelease.Text = GetRunningVersion();
         }
         private string _versionInfo;
         /// <summary>
