@@ -55,6 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D602
 	ProjectSection(SolutionItems) = preProject
 		Scripts\MakeCodeplexUpload.bat = Scripts\MakeCodeplexUpload.bat
 		Scripts\MakeInstaller.bat = Scripts\MakeInstaller.bat
+		Scripts\ReleaseBuild.ps1 = Scripts\ReleaseBuild.ps1
 		Scripts\setVersion.ps1 = Scripts\setVersion.ps1
 		Scripts\Version.xml = Scripts\Version.xml
 	EndProjectSection
