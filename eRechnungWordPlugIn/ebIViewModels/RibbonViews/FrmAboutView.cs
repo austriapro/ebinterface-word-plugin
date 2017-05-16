@@ -35,10 +35,6 @@ namespace ebIViewModels.RibbonViews
             System.Diagnostics.Process.Start(this.linkLabel1.Text);
         }
 
-        private void lblNewVersion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(this.lblNewVersion.Text);
-        }
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {

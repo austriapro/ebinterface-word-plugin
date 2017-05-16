@@ -35,6 +35,7 @@ namespace ebIModels.Services
         {
             VersionInfo = new ProductVersionInfo(Properties.Resources.ProductInfo);            
             getLatestReleaseFromGitHub();
+
         }
 
         private void getLatestReleaseFromGitHub()
@@ -42,13 +43,16 @@ namespace ebIModels.Services
             var client = new GitHubClient(new ProductHeaderValue(gitUser));
             var releases = client.Repository.Release.GetAll(gitUser, gitProject);
             releases.Wait();
-            var releaseItems = releases.Result.OrderByDescending(p => p.CreatedAt);
+            var releaseItems = releases.Result.Where(x=>x.Prerelease==false).OrderByDescending(p => p.CreatedAt);
             if (releaseItems.Any())
             {
                 latestRelease = releaseItems.OrderByDescending(p=>p.CreatedAt).First();
                 
                 var latestVersion = SemanticVersion.Parse(latestRelease.TagName, ParseMode.AllowPrefix);
                 _isNewReleaseAvailable = false;
+#if DEBUGx
+                _isNewReleaseAvailable = true;
+#endif
                 if (latestVersion > VersionInfo.SemVersion)
                 {
                     _isNewReleaseAvailable = true;

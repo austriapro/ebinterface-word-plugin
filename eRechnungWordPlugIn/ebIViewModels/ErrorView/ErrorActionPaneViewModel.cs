@@ -4,14 +4,20 @@ using SimpleEventBroker;
 using WinFormsMvvm;
 using WinFormsMvvm.Controls;
 using ebIModels.Services;
+using ebIViewModels.RibbonViews;
+using ebIViewModels.RibbonViewModels;
+using Microsoft.Practices.Unity;
+using WinFormsMvvm.DialogService;
 
 namespace ebIViewModels.ErrorView
 {
     public class ErrorActionPaneViewModel : ViewModelBase
     {
         public const string PublishToPanelEvent = "PublishToPanelEvent";
-        public const string ClearPanelEvent = "ClearPanelEvent";        
+        public const string ClearPanelEvent = "ClearPanelEvent";
 
+        private IUnityContainer _uc;
+        
         private BindingList<ErrorViewModel> _errors = new BindingList<ErrorViewModel>();
         public BindingList<ErrorViewModel> ErrorList
         {
@@ -53,20 +59,7 @@ namespace ebIViewModels.ErrorView
             }
         }
         #endregion
-        #region HtmlUrl - string
-        private Uri _HtmlUrl = new Uri("http://sample.url.com");
-        public Uri HtmlUrl
-        {
-            get { return _HtmlUrl; }
-            set
-            {
-                if (_HtmlUrl == value)
-                    return;
-                _HtmlUrl = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
+ 
 
         private RelayCommand _clearCommand;
         public RelayCommand ClearCommand
@@ -78,16 +71,36 @@ namespace ebIViewModels.ErrorView
             }
         }
 
+
+        #region Download
+        private RelayCommand _DownloadCommand;
+        public RelayCommand DownloadCommand
+        {
+            get
+            {
+                _DownloadCommand = _DownloadCommand ?? new RelayCommand(param => DownloadClick());
+                return _DownloadCommand;
+            }
+        }
+
+        private void DownloadClick()
+        {
+            var dwnVm = _uc.Resolve<DownloadViewModel>();
+            _dlg.ShowDialog<FrmUpdateDownload>(dwnVm);
+        }
+
+        #endregion
+
         private void ClearClick()
         {
             Message = "";
             ErrorList.Clear();
         }
-        public ErrorActionPaneViewModel()
+        public ErrorActionPaneViewModel(IUnityContainer uc, IDialogService dlg) : base(dlg)
         {
             var prod = new ProductInfo();
             _IsNewReleaseAvailable = prod.IsNewReleaseAvailable;
-            _HtmlUrl = new Uri(prod.LatestReleaseHtmlUrl);
+            _uc = uc;            
 
         }
         [SubscribesTo(PublishToPanelEvent)]

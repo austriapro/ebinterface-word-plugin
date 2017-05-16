@@ -50,7 +50,7 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-	-->
+  -->
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
@@ -220,6 +220,7 @@
     <Compile Include="ThisDocument.cs">
       <DependentUpon>eRechnung.dotx</DependentUpon>
     </Compile>
+    <None Include="eRechnung_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ebIViewModels.ErrorView.ErrorActionPaneViewModel.datasource" />
     <None Include="Properties\DataSources\ebIViewModels.ViewModels.InvoiceViewModel.datasource" />
@@ -332,19 +333,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>32EAD0FD6154FF8C8D13D8897A7940A11FFEDF38</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestTimestampUrl>http://timestamp.globalsign.com/scripts/timstamp.dll</ManifestTimestampUrl>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEbug32|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\DEbug32\</OutputPath>
-    <DefineConstants>VSTO40;DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -364,14 +355,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEbug32|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\DEbug32\</OutputPath>
-    <DefineConstants>VSTO40;DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+  <PropertyGroup>
+    <ManifestKeyFile>eRechnung_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint Condition="'$(Configuration)'=='Debug'">5F02904310B5B1E9DA5304D776A26D821173903C</ManifestCertificateThumbprint>
+    <ManifestKeyFile Condition="'$(Configuration)'=='Debug'">eRechnung_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestCertificateThumbprint Condition="'$(Configuration)'=='Release'">1212962DF8AB3C25731335F156031755B3E96AFE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />

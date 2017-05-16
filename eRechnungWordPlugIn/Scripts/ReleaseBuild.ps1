@@ -3,7 +3,7 @@ SYNOPSIS
 Powershell Script für Visual Studion 2015 zur Erstellung der Auslieferungsobjekte
 
 AUFRUF
-.\ReleaseBuild.ps1 -Configuration Release -UpdateVersionNumber Y
+.\ReleaseBuild.ps1 -Configuration Debug|Release -UpdateVersionNumber Y|N -Compile Y|N
 
 ----------------------------------------------------------------------------------------------------- #>
 param(
