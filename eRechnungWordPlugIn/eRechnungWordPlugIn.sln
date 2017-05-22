@@ -63,6 +63,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handbuch", "Handbuch", "{29
 		Handbuch\Ausfuellhilfe.docx = Handbuch\Ausfuellhilfe.docx
 		Handbuch\Ausfuellhilfe.pdf = Handbuch\Ausfuellhilfe.pdf
 		Handbuch\Länder_ISO3166.xlsx = Handbuch\Länder_ISO3166.xlsx
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductVersion", "ProductVersion\ProductVersion.csproj", "{72B8A5F0-8E2E-4C47-86B1-948CA6D00014}"
