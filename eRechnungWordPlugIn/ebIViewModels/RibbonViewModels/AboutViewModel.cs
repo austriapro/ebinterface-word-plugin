@@ -5,15 +5,19 @@ using WinFormsMvvm.DialogService;
 using SettingsManager;
 using System;
 using System.ComponentModel;
+using WinFormsMvvm.Controls;
+using Microsoft.Practices.Unity;
+using ebIViewModels.RibbonViews;
 
 namespace ebIViewModels.RibbonViewModels
 {
     public class AboutViewModel : ViewModelBase
     {
 
-
-        public AboutViewModel(IDialogService dialog):base(dialog)
+        private IUnityContainer _uc;
+        public AboutViewModel(IUnityContainer uc, IDialogService dialog):base(dialog)
         {
+            _uc = uc;
             string info = string.Empty;
             Assembly asm = Assembly.GetExecutingAssembly();
             //info = asm.FullName;
@@ -39,8 +43,7 @@ namespace ebIViewModels.RibbonViewModels
 
             _NugetPackages = new BindingList<NugetPackage>(new NugetPackages().Packages);
             _IsNewReleaseAvailable = prod.IsNewReleaseAvailable;
-            _HtmlUrl = new Uri(prod.LatestReleaseHtmlUrl);
-            
+            _NewVersion = $"Neue Version {prod.LatestVersion} verfügbar:";            
         }
 
         #region NugetPackages - NugetPackages
@@ -71,20 +74,38 @@ namespace ebIViewModels.RibbonViewModels
             }
         }
         #endregion
-        #region HtmlUrl - string
-        private Uri _HtmlUrl = new Uri("http://sample.url.com");
-        public Uri HtmlUrl
+
+
+        #region NewVersion - string
+        private string _NewVersion;
+        public string NewVersion
         {
-            get { return _HtmlUrl; }
+            get { return _NewVersion; }
             set
             {
-                if (_HtmlUrl == value)
+                if (_NewVersion == value)
                     return;
-                _HtmlUrl = value;
+                _NewVersion = value;
                 OnPropertyChanged();
             }
         }
         #endregion
+
+        private RelayCommand _DownloadCommand;
+        public RelayCommand DownloadCommand
+        {
+            get
+            {
+                _DownloadCommand = _DownloadCommand ?? new RelayCommand(param => DownloadClick());
+                return _DownloadCommand;
+            }
+        }
+
+        private void DownloadClick()
+        {
+            var dwnVm = _uc.Resolve<DownloadViewModel>();
+            _dlg.ShowDialog<FrmUpdateDownload>(dwnVm);
+        }
 
         private string _versionInfo;
         /// <summary>

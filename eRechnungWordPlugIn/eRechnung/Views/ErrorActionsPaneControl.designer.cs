@@ -43,8 +43,8 @@ namespace eRechnung.Views
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblNewVersion = new System.Windows.Forms.LinkLabel();
             this.lblNewVersionAvailable = new System.Windows.Forms.Label();
+            this.commandButton1 = new WinFormsMvvm.Controls.CommandButton();
             this.errorViewModelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.fieldNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -165,25 +165,13 @@ namespace eRechnung.Views
             // panel1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
-            this.panel1.Controls.Add(this.lblNewVersion);
+            this.panel1.Controls.Add(this.commandButton1);
             this.panel1.Controls.Add(this.lblNewVersionAvailable);
             this.panel1.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.errorViewModelBindingSource1, "IsNewReleaseAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.panel1.Location = new System.Drawing.Point(3, 83);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 35);
             this.panel1.TabIndex = 9;
-            // 
-            // lblNewVersion
-            // 
-            this.lblNewVersion.AutoSize = true;
-            this.lblNewVersion.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.errorViewModelBindingSource1, "HtmlUrl", true));
-            this.lblNewVersion.Location = new System.Drawing.Point(96, 9);
-            this.lblNewVersion.Name = "lblNewVersion";
-            this.lblNewVersion.Size = new System.Drawing.Size(55, 13);
-            this.lblNewVersion.TabIndex = 17;
-            this.lblNewVersion.TabStop = true;
-            this.lblNewVersion.Text = "linkLabel3";
-            this.lblNewVersion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblNewVersion_LinkClicked);
             // 
             // lblNewVersionAvailable
             // 
@@ -192,9 +180,19 @@ namespace eRechnung.Views
             this.lblNewVersionAvailable.ForeColor = System.Drawing.Color.Red;
             this.lblNewVersionAvailable.Location = new System.Drawing.Point(3, 9);
             this.lblNewVersionAvailable.Name = "lblNewVersionAvailable";
-            this.lblNewVersionAvailable.Size = new System.Drawing.Size(87, 13);
+            this.lblNewVersionAvailable.Size = new System.Drawing.Size(189, 13);
             this.lblNewVersionAvailable.TabIndex = 16;
-            this.lblNewVersionAvailable.Text = "Neue Version:";
+            this.lblNewVersionAvailable.Text = "Eine neue Version ist verfügbar:";
+            // 
+            // commandButton1
+            // 
+            this.commandButton1.DataBindings.Add(new System.Windows.Forms.Binding("Command", this.errorViewModelBindingSource1, "DownloadCommand", true));
+            this.commandButton1.Location = new System.Drawing.Point(198, 4);
+            this.commandButton1.Name = "commandButton1";
+            this.commandButton1.Size = new System.Drawing.Size(75, 23);
+            this.commandButton1.TabIndex = 17;
+            this.commandButton1.Text = "Download";
+            this.commandButton1.UseVisualStyleBackColor = true;
             // 
             // errorViewModelBindingSource1
             // 
@@ -255,7 +253,7 @@ namespace eRechnung.Views
         private System.Windows.Forms.DataGridViewTextBoxColumn fieldNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.LinkLabel lblNewVersion;
         private System.Windows.Forms.Label lblNewVersionAvailable;
+        private WinFormsMvvm.Controls.CommandButton commandButton1;
     }
 }

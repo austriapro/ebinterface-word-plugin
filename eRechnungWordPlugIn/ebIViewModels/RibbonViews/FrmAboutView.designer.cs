@@ -42,17 +42,24 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.lblNewVersionAvailable = new System.Windows.Forms.Label();
-            this.lblNewVersion = new System.Windows.Forms.LinkLabel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cmdBtnDownload = new WinFormsMvvm.Controls.CommandButton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.aboutViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.productDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.authorsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LicenseColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,7 +87,7 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "VersionInfo", true));
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(92, 87);
+            this.lblVersion.Location = new System.Drawing.Point(83, 50);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(45, 13);
             this.lblVersion.TabIndex = 6;
@@ -89,7 +96,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(92, 45);
+            this.linkLabel1.Location = new System.Drawing.Point(83, 8);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(372, 13);
             this.linkLabel1.TabIndex = 7;
@@ -100,7 +107,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 45);
+            this.label3.Location = new System.Drawing.Point(3, 8);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 8;
@@ -109,7 +116,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 66);
+            this.label4.Location = new System.Drawing.Point(3, 29);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 9;
@@ -129,7 +136,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 87);
+            this.label5.Location = new System.Drawing.Point(3, 50);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(42, 13);
             this.label5.TabIndex = 12;
@@ -140,7 +147,7 @@
             this.lblProduct.AutoSize = true;
             this.lblProduct.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "ProductInfoText", true));
             this.lblProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProduct.Location = new System.Drawing.Point(92, 66);
+            this.lblProduct.Location = new System.Drawing.Point(83, 29);
             this.lblProduct.Name = "lblProduct";
             this.lblProduct.Size = new System.Drawing.Size(165, 13);
             this.lblProduct.TabIndex = 11;
@@ -190,30 +197,70 @@
             this.bindingSource1.DataMember = "NugetPackages";
             this.bindingSource1.DataSource = this.aboutViewModelBindingSource;
             // 
-            // lblNewVersionAvailable
+            // label1
             // 
-            this.lblNewVersionAvailable.AutoSize = true;
-            this.lblNewVersionAvailable.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.aboutViewModelBindingSource, "IsNewReleaseAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblNewVersionAvailable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNewVersionAvailable.ForeColor = System.Drawing.Color.Red;
-            this.lblNewVersionAvailable.Location = new System.Drawing.Point(12, 110);
-            this.lblNewVersionAvailable.Name = "lblNewVersionAvailable";
-            this.lblNewVersionAvailable.Size = new System.Drawing.Size(145, 13);
-            this.lblNewVersionAvailable.TabIndex = 14;
-            this.lblNewVersionAvailable.Text = "Neue Version verfügbar:";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 130);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(167, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Verwendete Open Source Pakete";
             // 
-            // lblNewVersion
+            // panel1
             // 
-            this.lblNewVersion.AutoSize = true;
-            this.lblNewVersion.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "HtmlUrl", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblNewVersion.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.aboutViewModelBindingSource, "IsNewReleaseAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lblNewVersion.Location = new System.Drawing.Point(159, 110);
-            this.lblNewVersion.Name = "lblNewVersion";
-            this.lblNewVersion.Size = new System.Drawing.Size(55, 13);
-            this.lblNewVersion.TabIndex = 15;
-            this.lblNewVersion.TabStop = true;
-            this.lblNewVersion.Text = "linkLabel3";
-            this.lblNewVersion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblNewVersion_LinkClicked);
+            this.panel1.Controls.Add(this.cmdBtnDownload);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.aboutViewModelBindingSource, "IsNewReleaseAvailable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(244, 72);
+            this.panel1.TabIndex = 17;
+            // 
+            // cmdBtnDownload
+            // 
+            this.cmdBtnDownload.DataBindings.Add(new System.Windows.Forms.Binding("Command", this.aboutViewModelBindingSource, "DownloadCommand", true));
+            this.cmdBtnDownload.Location = new System.Drawing.Point(81, 40);
+            this.cmdBtnDownload.Name = "cmdBtnDownload";
+            this.cmdBtnDownload.Size = new System.Drawing.Size(75, 23);
+            this.cmdBtnDownload.TabIndex = 1;
+            this.cmdBtnDownload.Text = "Download";
+            this.cmdBtnDownload.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.aboutViewModelBindingSource, "NewVersion", true));
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(3, 8);
+            this.label6.Margin = new System.Windows.Forms.Padding(3, 15, 3, 0);
+            this.label6.MaximumSize = new System.Drawing.Size(244, 30);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(199, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Neue Version 4.2.3.123 verfügbar";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Location = new System.Drawing.Point(12, 45);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.label5);
+            this.splitContainer1.Panel1.Controls.Add(this.lblVersion);
+            this.splitContainer1.Panel1.Controls.Add(this.linkLabel1);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
+            this.splitContainer1.Panel1.Controls.Add(this.lblProduct);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.panel1);
+            this.splitContainer1.Size = new System.Drawing.Size(705, 72);
+            this.splitContainer1.SplitterDistance = 457;
+            this.splitContainer1.TabIndex = 18;
             // 
             // aboutViewModelBindingSource
             // 
@@ -243,31 +290,15 @@
             this.LicenseColumn.Name = "LicenseColumn";
             this.LicenseColumn.ReadOnly = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 130);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(167, 13);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "Verwendete Open Source Pakete";
-            // 
             // FrmAboutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(715, 363);
+            this.ClientSize = new System.Drawing.Size(715, 367);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblNewVersion);
-            this.Controls.Add(this.lblNewVersionAvailable);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.lblProduct);
             this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblHeadline);
             this.Controls.Add(this.pictureBox2);
@@ -278,6 +309,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -300,11 +338,13 @@
         private System.Windows.Forms.BindingSource aboutViewModelBindingSource;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.Label lblNewVersionAvailable;
-        private System.Windows.Forms.LinkLabel lblNewVersion;
         private System.Windows.Forms.DataGridViewTextBoxColumn productDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn authorsDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn LicenseColumn;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel1;
+        private WinFormsMvvm.Controls.CommandButton cmdBtnDownload;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
