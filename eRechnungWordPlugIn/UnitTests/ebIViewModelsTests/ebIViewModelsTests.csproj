@@ -158,6 +158,10 @@
     <Compile Include="ViewModels\ZustellDienstViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ebISaveFileDialog\ebISaveFileDialog.csproj">
+      <Project>{CA9BF7EF-850F-467B-96E6-02254BA24F60}</Project>
+      <Name>ebISaveFileDialog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\eRechnung\eRechnung.csproj">
       <Project>{dea4bf2b-be0a-4f5e-a8a5-67c81d7727c7}</Project>
       <Name>eRechnung</Name>

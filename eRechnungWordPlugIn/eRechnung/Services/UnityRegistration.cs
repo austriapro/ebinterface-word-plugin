@@ -24,6 +24,7 @@ using WinFormsMvvm.DialogService;
 using WinFormsMvvm.DialogService.FrameworkDialogs.FolderBrowse;
 using WinFormsMvvm.DialogService.FrameworkDialogs.OpenFile;
 using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
+using ebISaveFileDialog; 
 
 namespace eRechnung
 {
@@ -74,6 +75,7 @@ namespace eRechnung
             uc.RegisterType<IOpenFileDialog, OpenFileDialogViewModel>();
             uc.RegisterType<IFolderBrowserDialog, FolderBrowserDialogViewModel>();
             uc.RegisterType<IDialogService, DialogService>();
+            uc.RegisterType<FrmSelectVersion>();
 
             Invoice = InvoiceFactory.CreateInvoice();
             uc.RegisterInstance<IInvoiceType>(Invoice, new ContainerControlledLifetimeManager());

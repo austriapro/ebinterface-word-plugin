@@ -13,5 +13,6 @@ namespace ebIModels.Schema
         internal InvoiceType.ebIVersion Version;
         // internal string SchemaPath;
         internal Type VersionType;
+        internal bool IsSaveSupported;
     }
 }

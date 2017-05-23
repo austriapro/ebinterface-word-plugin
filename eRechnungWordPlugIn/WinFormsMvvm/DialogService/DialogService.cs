@@ -15,6 +15,7 @@ using OpenFileDialogMvvM = WinFormsMvvm.DialogService.FrameworkDialogs.OpenFile.
 using SaveFileDialogMvvm = WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile.SaveFileDialog;
 using FolderBrowserDialogMvvM = WinFormsMvvm.DialogService.FrameworkDialogs.FolderBrowse.FolderBrowserDialog;
 using LogService;
+using FileDialogExtenders;
 
 namespace WinFormsMvvm.DialogService
 {
@@ -109,6 +110,11 @@ namespace WinFormsMvvm.DialogService
         public DialogResult ShowFolderBrowserDialog(IFolderBrowserDialog folderBrowserDialog)
         {
             return _folderBrowser.ShowDialog(folderBrowserDialog);
+        }
+
+        public DialogResult ShowSaveFileDialog<T>(ISaveFileDialog saveFileDialog, T UserForm) where T : FileDialogControlBase
+        {
+            return _saveFileDialog.ShowDialog<T>(saveFileDialog, UserForm);
         }
 
         #endregion

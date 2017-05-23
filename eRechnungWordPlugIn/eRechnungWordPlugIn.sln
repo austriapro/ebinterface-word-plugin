@@ -68,6 +68,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handbuch", "Handbuch", "{29
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductVersion", "ProductVersion\ProductVersion.csproj", "{72B8A5F0-8E2E-4C47-86B1-948CA6D00014}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDlgExtenders", "FileDlgExtenders\FileDlgExtenders.csproj", "{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebISaveFileDialog", "ebISaveFileDialog\ebISaveFileDialog.csproj", "{CA9BF7EF-850F-467B-96E6-02254BA24F60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -244,6 +248,22 @@ Global
 		{72B8A5F0-8E2E-4C47-86B1-948CA6D00014}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72B8A5F0-8E2E-4C47-86B1-948CA6D00014}.Release|x86.ActiveCfg = Release|Any CPU
 		{72B8A5F0-8E2E-4C47-86B1-948CA6D00014}.Release|x86.Build.0 = Release|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Debug|x86.Build.0 = Debug|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Release|x86.ActiveCfg = Release|Any CPU
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}.Release|x86.Build.0 = Release|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Debug|x86.Build.0 = Debug|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Release|x86.ActiveCfg = Release|Any CPU
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,6 +283,8 @@ Global
 		{7D98E229-22D4-46B2-A09E-30D70426C54E} = {B22F178E-9B52-45F8-A41E-A3D95A9005F9}
 		{29BFC195-34E9-4CA3-ACA3-FD5F90773323} = {F3A7F157-7A2A-4849-8904-1B68884317CC}
 		{72B8A5F0-8E2E-4C47-86B1-948CA6D00014} = {B22F178E-9B52-45F8-A41E-A3D95A9005F9}
+		{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42} = {B22F178E-9B52-45F8-A41E-A3D95A9005F9}
+		{CA9BF7EF-850F-467B-96E6-02254BA24F60} = {B22F178E-9B52-45F8-A41E-A3D95A9005F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.Integration.WinForms.6.0.1304.0\lib\NET45

@@ -121,10 +121,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\ModelToV4P1.cs" />
+    <Compile Include="Mapping\ModelToV4P3.cs" />
     <Compile Include="Mapping\V4P0ToModel.cs" />
     <Compile Include="Mapping\V4P2ToModel.cs" />
     <Compile Include="Mapping\V4P1ToModel.cs" />
     <Compile Include="Mapping\ModelToV4P2.cs" />
+    <Compile Include="Mapping\V4P3ToModel.cs" />
     <Compile Include="Models\CountryCodes.cs" />
     <Compile Include="Models\DocumentTypeModel.cs" />
     <Compile Include="Models\DocumentTypeModels.cs" />
@@ -168,6 +171,11 @@
     </Compile>
     <Compile Include="Schema\ebInterface4p2\InvoiceHelperMethods.cs" />
     <Compile Include="Schema\ebInterface4p2\InvoiceInitializer.cs" />
+    <Compile Include="Schema\ebInterface4p3\invoice.cs">
+      <DependentUpon>Invoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Schema\ebInterface4p3\InvoiceHelperMethods.cs" />
+    <Compile Include="Schema\ebInterface4p3\InvoiceInitializer.cs" />
     <Compile Include="Schema\ebInterfaceResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -239,6 +247,15 @@
     <EmbeddedResource Include="Schema\ebInterface4p2\Invoice.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Schema\ebInterface4p3\ebInterfaceExtension.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schema\ebInterface4p3\ebInterfaceExtension_SV.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schema\ebInterface4p3\Invoice.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Schema\xmldsig-core-schema.xsx">
       <DependentUpon>xmldsig-core-schema.xsd</DependentUpon>
     </None>
@@ -257,6 +274,10 @@
     <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
       <Project>{4fd6055e-92d6-485a-8473-18978eb0669e}</Project>
       <Name>ExtensionMethods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{7D98E229-22D4-46B2-A09E-30D70426C54E}</Project>
+      <Name>Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\ProductVersion\ProductVersion.csproj">
       <Project>{72b8a5f0-8e2e-4c47-86b1-948ca6d00014}</Project>

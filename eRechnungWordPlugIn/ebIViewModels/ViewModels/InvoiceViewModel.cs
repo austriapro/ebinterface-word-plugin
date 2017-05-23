@@ -48,7 +48,9 @@ using InvoiceType = ebIModels.Models.InvoiceType;
 using ValidationResult = Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult;
 using ebIServices;
 using LogService;
-
+using ebISaveFileDialog;
+using FileDialogExtenders;
+using static ebIModels.Schema.InvoiceType;
 
 namespace ebIViewModels.ViewModels
 {
@@ -1273,6 +1275,7 @@ namespace ebIViewModels.ViewModels
                 return null;
             }
             string fn;
+            ebIVersion selectedVersion = InvoiceFactory.LatestVersion;
             if (o is string)
             {
                 fn = (string)o;
@@ -1283,14 +1286,17 @@ namespace ebIViewModels.ViewModels
                 _saveDlg.Filter = "ebInterface XML (*.xml)|*.xml|Alle Dateien (*.*)|*.*";
                 _saveDlg.DefaultExt = "xml";
                 _saveDlg.FileName = MakeFileName("Rechng-", _saveDlg.DefaultExt);
-                DialogResult rc = _dlg.ShowSaveFileDialog(_saveDlg);
+                FrmSelectVersion selectVersion = _uc.Resolve<FrmSelectVersion>();
+                selectVersion.SelectedVersion = selectedVersion;
+                DialogResult rc = _dlg.ShowSaveFileDialog(_saveDlg,selectVersion as FileDialogControlBase);
                 if (rc != DialogResult.OK)
                 {
                     return null;
                 }
                 fn = _saveDlg.FileName;
+                selectedVersion = selectVersion.SelectedVersion;
             }
-            if (!SaveEbinterface(fn))
+            if (!SaveEbinterface(fn, selectedVersion))
             {
                 return null;
             }
@@ -1700,10 +1706,10 @@ namespace ebIViewModels.ViewModels
             _invoice.SaveTemplate(fileName);
         }
 
-        internal bool SaveEbinterface(string filename)
+        internal bool SaveEbinterface(string filename, ebIVersion saveAsVersion)
         {
             ClearPanel();
-            ebInterfaceResult ebIResult = _invoice.Save(filename);
+            ebInterfaceResult ebIResult = _invoice.Save(filename,saveAsVersion);
             if (ebIResult.ResultType == ResultType.IsValid)
             {
                 PublishToPanel(filename + " erfolgreich gespeichert.", "", "", "");

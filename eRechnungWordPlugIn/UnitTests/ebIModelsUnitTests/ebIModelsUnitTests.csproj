@@ -102,6 +102,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -117,6 +118,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="InvoiceFactoryTests.cs" />
+    <Compile Include="Models\InvoiceTypeTests.cs" />
     <Compile Include="Models\Mapping\MappingServiceTests.cs" />
     <Compile Include="Models\CountryCodeModelsTests.cs" />
     <Compile Include="Models\DocumentTypeModelsTests.cs" />

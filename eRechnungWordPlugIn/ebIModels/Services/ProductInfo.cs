@@ -5,6 +5,8 @@ using ProductVersion;
 using Octokit;
 using System.Linq;
 using McSherry.SemanticVersioning;
+using LogService;
+using System;
 
 namespace ebIModels.Services
 {
@@ -24,7 +26,7 @@ namespace ebIModels.Services
                 return _isNewReleaseAvailable;
             }
         }
-        public string LatestVersion { get { return latestRelease.TagName; } }
+        public string LatestVersion { get { return latestRelease?.TagName; } }
         public string LatestReleaseHtmlUrl { get { return latestRelease?.HtmlUrl; }}
         public ProductVersionInfo VersionInfo
         {
@@ -39,10 +41,28 @@ namespace ebIModels.Services
         }
 
         private void getLatestReleaseFromGitHub()
-        {
+        { 
+            const string token = "8b0d40282df36a78db857c3c16cacb3d98468ac2";
+            var oauth = new Credentials(token);
             var client = new GitHubClient(new ProductHeaderValue(gitUser));
+            //client.Credentials = oauth;
+            
+
             var releases = client.Repository.Release.GetAll(gitUser, gitProject);
-            releases.Wait();
+            try
+            {
+                releases.Wait();
+
+            }
+            catch (System.Exception ex)
+            {
+                latestRelease = new Release();
+                _isNewReleaseAvailable = false;
+                DateTime restDateTime = DateTime.Now;
+                
+                Log.LogWrite(LogService.CallerInfo.Create(), Log.LogPriority.High, $"Abfrage für neue Release fehlgeschlagen: {releases.Exception.InnerException.Message}");
+                Log.LogWrite(CallerInfo.Create(), Log.LogPriority.High, $"Github Reset: {restDateTime:G} ");
+            }
             var releaseItems = releases.Result.Where(x=>x.Prerelease==false).OrderByDescending(p => p.CreatedAt);
             if (releaseItems.Any())
             {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ExtensionMethods;
 using ebIModels.Models;
 using V4P2 = ebIModels.Schema.ebInterface4p2;
+using ebIModels.Schema;
 
 namespace ebIModels.Mapping
 {
@@ -19,7 +20,7 @@ namespace ebIModels.Mapping
         /// <returns>InvoiceType Model</returns>
         public static IInvoiceType MapV4P2ToVm(V4P2.InvoiceType source)
         {
-            InvoiceType Invoice = new InvoiceType();
+            IInvoiceType Invoice = InvoiceFactory.CreateInvoice(); 
             #region Rechnungskopf
             Invoice.InvoiceNumber = source.InvoiceNumber;
             Invoice.InvoiceDate = source.InvoiceDate;

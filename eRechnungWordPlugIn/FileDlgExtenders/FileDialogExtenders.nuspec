@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Decebal Mihailescu</authors>
+    <owners>Josef Bogad</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Extended FileDialog details see https:&amp;&amp;www.codeproject.com&amp;Articles&amp;19566&amp;Extend-OpenFileDialog-and-SaveFileDialog-the-easy#heading0004</description>
+    <releaseNotes>Forked</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>OpenFileDialog SaveFileDialog</tags>
+  </metadata>
+</package>

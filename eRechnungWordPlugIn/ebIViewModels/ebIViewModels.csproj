@@ -226,6 +226,10 @@
       <Project>{62a897ba-5a82-429f-b18a-2f77c0c1d9e3}</Project>
       <Name>ebIModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ebISaveFileDialog\ebISaveFileDialog.csproj">
+      <Project>{ca9bf7ef-850f-467b-96e6-02254ba24f60}</Project>
+      <Name>ebISaveFileDialog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ebIServices\ebIServices.csproj">
       <Project>{e38986b2-3b1b-4d39-9266-eae34d8aa7bd}</Project>
       <Name>ebIServices</Name>
@@ -241,6 +245,10 @@
     <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
       <Project>{4fd6055e-92d6-485a-8473-18978eb0669e}</Project>
       <Name>ExtensionMethods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileDlgExtenders\FileDlgExtenders.csproj">
+      <Project>{9B4DA48C-6D11-46C9-A63D-D369E9C5FE42}</Project>
+      <Name>FileDlgExtenders</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{7d98e229-22d4-46b2-a09e-30d70426c54e}</Project>
@@ -299,9 +307,6 @@
     <EmbeddedResource Include="Views\FrmUpdateInvoiceView.resx">
       <DependentUpon>FrmUpdateInvoiceView.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\bpc.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ebInterface-Logo.gif" />

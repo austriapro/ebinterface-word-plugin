@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 using WinFormsMvvm.DialogService.FrameworkDialogs.FolderBrowse;
 using WinFormsMvvm.DialogService.FrameworkDialogs.OpenFile;
 using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
+using FileDialogExtenders;
 
 namespace WinFormsMvvm.DialogService
 {
@@ -70,6 +71,7 @@ namespace WinFormsMvvm.DialogService
 
         DialogResult ShowSaveFileDialog(ISaveFileDialog saveFileDialog);
 
+        DialogResult ShowSaveFileDialog<T>(ISaveFileDialog saveFileDialog, T UserForm) where T : FileDialogControlBase;
         /// <summary>
         /// Shows the FolderBrowserDialog.
         /// </summary>

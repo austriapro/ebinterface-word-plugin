@@ -17,5 +17,6 @@ namespace ebIModels.Services.Tests
             var prodInfo = new ProductInfo();
             Assert.IsNotNull(prodInfo);
         }
+
     }
 }

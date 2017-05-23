@@ -34,6 +34,7 @@ using WinFormsMvvm.DialogService;
 using WinFormsMvvm.DialogService.FrameworkDialogs.FolderBrowse;
 using WinFormsMvvm.DialogService.FrameworkDialogs.OpenFile;
 using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
+using ebISaveFileDialog;
 
 namespace ebIViewModels.ViewModels.Tests
 {

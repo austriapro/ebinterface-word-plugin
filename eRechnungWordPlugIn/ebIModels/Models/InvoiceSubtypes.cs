@@ -24,6 +24,9 @@ namespace ebIModels.Models
         private const string PlugInBund4p2 = "ebInterface Word PlugIn an die öffentl. Verwaltung V4p2";
         private const string PlugInWord4p2 = "ebInterface Word PlugIn an die Wirtschaft V4p2";
 
+        private const string PlugInBund4p3 = "ebInterface Word PlugIn an die öffentl. Verwaltung V4p3";
+        private const string PlugInWord4p3 = "ebInterface Word PlugIn an die Wirtschaft V4p3";
+
 
         public enum ValidationRuleSet
         {
@@ -41,7 +44,7 @@ namespace ebIModels.Models
                FileName = "DocumentTypeStandard.xml",
                DocTypeAlt = PlugInWordOld,
                DocTypeVorlageAlt = VorlageWordOld,
-               DocTypeNew = PlugInWord4p2
+               DocTypeNew = PlugInWord4p3
 
             },
 
@@ -52,7 +55,17 @@ namespace ebIModels.Models
                FileName = "DocumentTypeStandard.xml",
                DocTypeAlt = PlugInWord4p1,
                DocTypeVorlageAlt = VorlageWordOld,
-               DocTypeNew = PlugInWord4p2
+               DocTypeNew = PlugInWord4p3
+
+            },
+                        new InvoiceSubtype()
+            {
+               FriendlyName = "Wirtschaft",
+               VariantOption = InvoiceSubtypes.ValidationRuleSet.Industries,
+               FileName = "DocumentTypeStandard.xml",
+               DocTypeAlt = PlugInWord4p2,
+               DocTypeVorlageAlt = VorlageWordOld,
+               DocTypeNew = PlugInWord4p3
 
             },
 
@@ -63,7 +76,7 @@ namespace ebIModels.Models
                 FileName = "DocumentTypeBund.xml",
                 DocTypeAlt = PlugInBundOld,
                 DocTypeVorlageAlt = VorlageBundOld,
-                DocTypeNew = PlugInBund4p2
+                DocTypeNew = PlugInBund4p3
             },
 
             new InvoiceSubtype()
@@ -73,7 +86,7 @@ namespace ebIModels.Models
                 FileName = "DocumentTypeBund.xml",
                 DocTypeAlt = PlugInBund4p1a,
                 DocTypeVorlageAlt = VorlageBundOld,
-                DocTypeNew = PlugInBund4p2
+                DocTypeNew = PlugInBund4p3
             },
 
                         new InvoiceSubtype()
@@ -83,7 +96,16 @@ namespace ebIModels.Models
                 FileName = "DocumentTypeBund.xml",
                 DocTypeAlt = PlugInBund4p1,
                 DocTypeVorlageAlt = VorlageBundOld,
-                DocTypeNew = PlugInBund4p2
+                DocTypeNew = PlugInBund4p3
+            },
+            new InvoiceSubtype()
+            {
+                FriendlyName = "öffentl. Verwaltung",
+                VariantOption = InvoiceSubtypes.ValidationRuleSet.Government,
+                FileName = "DocumentTypeBund.xml",
+                DocTypeAlt = PlugInBund4p2,
+                DocTypeVorlageAlt = VorlageBundOld,
+                DocTypeNew = PlugInBund4p3
             },
 
             //new InvoiceSubtype()
@@ -92,7 +114,7 @@ namespace ebIModels.Models
             //    VariantOption = ValidationRuleSet.Invalid
             //}
         };
-
+        public static InvoiceType.ebIVersion AktuelleVersion { get; private set; } = Schema.InvoiceType.ebIVersion.V4P3;
         public static List<InvoiceSubtype> GetList()
         {
             return Variants;

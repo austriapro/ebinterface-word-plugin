@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExtensionMethods;
+using System.Linq;
 
 namespace ebIModels.Models
 {
@@ -71,6 +72,37 @@ namespace ebIModels.Models
         }
     }
 
+    public partial class AbstractPartyType 
+    {
+
+        public void SetFurtherIdenfication(FurtherIdentificationType.SupportedIds id, string value)
+        {
+            if (FurtherIdentification == null)
+            {
+                FurtherIdentification = new List<FurtherIdentificationType>();
+            }
+            var fId = FurtherIdentification.FirstOrDefault(p => p.IdentificationType == id.ToString());
+            if (fId != null)
+            {
+                FurtherIdentification.Remove(fId);
+            }
+            FurtherIdentification.Add(new FurtherIdentificationType() { IdentificationType = id.ToString(), Value = value });
+
+        }
+        public string GetFurtherIdentification(FurtherIdentificationType.SupportedIds id)
+        {
+            if (FurtherIdentification == null)
+            {
+                return "";
+            }
+            var fId = FurtherIdentification.FirstOrDefault(p => p.IdentificationType == id.ToString());
+            if (fId == null)
+            {
+                return "";
+            }
+            return fId.Value;
+        }
+    }
     public partial class CountryType
     {
         // private readonly ICountryCodes _countryCodes = new CountryCodesModels();

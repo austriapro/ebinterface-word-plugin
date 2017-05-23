@@ -147,6 +147,10 @@
       <Project>{4fd6055e-92d6-485a-8473-18978eb0669e}</Project>
       <Name>ExtensionMethods</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FileDlgExtenders\FileDlgExtenders.csproj">
+      <Project>{9b4da48c-6d11-46c9-a63d-d369e9c5fe42}</Project>
+      <Name>FileDlgExtenders</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{7d98e229-22d4-46b2-a09e-30d70426c54e}</Project>
       <Name>Logging</Name>

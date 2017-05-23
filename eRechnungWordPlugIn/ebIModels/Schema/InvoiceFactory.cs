@@ -19,43 +19,43 @@ namespace ebIModels.Schema
 
         private static readonly Dictionary<string, ebInterfaceVersion> InvoiceTypes = new Dictionary<string, ebInterfaceVersion>
         {
-                //{"http://www.ebinterface.at/schema/3p02/", 
-                    //new ebInterfaceVersion
-                    //{
-                    //        // SchemaPath = "ebInterfaceApi.Schema.ebInterface3p02.", 
-                    //        Version = Schema.InvoiceType.ebIVersion.V3P02,
-                    //        // Uri = "http://www.ebinterface.at/schema/3p02/",
-                    //        VersionType = typeof(Schema.ebInterface3p02.InvoiceType)                            
-
-                    //    }},
             {"http://www.ebinterface.at/schema/4p0/",
                     new ebInterfaceVersion
                         {
-                            // SchemaPath = "ebInterfaceApi.Schema.ebInterface4p0.", 
                             Version = Schema.InvoiceType.ebIVersion.V4P0, 
-                            // Uri = "http://www.ebinterface.at/schema/4p0/",
-                            VersionType = typeof(Schema.ebInterface4p0.InvoiceType)
+                            VersionType = typeof(Schema.ebInterface4p0.InvoiceType),
+                            IsSaveSupported = false
                         }
             },
             {"http://www.ebinterface.at/schema/4p1/",
                     new ebInterfaceVersion
                         {
-                            // SchemaPath = "ebInterfaceApi.Schema.ebInterface4p1.", 
                             Version = Schema.InvoiceType.ebIVersion.V4P1, 
-                            // Uri = "http://www.ebinterface.at/schema/4p0/",
-                            VersionType = typeof(Schema.ebInterface4p1.InvoiceType)
+                            VersionType = typeof(Schema.ebInterface4p1.InvoiceType),
+                            IsSaveSupported = true
+                        
                         }
             },
                 {"http://www.ebinterface.at/schema/4p2/",
                     new ebInterfaceVersion
                         {
                             Version = Schema.InvoiceType.ebIVersion.V4P2,
-                            VersionType = typeof(Schema.ebInterface4p2.InvoiceType)
-                        }},
+                            VersionType = typeof(Schema.ebInterface4p2.InvoiceType),
+                            IsSaveSupported = true
+                        }
+                },
+                {"http://www.ebinterface.at/schema/4p3/",
+                    new ebInterfaceVersion
+                        {
+                            Version = Schema.InvoiceType.ebIVersion.V4P3,
+                            VersionType = typeof(Schema.ebInterface4p3.InvoiceType),
+                            IsSaveSupported = true
+                        }
+                },
 
             };
 
-
+        public static readonly InvoiceType.ebIVersion LatestVersion = InvoiceType.ebIVersion.V4P3;
         /// <summary>
         /// Erzeugt eine neue ebInterface Instanz der angegebenen Version 
         /// </summary>
@@ -84,6 +84,14 @@ namespace ebIModels.Schema
             }
 
             return invoice;
+        }
+
+        public static List<string> GetVersionsWithSaveSupported()
+        {
+            var list = from x in InvoiceTypes where x.Value.IsSaveSupported == true select x.Value.Version.ToString();
+
+            //   List<string> ebiList = new List<string>() { ebIVersion.V4P2.ToString(), ebIVersion.V4P1.ToString() };
+            return list.ToList(); ;
         }
 
         public const string VatIdDefault = "00000000";
@@ -138,6 +146,10 @@ namespace ebIModels.Schema
                     invModel.Version = InvoiceType.ebIVersion.V4P2;
                     return invModel;
                 // break;
+                case Schema.InvoiceType.ebIVersion.V4P3:
+                    invModel = MappingService4p3ToVm.MapV4P3ToVm(inv as Schema.ebInterface4p3.InvoiceType);
+                    invModel.Version = InvoiceType.ebIVersion.V4P3;
+                    return invModel;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ebIModels.Schema;
+using static ebIModels.Schema.InvoiceType;
 
 namespace ebIModels.Models
 {
@@ -96,5 +97,7 @@ namespace ebIModels.Models
         void SaveTemplate(string filename);
 
         ebInterfaceResult Save(string filename);
+
+        ebInterfaceResult Save(string filename, ebIVersion version);
     }
 }

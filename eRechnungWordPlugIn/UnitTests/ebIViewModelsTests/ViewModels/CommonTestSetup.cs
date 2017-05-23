@@ -28,6 +28,14 @@ namespace ebIViewModelsTests.ViewModels
             InitGlobals();
         }
 
+        public CommonTestSetup(bool DoInit)
+        {
+            if (DoInit)
+            {
+                InitGlobals();
+            }
+        }
+
         [TestInitialize]
         public void InitGlobals()
         {

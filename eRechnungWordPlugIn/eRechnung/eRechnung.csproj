@@ -258,6 +258,10 @@
       <Project>{62A897BA-5A82-429F-B18A-2F77C0C1D9E3}</Project>
       <Name>ebIModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ebISaveFileDialog\ebISaveFileDialog.csproj">
+      <Project>{ca9bf7ef-850f-467b-96e6-02254ba24f60}</Project>
+      <Name>ebISaveFileDialog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ebIServices\ebIServices.csproj">
       <Project>{e38986b2-3b1b-4d39-9266-eae34d8aa7bd}</Project>
       <Name>ebIServices</Name>
@@ -273,6 +277,10 @@
     <ProjectReference Include="..\ExtensionMethods\ExtensionMethods.csproj">
       <Project>{4fd6055e-92d6-485a-8473-18978eb0669e}</Project>
       <Name>ExtensionMethods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileDlgExtenders\FileDlgExtenders.csproj">
+      <Project>{9b4da48c-6d11-46c9-a63d-d369e9c5fe42}</Project>
+      <Name>FileDlgExtenders</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{7d98e229-22d4-46b2-a09e-30d70426c54e}</Project>

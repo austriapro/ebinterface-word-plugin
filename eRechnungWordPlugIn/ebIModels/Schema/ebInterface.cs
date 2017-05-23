@@ -27,7 +27,10 @@ namespace ebIModels.Schema
     {
         public enum ebIVersion
         {
-            V4P0, V4P1, V4P2
+            V4P0,
+            V4P1,
+            V4P2,
+            V4P3 
         }
 
         [XmlIgnore]
@@ -216,6 +219,9 @@ namespace ebIModels.Schema
                     break;
                 case InvoiceType.ebIVersion.V4P2:
                     schemas = ebInterface4p2.InvoiceType._schemaInfo;
+                    break;
+                case InvoiceType.ebIVersion.V4P3:
+                    schemas = ebInterface4p3.InvoiceType._schemaInfo;
                     break;
                 default:
                     throw new NotSupportedException("ebInterface Version nicht unterstützt.");
