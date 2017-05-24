@@ -1117,9 +1117,9 @@ namespace eRechnung
 
             switch (appVersion.Version.ToString())
             {
-                case "12.0":
-                    sVersion = 2007;
-                    break;
+                //case "12.0":
+                //    sVersion = 2007;
+                //    break;
                 case "14.0":
                     sVersion = 2010;
                     break;

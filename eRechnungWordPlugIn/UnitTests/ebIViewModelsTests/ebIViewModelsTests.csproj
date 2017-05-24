@@ -137,7 +137,6 @@
     <Compile Include="ExtensionMethods\StringExtensionsTests.cs" />
     <Compile Include="Mapping\MappingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RibbonViewModels\UidBestaetigungViewModelTests.cs" />
     <Compile Include="SettingsViewModels\BillerSettingsViewModelTests.cs" />
     <Compile Include="ExtensionMethods\DecimalFractionValidatorTests.cs" />
     <Compile Include="Validation\GLNValidatorTests.cs" />
@@ -246,6 +245,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="RibbonViewModels\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <Choose>

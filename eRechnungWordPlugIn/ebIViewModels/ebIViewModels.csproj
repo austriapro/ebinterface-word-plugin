@@ -127,13 +127,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RibbonViewModels\DownloadViewModel.cs" />
-    <Compile Include="RibbonViewModels\UidBestaetigungViewModel.cs" />
-    <Compile Include="RibbonViews\FrmUidBestaetigung.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RibbonViews\FrmUidBestaetigung.Designer.cs">
-      <DependentUpon>FrmUidBestaetigung.cs</DependentUpon>
-    </Compile>
     <Compile Include="RibbonViews\FrmUpdateDownload.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -282,9 +275,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RibbonViews\FrmAboutView.resx">
       <DependentUpon>FrmAboutView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RibbonViews\FrmUidBestaetigung.resx">
-      <DependentUpon>FrmUidBestaetigung.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RibbonViews\FrmUpdateDownload.resx">
       <DependentUpon>FrmUpdateDownload.cs</DependentUpon>

@@ -1226,7 +1226,8 @@ namespace ebIViewModels.ViewModels
             _countryCodeList = _uc.Resolve<DropDownListViewModels>();
             _countryCodeList.GetList(CountryCodes.GetCountryCodeList());
             _currencyList = _uc.Resolve<DropDownListViewModels>();
-            _currencyList.GetList(Enum.GetNames(typeof(CurrencyType)).ToList());
+            //_currencyList.GetList(Enum.GetNames(typeof(CurrencyType)).ToList());
+            _currencyList.GetList(new List<string>() { CurrencyType.EUR.ToString() });
             _invoiceVariantList = _uc.Resolve<DropDownListViewModels>();
             _invoiceVariantList.GetList(InvoiceSubtypes.GetList());
             _invTypes = _uc.Resolve<DropDownListViewModels>();
@@ -1275,7 +1276,11 @@ namespace ebIViewModels.ViewModels
                 return null;
             }
             string fn;
-            ebIVersion selectedVersion = InvoiceFactory.LatestVersion;
+            ebIVersion preSelectedVersion = InvoiceFactory.LatestVersion;
+            if (!Enum.TryParse(PlugInSettings.Default.ebInterfaceVersionString,out preSelectedVersion))
+            {
+               preSelectedVersion = InvoiceFactory.LatestVersion;
+            }
             if (o is string)
             {
                 fn = (string)o;
@@ -1287,16 +1292,17 @@ namespace ebIViewModels.ViewModels
                 _saveDlg.DefaultExt = "xml";
                 _saveDlg.FileName = MakeFileName("Rechng-", _saveDlg.DefaultExt);
                 FrmSelectVersion selectVersion = _uc.Resolve<FrmSelectVersion>();
-                selectVersion.SelectedVersion = selectedVersion;
+                //selectVersion.SelectedVersion = selectedVersion;
+                selectVersion.SetSelectedVersion(preSelectedVersion);
                 DialogResult rc = _dlg.ShowSaveFileDialog(_saveDlg,selectVersion as FileDialogControlBase);
                 if (rc != DialogResult.OK)
                 {
                     return null;
                 }
                 fn = _saveDlg.FileName;
-                selectedVersion = selectVersion.SelectedVersion;
+                preSelectedVersion = selectVersion.SelectedVersion;
             }
-            if (!SaveEbinterface(fn, selectedVersion))
+            if (!SaveEbinterface(fn, preSelectedVersion))
             {
                 return null;
             }

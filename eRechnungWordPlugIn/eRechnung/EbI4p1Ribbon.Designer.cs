@@ -36,38 +36,32 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group7 = this.Factory.CreateRibbonGroup();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.group1 = this.Factory.CreateRibbonGroup();
+            this.rbGrpSignSend = this.Factory.CreateRibbonGroup();
+            this.group6 = this.Factory.CreateRibbonGroup();
+            this.group4 = this.Factory.CreateRibbonGroup();
+            this.group3 = this.Factory.CreateRibbonGroup();
             this.btnNewInvoice = this.Factory.CreateRibbonButton();
             this.BtnSave = this.Factory.CreateRibbonButton();
             this.btnVerify = this.Factory.CreateRibbonButton();
-            this.group2 = this.Factory.CreateRibbonGroup();
             this.BtnDetails = this.Factory.CreateRibbonButton();
             this.BtnSkonto = this.Factory.CreateRibbonButton();
-            this.group1 = this.Factory.CreateRibbonGroup();
             this.BtnLoadTemplate = this.Factory.CreateRibbonButton();
             this.BtnSaveAsTemplate = this.Factory.CreateRibbonButton();
             this.btnChangeFormType = this.Factory.CreateRibbonButton();
-            this.rbGrpSignSend = this.Factory.CreateRibbonGroup();
-            this.btnSignAndMail = this.Factory.CreateRibbonButton();
             this.btnSendByMail = this.Factory.CreateRibbonButton();
             this.btnSendByService = this.Factory.CreateRibbonButton();
-            this.rGrpServices = this.Factory.CreateRibbonGroup();
-            this.btnUIDBestaetigung = this.Factory.CreateRibbonButton();
-            this.btnVerifySignature = this.Factory.CreateRibbonButton();
-            this.group6 = this.Factory.CreateRibbonGroup();
             this.BtnEditSettings = this.Factory.CreateRibbonButton();
             this.gallery1 = this.Factory.CreateRibbonGallery();
             this.gbtnKonto = this.Factory.CreateRibbonButton();
             this.gbtnHandySignatur = this.Factory.CreateRibbonButton();
             this.gbtnMail = this.Factory.CreateRibbonButton();
-            this.gbtnUidAbfrage = this.Factory.CreateRibbonButton();
             this.gbtnSaveLoc = this.Factory.CreateRibbonButton();
             this.gbtnZustellung = this.Factory.CreateRibbonButton();
-            this.group4 = this.Factory.CreateRibbonGroup();
             this.BtnEbInterface = this.Factory.CreateRibbonButton();
             this.BtnAustriaPro = this.Factory.CreateRibbonButton();
-            this.BtnSignatur = this.Factory.CreateRibbonButton();
             this.btnErbGvAt = this.Factory.CreateRibbonButton();
-            this.group3 = this.Factory.CreateRibbonGroup();
             this.BtnHelp = this.Factory.CreateRibbonButton();
             this.btnSupport = this.Factory.CreateRibbonButton();
             this.BtnAbout = this.Factory.CreateRibbonButton();
@@ -76,7 +70,6 @@
             this.group2.SuspendLayout();
             this.group1.SuspendLayout();
             this.rbGrpSignSend.SuspendLayout();
-            this.rGrpServices.SuspendLayout();
             this.group6.SuspendLayout();
             this.group4.SuspendLayout();
             this.group3.SuspendLayout();
@@ -89,11 +82,10 @@
             this.tab1.Groups.Add(this.group2);
             this.tab1.Groups.Add(this.group1);
             this.tab1.Groups.Add(this.rbGrpSignSend);
-            this.tab1.Groups.Add(this.rGrpServices);
             this.tab1.Groups.Add(this.group6);
             this.tab1.Groups.Add(this.group4);
             this.tab1.Groups.Add(this.group3);
-            this.tab1.Label = "AUSTRIAPRO";
+            this.tab1.Label = "eRechnung";
             this.tab1.Name = "tab1";
             // 
             // group7
@@ -103,6 +95,51 @@
             this.group7.Items.Add(this.btnVerify);
             this.group7.Label = "eRechnung ";
             this.group7.Name = "group7";
+            // 
+            // group2
+            // 
+            this.group2.Items.Add(this.BtnDetails);
+            this.group2.Items.Add(this.BtnSkonto);
+            this.group2.Label = "Bearbeiten";
+            this.group2.Name = "group2";
+            // 
+            // group1
+            // 
+            this.group1.Items.Add(this.BtnLoadTemplate);
+            this.group1.Items.Add(this.BtnSaveAsTemplate);
+            this.group1.Items.Add(this.btnChangeFormType);
+            this.group1.Label = "Vorlagen";
+            this.group1.Name = "group1";
+            // 
+            // rbGrpSignSend
+            // 
+            this.rbGrpSignSend.Items.Add(this.btnSendByMail);
+            this.rbGrpSignSend.Items.Add(this.btnSendByService);
+            this.rbGrpSignSend.Label = "Versand";
+            this.rbGrpSignSend.Name = "rbGrpSignSend";
+            // 
+            // group6
+            // 
+            this.group6.Items.Add(this.BtnEditSettings);
+            this.group6.Items.Add(this.gallery1);
+            this.group6.Label = "Einstellungen";
+            this.group6.Name = "group6";
+            // 
+            // group4
+            // 
+            this.group4.Items.Add(this.BtnEbInterface);
+            this.group4.Items.Add(this.BtnAustriaPro);
+            this.group4.Items.Add(this.btnErbGvAt);
+            this.group4.Label = "Informationen";
+            this.group4.Name = "group4";
+            // 
+            // group3
+            // 
+            this.group3.Items.Add(this.BtnHelp);
+            this.group3.Items.Add(this.btnSupport);
+            this.group3.Items.Add(this.BtnAbout);
+            this.group3.Label = "Hilfe & Support";
+            this.group3.Name = "group3";
             // 
             // btnNewInvoice
             // 
@@ -136,13 +173,6 @@
             this.btnVerify.SuperTip = "Die aktuelle eRechnung wird gemäß ebInterface Standard und bei Bedarf gemäß eRech" +
     "nung an die öffentl. Verwaltung  geprüft.";
             // 
-            // group2
-            // 
-            this.group2.Items.Add(this.BtnDetails);
-            this.group2.Items.Add(this.BtnSkonto);
-            this.group2.Label = "Bearbeiten";
-            this.group2.Name = "group2";
-            // 
             // BtnDetails
             // 
             this.BtnDetails.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -162,14 +192,6 @@
             this.BtnSkonto.ScreenTip = "Skonti bearbeiten";
             this.BtnSkonto.ShowImage = true;
             this.BtnSkonto.SuperTip = "Öffnet ein Fenster zur Bearbeitung der Skonto Tabelle";
-            // 
-            // group1
-            // 
-            this.group1.Items.Add(this.BtnLoadTemplate);
-            this.group1.Items.Add(this.BtnSaveAsTemplate);
-            this.group1.Items.Add(this.btnChangeFormType);
-            this.group1.Label = "Vorlagen";
-            this.group1.Name = "group1";
             // 
             // BtnLoadTemplate
             // 
@@ -198,25 +220,6 @@
             this.btnChangeFormType.SuperTip = "Wechseln zwischen den Formularen für öffentl. Verwaltung und Wirtschaft";
             this.btnChangeFormType.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnToggleBund_Click);
             // 
-            // rbGrpSignSend
-            // 
-            this.rbGrpSignSend.Items.Add(this.btnSignAndMail);
-            this.rbGrpSignSend.Items.Add(this.btnSendByMail);
-            this.rbGrpSignSend.Items.Add(this.btnSendByService);
-            this.rbGrpSignSend.Label = "Versand";
-            this.rbGrpSignSend.Name = "rbGrpSignSend";
-            // 
-            // btnSignAndMail
-            // 
-            this.btnSignAndMail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btnSignAndMail.Image = global::eRechnung.Images.SignAndSendByEmail_32x32;
-            this.btnSignAndMail.Label = "Signieren und per e-Mail versenden";
-            this.btnSignAndMail.Name = "btnSignAndMail";
-            this.btnSignAndMail.ScreenTip = "Signieren und versenden";
-            this.btnSignAndMail.ShowImage = true;
-            this.btnSignAndMail.SuperTip = "Überprüft die Rechnung gemäß ebInterface Standard, erstellt die A-Trust Handy Sig" +
-    "natur für diese eRechnung und ermöglicht den Versand per E-Mail";
-            // 
             // btnSendByMail
             // 
             this.btnSendByMail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -239,40 +242,6 @@
             this.btnSendByService.SuperTip = "Überprüft die Rechnung gemäß ebInterface Standard, erstellt ein PDF und ermöglich" +
     "t den Versand per separatem Zustelldienst-Programm";
             // 
-            // rGrpServices
-            // 
-            this.rGrpServices.Items.Add(this.btnUIDBestaetigung);
-            this.rGrpServices.Items.Add(this.btnVerifySignature);
-            this.rGrpServices.Label = "Dienste";
-            this.rGrpServices.Name = "rGrpServices";
-            // 
-            // btnUIDBestaetigung
-            // 
-            this.btnUIDBestaetigung.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btnUIDBestaetigung.Image = global::eRechnung.Images.FinanzOnline2;
-            this.btnUIDBestaetigung.Label = "UID Bestätigung";
-            this.btnUIDBestaetigung.Name = "btnUIDBestaetigung";
-            this.btnUIDBestaetigung.ScreenTip = "UID Bestätigung über FinanzOnline für die UID des Rechnungsempfängers";
-            this.btnUIDBestaetigung.ShowImage = true;
-            this.btnUIDBestaetigung.SuperTip = "Sendet die UID des Rechnungsempfängers zur Überprüfung zum FinanzOnline des BMF";
-            // 
-            // btnVerifySignature
-            // 
-            this.btnVerifySignature.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btnVerifySignature.Image = global::eRechnung.Images.PageVerifySignature;
-            this.btnVerifySignature.Label = "Signatur prüfen";
-            this.btnVerifySignature.Name = "btnVerifySignature";
-            this.btnVerifySignature.ScreenTip = "Signatur prüfen";
-            this.btnVerifySignature.ShowImage = true;
-            this.btnVerifySignature.SuperTip = "Öffnet für die Signaturprüfung die Webseite der RTR";
-            // 
-            // group6
-            // 
-            this.group6.Items.Add(this.BtnEditSettings);
-            this.group6.Items.Add(this.gallery1);
-            this.group6.Label = "Einstellungen";
-            this.group6.Name = "group6";
-            // 
             // BtnEditSettings
             // 
             this.BtnEditSettings.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -288,7 +257,6 @@
             this.gallery1.Buttons.Add(this.gbtnKonto);
             this.gallery1.Buttons.Add(this.gbtnHandySignatur);
             this.gallery1.Buttons.Add(this.gbtnMail);
-            this.gallery1.Buttons.Add(this.gbtnUidAbfrage);
             this.gallery1.Buttons.Add(this.gbtnSaveLoc);
             this.gallery1.Buttons.Add(this.gbtnZustellung);
             this.gallery1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -321,13 +289,6 @@
             this.gbtnMail.ScreenTip = "Mail Einstellungen";
             this.gbtnMail.SuperTip = "Öffnet eine Fenster zum Bearbeiten der Mail Einstellungen";
             // 
-            // gbtnUidAbfrage
-            // 
-            this.gbtnUidAbfrage.Label = "UID-Abfrage";
-            this.gbtnUidAbfrage.Name = "gbtnUidAbfrage";
-            this.gbtnUidAbfrage.ScreenTip = "Einstellungen für die UID Abfrage";
-            this.gbtnUidAbfrage.SuperTip = "Öffnet ein Fenster zum Bearbeiten der Einstellungen für die UID Abfrage";
-            // 
             // gbtnSaveLoc
             // 
             this.gbtnSaveLoc.Label = "Speicherorte";
@@ -341,15 +302,6 @@
             this.gbtnZustellung.Name = "gbtnZustellung";
             this.gbtnZustellung.ScreenTip = "Einstellungen für den Zustelldienst";
             this.gbtnZustellung.SuperTip = "Öffnet ein Fenster zum Bearbeiten der Einstellungen für den Zustelldienst";
-            // 
-            // group4
-            // 
-            this.group4.Items.Add(this.BtnEbInterface);
-            this.group4.Items.Add(this.BtnAustriaPro);
-            this.group4.Items.Add(this.BtnSignatur);
-            this.group4.Items.Add(this.btnErbGvAt);
-            this.group4.Label = "Informationen";
-            this.group4.Name = "group4";
             // 
             // BtnEbInterface
             // 
@@ -369,15 +321,6 @@
             this.BtnAustriaPro.ShowImage = true;
             this.BtnAustriaPro.SuperTip = "Öffnet die Home Page der AUSTRIAPRO";
             // 
-            // BtnSignatur
-            // 
-            this.BtnSignatur.Image = global::eRechnung.Images.WebInsertHyperlinkHS;
-            this.BtnSignatur.Label = "Signatur";
-            this.BtnSignatur.Name = "BtnSignatur";
-            this.BtnSignatur.ScreenTip = "Signatur";
-            this.BtnSignatur.ShowImage = true;
-            this.BtnSignatur.SuperTip = "Öffnet eine Webseite der WKO mit Hinweisen zur digitalen Signatur";
-            // 
             // btnErbGvAt
             // 
             this.btnErbGvAt.Image = global::eRechnung.Images.WebInsertHyperlinkHS;
@@ -387,14 +330,6 @@
             this.btnErbGvAt.ShowImage = true;
             this.btnErbGvAt.SuperTip = "Öffnet eine Webseite des BMF mit Informationen zur eRechnung an die öffentliche V" +
     "erwaltung";
-            // 
-            // group3
-            // 
-            this.group3.Items.Add(this.BtnHelp);
-            this.group3.Items.Add(this.btnSupport);
-            this.group3.Items.Add(this.BtnAbout);
-            this.group3.Label = "Hilfe & Support";
-            this.group3.Name = "group3";
             // 
             // BtnHelp
             // 
@@ -438,8 +373,6 @@
             this.group1.PerformLayout();
             this.rbGrpSignSend.ResumeLayout(false);
             this.rbGrpSignSend.PerformLayout();
-            this.rGrpServices.ResumeLayout(false);
-            this.rGrpServices.PerformLayout();
             this.group6.ResumeLayout(false);
             this.group6.PerformLayout();
             this.group4.ResumeLayout(false);
@@ -458,11 +391,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnDetails;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnSkonto;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnSave;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnUIDBestaetigung;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup rbGrpSignSend;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSignAndMail;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSendByService;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnVerifySignature;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnSaveAsTemplate;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnLoadTemplate;
@@ -471,20 +401,17 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group4;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnEbInterface;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnAustriaPro;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnSignatur;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnErbGvAt;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnHelp;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSupport;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BtnAbout;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup rGrpServices;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group7;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnVerify;
         internal Microsoft.Office.Tools.Ribbon.RibbonGallery gallery1;
         private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnKonto;
         private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnHandySignatur;
         private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnMail;
-        private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnUidAbfrage;
         private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnSaveLoc;
         private Microsoft.Office.Tools.Ribbon.RibbonButton gbtnZustellung;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSendByMail;

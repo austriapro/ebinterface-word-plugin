@@ -50,6 +50,8 @@ namespace SettingsEditor.Views
             this.txBxBIC = new System.Windows.Forms.TextBox();
             this.txtIBAN = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.ebIVersionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.currencyListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label9 = new System.Windows.Forms.Label();
@@ -78,11 +80,13 @@ namespace SettingsEditor.Views
             this.txtBxBank = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cBtnReset = new WinFormsMvvm.Controls.CommandButton();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceReStellerSetting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.countryCodesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vatDefaultListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ebIVersionsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currencyListBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -150,7 +154,7 @@ namespace SettingsEditor.Views
             // tbxMyGLN
             // 
             this.tbxMyGLN.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSourceReStellerSetting, "Gln", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.tbxMyGLN.Location = new System.Drawing.Point(342, 229);
+            this.tbxMyGLN.Location = new System.Drawing.Point(344, 229);
             this.tbxMyGLN.Name = "tbxMyGLN";
             this.validationProviderBillerSettings.SetPerformValidation(this.tbxMyGLN, true);
             this.tbxMyGLN.Size = new System.Drawing.Size(136, 20);
@@ -253,6 +257,8 @@ namespace SettingsEditor.Views
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.tbxMyGLN);
@@ -287,6 +293,20 @@ namespace SettingsEditor.Views
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rechnungssteller";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(239, 259);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(99, 13);
+            this.label10.TabIndex = 57;
+            this.label10.Text = "ebInterface Version";
+            // 
+            // ebIVersionsBindingSource
+            // 
+            this.ebIVersionsBindingSource.DataMember = "ebIVersions";
+            this.ebIVersionsBindingSource.DataSource = this.bindingSourceReStellerSetting;
+            // 
             // comboBox1
             // 
             this.comboBox1.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "CurrSelected", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -308,7 +328,7 @@ namespace SettingsEditor.Views
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(259, 205);
+            this.label9.Location = new System.Drawing.Point(287, 205);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(51, 13);
             this.label9.TabIndex = 54;
@@ -317,7 +337,7 @@ namespace SettingsEditor.Views
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(259, 232);
+            this.label8.Location = new System.Drawing.Point(277, 232);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(61, 13);
             this.label8.TabIndex = 52;
@@ -556,6 +576,17 @@ namespace SettingsEditor.Views
             this.cBtnReset.Text = "Zurücksetzen";
             this.cBtnReset.UseVisualStyleBackColor = true;
             // 
+            // comboBox2
+            // 
+            this.comboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "SelectedVersion", true));
+            this.comboBox2.DataSource = this.ebIVersionsBindingSource;
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(344, 256);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(83, 21);
+            this.comboBox2.TabIndex = 56;
+            // 
             // FrmBillerSettingsView
             // 
             this.AcceptButton = this.btnSave;
@@ -577,6 +608,7 @@ namespace SettingsEditor.Views
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ebIVersionsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currencyListBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -634,6 +666,8 @@ namespace SettingsEditor.Views
         private System.Windows.Forms.BindingSource currencyListBindingSource;
         private System.Windows.Forms.ComboBox comboBox1;
         private WinFormsMvvm.Controls.CommandButton cBtnReset;
-
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.BindingSource ebIVersionsBindingSource;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

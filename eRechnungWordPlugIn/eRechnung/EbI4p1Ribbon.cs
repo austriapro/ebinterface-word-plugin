@@ -78,7 +78,6 @@ namespace eRechnung
             // Ribbonbutton BtnVerify
             RegisterCommand(btnVerify, _invoiceView.VerifyCommand);
 
-            // RibbonButton btnSignAndMail;
 
             // RibbonButton btnMailAndSave;
             RegisterCommand(btnSendByMail, _invoiceView.SaveAndMailButton);
@@ -90,22 +89,18 @@ namespace eRechnung
             RegisterCommand(gbtnKonto, _settingsView.EditKontoCommandButton);
             RegisterCommand(gbtnHandySignatur, _settingsView.HandySignaturButtonCommand);
             RegisterCommand(gbtnMail, _settingsView.MailButton);
-            RegisterCommand(gbtnUidAbfrage, _settingsView.UidAbfrageButton);
             RegisterCommand(gbtnSaveLoc, _settingsView.SaveLocButton);
             RegisterCommand(gbtnZustellung, _settingsView.ZustellgButton);
 
             #endregion
             #region service -> RibbonViewModel
-            // RibbonButton btnUIDBestaetigung;
-            RegisterCommand(btnUIDBestaetigung, _ribbonView.UidCheckButton, true);
-            // RibbonButton btnVerifySignature;
 
             // RibbonButton BtnEbInterface;
             RegisterCommand(BtnEbInterface, _ribbonView.EbInterfaceLinkButton);
             // RibbonButton BtnAustriaPro;
             RegisterCommand(BtnAustriaPro, _ribbonView.AustriaProButton);
             // RibbonButton BtnSignatur;
-            RegisterCommand(BtnSignatur, _ribbonView.SignaturButton);
+            //RegisterCommand(BtnSignatur, _ribbonView.SignaturButton);
             // RibbonButton btnErbGvAt;
             RegisterCommand(btnErbGvAt, _ribbonView.ErbGvAtButton);
             // RibbonButton BtnHelp;
@@ -157,9 +152,7 @@ namespace eRechnung
         private void SetRibbonVisibility(InvoiceSubtypes.ValidationRuleSet validation)
         {
             Log.TraceWrite(CallerInfo.Create(),"entering, CurrentSelectedValidation=" + validation.ToString());
-            btnSignAndMail.Visible = false;
-            BtnSignatur.Visible = false;
-            btnVerifySignature.Visible = false;
+            // BtnSignatur.Visible = false;
             switch (validation)
             {
                 case InvoiceSubtypes.ValidationRuleSet.Industries:
@@ -167,18 +160,15 @@ namespace eRechnung
                     btnSendByMail.Visible = true;
                     btnSendByService.Visible = true;
                     //  btnSignAndMail.Visible = true;
-                    rGrpServices.Visible = true;
                     gbtnZustellung.Visible = true;
                     
                   btnChangeFormType.Label = "Wechsel zu " + _invoiceView.InvoiceVariantList.GetText(InvoiceSubtypes.ValidationRuleSet.Government.ToString());
                     break;
                 case InvoiceSubtypes.ValidationRuleSet.Government:
                     rbGrpSignSend.Visible = false;
-                    rGrpServices.Visible = false;
                     //   btnSendByMail.Visible = false;
                     btnSendByService.Visible = false;
                     btnSendByMail.Visible = false;
-                    btnSignAndMail.Visible = false;
                     gbtnZustellung.Visible = false;
                     
                     btnChangeFormType.Label = "Wechsel zu " + _invoiceView.InvoiceVariantList.GetText(InvoiceSubtypes.ValidationRuleSet.Industries.ToString());

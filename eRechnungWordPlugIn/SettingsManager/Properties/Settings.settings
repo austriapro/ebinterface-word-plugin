@@ -130,5 +130,8 @@
     <Setting Name="setZustellWorkDir" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="SetEbIVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">V4P3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

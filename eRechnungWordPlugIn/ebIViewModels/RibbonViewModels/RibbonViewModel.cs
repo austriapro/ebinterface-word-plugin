@@ -15,7 +15,6 @@ namespace ebIViewModels.RibbonViewModels
     /// </summary>
     public class RibbonViewModel : ViewModelBase
     {
-        #region Relay Commands
 
         private RibbonCommandButton _btnAboutCommand;
         public RibbonCommandButton BtnAboutCommand
@@ -131,26 +130,6 @@ namespace ebIViewModels.RibbonViewModels
             System.Diagnostics.Process.Start("http://www.ebinterface.org");
         }
 
-
-        private RibbonCommandButton _uidCheckButton;
-        public RibbonCommandButton UidCheckButton
-        {
-            get
-            {
-                _uidCheckButton = _uidCheckButton ?? new RibbonCommandButton(UidCheckClick);
-                return _uidCheckButton;
-            }
-        }
-
-        private void UidCheckClick(object o)
-        {
-            InvoiceViewModel invVm = (InvoiceViewModel) o;
-            UidBestaetigungViewModel uidView =
-                _uc.Resolve<UidBestaetigungViewModel>(new ParameterOverride("invoiceView", invVm));
-            var rc = _dlg.ShowDialog<FrmUidBestaetigung>(uidView);
-        }
-
-        #endregion
 
         private IUnityContainer _uc;
 

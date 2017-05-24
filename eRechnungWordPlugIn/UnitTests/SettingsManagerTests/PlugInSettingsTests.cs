@@ -29,16 +29,6 @@ namespace SettingsManager.Tests
             Assert.IsNotNull(vatList);
         }
 
-        [TestMethod]
-        public void SetVatTest()
-        {
-
-            var vatList = PlugInSettings.Default.VatDefaultValues;
-            PlugInSettings.Default.VatDefaultValues = vatList;
-            Console.WriteLine(PlugInSettings.Default.MwStTab);
-            Assert.IsNotNull(vatList);
-            
-        }
 
         [TestMethod()]
         public void LoadUnitOfMeasureTest()

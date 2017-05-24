@@ -18,6 +18,8 @@ using WinFormsMvvm;
 using WinFormsMvvm.Controls;
 using WinFormsMvvm.DialogService;
 using LogService;
+using static ebIModels.Schema.InvoiceType;
+using ebIModels.Schema;
 
 namespace SettingsEditor.ViewModels
 {
@@ -219,19 +221,35 @@ namespace SettingsEditor.ViewModels
             get { return IsVatBerechtigt ? "" : KeinVstAbzug; }
         }
 
+        #region SelectedVersion - string
+        private string _SelectedVersion;
+        public string SelectedVersion
+        {
+            get { return _SelectedVersion; }
+            set
+            {
+                if (_SelectedVersion == value)
+                    return;
+                _SelectedVersion = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+        #region ebIVersions - List<ebIVersion>
+        private List<string> _ebIVersions;
+        public List<string> ebIVersions
+        {
+            get { return _ebIVersions; }
+            set
+            {
+                if (_ebIVersions == value)
+                    return;
+                _ebIVersions = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
 
-        //private bool _anyTextChanged;
-        //public bool AnyTextChanged
-        //{
-        //    get { return _anyTextChanged; }
-        //    set
-        //    {
-        //        if (_anyTextChanged == value)
-        //            return;
-        //        _anyTextChanged = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
 
         public bool IsNotVatBerechtigt { get { return !IsVatBerechtigt; } }
         private bool _isVatBerechtigt;
@@ -520,11 +538,14 @@ namespace SettingsEditor.ViewModels
             _countryCodes = ebIModels.Models.CountryCodes.GetCountryCodeList();
             Results = new ValidationResults();
            var  cList = _uc.Resolve<CurrencyListViewModels>();
-            cList.GetList(Enum.GetNames(typeof(CurrencyType)).ToList());
-            _currencyList = new BindingList<CurrencyListViewModel>(cList.DropDownList);
+            //cList.GetList(Enum.GetNames(typeof(CurrencyType)).ToList());
+            cList.GetList(new List<string>() { CurrencyType.EUR.ToString() });
+            _currencyList = new BindingList<CurrencyListViewModel>(cList.DropDownList);            
             string defCurr = PlugInSettings.Default.Currency;
             _currSelected = _currencyList.FirstOrDefault(p => p.Code == defCurr);
+            _ebIVersions = InvoiceFactory.GetVersionsWithSaveSupported();
             FillFromSettings();
+
         }
 
         internal virtual void FillFromSettings()
@@ -551,6 +572,7 @@ namespace SettingsEditor.ViewModels
             _inhaber = PlugInSettings.Default.Kontowortlaut;
             _iban = PlugInSettings.Default.Iban;
             _bic = PlugInSettings.Default.Bic;
+            _SelectedVersion = PlugInSettings.Default.ebInterfaceVersionString;
             // _anyTextChanged = false;
         }
 
@@ -584,7 +606,7 @@ namespace SettingsEditor.ViewModels
             PlugInSettings.Default.VStBerechtigt = IsVatBerechtigt;
             // CountryCodeSelected = CountryCodes.Find(p => p.Code == PlugInSettings.Default.SetLand);
             PlugInSettings.Default.Land = CountryCodeSelected.Code;
-            PlugInSettings.Default.VatDefaultValues = VatDefaultList;
+            //PlugInSettings.Default.VatDefaultValues = VatDefaultList;
             // VatSelected = VatDefaultList.Find(p => p.MwStSatz == PlugInSettings.Default.SetMwStDefault);
             PlugInSettings.Default.MwStDefault = VatSelected.MwStSatz;
             PlugInSettings.Default.VStText = VatText;
@@ -594,7 +616,7 @@ namespace SettingsEditor.ViewModels
             PlugInSettings.Default.Kontowortlaut = Inhaber;
             PlugInSettings.Default.Iban = Iban;
             PlugInSettings.Default.Bic = Bic;
-
+            PlugInSettings.Default.ebInterfaceVersionString = SelectedVersion;
         }
 
         

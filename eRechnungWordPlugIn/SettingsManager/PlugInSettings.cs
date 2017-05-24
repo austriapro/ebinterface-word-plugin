@@ -89,7 +89,12 @@ namespace SettingsManager
             get { return Settings.Default.SetWhrg; }
             set { Settings.Default.SetWhrg = value; }
         }
-
+        
+        public string ebInterfaceVersionString
+        {
+            get{ return Settings.Default.SetEbIVersion; }
+            set { Settings.Default.SetEbIVersion = value; }
+        }
         #endregion
 
         #region Mehrwertsteuer
@@ -178,7 +183,7 @@ namespace SettingsManager
         #endregion
 
         #region Zustellung
-        public string DeliveryExePath { get { return Settings.Default.SetZustellExe; } set{Settings.Default.SetZustellExe=value;}}
+        public string DeliveryExePath { get { return Settings.Default.SetZustellExe; } set { Settings.Default.SetZustellExe = value; } }
         public string DeliveryArgs { get { return Settings.Default.SetZustellParm; } set { Settings.Default.SetZustellParm = value; } }
         public string DeliveryWorkDir { get { return Settings.Default.setZustellWorkDir; } set { Settings.Default.setZustellWorkDir = value; } }
         #endregion
@@ -289,13 +294,13 @@ namespace SettingsManager
             get
             {
 
-                string xmlVat = Settings.Default.SetMwStTab;
+                //string xmlVat = Settings.Default.SetMwStTab;
 
-                if (xmlVat == string.Empty)
-                {
+                //if (xmlVat == string.Empty)
+                //{
 
-                    xmlVat = ResourceService.ReadXmlString("MwStDefaults.xml");
-                }
+                string xmlVat = ResourceService.ReadXmlString("MwStDefaults.xml");
+                //}
                 XElement xDoc = XElement.Parse(xmlVat);
                 IEnumerable<XElement> childs = from xel in xDoc.Elements() select xel;
                 List<VatDefaultValue> vatList = (from xElement in childs
@@ -306,7 +311,7 @@ namespace SettingsManager
                                                  }).ToList<VatDefaultValue>();
                 return new List<VatDefaultValue>(vatList);
             }
-            set
+            private set
             {
                 var myList = value;
                 if (myList == null) return;

@@ -25,12 +25,17 @@ namespace ebISaveFileDialog
             this.FileDlgStartLocation = AddonWindowLocation.Bottom;
             List<string> ebiLIst = InvoiceFactory.GetVersionsWithSaveSupported().OrderByDescending(p => p).ToList();
             comboBox1.DataSource = ebiLIst;
-            comboBox1.SelectedItem = SelectedVersion.ToString();
+            // comboBox1.SelectedItem = SelectedVersion.ToString();
+            //comboBox1.SelectedText = SelectedVersion.ToString();
+            //  this.comboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "SelectedVersion", true));
         }
 
         public ebIVersion SelectedVersion { get; set; }
       
-
+        public void SetSelectedVersion(ebIVersion version)
+        {
+            comboBox1.SelectedItem = version.ToString();
+        }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string sel = comboBox1.SelectedItem as string;
