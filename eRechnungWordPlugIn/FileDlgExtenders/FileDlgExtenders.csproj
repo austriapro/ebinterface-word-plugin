@@ -133,11 +133,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="AfterBuild"
-          Condition=" '$(Configuration)' == 'Release'">
-    <Exec Command="del *.nupkg">
-    </Exec>
-    <Exec Command="c:\util\nuget pack $(AssemblyName)_V12.csproj -IncludeReferencedProjects -Prop Configuration=Release">
-    </Exec>
-  </Target>
 </Project>
