@@ -61,8 +61,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D602
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handbuch", "Handbuch", "{29392638-F0FE-42D6-BB91-ABEB04CC8E70}"
 	ProjectSection(SolutionItems) = preProject
-		Handbuch\Ausfuellhilfe.docx = Handbuch\Ausfuellhilfe.docx
-		Handbuch\Ausfuellhilfe.pdf = Handbuch\Ausfuellhilfe.pdf
+		Handbuch\Anleitung.docx = Handbuch\Anleitung.docx
+		Handbuch\Anleitung.pdf = Handbuch\Anleitung.pdf
 		Handbuch\Länder_ISO3166.xlsx = Handbuch\Länder_ISO3166.xlsx
 		..\README.md = ..\README.md
 	EndProjectSection

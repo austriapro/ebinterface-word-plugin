@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 using WinFormsMvvm;
 using WinFormsMvvm.Controls;
 using WinFormsMvvm.DialogService;
+using System.IO;
 
 namespace ebIViewModels.RibbonViewModels
 {
@@ -112,8 +113,15 @@ namespace ebIViewModels.RibbonViewModels
         }
         private void HelpClick()
         {
-            _dlg.ShowMessageBox("Weitere Hilfe finden Sie im mitgelieferten Dokument 'Ausfüllhilfe.pdf'" + Environment.NewLine + "oder im Forum http://www.ebinterface.org.","Hilfe",MessageBoxButtons.OK, MessageBoxIcon.Information);
+            const string fnAnleitungPdf = @"C:\OfficeApps\eRechnung\Anleitung.pdf";
+            if (File.Exists(fnAnleitungPdf))
+            {
+                System.Diagnostics.Process.Start(fnAnleitungPdf);
+            } else
+            {
+                _dlg.ShowMessageBox("Weitere Hilfe finden Sie im mitgelieferten Dokument 'Anleitung.pdf'" + Environment.NewLine + "oder im Forum http://www.ebinterface.org.", "Hilfe", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            }
         }
 
         private RibbonCommandButton _supportButton;

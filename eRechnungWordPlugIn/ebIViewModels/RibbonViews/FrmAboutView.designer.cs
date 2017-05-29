@@ -71,7 +71,7 @@
             this.lblHeadline.Name = "lblHeadline";
             this.lblHeadline.Size = new System.Drawing.Size(448, 24);
             this.lblHeadline.TabIndex = 4;
-            this.lblHeadline.Text = "AUSTRIAPRO - Word PlugIn für ebInterface 4.2";
+            this.lblHeadline.Text = "AUSTRIAPRO - Word PlugIn für ebInterface 4.3";
             // 
             // label2
             // 

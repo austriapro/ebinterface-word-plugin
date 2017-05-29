@@ -51,6 +51,7 @@ namespace SettingsEditor.Views
             this.txtIBAN = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.ebIVersionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.currencyListBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -80,7 +81,6 @@ namespace SettingsEditor.Views
             this.txtBxBank = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cBtnReset = new WinFormsMvvm.Controls.CommandButton();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceReStellerSetting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.countryCodesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vatDefaultListBindingSource)).BeginInit();
@@ -127,7 +127,6 @@ namespace SettingsEditor.Views
             this.checkBox1.TabIndex = 30;
             this.checkBox1.Text = "Alle Daten beim Speichern in das Formular übernehmen";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
             // 
             // btnSave
             // 
@@ -301,6 +300,17 @@ namespace SettingsEditor.Views
             this.label10.Size = new System.Drawing.Size(99, 13);
             this.label10.TabIndex = 57;
             this.label10.Text = "ebInterface Version";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "SelectedVersion", true));
+            this.comboBox2.DataSource = this.ebIVersionsBindingSource;
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(344, 256);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(83, 21);
+            this.comboBox2.TabIndex = 56;
             // 
             // ebIVersionsBindingSource
             // 
@@ -575,17 +585,6 @@ namespace SettingsEditor.Views
             this.cBtnReset.TabIndex = 34;
             this.cBtnReset.Text = "Zurücksetzen";
             this.cBtnReset.UseVisualStyleBackColor = true;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "SelectedVersion", true));
-            this.comboBox2.DataSource = this.ebIVersionsBindingSource;
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(344, 256);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(83, 21);
-            this.comboBox2.TabIndex = 56;
             // 
             // FrmBillerSettingsView
             // 

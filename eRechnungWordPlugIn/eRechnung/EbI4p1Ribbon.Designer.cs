@@ -36,22 +36,20 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group7 = this.Factory.CreateRibbonGroup();
-            this.group2 = this.Factory.CreateRibbonGroup();
-            this.group1 = this.Factory.CreateRibbonGroup();
-            this.rbGrpSignSend = this.Factory.CreateRibbonGroup();
-            this.group6 = this.Factory.CreateRibbonGroup();
-            this.group4 = this.Factory.CreateRibbonGroup();
-            this.group3 = this.Factory.CreateRibbonGroup();
             this.btnNewInvoice = this.Factory.CreateRibbonButton();
             this.BtnSave = this.Factory.CreateRibbonButton();
             this.btnVerify = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
             this.BtnDetails = this.Factory.CreateRibbonButton();
             this.BtnSkonto = this.Factory.CreateRibbonButton();
+            this.group1 = this.Factory.CreateRibbonGroup();
             this.BtnLoadTemplate = this.Factory.CreateRibbonButton();
             this.BtnSaveAsTemplate = this.Factory.CreateRibbonButton();
             this.btnChangeFormType = this.Factory.CreateRibbonButton();
+            this.rbGrpSignSend = this.Factory.CreateRibbonGroup();
             this.btnSendByMail = this.Factory.CreateRibbonButton();
             this.btnSendByService = this.Factory.CreateRibbonButton();
+            this.group6 = this.Factory.CreateRibbonGroup();
             this.BtnEditSettings = this.Factory.CreateRibbonButton();
             this.gallery1 = this.Factory.CreateRibbonGallery();
             this.gbtnKonto = this.Factory.CreateRibbonButton();
@@ -59,9 +57,11 @@
             this.gbtnMail = this.Factory.CreateRibbonButton();
             this.gbtnSaveLoc = this.Factory.CreateRibbonButton();
             this.gbtnZustellung = this.Factory.CreateRibbonButton();
+            this.group4 = this.Factory.CreateRibbonGroup();
             this.BtnEbInterface = this.Factory.CreateRibbonButton();
             this.BtnAustriaPro = this.Factory.CreateRibbonButton();
             this.btnErbGvAt = this.Factory.CreateRibbonButton();
+            this.group3 = this.Factory.CreateRibbonGroup();
             this.BtnHelp = this.Factory.CreateRibbonButton();
             this.btnSupport = this.Factory.CreateRibbonButton();
             this.BtnAbout = this.Factory.CreateRibbonButton();
@@ -96,51 +96,6 @@
             this.group7.Label = "eRechnung ";
             this.group7.Name = "group7";
             // 
-            // group2
-            // 
-            this.group2.Items.Add(this.BtnDetails);
-            this.group2.Items.Add(this.BtnSkonto);
-            this.group2.Label = "Bearbeiten";
-            this.group2.Name = "group2";
-            // 
-            // group1
-            // 
-            this.group1.Items.Add(this.BtnLoadTemplate);
-            this.group1.Items.Add(this.BtnSaveAsTemplate);
-            this.group1.Items.Add(this.btnChangeFormType);
-            this.group1.Label = "Vorlagen";
-            this.group1.Name = "group1";
-            // 
-            // rbGrpSignSend
-            // 
-            this.rbGrpSignSend.Items.Add(this.btnSendByMail);
-            this.rbGrpSignSend.Items.Add(this.btnSendByService);
-            this.rbGrpSignSend.Label = "Versand";
-            this.rbGrpSignSend.Name = "rbGrpSignSend";
-            // 
-            // group6
-            // 
-            this.group6.Items.Add(this.BtnEditSettings);
-            this.group6.Items.Add(this.gallery1);
-            this.group6.Label = "Einstellungen";
-            this.group6.Name = "group6";
-            // 
-            // group4
-            // 
-            this.group4.Items.Add(this.BtnEbInterface);
-            this.group4.Items.Add(this.BtnAustriaPro);
-            this.group4.Items.Add(this.btnErbGvAt);
-            this.group4.Label = "Informationen";
-            this.group4.Name = "group4";
-            // 
-            // group3
-            // 
-            this.group3.Items.Add(this.BtnHelp);
-            this.group3.Items.Add(this.btnSupport);
-            this.group3.Items.Add(this.BtnAbout);
-            this.group3.Label = "Hilfe & Support";
-            this.group3.Name = "group3";
-            // 
             // btnNewInvoice
             // 
             this.btnNewInvoice.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -173,6 +128,13 @@
             this.btnVerify.SuperTip = "Die aktuelle eRechnung wird gemäß ebInterface Standard und bei Bedarf gemäß eRech" +
     "nung an die öffentl. Verwaltung  geprüft.";
             // 
+            // group2
+            // 
+            this.group2.Items.Add(this.BtnDetails);
+            this.group2.Items.Add(this.BtnSkonto);
+            this.group2.Label = "Bearbeiten";
+            this.group2.Name = "group2";
+            // 
             // BtnDetails
             // 
             this.BtnDetails.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -192,6 +154,14 @@
             this.BtnSkonto.ScreenTip = "Skonti bearbeiten";
             this.BtnSkonto.ShowImage = true;
             this.BtnSkonto.SuperTip = "Öffnet ein Fenster zur Bearbeitung der Skonto Tabelle";
+            // 
+            // group1
+            // 
+            this.group1.Items.Add(this.BtnLoadTemplate);
+            this.group1.Items.Add(this.BtnSaveAsTemplate);
+            this.group1.Items.Add(this.btnChangeFormType);
+            this.group1.Label = "Vorlagen";
+            this.group1.Name = "group1";
             // 
             // BtnLoadTemplate
             // 
@@ -220,6 +190,13 @@
             this.btnChangeFormType.SuperTip = "Wechseln zwischen den Formularen für öffentl. Verwaltung und Wirtschaft";
             this.btnChangeFormType.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnToggleBund_Click);
             // 
+            // rbGrpSignSend
+            // 
+            this.rbGrpSignSend.Items.Add(this.btnSendByMail);
+            this.rbGrpSignSend.Items.Add(this.btnSendByService);
+            this.rbGrpSignSend.Label = "Versand";
+            this.rbGrpSignSend.Name = "rbGrpSignSend";
+            // 
             // btnSendByMail
             // 
             this.btnSendByMail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -241,6 +218,13 @@
             this.btnSendByService.ShowImage = true;
             this.btnSendByService.SuperTip = "Überprüft die Rechnung gemäß ebInterface Standard, erstellt ein PDF und ermöglich" +
     "t den Versand per separatem Zustelldienst-Programm";
+            // 
+            // group6
+            // 
+            this.group6.Items.Add(this.BtnEditSettings);
+            this.group6.Items.Add(this.gallery1);
+            this.group6.Label = "Einstellungen";
+            this.group6.Name = "group6";
             // 
             // BtnEditSettings
             // 
@@ -303,6 +287,14 @@
             this.gbtnZustellung.ScreenTip = "Einstellungen für den Zustelldienst";
             this.gbtnZustellung.SuperTip = "Öffnet ein Fenster zum Bearbeiten der Einstellungen für den Zustelldienst";
             // 
+            // group4
+            // 
+            this.group4.Items.Add(this.BtnEbInterface);
+            this.group4.Items.Add(this.BtnAustriaPro);
+            this.group4.Items.Add(this.btnErbGvAt);
+            this.group4.Label = "Informationen";
+            this.group4.Name = "group4";
+            // 
             // BtnEbInterface
             // 
             this.BtnEbInterface.Image = global::eRechnung.Images.WebInsertHyperlinkHS;
@@ -331,10 +323,18 @@
             this.btnErbGvAt.SuperTip = "Öffnet eine Webseite des BMF mit Informationen zur eRechnung an die öffentliche V" +
     "erwaltung";
             // 
+            // group3
+            // 
+            this.group3.Items.Add(this.BtnHelp);
+            this.group3.Items.Add(this.btnSupport);
+            this.group3.Items.Add(this.BtnAbout);
+            this.group3.Label = "Hilfe & Support";
+            this.group3.Name = "group3";
+            // 
             // BtnHelp
             // 
             this.BtnHelp.Image = global::eRechnung.Images.HilfeIcon;
-            this.BtnHelp.Label = " Ausfüllhilfe";
+            this.BtnHelp.Label = "Anleitung";
             this.BtnHelp.Name = "BtnHelp";
             this.BtnHelp.ScreenTip = "Ausfüllhilfe";
             this.BtnHelp.ShowImage = true;
