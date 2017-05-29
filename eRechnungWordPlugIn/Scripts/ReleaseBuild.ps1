@@ -9,7 +9,8 @@ AUFRUF
 param(
 	[string]$Configuration="Debug",
 	[string]$UpdateVersionNumber ="N",
-	[string]$Compile="N"
+	[string]$Compile="N",
+	[string]$UpdateVstoVersion = "Y"
 )
 
 function doBuild([string]$targetDir, [string]$project, [string]$config, [string]$target,[string]$OutputPath){
@@ -119,12 +120,20 @@ param(
 	#"fnVersion="+$fnVersion;
 	[xml]$xmlVersion = Get-Content($versionFile);
 	Format-Xml -InputObject $xmlVersion
-	[int]$iUpdate = [Convert]::ToInt32($xmlVersion.Version.Actual.Minor,10);
 
 	if($build.StartsWith("Release")) {
-		$iUpdate += 1;
+			[int]$iUpdate = [Convert]::ToInt32($xmlVersion.Version.Actual.Minor,10);
+		if($updVers.StartsWith("y"))
+		{
+			$iUpdate += 1;
+		}
+		[int]$iPatch = [Convert]::ToInt32($xmlVersion.Version.Actual.Update,10);
+		if($UpdateVstoVersion.ToLower().StartsWith("y")) 
+		{
+			$iPatch += 1;
+		}
 		$xmlVersion.Version.Actual.Minor = [string]$iUpdate;
-		$xmlVersion.Version.Actual.Update = "0"
+		$xmlVersion.Version.Actual.Update = [string]$iPatch
 		$xmlVersion.Save($fnVersion);
 		}
 
@@ -169,10 +178,8 @@ if($Compile -eq "Y")
  
 }
 # Update Version if UpdateVersionNumber=Y and Configuration=Release
-if($updVers.StartsWith("y"))
-{
-  UpdateVersion -build $Configuration -versionFile $fnVersion
-}
+UpdateVersion -build $Configuration -versionFile $fnVersion
+
 
 [string]$proj = $SolutionDir + $eRechnungProject
 # Put current Version Number in Project file
