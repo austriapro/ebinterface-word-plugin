@@ -10,7 +10,7 @@ param(
 	[string]$Configuration="Debug",
 	[string]$UpdateVersionNumber ="N",
 	[string]$Compile="N",
-	[string]$UpdateVstoVersion = "Y"
+	[string]$UpdateVstoVersion = "N"
 )
 
 function doBuild([string]$targetDir, [string]$project, [string]$config, [string]$target,[string]$OutputPath){
