@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -13,7 +12,6 @@ using System.Xml.Serialization;
 using ebIModels.Models;
 using ebIModels.Services;
 using ExtensionMethods;
-using ebIModels.Version;
 
 namespace ebIModels.Schema
 {

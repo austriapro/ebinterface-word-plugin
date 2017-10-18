@@ -196,7 +196,6 @@
     <Compile Include="Services\ProductInfo.cs" />
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Services\XMLValidator.cs" />
-    <Compile Include="Version\TfsInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -293,9 +292,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XmlData\ProductInfo.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Version\Version.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\BuildDateTime.txt" />
