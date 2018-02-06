@@ -36,11 +36,11 @@ namespace ebIModels.Services
         public ProductInfo()
         {
             VersionInfo = new ProductVersionInfo(Properties.Resources.ProductInfo);
-            getLatestReleaseFromGitHub();
+            GetLatestReleaseFromGitHub();
 
         }
 
-        private void getLatestReleaseFromGitHub()
+        private void GetLatestReleaseFromGitHub()
         {
             var client = new GitHubClient(new ProductHeaderValue(gitUser));
             var releases = client.Repository.Release.GetAll(gitUser, gitProject);
@@ -56,6 +56,8 @@ namespace ebIModels.Services
 
                 Log.LogWrite(LogService.CallerInfo.Create(), Log.LogPriority.High, $"Abfrage für neue Release fehlgeschlagen: {releases.Exception.InnerException.Message}");
                 Log.LogWrite(CallerInfo.Create(), Log.LogPriority.High, $"Github Reset: {restDateTime:G} ");
+                _isNewReleaseAvailable = false;
+                return;
             }
             var releaseItems = releases.Result.Where(x => x.Prerelease == false).OrderByDescending(p => p.CreatedAt);
             if (releaseItems.Any())
