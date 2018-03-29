@@ -176,6 +176,9 @@
     </Compile>
     <Compile Include="Schema\ebInterface4p3\InvoiceHelperMethods.cs" />
     <Compile Include="Schema\ebInterface4p3\InvoiceInitializer.cs" />
+    <Compile Include="Schema\ebInterface5p0\invoice.cs">
+      <DependentUpon>Invoice.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Schema\ebInterfaceResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -255,6 +258,9 @@
     <EmbeddedResource Include="Schema\ebInterface4p3\Invoice.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Schema\ebInterface5p0\Invoice.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Schema\xmldsig-core-schema.xsx">
       <DependentUpon>xmldsig-core-schema.xsd</DependentUpon>
     </None>
