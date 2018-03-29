@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIViewModels", "eRechnungWordPlugIn\eRechnungWordPlugIn\ebIViewModels\ebIViewModels.csproj", "{DA41F877-C6C7-48E8-A5B3-7F126C657AF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIViewModels", "eRechnungWordPlugIn\ebIViewModels\ebIViewModels.csproj", "{DA41F877-C6C7-48E8-A5B3-7F126C657AF0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIModels", "eRechnungWordPlugIn\ebIModels\ebIModels.csproj", "{62A897BA-5A82-429F-B18A-2F77C0C1D9E3}"
 EndProject
