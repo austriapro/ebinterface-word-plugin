@@ -42,16 +42,16 @@ namespace LogService
             }
             else
             {
-                logCleanup(logDir);
+                LogCleanup(logDir);
             }
             logfn = System.IO.Path.Combine(logDir, _logFileName + DateTime.Now.ToString("yyyy-MM-dd-HHmmssff") + ".log");
             _logfn = logfn;
         }
 
-        private static void logCleanup(string logDir)
+        private static void LogCleanup(string logDir)
         {
             string pattern = Path.Combine(_logFileName + "*") + ".log";
-            List<string> entries = new List<string>(Directory.GetFiles(logDir,pattern));
+            List<string> entries = new List<string>(Directory.GetFiles(logDir, pattern));
             if (entries.Count() > _numLogFiles)
             {
                 Debug.WriteLine("Anzahl Files:{0}", entries.Count());
@@ -74,17 +74,17 @@ namespace LogService
         public static void TraceWrite(CallerInfo cInfo, string format, params object[] parms)
         {
             if (!_traceEnabled) return;
-            WriteToLog("Trace", string.Format(format, parms),cInfo);
+            WriteToLog("Trace", string.Format(format, parms), cInfo);
         }
         public static void TraceWrite(CallerInfo cInfo, string message)
         {
             if (!_traceEnabled) return;
             WriteToLog("Trace", message, cInfo);
         }
-        private static void WriteToLog(string level, string message, CallerInfo cInfo )
-            {
-                string msg = "";
-            msg = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss,ff\t") + level + "\t" + cInfo.CallerFilePath+ "\t" +cInfo.CallerMemberName+ "\t" + cInfo.CallerLineNumber + "\t" + message;
+        private static void WriteToLog(string level, string message, CallerInfo cInfo)
+        {
+            string msg = "";
+            msg = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss,ff\t") + level + "\t" + cInfo.CallerFilePath + "\t" + cInfo.CallerMemberName + "\t" + cInfo.CallerLineNumber + "\t" + message;
             if (_semaphore.WaitOne(100))
             {
                 if (string.IsNullOrEmpty(_logfn))
@@ -92,6 +92,16 @@ namespace LogService
                     GetLogFn();
                     string msg1 = "Timestamp\tType\tFile\tMethod\tLine\tMessage";
                     File.AppendAllLines(_logfn, new List<string> { msg1 });
+                    Assembly asm = Assembly.GetExecutingAssembly();
+                    var version = asm.GetName().Version;
+                    string initStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss,ff\t");
+                    var initstrings = new List<string>{
+                        initStamp+"Init\tLog Init\t******************************",
+                        initStamp+$"Init\tLog Init\teRechnung Word PlugIn Version {version.ToString()}",
+                        initStamp+"Init\tLog Init\t******************************",
+
+                        };
+                    File.AppendAllLines(_logfn, initstrings);
                 }
                 File.AppendAllLines(_logfn, new List<string> { msg });
                 _semaphore.ReleaseMutex();
@@ -100,7 +110,7 @@ namespace LogService
             {
                 // Silently skip
                 Debug.WriteLine("Semaphore not acquired: '" + msg + "'");
-            }            
+            }
             return;
         }
 

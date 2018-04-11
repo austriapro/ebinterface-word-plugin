@@ -88,8 +88,10 @@ function UpdateVstoProject([string]$project,[string]$publishDir){
 	$fileVersion = [Version]$svers
 	# C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\eRechnung\Properties\AssemblyInfo.cs
 	$asmPath = (Split-Path -Path $project)+"\Properties\AssemblyInfo.cs" 
+	Write-Host $asmPath
 	UpdateAssembly -path $asmPath -fileVersion $fileVersion
-	
+	[string]$logAsmPath = $asmPath -replace "\\eRechnung\\", "\Logging\"
+	UpdateAssembly -path $logAsmPath -fileVersion $fileVersion
 	$pUrl
 	return
 }

@@ -304,7 +304,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>Powershell "$(SolutionDir)\Scripts\setVersion.ps1" -cfgName $(ConfigurationName) -ProductFile "$(ProjectDir)XmlData\ProductInfo.xml" -VersionFile "$(SolutionDir)Scripts\Version.xml"</PreBuildEvent>
+    <PreBuildEvent>Powershell "$(SolutionDir)\eRechnungWordPlugIn\Scripts\setVersion.ps1" -cfgName $(ConfigurationName) -ProductFile "$(ProjectDir)XmlData\ProductInfo.xml" -VersionFile "$(SolutionDir)\eRechnungWordPlugIn\Scripts\Version.xml"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

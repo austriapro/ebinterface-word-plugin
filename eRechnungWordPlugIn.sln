@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIViewModels", "eRechnungWordPlugIn\ebIViewModels\ebIViewModels.csproj", "{DA41F877-C6C7-48E8-A5B3-7F126C657AF0}"
 EndProject
@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEventBroker", "eRechn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsMvvm", "eRechnungWordPlugIn\WinFormsMvvm\WinFormsMvvm.csproj", "{2C9CCB95-9E62-419F-BED1-27623EAE81E3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "eRechnungWordPlugIn\UnitTests", "{F3A7F157-7A2A-4849-8904-1B68884317CC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{F3A7F157-7A2A-4849-8904-1B68884317CC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrameWork", "eRechnungWordPlugIn\FrameWork", "{B22F178E-9B52-45F8-A41E-A3D95A9005F9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrameWork", "FrameWork", "{B22F178E-9B52-45F8-A41E-A3D95A9005F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIModelsUnitTests", "eRechnungWordPlugIn\UnitTests\ebIModelsUnitTests\ebIModelsUnitTests.csproj", "{80C2EC76-7E37-4FC4-9222-7E5F7E23D2AA}"
 EndProject
@@ -51,15 +51,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eRechnung", "eRechnungWordP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIModelsTests", "eRechnungWordPlugIn\ebIModelsTests\ebIModelsTests.csproj", "{29BFC195-34E9-4CA3-ACA3-FD5F90773323}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "eRechnungWordPlugIn\Scripts", "{D602502B-6A6C-4823-A399-E82411132766}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D602502B-6A6C-4823-A399-E82411132766}"
 	ProjectSection(SolutionItems) = preProject
-		Scripts\PlugInCfg.txt = Scripts\PlugInCfg.txt
-		Scripts\ReleaseBuild.ps1 = Scripts\ReleaseBuild.ps1
-		Scripts\setVersion.ps1 = Scripts\setVersion.ps1
-		Scripts\Version.xml = Scripts\Version.xml
+		eRechnungWordPlugIn\Scripts\PlugInCfg.txt = eRechnungWordPlugIn\Scripts\PlugInCfg.txt
+		eRechnungWordPlugIn\Scripts\ReleaseBuild.ps1 = eRechnungWordPlugIn\Scripts\ReleaseBuild.ps1
+		eRechnungWordPlugIn\Scripts\setVersion.ps1 = eRechnungWordPlugIn\Scripts\setVersion.ps1
+		eRechnungWordPlugIn\Scripts\Version.xml = eRechnungWordPlugIn\Scripts\Version.xml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handbuch", "eRechnungWordPlugIn\Handbuch", "{29392638-F0FE-42D6-BB91-ABEB04CC8E70}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handbuch", "Handbuch", "{29392638-F0FE-42D6-BB91-ABEB04CC8E70}"
 	ProjectSection(SolutionItems) = preProject
 		Handbuch\Anleitung.docx = Handbuch\Anleitung.docx
 		Handbuch\Anleitung.pdf = Handbuch\Anleitung.pdf
@@ -289,5 +289,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.Integration.WinForms.6.0.1304.0\lib\NET45
+		SolutionGuid = {9C14C1FE-C995-4B16-B801-17627B2C35EA}
 	EndGlobalSection
 EndGlobal
