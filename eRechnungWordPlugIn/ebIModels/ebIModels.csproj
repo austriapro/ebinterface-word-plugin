@@ -104,9 +104,8 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
-    <Reference Include="Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.0.24.0\lib\net45\Octokit.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Octokit, Version=0.29.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Octokit.0.29.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -304,7 +303,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>Powershell "$(SolutionDir)\eRechnungWordPlugIn\Scripts\setVersion.ps1" -cfgName $(ConfigurationName) -ProductFile "$(ProjectDir)XmlData\ProductInfo.xml" -VersionFile "$(SolutionDir)\eRechnungWordPlugIn\Scripts\Version.xml"</PreBuildEvent>
+    <PreBuildEvent>Powershell "$(SolutionDir)Scripts\setVersion.ps1" -cfgName $(ConfigurationName) -ProductFile "$(ProjectDir)XmlData\ProductInfo.xml" -VersionFile "$(SolutionDir)Scripts\Version.xml"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

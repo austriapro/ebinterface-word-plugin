@@ -53,10 +53,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebIModelsTests", "eRechnung
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D602502B-6A6C-4823-A399-E82411132766}"
 	ProjectSection(SolutionItems) = preProject
-		eRechnungWordPlugIn\Scripts\PlugInCfg.txt = eRechnungWordPlugIn\Scripts\PlugInCfg.txt
-		eRechnungWordPlugIn\Scripts\ReleaseBuild.ps1 = eRechnungWordPlugIn\Scripts\ReleaseBuild.ps1
-		eRechnungWordPlugIn\Scripts\setVersion.ps1 = eRechnungWordPlugIn\Scripts\setVersion.ps1
-		eRechnungWordPlugIn\Scripts\Version.xml = eRechnungWordPlugIn\Scripts\Version.xml
+		Scripts\PlugInCfg.txt = Scripts\PlugInCfg.txt
+		Scripts\ReleaseBuild.ps1 = Scripts\ReleaseBuild.ps1
+		Scripts\setVersion.ps1 = Scripts\setVersion.ps1
+		Scripts\Version.xml = Scripts\Version.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handbuch", "Handbuch", "{29392638-F0FE-42D6-BB91-ABEB04CC8E70}"
@@ -288,7 +288,7 @@ Global
 		{CA9BF7EF-850F-467B-96E6-02254BA24F60} = {B22F178E-9B52-45F8-A41E-A3D95A9005F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.Integration.WinForms.6.0.1304.0\lib\NET45
 		SolutionGuid = {9C14C1FE-C995-4B16-B801-17627B2C35EA}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Validation.Integration.WinForms.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

@@ -55,6 +55,7 @@ namespace ebIModels.Services
                 DateTime restDateTime = DateTime.Now;
 
                 Log.LogWrite(CallerInfo.Create(), Log.LogPriority.High, $"Abfrage für neue Release fehlgeschlagen: {releases.Exception.InnerException.Message}");
+
                 Log.LogWrite(CallerInfo.Create(), Log.LogPriority.High, $"Github Reset: {restDateTime:G} ");
                 _isNewReleaseAvailable = false;
                 return;
@@ -63,7 +64,7 @@ namespace ebIModels.Services
             if (releaseItems.Any())
             {
                 latestRelease = releaseItems.OrderByDescending(p => p.CreatedAt).First();
-
+                Log.LogWrite(CallerInfo.Create(), Log.LogPriority.High, $"Release at GitHub: {latestRelease.TagName}");
                 // Release Tag auf github muss die Syntax Vn.n.n+n haben sonst geht das hier schief
                 var latestVersion = SemanticVersion.Parse(latestRelease.TagName, ParseMode.AllowPrefix);
                 _isNewReleaseAvailable = false;

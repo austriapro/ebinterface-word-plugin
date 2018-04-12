@@ -159,7 +159,7 @@ Format-Xml -InputObject $xmlVersion
 #popd
 #write-host "`nVisual Studio 2015 Command Prompt variables set." -ForegroundColor Yellow
 
-[string]$SolutionDir = "C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\"
+[string]$SolutionDir = "C:\GitHub\ebinterface-word-plugin\"
 [string]$updVers = $UpdateVersionNumber.ToLower();
 if("y","n","yes","no" -notcontains $updVers)
 {
@@ -167,7 +167,7 @@ if("y","n","yes","no" -notcontains $updVers)
 }
 [string]$BuildLogDir = $SolutionDir+"Buildlog\";
 [string]$eRechnung = "eRechnung"
-[string]$eRechnungProject = "eRechnung\eRechnung.csproj"
+[string]$eRechnungProject = "eRechnungWordPlugIn\eRechnung\eRechnung.csproj"
 [string]$fnVersion = $SolutionDir +"Scripts\Version.xml"
 
 if(!(Test-Path -Path $BuildLogDir)){
@@ -204,8 +204,8 @@ if(Test-Path $publishUrl) {
 } else {
 	md $publishUrl
 }
-[string]$buildDir = $SolutionDir+$eRechnung+"\bin\"+$Configuration+"\app.publish\*"
-[string]$manual = $SolutionDir+"Handbuch\Anleitung.pdf"
+[string]$buildDir = $SolutionDir+"\eRechnungWordPlugIn\"+$eRechnung+"\bin\"+$Configuration+"\app.publish\*"
+[string]$manual = $SolutionDir+"eRechnungWordPlugin\Handbuch\Anleitung.pdf"
 [string]$jbArchive =$publishUrl+"jbarchive.7z"
 [string]$7zip = '"C:\Program Files\7-Zip\7z.exe"'
 [string]$arch1cmdParm= $7zip+ " a "+$jbArchive+" "+$buildDir+" "+$manual+ " -m0=BCJ2 -m1=LZMA:d25:fb255 -m2=LZMA:d19 -m3=LZMA:d19 -mb0:1 -mb0s1:2 -mb0s2:3 -mx"
