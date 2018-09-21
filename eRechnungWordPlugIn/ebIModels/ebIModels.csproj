@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\Unreferenced.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -120,6 +121,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\MappingError.cs" />
+    <Compile Include="Mapping\ModelConstants.cs" />
     <Compile Include="Mapping\ModelToV4P1.cs" />
     <Compile Include="Mapping\ModelToV4P3.cs" />
     <Compile Include="Mapping\V4P0ToModel.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="Models\CountryCodeModel.cs" />
     <Compile Include="Models\IDocumentTypes.cs" />
     <Compile Include="Models\IInvoiceType.cs" />
+    <Compile Include="Models\IInvoiceTypeBase.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceExtensions.cs" />
     <Compile Include="Models\InvoiceHelperMethods.cs" />

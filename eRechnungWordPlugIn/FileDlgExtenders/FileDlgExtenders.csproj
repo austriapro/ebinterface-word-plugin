@@ -49,7 +49,7 @@
     <CodeAnalysisRules>
     </CodeAnalysisRules>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <CodeAnalysisRuleSet>Migrated rules for FileDlgExtenders.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\Unreferenced.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

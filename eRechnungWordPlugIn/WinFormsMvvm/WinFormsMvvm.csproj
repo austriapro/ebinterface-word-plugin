@@ -131,6 +131,7 @@
     <Compile Include="DialogService\FrameworkDialogs\SaveFile\SaveFileDialog.cs" />
     <Compile Include="DialogService\FrameworkDialogs\SaveFile\SaveFileDialogViewModel.cs" />
     <Compile Include="DialogService\IDialogService.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MultiColumnComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

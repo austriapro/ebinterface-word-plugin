@@ -73,6 +73,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendMail\SendMailServiceTests.cs" />
     <Compile Include="SendMail\SendMailTestMock.cs" />

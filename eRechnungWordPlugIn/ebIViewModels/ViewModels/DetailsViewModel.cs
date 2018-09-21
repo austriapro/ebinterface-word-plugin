@@ -151,7 +151,9 @@ namespace ebIViewModels.ViewModels
             }
         }
 
+#pragma warning disable CS0169 // The field 'DetailsViewModel._taxexemption' is never used
         private bool _taxexemption;
+#pragma warning restore CS0169 // The field 'DetailsViewModel._taxexemption' is never used
         /// <summary>
         /// Zeigt eine Steuerbefreiung an.
         /// </summary>

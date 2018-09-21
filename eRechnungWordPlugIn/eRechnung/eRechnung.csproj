@@ -376,7 +376,7 @@
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
-        <ProjectProperties HostName="eRechnung.dotx" HostPackage="{18A3A5AC-5778-4778-901C-ADAAC08E910A}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="DOT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE" DebugInfoCommandLine="/w /z&quot;[$OUTPUT]eRechnung.dotx&quot;" />
+        <ProjectProperties HostName="eRechnung.dotx" HostPackage="{18A3A5AC-5778-4778-901C-ADAAC08E910A}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="DOT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\root\Office16\winword.exe" DebugInfoCommandLine="/w /z&quot;[$OUTPUT]eRechnung.dotx&quot;" />
         <Host Name="Word Document" Path=".\eRechnung.dotx" GeneratedCodeNamespace="eRechnung" PublishedHash="CFECFF3FB805E9A295392C4C85A42160CA201773">
           <HostItem Name="ThisDocument" Code="ThisDocument.cs" CanonicalName="ThisDocument" PublishedHash="45C6FF2C13CAA0165ACDA2BBC1C927CA55C82DCF" Blueprint="ThisDocument.Designer.xml" GeneratedCode="ThisDocument.Designer.cs" />
         </Host>

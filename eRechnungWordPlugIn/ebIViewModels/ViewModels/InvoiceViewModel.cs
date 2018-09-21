@@ -2289,7 +2289,9 @@ namespace ebIViewModels.ViewModels
             }
             else
             {
+#pragma warning disable CS0219 // The variable 'regEx' is assigned but its value is never used
                 string regEx = "^(?=(?:.{8}|.{11})$)[0-9A-Za-z]{8}([0-9A-Za-z]{3})?";
+#pragma warning restore CS0219 // The variable 'regEx' is assigned but its value is never used
                 var reg = new Regex("[0-9A-Za-z]{8}([0-9A-Za-z]{3})?"); // ([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?) Pattern aus xsd
                 if (!reg.IsMatch(VmKtoBic))
                 {

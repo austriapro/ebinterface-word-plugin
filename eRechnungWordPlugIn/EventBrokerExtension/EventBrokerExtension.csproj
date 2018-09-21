@@ -132,6 +132,7 @@
     <Compile Include="EventBrokerInfoPolicy.cs" />
     <Compile Include="EventBrokerReflectionStrategy.cs" />
     <Compile Include="EventBrokerWireupStrategy.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEventBrokerInfoPolicy.cs" />
     <Compile Include="ISimpleEventBrokerConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
