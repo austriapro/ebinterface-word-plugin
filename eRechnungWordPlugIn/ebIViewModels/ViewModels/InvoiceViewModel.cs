@@ -51,6 +51,7 @@ using LogService;
 using ebISaveFileDialog;
 using FileDialogExtenders;
 using static ebIModels.Schema.InvoiceType;
+using ebIModels.Mapping;
 
 namespace ebIViewModels.ViewModels
 {
@@ -774,7 +775,7 @@ namespace ebIViewModels.ViewModels
                 CurrencyType curr;
                 if (!Enum.TryParse(value, out curr))
                 {
-                    curr = CurrencyType.EUR;
+                    curr = ModelConstants.CurrencyCodeFixed;
                 }
                 _vmInvCurrency = value;
                 _invoice.InvoiceCurrency = curr;
@@ -1227,7 +1228,7 @@ namespace ebIViewModels.ViewModels
             _countryCodeList.GetList(CountryCodes.GetCountryCodeList());
             _currencyList = _uc.Resolve<DropDownListViewModels>();
             //_currencyList.GetList(Enum.GetNames(typeof(CurrencyType)).ToList());
-            _currencyList.GetList(new List<string>() { CurrencyType.EUR.ToString() });
+            _currencyList.GetList(new List<string>() { ModelConstants.CurrencyCodeFixed.ToString() });
             _invoiceVariantList = _uc.Resolve<DropDownListViewModels>();
             _invoiceVariantList.GetList(InvoiceSubtypes.GetList());
             _invTypes = _uc.Resolve<DropDownListViewModels>();

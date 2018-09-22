@@ -182,6 +182,8 @@
     <Compile Include="Schema\ebInterface5p0\invoice.cs">
       <DependentUpon>Invoice.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Schema\ebInterface5p0\InvoiceHelperMethods5p0.cs" />
+    <Compile Include="Schema\ebInterface5p0\InvoiceInitializer5p0.cs" />
     <Compile Include="Schema\ebInterfaceResult.cs">
       <SubType>Code</SubType>
     </Compile>

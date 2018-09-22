@@ -28,7 +28,8 @@ namespace ebIModels.Schema
             V4P0,
             V4P1,
             V4P2,
-            V4P3 
+            V4P3,
+            V5p0
         }
 
         [XmlIgnore]

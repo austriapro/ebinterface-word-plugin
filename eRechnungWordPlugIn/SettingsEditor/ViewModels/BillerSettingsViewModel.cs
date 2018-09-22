@@ -20,6 +20,7 @@ using WinFormsMvvm.DialogService;
 using LogService;
 using static ebIModels.Schema.InvoiceType;
 using ebIModels.Schema;
+using ebIModels.Mapping;
 
 namespace SettingsEditor.ViewModels
 {
@@ -539,7 +540,7 @@ namespace SettingsEditor.ViewModels
             Results = new ValidationResults();
            var  cList = _uc.Resolve<CurrencyListViewModels>();
             //cList.GetList(Enum.GetNames(typeof(CurrencyType)).ToList());
-            cList.GetList(new List<string>() { CurrencyType.EUR.ToString() });
+            cList.GetList(new List<string>() { ModelConstants.CurrencyCodeFixed.ToString() });
             _currencyList = new BindingList<CurrencyListViewModel>(cList.DropDownList);            
             string defCurr = PlugInSettings.Default.Currency;
             _currSelected = _currencyList.FirstOrDefault(p => p.Code == defCurr);

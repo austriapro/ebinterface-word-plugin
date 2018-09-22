@@ -11,7 +11,7 @@
 // 
 // Dieser Quellcode wurde automatisch generiert von xsd, Version=4.6.1055.0.
 // 
-namespace ebIModels.Schema.ebInterface5p0 {
+namespace ebIModels.Schema.ebInterface5p0 { 
     using System.Xml.Serialization;
     
     

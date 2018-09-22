@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace ebIModels.Schema.ebInterface4p3
+namespace ebIModels.Schema.ebInterface4p3 
 {
     public class InvoiceInitializer
     {

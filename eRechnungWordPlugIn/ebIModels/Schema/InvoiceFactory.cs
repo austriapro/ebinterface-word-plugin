@@ -103,7 +103,7 @@ namespace ebIModels.Schema
             invoice.InvoiceRecipient.Address.Country = new CountryType(CountryCodeType.AT);
             invoice.DocumentTitle = "Demo Rechnung";
             invoice.InvoiceDate = DateTime.Today;
-            invoice.InvoiceCurrency = CurrencyType.EUR;
+            invoice.InvoiceCurrency = ModelConstants.CurrencyCodeFixed;
             invoice.Delivery.Item = null;
             invoice.PaymentConditions.DueDate = DateTime.Today;
             invoice.Biller.OrderReference.ReferenceDateSpecified = false;

@@ -27,16 +27,16 @@ namespace ebIModels.Mapping
             Invoice.GeneratingSystem = source.GeneratingSystem;
             Invoice.DocumentTitle = source.DocumentTitle;
             Invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
-            Invoice.InvoiceCurrency = source.InvoiceCurrency.ToEnum(CurrencyType.EUR); // source.InvoiceCurrency.ConvertEnum<CurrencyType>();
+            Invoice.InvoiceCurrency = source.InvoiceCurrency.ToEnum(ModelConstants.CurrencyCodeFixed); // source.InvoiceCurrency.ConvertEnum<CurrencyType>();
             if (!string.IsNullOrEmpty(source.Language))
             {
-                Invoice.Language = source.Language.ToEnum(LanguageType.ger);  //source.Language.ConvertEnum<LanguageType>();
+                Invoice.Language = source.Language.ToEnum(ModelConstants.LanguangeCodeFixed);  //source.Language.ConvertEnum<LanguageType>();
                 Invoice.LanguageSpecified = true;
             }
             else
             {
                 Invoice.LanguageSpecified = false;
-                Invoice.Language = LanguageType.ger;
+                Invoice.Language = ModelConstants.LanguangeCodeFixed;
             }
             Invoice.Comment = source.Comment;
             if (source.CancelledOriginalDocument == null)
