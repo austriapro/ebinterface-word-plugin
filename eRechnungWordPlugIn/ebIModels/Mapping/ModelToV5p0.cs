@@ -9,7 +9,7 @@ using V5P0 = ebIModels.Schema.ebInterface5p0;
 
 namespace ebIModels.Mapping
 {
-    public static class ModelToVM
+    public static class ModelToV5P0
     {
         public static List<MappingError> mappingErrors;
         /// <summary>
@@ -17,7 +17,7 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">ebInterface 5p0 InvoiceType</param>
         /// <returns></returns>
-        public static V5P0.InvoiceType MapVMToVm(VM.IInvoiceType source)
+        public static V5P0.InvoiceType MapModelToV5p0(VM.IInvoiceType source)
         {
             V5P0.InvoiceType invoice = new V5P0.InvoiceType();
             mappingErrors = new List<MappingError>();
