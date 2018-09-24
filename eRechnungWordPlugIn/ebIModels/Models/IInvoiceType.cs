@@ -33,12 +33,15 @@ namespace ebIModels.Models
 
         ReductionAndSurchargeDetailsType ReductionAndSurchargeDetails { get; set; }
 
+        List<AdditionalInformationType> AdditionalInformation { get; set; }
+
         TaxType Tax { get; set; }
 
         /// <summary>
         /// Gesamtbetrag der Rechnung inkl. Steuern
         /// </summary>
         decimal? TotalGrossAmount { get; set; }
+        decimal? PrepaidAmount { get; set; }
 
         /// <summary>
         /// Zu zahlender Betrag der Rechnung
@@ -54,7 +57,6 @@ namespace ebIModels.Models
         /// Summe aller Vat Beträge
         /// </summary>
         decimal? TaxAmount { get; set; }
-
 
         PaymentMethodType PaymentMethod { get; set; }
 

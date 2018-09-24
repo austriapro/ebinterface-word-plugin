@@ -17,7 +17,15 @@ namespace ebIModels.Models
             set { _netAmount = value.FixedFraction(2); }
         }
 
-
+        private decimal? prepaidAmountField;
+        public decimal? PrepaidAmount
+        {
+            get => this.prepaidAmountField.FixedFraction(2);
+            set
+            {
+                this.prepaidAmountField = value.FixedFraction(2);
+            }
+        }
         //public decimal? TaxAmount { get; set; }
         private decimal? _taxAmount;
 
@@ -37,7 +45,7 @@ namespace ebIModels.Models
             decimal gesamtBetrag = 0;
             decimal nettoBetrag = 0;
             decimal amount = 0;
-            if (Tax != null && Tax.VAT!=null)
+            if (Tax != null && Tax.VAT != null)
             {
                 foreach (var vatItem in this.Tax.VAT)
                 {
@@ -58,7 +66,7 @@ namespace ebIModels.Models
 
             }
             TotalGrossAmount = gesamtBetrag;
-            
+
             PayableAmount = gesamtBetrag;
             if (Details.BelowTheLineItem.Count > 0)
             {
@@ -72,7 +80,7 @@ namespace ebIModels.Models
         }
     }
 
-    public partial class AbstractPartyType 
+    public partial class AbstractPartyType
     {
 
         public void SetFurtherIdenfication(FurtherIdentificationType.SupportedIds id, string value)
@@ -122,10 +130,10 @@ namespace ebIModels.Models
             }
             set
             {
-                if (CountryCode.ToString().Equals(value)==true)
+                if (CountryCode.ToString().Equals(value) == true)
                     return;
                 string val = value;
-                CountryCode = (CountryCodeType) Enum.Parse(typeof(CountryCodeType), val);
+                CountryCode = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), val);
             }
         }
 
@@ -140,7 +148,7 @@ namespace ebIModels.Models
             FBG
         }
     }
-   
+
     public partial class TaxType
     {
         /// <summary>
@@ -157,9 +165,9 @@ namespace ebIModels.Models
                 TaxExemptionType taxEx = new TaxExemptionType()
                 {
                     TaxExemptionCode = null,
-                    Value=vatText
+                    Value = vatText
                 };
-                
+
             }
             if (itemList.Count == 0)
                 return tax;
@@ -196,14 +204,14 @@ namespace ebIModels.Models
                             if (taxItems.ContainsKey(taxVal))
                             {
                                 taxItems[taxVal].TaxedAmount += lineItem.LineItemAmount;
-                                taxItems[taxVal].Amount =0;
+                                taxItems[taxVal].Amount = 0;
                             }
                             else
                             {
                                 taxItems.Add(taxVal, new VATItemType()
                                 {
                                     Amount = 0,
-                                    Item = new TaxExemptionType() { TaxExemptionCode=null, Value=vatText },
+                                    Item = new TaxExemptionType() { TaxExemptionCode = null, Value = vatText },
                                     TaxedAmount = lineItem.LineItemAmount
                                 });
                             }

@@ -38,6 +38,8 @@ namespace ebIModels.Models
         private bool languageFieldSpecified;
         private bool isDuplicateField;
         private bool isDuplicateFieldSpecified;
+        private List<AdditionalInformationType> additionalInformation;
+
         public InvoiceType()
         {
             this.invoiceRootExtensionField = new InvoiceRootExtensionType();
@@ -57,7 +59,7 @@ namespace ebIModels.Models
 
         }
 
-        
+
         public new ebIVersion Version { get; set; }
 
         public string InvoiceNumber
@@ -636,15 +638,18 @@ namespace ebIModels.Models
                 }
             }
         }
+
+        public List<AdditionalInformationType> AdditionalInformation { get { return additionalInformation; } set { additionalInformation = value; } }
+
         public override ebInterfaceResult Save(string file)
         {
 
             return Save(file, ebIVersion.V4P2);
         }
-        public ebInterfaceResult Save(string filename,ebIVersion versionToSave)
+        public ebInterfaceResult Save(string filename, ebIVersion versionToSave)
         {
             ebInterfaceResult result = new ebInterfaceResult() { ResultType = ResultType.XmlValidationIssue };
-            result.ResultMessages.Add(new ResultMessage() { Field = "Version", Message = "Unbekannte ebInterface Version", Severity= MessageType.Error });
+            result.ResultMessages.Add(new ResultMessage() { Field = "Version", Message = "Unbekannte ebInterface Version", Severity = MessageType.Error });
             switch (versionToSave)
             {
                 //case ebIVersion.V4P0:
@@ -655,7 +660,7 @@ namespace ebIModels.Models
                     break;
                 case ebIVersion.V4P2:
                     Schema.ebInterface4p2.InvoiceType inv4p2 = MappingServiceVmTo4p2.MapModelToV4p2(this);
-                    result =  inv4p2.Save(filename);
+                    result = inv4p2.Save(filename);
                     break;
                 case ebIVersion.V4P3:
                     Schema.ebInterface4p3.InvoiceType inv4p3 = MappingServiceVmTo4p3.MapModelToV4p3(this);
@@ -4568,7 +4573,7 @@ namespace ebIModels.Models
         }
         public void RecalcLineItem()
         {
-            if (UnitPrice.Value== null)
+            if (UnitPrice.Value == null)
             {
                 return;
             }
@@ -5440,7 +5445,7 @@ namespace ebIModels.Models
 
                 }
             }
-        }        
+        }
     }
     public partial class DetailsType
     {
@@ -5495,7 +5500,7 @@ namespace ebIModels.Models
                 else
                 {
                     this.itemListField = value;
-                    
+
                 }
             }
         }
@@ -7642,6 +7647,29 @@ namespace ebIModels.Models
                     this.vATItemField = value;
 
                 }
+            }
+        }
+    }
+
+    // Mit ebInterface 5p0
+    public partial class AdditionalInformationType
+    {
+
+        private string keyField;
+
+        private string valueField;
+
+        /// <remarks/>
+
+        public string Key
+        {
+            get
+            {
+                return this.keyField;
+            }
+            set
+            {
+                this.keyField = value;
             }
         }
     }
