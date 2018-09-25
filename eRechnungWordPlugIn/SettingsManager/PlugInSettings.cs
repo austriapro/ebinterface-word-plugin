@@ -307,7 +307,8 @@ namespace SettingsManager
                                                  select new VatDefaultValue()
                                                  {
                                                      MwStSatz = decimal.Parse(xElement.Element("MwStSatz").Value),
-                                                     Beschreibung = xElement.Element("Beschreibung").Value
+                                                     Beschreibung = xElement.Element("Beschreibung").Value,
+                                                     Code = xElement.Element("Code").Value
                                                  }).ToList<VatDefaultValue>();
                 return new List<VatDefaultValue>(vatList);
             }

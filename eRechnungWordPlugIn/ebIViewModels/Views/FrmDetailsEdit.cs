@@ -36,7 +36,7 @@ namespace ebIViewModels.Views
             bindingSource1.DataSource = ViewModel as DetailsViewModel;
             cmBxMwSt.SelectedValue = viewModel.VatSatz;
             multiColumnComboBox1.DataSource = ((DetailsViewModel)ViewModel).UoMList;
-
+            multiColumnComboBox2.DataSource = ((DetailsViewModel)ViewModel).VatList;
             // cmBxMwSt.Format += CmBxMwStOnFormat;
 
         }

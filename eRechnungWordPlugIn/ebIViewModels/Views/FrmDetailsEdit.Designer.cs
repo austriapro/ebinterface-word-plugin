@@ -60,10 +60,13 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.detailsViewValidationProvider = new Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.ValidationProvider();
             this.cmdBtnSave = new System.Windows.Forms.Button();
+            this.multiColumnComboBox2 = new WinFormsMvvm.MultiColumnComboBox();
+            this.vatListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vatDefaultValuesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uoMListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vatListBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // cmdBtnCancel
@@ -343,6 +346,24 @@
             this.cmdBtnSave.UseVisualStyleBackColor = true;
             this.cmdBtnSave.Click += new System.EventHandler(this.cmdBtnSave_Click);
             // 
+            // multiColumnComboBox2
+            // 
+            this.multiColumnComboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSource1, "VatItem", true));
+            this.multiColumnComboBox2.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource1, "IsVatBerechtigt", true));
+            this.multiColumnComboBox2.DataSource = this.vatListBindingSource;
+            this.multiColumnComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.multiColumnComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.multiColumnComboBox2.FormattingEnabled = true;
+            this.multiColumnComboBox2.Location = new System.Drawing.Point(84, 200);
+            this.multiColumnComboBox2.Name = "multiColumnComboBox2";
+            this.multiColumnComboBox2.Size = new System.Drawing.Size(101, 21);
+            this.multiColumnComboBox2.TabIndex = 32;
+            // 
+            // vatListBindingSource
+            // 
+            this.vatListBindingSource.DataMember = "VatList";
+            this.vatListBindingSource.DataSource = this.bindingSource1;
+            // 
             // FrmDetailsEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -350,6 +371,7 @@
             this.CancelButton = this.cmdBtnCancel;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(377, 303);
+            this.Controls.Add(this.multiColumnComboBox2);
             this.Controls.Add(this.cmdBtnSave);
             this.Controls.Add(this.multiColumnComboBox1);
             this.Controls.Add(this.cmBxMwSt);
@@ -383,6 +405,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.vatDefaultValuesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uoMListBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vatListBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,5 +444,7 @@
         private Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.ValidationProvider detailsViewValidationProvider;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button cmdBtnSave;
+        private WinFormsMvvm.MultiColumnComboBox multiColumnComboBox2;
+        private System.Windows.Forms.BindingSource vatListBindingSource;
     }
 }

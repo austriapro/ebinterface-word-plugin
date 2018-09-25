@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ebIModels.Schema.ebInterface5p0;
-using VM = ebIModels.Models;
+using Model = ebIModels.Models;
 using V5P0 = ebIModels.Schema.ebInterface5p0;
 
 namespace ebIModels.Mapping
@@ -17,7 +17,7 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">ebInterface 5p0 InvoiceType</param>
         /// <returns></returns>
-        public static V5P0.InvoiceType MapModelToV5p0(VM.IInvoiceType source)
+        public static V5P0.InvoiceType MapModelToV5p0(Model.IInvoiceType source)
         {
             V5P0.InvoiceType invoice = new V5P0.InvoiceType();
             mappingErrors = new List<MappingError>();
@@ -99,62 +99,153 @@ namespace ebIModels.Mapping
             return invoice;
         }
 
-        private static PaymentConditionsType MapPaymentConditions(VM.PaymentConditionsType paymentConditions)
+        #region PaymentConditions 
+        /// <summary>
+        /// Maps the PaymentConditions from Model to ebInterface V5p0
+        /// </summary>
+        /// <param name="paymentConditions">Payment Conditions from Model</param>
+        /// <returns></returns>
+        private static PaymentConditionsType MapPaymentConditions(Model.PaymentConditionsType paymentConditions)
+        {
+
+            if (paymentConditions == null)
+            {
+                return null;
+            }
+            PaymentConditionsType payment = new PaymentConditionsType();
+            payment.Comment = paymentConditions.Comment;
+
+
+            if (paymentConditions.DueDate > DateTime.MinValue)
+            {
+                payment.DueDate = paymentConditions.DueDate;
+                payment.DueDateSpecified = true;
+            }
+            else
+            {
+                payment.DueDateSpecified = false;
+            }
+            if (paymentConditions.Discount != null)
+            {
+                // inv4P1.PaymentConditions.Discount.Clear();
+                var discountList = new List<DiscountType>();
+                foreach (Model.DiscountType srcDiscount in paymentConditions.Discount)
+                {
+                    DiscountType discount = new DiscountType()
+                    {
+                        Amount = srcDiscount.Amount.GetValueOrDefault(),
+                        AmountSpecified = srcDiscount.AmountSpecified,
+                        BaseAmount = srcDiscount.BaseAmount.GetValueOrDefault(),
+                        BaseAmountSpecified = srcDiscount.BaseAmountSpecified,
+                        PaymentDate = srcDiscount.PaymentDate,
+                        Percentage = srcDiscount.Percentage.GetValueOrDefault(),
+                        PercentageSpecified = srcDiscount.PercentageSpecified
+                    };
+                    discountList.Add(discount);
+                }
+                payment.Discount = discountList.ToArray();
+            }
+            return payment;
+        }
+        #endregion
+
+        #region PaymentMethod
+        /// <summary>
+        /// Maps the payment method.
+        /// </summary>
+        /// <param name="paymentMethod">The payment method.</param>
+        /// <returns></returns>
+        private static PaymentMethodType MapPaymentMethod(Model.PaymentMethodType paymentMethod)
+        {
+            PaymentMethodType paymethod = new PaymentMethodType();
+            paymethod.Comment = paymentMethod.Comment;
+            if (paymentMethod.Item.GetType() == typeof(Model.UniversalBankTransactionType))
+            {
+                Model.UniversalBankTransactionType txType = paymentMethod.Item as Model.UniversalBankTransactionType;
+
+                paymethod.Item = new UniversalBankTransactionType();
+                ((UniversalBankTransactionType)paymethod.Item).BeneficiaryAccount = new AccountType[]
+                {
+                    new AccountType()
+                    {
+                        BIC = txType.BeneficiaryAccount.First().BIC,
+                        BankName = txType.BeneficiaryAccount.First().BankName,
+                        IBAN = txType.BeneficiaryAccount.First().IBAN,
+                        BankAccountOwner = txType.BeneficiaryAccount.First().BankAccountOwner
+                    }
+                };
+            }
+            return paymethod;
+        }
+        #endregion
+
+        private static TaxType MapTax(Model.TaxType SourceTax)
+        {
+            throw new NotImplementedException();
+            /*
+                        TaxType tax = new TaxType();
+                        if (SourceTax.VAT)
+                        {
+
+                        } 
+                        tax.VAT = new List<VATItemType>();
+                        if (source.Tax.VAT != null)
+                            foreach (var vatItem in source.Tax.VAT)
+                            {
+
+                                VATItemType vatItemNeu = new VATItemType()
+                                {
+                                    Amount = vatItem.Amount,
+                                    TaxedAmount = vatItem.TaxedAmount,
+                                    Item = MapVatItemType2Vm(vatItem.Item)
+                                };
+                                tax.VAT.Add(vatItemNeu);
+                            }
+                        return tax;
+                        */
+        }
+
+        private static ReductionAndSurchargeDetailsType MapReductionAndSurchargeDetails(Model.ReductionAndSurchargeDetailsType reductionAndSurchargeDetails)
         {
             throw new NotImplementedException();
         }
 
-        private static PaymentMethodType MapPaymentMethod(VM.PaymentMethodType paymentMethod)
+        private static DetailsType MapDetails(Model.DetailsType details)
         {
             throw new NotImplementedException();
         }
 
-        private static TaxType MapTax(VM.TaxType tax)
+        private static OrderingPartyType MapOrderingParty(Model.OrderingPartyType orderingParty)
         {
             throw new NotImplementedException();
         }
 
-        private static ReductionAndSurchargeDetailsType MapReductionAndSurchargeDetails(VM.ReductionAndSurchargeDetailsType reductionAndSurchargeDetails)
+        private static InvoiceRecipientType MapInvoiceRecipient(Model.InvoiceRecipientType invoiceRecipient)
         {
             throw new NotImplementedException();
         }
 
-        private static DetailsType MapDetails(VM.DetailsType details)
+        private static BillerType MapBiller(Model.BillerType biller)
         {
             throw new NotImplementedException();
         }
 
-        private static OrderingPartyType MapOrderingParty(VM.OrderingPartyType orderingParty)
+        private static DeliveryType MapDelivery(Model.DeliveryType delivery)
         {
             throw new NotImplementedException();
         }
 
-        private static InvoiceRecipientType MapInvoiceRecipient(VM.InvoiceRecipientType invoiceRecipient)
+        private static AdditionalInformationType[] MapAdditionalInformation(List<Model.AdditionalInformationType> additionalInformation)
         {
             throw new NotImplementedException();
         }
 
-        private static BillerType MapBiller(VM.BillerType biller)
+        private static RelatedDocumentType[] MapRelatedDocument(List<Model.RelatedDocumentType> relatedDocument)
         {
             throw new NotImplementedException();
         }
 
-        private static DeliveryType MapDelivery(VM.DeliveryType delivery)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static AdditionalInformationType[] MapAdditionalInformation(List<VM.AdditionalInformationType> additionalInformation)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static RelatedDocumentType[] MapRelatedDocument(List<VM.RelatedDocumentType> relatedDocument)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static CancelledOriginalDocumentType MapCancelledOriginalDocument(VM.CancelledOriginalDocumentType cancelledOriginalDocument)
+        private static CancelledOriginalDocumentType MapCancelledOriginalDocument(Model.CancelledOriginalDocumentType cancelledOriginalDocument)
         {
             throw new NotImplementedException();
         }

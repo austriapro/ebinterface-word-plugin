@@ -217,6 +217,11 @@ namespace ExtensionMethods
             return false;
         }
 
+        /// <summary>
+        /// To the XML document.
+        /// </summary>
+        /// <param name="xDocument">The x document.</param>
+        /// <returns></returns>
         public static XmlDocument ToXmlDocument(this XDocument xDocument)
         {
             var xmlDocument = new XmlDocument();
@@ -235,6 +240,11 @@ namespace ExtensionMethods
             }
             return dec;
         }
+        /// <summary>
+        /// To the x document.
+        /// </summary>
+        /// <param name="xmlDocument">The XML document.</param>
+        /// <returns></returns>
         public static XDocument ToXDocument(this XmlDocument xmlDocument)
         {
             using (var nodeReader = new XmlNodeReader(xmlDocument))
@@ -243,6 +253,11 @@ namespace ExtensionMethods
                 return XDocument.Load(nodeReader);
             }
         }
+        /// <summary>
+        /// Suspends the two way binding.
+        /// </summary>
+        /// <param name="bindingManager">The binding manager.</param>
+        /// <exception cref="ArgumentNullException">bindingManager</exception>
         public static void SuspendTwoWayBinding(this BindingManagerBase bindingManager)
         {
             if (bindingManager == null)
@@ -255,6 +270,11 @@ namespace ExtensionMethods
                 b.DataSourceUpdateMode = DataSourceUpdateMode.Never;
             }
         }
+        /// <summary>
+        /// Resumes the two way binding.
+        /// </summary>
+        /// <param name="bindingManager">The binding manager.</param>
+        /// <exception cref="ArgumentNullException">bindingManager</exception>
         public static void ResumeTwoWayBinding(this BindingManagerBase bindingManager)
         {
             if (bindingManager == null)
@@ -267,6 +287,11 @@ namespace ExtensionMethods
                 b.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             }
         }
+        /// <summary>
+        /// Updates the data bound object.
+        /// </summary>
+        /// <param name="bindingManager">The binding manager.</param>
+        /// <exception cref="ArgumentNullException">bindingManager</exception>
         public static void UpdateDataBoundObject(this BindingManagerBase bindingManager)
         {
             if (bindingManager == null)
@@ -296,11 +321,14 @@ namespace ExtensionMethods
 
             return ret;
         }
+
+
     }
 
     /// <summary>
     /// UTF Stringwriter
     /// </summary>
+    /// <seealso cref="System.IO.StringWriter" />
     public class StringWriterUtf8 : System.IO.StringWriter
     {
         public override Encoding Encoding
