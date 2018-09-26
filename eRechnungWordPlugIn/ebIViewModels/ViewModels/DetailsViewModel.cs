@@ -113,7 +113,7 @@ namespace ebIViewModels.ViewModels
                 _einheit = value;
                 OnPropertyChanged();
                 _uomSelected = _uoMList.FirstOrDefault(p => p.Id == _einheit);
-                OnPropertyChanged("UomSelected");
+                OnPropertyChanged(nameof(UomSelected));
             }
         }
 
@@ -151,9 +151,7 @@ namespace ebIViewModels.ViewModels
             }
         }
 
-#pragma warning disable CS0169 // The field 'DetailsViewModel._taxexemption' is never used
-        private bool _taxexemption;
-#pragma warning restore CS0169 // The field 'DetailsViewModel._taxexemption' is never used
+        //private bool _taxexemption;
         /// <summary>
         /// Zeigt eine Steuerbefreiung an.
         /// </summary>
@@ -217,7 +215,9 @@ namespace ebIViewModels.ViewModels
                 _vatItem = value;
                 OnPropertyChanged();
                 _vatSatz = _vatItem.MwStSatz;
-                OnPropertyChanged("VatSatz");
+                OnPropertyChanged(nameof(VatSatz));
+                //_vatCode = _vatItem.Code;
+                //OnPropertyChanged(nameof(VatCode));
                 UpdateTotals();
             }
         }
@@ -242,7 +242,7 @@ namespace ebIViewModels.ViewModels
                 _vatSatz = value;
                 OnPropertyChanged();
                 _vatItem = _vatList.FirstOrDefault(p => p.MwStSatz == _vatSatz);
-                OnPropertyChanged("VatItem");
+                OnPropertyChanged(nameof(VatItem));
                 UpdateTotals();
             }
         }
@@ -366,7 +366,7 @@ namespace ebIViewModels.ViewModels
                 _uomSelected = value;
                 OnPropertyChanged();
                 _einheit = _uomSelected.Id;
-                OnPropertyChanged("Einheit");
+                OnPropertyChanged(nameof(Einheit));
             }
         }
 

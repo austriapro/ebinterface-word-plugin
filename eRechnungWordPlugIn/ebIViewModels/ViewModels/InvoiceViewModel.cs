@@ -268,7 +268,7 @@ namespace ebIViewModels.ViewModels
                 OnPropertyChanged();
                 //_paymentConditions.InvoiceDueDate = value.AddDays(_dueDays);
                 _paymentConditions.InvoiceDate = value;
-                OnPropertyChanged("VmInvDueDate");
+                OnPropertyChanged(nameof(VmInvDueDate));
                 InvDatesChangedFire();
                 OnUpdateDocTable(PaymentConditions, "PaymentConditions");
             }
@@ -448,7 +448,7 @@ namespace ebIViewModels.ViewModels
                 {
                     _invoice.InvoiceRecipient.OrderReference.OrderID = value;
                     _invoice.InvoiceRecipient.BestellPositionErforderlich = false;
-                    OnPropertyChanged("IsBestPosRequired");
+                    OnPropertyChanged(nameof(IsBestPosRequired));
                 }
                 else
                 {
@@ -458,7 +458,7 @@ namespace ebIViewModels.ViewModels
                     bool isReq = IsBestPosRequired;
                     var x = _invoice.InvoiceRecipient.OrderReference.OrderID.IsValidOrderRefBund(out msg, out isReq);
                     _invoice.InvoiceRecipient.BestellPositionErforderlich = isReq;
-                    OnPropertyChanged("IsBestPosRequired");
+                    OnPropertyChanged(nameof(IsBestPosRequired));
                 }
             }
         }
@@ -735,7 +735,7 @@ namespace ebIViewModels.ViewModels
 
         public string VmInvTaxAmount
         {
-            get { return PlugInSettings.Default.VStBerechtigt ? ((_invoice.TaxAmount ?? 0).Decimal2()) : "0,00"; }
+            get { return PlugInSettings.Default.VStBerechtigt ? ((_invoice.TaxAmountTotal ?? 0).Decimal2()) : "0,00"; }
         }
 
         public string VmInvTotalAmountText
@@ -860,7 +860,7 @@ namespace ebIViewModels.ViewModels
                 {
                     _invoice.PaymentConditions = _paymentConditions.GetPaymentConditions(VmInvDueDate);
                     OnUpdateDocTable(value);
-                    OnPropertyChanged("VmInvDueDate");
+                    OnPropertyChanged(nameof(VmInvDueDate));
                 }
             }
         }
@@ -986,7 +986,7 @@ namespace ebIViewModels.ViewModels
                 _invTypes.GetList(_documentTypes.GetDocumentTypes(subt));
                 OnInvoiceValidationOptionChanged();
                 OnPropertyChanged();
-                OnPropertyChanged("InvTypes");
+                OnPropertyChanged(nameof(InvTypes));
             }
         }
 
@@ -1953,7 +1953,7 @@ namespace ebIViewModels.ViewModels
                 }
                 workerReportProgress(worker);
 
-                OnPropertyChanged("RelatedDoc");
+                OnPropertyChanged(nameof(RelatedDoc));
                 OnPropertyChanged(null);
                 workerReportProgress(worker);
 

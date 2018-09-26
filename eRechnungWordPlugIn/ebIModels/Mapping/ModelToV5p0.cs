@@ -9,7 +9,7 @@ using V5P0 = ebIModels.Schema.ebInterface5p0;
 
 namespace ebIModels.Mapping
 {
-    public static class ModelToV5P0
+    public static class MappingServiceVmTo5p0 
     {
         public static List<MappingError> mappingErrors;
         /// <summary>

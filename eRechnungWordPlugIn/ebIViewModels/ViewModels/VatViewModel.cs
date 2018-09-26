@@ -13,7 +13,6 @@ namespace ebIViewModels.ViewModels
     /// </summary>
     public class VatViewModel : ViewModelBase
     {
-        public const string FmtDecimal2 = "";
         private decimal _vatBaseAmount;
         /// <summary>
         /// Basisbetrag für die MwSt Berechnung

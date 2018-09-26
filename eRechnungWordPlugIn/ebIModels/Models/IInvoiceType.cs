@@ -35,7 +35,7 @@ namespace ebIModels.Models
 
         List<AdditionalInformationType> AdditionalInformation { get; set; }
 
-        TaxType Tax { get; set; }
+        TaxType Tax { get; /*internal set; */}
 
         /// <summary>
         /// Gesamtbetrag der Rechnung inkl. Steuern
@@ -56,7 +56,7 @@ namespace ebIModels.Models
         /// <summary>
         /// Summe aller Vat Beträge
         /// </summary>
-        decimal? TaxAmount { get; set; }
+        decimal? TaxAmountTotal { get; set; }
 
         PaymentMethodType PaymentMethod { get; set; }
 

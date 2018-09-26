@@ -44,7 +44,7 @@ namespace ebIViewModels.ViewModels
                 _invoiceDate = value;
                 OnPropertyChanged();
                 _invoiceDueDate = _invoiceDate.AddDays(_dueDays);
-                OnPropertyChanged("InvoiceDueDate");
+                OnPropertyChanged(nameof(InvoiceDueDate));
             }
         }
 
@@ -62,7 +62,7 @@ namespace ebIViewModels.ViewModels
                 _invoiceDueDate = value;
                 OnPropertyChanged();
                 _dueDays = value.Days(_invoiceDate);
-                OnPropertyChanged("DueDays");
+                OnPropertyChanged(nameof(DueDays));
             }
         }
 
@@ -95,7 +95,7 @@ namespace ebIViewModels.ViewModels
                 _dueDays = value;
                 OnPropertyChanged();
                 _invoiceDueDate = _invoiceDate.AddDays(_dueDays);
-                OnPropertyChanged("InvoiceDueDate");
+                OnPropertyChanged(nameof(InvoiceDueDate));
             }
         }
         public ValidationResults Results { get; private set; }

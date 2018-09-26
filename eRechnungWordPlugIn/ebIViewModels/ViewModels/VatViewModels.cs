@@ -32,36 +32,6 @@ namespace ebIViewModels.ViewModels
             _vatViewList = new List<VatViewModel>();
         }
 
-        public TaxType GetTaxType()
-        {
-            if (VatViewList.Count == 0)
-                return null;
-            TaxType tax = new TaxType();            
-            tax.VAT = new List<VATItemType>();
-            foreach (VatViewModel vatView in VatViewList)
-            {
-                VATItemType vatItem = new VATItemType();
-                vatItem.Amount = vatView.VatAmount;
-                vatItem.TaxedAmount = vatView.VatBaseAmount;
-                if (vatView.TaxExemption == true)
-                {
-                    TaxExemptionType taxex = new TaxExemptionType();
-                    taxex.TaxExemptionCode = vatView.TaxCode;
-                    taxex.Value = vatView.TaxCodeText;
-                    vatItem.Item = taxex;
-                }
-                else
-                {
-                    VATRateType vatRate = new VATRateType();
-                    vatRate.TaxCode = vatView.TaxCode;
-                    vatRate.Value = vatView.VatPercent;
-                    vatItem.Item = vatRate;
-                }
-                tax.VAT.Add(vatItem);
-            }
-            return tax;
-        }
-
         public static VatViewModels Load(TaxType taxType)
         {
             VatViewModels vatView = new VatViewModels();
@@ -104,6 +74,9 @@ namespace ebIViewModels.ViewModels
                     VATRateType rate = (VATRateType)vatItemType.Item;
                     vatModel.VatPercent = rate.Value ?? 0;
                     vatModel.TaxCode = rate.TaxCode;
+                    
+
+                    
                 }
                 vatView.VatViewList.Add(vatModel);
             }

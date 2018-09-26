@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace ebIModels.Schema.ebInterface5p0 
+namespace ebIModels.Schema.ebInterface5p0
 {
     public class InvoiceHelperMethods5p0
     {
@@ -20,13 +20,17 @@ namespace ebIModels.Schema.ebInterface5p0
         public void SetInvoiceVersion()
         {
             base.CurrentSchema = _schemaInfo;
-            base.Version = Schema.InvoiceType.ebIVersion.V5p0;
+            base.Version = Schema.InvoiceType.ebIVersion.V5P0;
         }
 
 
         internal static List<ebISchema> _schemaInfo = new List<ebISchema>()
             {
-                new ebISchema(){Prefix = "eb",Url="http://www.ebinterface.at/schema/5p0/",CacheName = "ebInterface5p0.Invoice.xsd",UseInSchema = true},
+                new ebISchema() {
+                Prefix = "eb",
+                Url ="http://www.ebinterface.at/schema/5p0/",
+                CacheName = "ebInterface5p0.Invoice.xsd",
+                UseInSchema = true},
             };
 
 

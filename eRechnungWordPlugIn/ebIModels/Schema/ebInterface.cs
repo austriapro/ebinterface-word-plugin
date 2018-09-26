@@ -29,7 +29,7 @@ namespace ebIModels.Schema
             V4P1,
             V4P2,
             V4P3,
-            V5p0
+            V5P0
         }
 
         [XmlIgnore]
@@ -221,6 +221,9 @@ namespace ebIModels.Schema
                     break;
                 case InvoiceType.ebIVersion.V4P3:
                     schemas = ebInterface4p3.InvoiceType._schemaInfo;
+                    break;
+                case InvoiceType.ebIVersion.V5P0:
+                    schemas = ebInterface5p0.InvoiceType._schemaInfo;
                     break;
                 default:
                     throw new NotSupportedException("ebInterface Version nicht unterstützt.");

@@ -27,12 +27,12 @@ namespace ebIModels.Models
             }
         }
         //public decimal? TaxAmount { get; set; }
-        private decimal? _taxAmount;
+        private decimal? _taxAmountTotal;
 
-        public decimal? TaxAmount
+        public decimal? TaxAmountTotal
         {
-            get { return _taxAmount.FixedFraction(2); }
-            set { _taxAmount = value.FixedFraction(2); }
+            get { return _taxAmountTotal.FixedFraction(2); }
+            set { _taxAmountTotal = value.FixedFraction(2); }
         }
 
 
@@ -76,7 +76,7 @@ namespace ebIModels.Models
                 }
             }
             NetAmount = nettoBetrag;
-            TaxAmount = amount;
+            TaxAmountTotal = amount;
         }
     }
 

@@ -41,7 +41,7 @@ namespace ebIViewModels.ViewModels
                 OnPropertyChanged();
                 // HasSkontoElements = _skontoList.Any();
 
-                OnPropertyChanged("HasSkontoElements");
+                OnPropertyChanged(nameof(HasSkontoElements));
             }
         }
 
@@ -81,7 +81,7 @@ namespace ebIViewModels.ViewModels
                 _dueDays = value;
                 OnPropertyChanged();
                 _invoiceDueDate = _invoiceDate.AddDays(_dueDays);
-                OnPropertyChanged("InvoiceDueDate");
+                OnPropertyChanged(nameof(InvoiceDueDate));
             }
         }
 
@@ -123,9 +123,9 @@ namespace ebIViewModels.ViewModels
                 _invoiceDate = value.Date;
                 OnPropertyChanged();
                 _invoiceDueDate = _invoiceDate.AddDays(_dueDays);
-                OnPropertyChanged("InvoiceDueDate");
+                OnPropertyChanged(nameof(InvoiceDueDate));
                 UpdateSkontoList();
-                OnPropertyChanged("SkontoList");
+                OnPropertyChanged(nameof(SkontoList));
             }
         }
 
@@ -150,7 +150,7 @@ namespace ebIViewModels.ViewModels
                 OnPropertyChanged();
                 _dueDays = _invoiceDueDate.Days(_invoiceDate);
                 Log.TraceWrite(CallerInfo.Create(),"@Duedate Duedate: {0:d}, Invoicedate:{1:d}, Days:{2}", _invoiceDueDate, _invoiceDate, _dueDays);
-                OnPropertyChanged("InvoiceDueDays");
+                OnPropertyChanged(nameof(InvoiceDueDays));
             }
         }
 
@@ -234,8 +234,8 @@ namespace ebIViewModels.ViewModels
             {
                 Clear();
                 // HasSkontoElements = false;
-                OnPropertyChanged("HasSkontoElements");
-                OnPropertyChanged("SkontoList");
+                OnPropertyChanged(nameof(HasSkontoElements));
+                OnPropertyChanged(nameof(SkontoList));
             }
         }
 
@@ -248,8 +248,8 @@ namespace ebIViewModels.ViewModels
             {
                 SkontoList.Add(skonto);
                 // HasSkontoElements = true;
-                OnPropertyChanged("HasSkontoElements");
-                OnPropertyChanged("SkontoList");
+                OnPropertyChanged(nameof(HasSkontoElements));
+                OnPropertyChanged(nameof(SkontoList));
 
             }
         }
@@ -275,8 +275,8 @@ namespace ebIViewModels.ViewModels
                 int i = (int)o;
                 SkontoList.RemoveAt(i);
                 // HasSkontoElements = SkontoList.Any();
-                OnPropertyChanged("HasSkontoElements");
-                OnPropertyChanged("SkontoList");
+                OnPropertyChanged(nameof(HasSkontoElements));
+                OnPropertyChanged(nameof(SkontoList));
             }
         }
 
@@ -289,7 +289,7 @@ namespace ebIViewModels.ViewModels
             if (rc == DialogResult.OK)
             {
                 SkontoList[i] = skonto;
-                OnPropertyChanged("SkontoList");
+                OnPropertyChanged(nameof(SkontoList));
 
             }
         }
@@ -338,7 +338,7 @@ namespace ebIViewModels.ViewModels
             // InvoiceDueDate = new DateTime();
             SkontoList.Clear();
             // HasSkontoElements = false;
-            OnPropertyChanged("HasSkontoElements");
+            OnPropertyChanged(nameof(HasSkontoElements));
         }
 
         private void UpdateSkontoList()
@@ -348,7 +348,7 @@ namespace ebIViewModels.ViewModels
             {
                 UpdateSkonto(skonto);
             }
-            OnPropertyChanged("SkontoList");
+            OnPropertyChanged(nameof(SkontoList));
 
         }
 

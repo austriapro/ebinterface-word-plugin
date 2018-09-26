@@ -22,7 +22,7 @@ namespace ebIModels.Schema
             {"http://www.ebinterface.at/schema/4p0/",
                     new ebInterfaceVersion
                         {
-                            Version = Schema.InvoiceType.ebIVersion.V4P0, 
+                            Version = Schema.InvoiceType.ebIVersion.V4P0,
                             VersionType = typeof(Schema.ebInterface4p0.InvoiceType),
                             IsSaveSupported = false
                         }
@@ -30,10 +30,10 @@ namespace ebIModels.Schema
             {"http://www.ebinterface.at/schema/4p1/",
                     new ebInterfaceVersion
                         {
-                            Version = Schema.InvoiceType.ebIVersion.V4P1, 
+                            Version = Schema.InvoiceType.ebIVersion.V4P1,
                             VersionType = typeof(Schema.ebInterface4p1.InvoiceType),
                             IsSaveSupported = true
-                        
+
                         }
             },
                 {"http://www.ebinterface.at/schema/4p2/",
@@ -52,10 +52,18 @@ namespace ebIModels.Schema
                             IsSaveSupported = true
                         }
                 },
+                {"http://www.ebinterface.at/schema/5p0/",
+                    new ebInterfaceVersion
+                        {
+                            Version = Schema.InvoiceType.ebIVersion.V5P0,
+                            VersionType = typeof(Schema.ebInterface5p0.InvoiceType),
+                            IsSaveSupported = true
+                        }
+                },
 
             };
 
-        public static readonly InvoiceType.ebIVersion LatestVersion = InvoiceType.ebIVersion.V4P3;
+        public static readonly InvoiceType.ebIVersion LatestVersion = InvoiceType.ebIVersion.V5P0;
         /// <summary>
         /// Erzeugt eine neue ebInterface Instanz der angegebenen Version 
         /// </summary>
@@ -78,6 +86,9 @@ namespace ebIModels.Schema
                     break;
                 case Schema.InvoiceType.ebIVersion.V4P2:
                     invoice = new Schema.ebInterface4p2.InvoiceType();
+                    break;
+                case Schema.InvoiceType.ebIVersion.V5P0:
+                    invoice = new Schema.ebInterface5p0.InvoiceType();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("version");

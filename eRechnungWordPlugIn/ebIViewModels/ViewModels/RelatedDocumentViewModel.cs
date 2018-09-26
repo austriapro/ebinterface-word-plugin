@@ -145,7 +145,7 @@ namespace ebIViewModels.ViewModels
                 _currentSelectedValidation = value;
                 _refDocTypes.GetList(_documentTypes.GetReferenceDocumentTypes(CurrentSelectedValidation));
                 OnPropertyChanged();
-                OnPropertyChanged("RefDocTypes");
+                OnPropertyChanged(nameof(RefDocTypes));
             }
         }
         private DocumentTypeModels _documentTypes;

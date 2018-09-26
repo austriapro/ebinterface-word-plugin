@@ -64,35 +64,13 @@ namespace ebIModels.Models
 
         public string InvoiceNumber
         {
-            get
-            {
-                return this.invoiceNumberField;
-            }
-            set
-            {
-                if ((this.invoiceNumberField != null))
-                {
-                    if ((invoiceNumberField.Equals(value) != true))
-                    {
-                        this.invoiceNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceNumberField = value;
-
-                }
-            }
+            get { return this.invoiceNumberField; }
+            set { this.invoiceNumberField = value; }
         }
         public System.DateTime InvoiceDate
         {
-            get
-            {
-                return this.invoiceDateField;
-            }
-            set
-            {
+            get { return this.invoiceDateField; }
+            set {
                 if ((invoiceDateField.Equals(value) != true))
                 {
                     this.invoiceDateField = value;
@@ -102,404 +80,94 @@ namespace ebIModels.Models
         }
         public CancelledOriginalDocumentType CancelledOriginalDocument
         {
-            get
-            {
-                return this.cancelledOriginalDocumentField;
-            }
-            set
-            {
-                if ((this.cancelledOriginalDocumentField != null))
-                {
-                    if ((cancelledOriginalDocumentField.Equals(value) != true))
-                    {
-                        this.cancelledOriginalDocumentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.cancelledOriginalDocumentField = value;
-
-                }
-            }
+            get { return this.cancelledOriginalDocumentField; }
+            set { this.cancelledOriginalDocumentField = value; }
         }
         public List<RelatedDocumentType> RelatedDocument
         {
-            get
-            {
-                return this.relatedDocumentField;
-            }
-            set
-            {
-                if ((this.relatedDocumentField != null))
-                {
-                    if ((relatedDocumentField.Equals(value) != true))
-                    {
-                        this.relatedDocumentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.relatedDocumentField = value;
-
-                }
-            }
+            get { return this.relatedDocumentField; }
+            set { this.relatedDocumentField = value; }
         }
         public DeliveryType Delivery
         {
-            get
-            {
-                return this.deliveryField;
-            }
-            set
-            {
-                if ((this.deliveryField != null))
-                {
-                    if ((deliveryField.Equals(value) != true))
-                    {
-                        this.deliveryField = value;
-
-                    }
-                }
-                else
-                {
-                    this.deliveryField = value;
-
-                }
-            }
+            get { return this.deliveryField; }
+            set { this.deliveryField = value; }
         }
         public BillerType Biller
         {
-            get
-            {
-                return this.billerField;
-            }
-            set
-            {
-                if ((this.billerField != null))
-                {
-                    if ((billerField.Equals(value) != true))
-                    {
-                        this.billerField = value;
-
-                    }
-                }
-                else
-                {
-                    this.billerField = value;
-
-                }
-            }
+            get { return this.billerField; }
+            set { this.billerField = value; }
         }
         public InvoiceRecipientType InvoiceRecipient
         {
-            get
-            {
-                return this.invoiceRecipientField;
-            }
-            set
-            {
-                if ((this.invoiceRecipientField != null))
-                {
-                    if ((invoiceRecipientField.Equals(value) != true))
-                    {
-                        this.invoiceRecipientField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceRecipientField = value;
-
-                }
-            }
+            get { return this.invoiceRecipientField; }
+            set { this.invoiceRecipientField = value; }
         }
         public OrderingPartyType OrderingParty
         {
-            get
-            {
-                return this.orderingPartyField;
-            }
-            set
-            {
-                if ((this.orderingPartyField != null))
-                {
-                    if ((orderingPartyField.Equals(value) != true))
-                    {
-                        this.orderingPartyField = value;
-
-                    }
-                }
-                else
-                {
-                    this.orderingPartyField = value;
-
-                }
-            }
+            get { return this.orderingPartyField; }
+            set { this.orderingPartyField = value; }
         }
         public DetailsType Details
         {
-            get
-            {
-                return this.detailsField;
-            }
-            set
-            {
-                if ((this.detailsField != null))
-                {
-                    if ((detailsField.Equals(value) != true))
-                    {
-                        this.detailsField = value;
-
-                    }
-                }
-                else
-                {
-                    this.detailsField = value;
-
-                }
-            }
+            get { return this.detailsField; }
+            set { this.detailsField = value; }
         }
         public ReductionAndSurchargeDetailsType ReductionAndSurchargeDetails
         {
-            get
-            {
-                return this.reductionAndSurchargeDetailsField;
-            }
-            set
-            {
-                if ((this.reductionAndSurchargeDetailsField != null))
-                {
-                    if ((reductionAndSurchargeDetailsField.Equals(value) != true))
-                    {
-                        this.reductionAndSurchargeDetailsField = value;
-
-                    }
-                }
-                else
-                {
-                    this.reductionAndSurchargeDetailsField = value;
-
-                }
-            }
+            get { return this.reductionAndSurchargeDetailsField; }
+            set { this.reductionAndSurchargeDetailsField = value; }
         }
         public TaxType Tax
         {
-            get
-            {
-                return this.taxField;
-            }
-            set
-            {
-                if ((this.taxField != null))
-                {
-                    if ((taxField.Equals(value) != true))
-                    {
-                        this.taxField = value;
-
-                    }
-                }
-                else
-                {
-                    this.taxField = value;
-
-                }
-            }
+            get { return this.taxField; }
+            internal set { this.taxField = value; }
         }
         public decimal? TotalGrossAmount
         {
-            get
-            {
-                return this.totalGrossAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.totalGrossAmountField != null))
-                {
-                    if ((totalGrossAmountField.Equals(value) != true))
-                    {
-                        this.totalGrossAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.totalGrossAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.totalGrossAmountField.FixedFraction(2); }
+            set { this.totalGrossAmountField = value; }
         }
         public decimal? PayableAmount
         {
-            get
-            {
-                return this.payableAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.payableAmountField != null))
-                {
-                    if ((payableAmountField.Equals(value) != true))
-                    {
-                        this.payableAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.payableAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.payableAmountField.FixedFraction(2); }
+            set { this.payableAmountField = value; }
         }
 
         public PaymentMethodType PaymentMethod
         {
-            get
-            {
-                return this.paymentMethodField;
-            }
-            set
-            {
-                if ((this.paymentMethodField != null))
-                {
-                    if ((paymentMethodField.Equals(value) != true))
-                    {
-                        this.paymentMethodField = value;
-
-                    }
-                }
-                else
-                {
-                    this.paymentMethodField = value;
-
-                }
-            }
+            get { return this.paymentMethodField; }
+            set { this.paymentMethodField = value; }
         }
         public PaymentConditionsType PaymentConditions
         {
-            get
-            {
-                return this.paymentConditionsField;
-            }
-            set
-            {
-                if ((this.paymentConditionsField != null))
-                {
-                    if ((paymentConditionsField.Equals(value) != true))
-                    {
-                        this.paymentConditionsField = value;
-
-                    }
-                }
-                else
-                {
-                    this.paymentConditionsField = value;
-
-                }
-            }
+            get { return this.paymentConditionsField; }
+            set { this.paymentConditionsField = value; }
         }
         public PresentationDetailsType PresentationDetails
         {
-            get
-            {
-                return this.presentationDetailsField;
-            }
-            set
-            {
-                if ((this.presentationDetailsField != null))
-                {
-                    if ((presentationDetailsField.Equals(value) != true))
-                    {
-                        this.presentationDetailsField = value;
-
-                    }
-                }
-                else
-                {
-                    this.presentationDetailsField = value;
-
-                }
-            }
+            get { return this.presentationDetailsField; }
+            set { this.presentationDetailsField = value; }
         }
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
         public InvoiceRootExtensionType InvoiceRootExtension
         {
-            get
-            {
-                return this.invoiceRootExtensionField;
-            }
-            set
-            {
-                if ((this.invoiceRootExtensionField != null))
-                {
-                    if ((invoiceRootExtensionField.Equals(value) != true))
-                    {
-                        this.invoiceRootExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceRootExtensionField = value;
-
-                }
-            }
+            get { return this.invoiceRootExtensionField; }
+            set { this.invoiceRootExtensionField = value; }
         }
         public string GeneratingSystem
         {
-            get
-            {
-                return this.generatingSystemField;
-            }
-            set
-            {
-                if ((this.generatingSystemField != null))
-                {
-                    if ((generatingSystemField.Equals(value) != true))
-                    {
-                        this.generatingSystemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.generatingSystemField = value;
-
-                }
-            }
+            get { return this.generatingSystemField; }
+            set { this.generatingSystemField = value; }
         }
         public DocumentTypeType DocumentType
         {
-            get
-            {
-                return this.documentTypeField;
-            }
-            set
-            {
+            get { return this.documentTypeField; }
+            set {
                 if ((documentTypeField.Equals(value) != true))
                 {
                     this.documentTypeField = value;
@@ -509,12 +177,8 @@ namespace ebIModels.Models
         }
         public CurrencyType InvoiceCurrency
         {
-            get
-            {
-                return this.invoiceCurrencyField;
-            }
-            set
-            {
+            get { return this.invoiceCurrencyField; }
+            set {
                 if ((invoiceCurrencyField.Equals(value) != true))
                 {
                     this.invoiceCurrencyField = value;
@@ -524,12 +188,8 @@ namespace ebIModels.Models
         }
         public bool ManualProcessing
         {
-            get
-            {
-                return this.manualProcessingField;
-            }
-            set
-            {
+            get { return this.manualProcessingField; }
+            set {
                 if ((manualProcessingField.Equals(value) != true))
                 {
                     this.manualProcessingField = value;
@@ -540,12 +200,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool ManualProcessingSpecified
         {
-            get
-            {
-                return this.manualProcessingFieldSpecified;
-            }
-            set
-            {
+            get { return this.manualProcessingFieldSpecified; }
+            set {
                 if ((manualProcessingFieldSpecified.Equals(value) != true))
                 {
                     this.manualProcessingFieldSpecified = value;
@@ -555,35 +211,13 @@ namespace ebIModels.Models
         }
         public string DocumentTitle
         {
-            get
-            {
-                return this.documentTitleField;
-            }
-            set
-            {
-                if ((this.documentTitleField != null))
-                {
-                    if ((documentTitleField.Equals(value) != true))
-                    {
-                        this.documentTitleField = value;
-
-                    }
-                }
-                else
-                {
-                    this.documentTitleField = value;
-
-                }
-            }
+            get { return this.documentTitleField; }
+            set { this.documentTitleField = value; }
         }
         public LanguageType Language
         {
-            get
-            {
-                return this.languageField;
-            }
-            set
-            {
+            get { return this.languageField; }
+            set {
                 if ((languageField.Equals(value) != true))
                 {
                     this.languageField = value;
@@ -594,12 +228,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool LanguageSpecified
         {
-            get
-            {
-                return this.languageFieldSpecified;
-            }
-            set
-            {
+            get { return this.languageFieldSpecified; }
+            set {
                 if ((languageFieldSpecified.Equals(value) != true))
                 {
                     this.languageFieldSpecified = value;
@@ -609,12 +239,8 @@ namespace ebIModels.Models
         }
         public bool IsDuplicate
         {
-            get
-            {
-                return this.isDuplicateField;
-            }
-            set
-            {
+            get { return this.isDuplicateField; }
+            set {
                 if ((isDuplicateField.Equals(value) != true))
                 {
                     this.isDuplicateField = value;
@@ -625,12 +251,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool IsDuplicateSpecified
         {
-            get
-            {
-                return this.isDuplicateFieldSpecified;
-            }
-            set
-            {
+            get { return this.isDuplicateFieldSpecified; }
+            set {
                 if ((isDuplicateFieldSpecified.Equals(value) != true))
                 {
                     this.isDuplicateFieldSpecified = value;
@@ -666,6 +288,10 @@ namespace ebIModels.Models
                     Schema.ebInterface4p3.InvoiceType inv4p3 = MappingServiceVmTo4p3.MapModelToV4p3(this);
                     result = inv4p3.Save(filename);
                     break;
+                case ebIVersion.V5P0:
+                    Schema.ebInterface5p0.InvoiceType inv5p0 = MappingServiceVmTo5p0.MapModelToV5p0(this);
+                    result = inv5p0.Save(filename);
+                    break;
                 default:
                     break;
             }
@@ -675,7 +301,7 @@ namespace ebIModels.Models
 
         public override void SaveTemplate(string filename)
         {
-            // ToDo: V4p2
+            // ToDo: V5p0
             Schema.ebInterface4p2.InvoiceType inv = MappingServiceVmTo4p2.MapModelToV4p2(this);
             inv.SaveTemplate(filename);
         }
@@ -689,35 +315,13 @@ namespace ebIModels.Models
         private string commentField = "";
         public string InvoiceNumber
         {
-            get
-            {
-                return this.invoiceNumberField;
-            }
-            set
-            {
-                if ((this.invoiceNumberField != null))
-                {
-                    if ((invoiceNumberField.Equals(value) != true))
-                    {
-                        this.invoiceNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceNumberField = value;
-
-                }
-            }
+            get { return this.invoiceNumberField; }
+            set { this.invoiceNumberField = value; }
         }
         public System.DateTime InvoiceDate
         {
-            get
-            {
-                return this.invoiceDateField;
-            }
-            set
-            {
+            get { return this.invoiceDateField; }
+            set {
                 if ((invoiceDateField.Equals(value) != true))
                 {
                     this.invoiceDateField = value;
@@ -727,12 +331,8 @@ namespace ebIModels.Models
         }
         public DocumentTypeType DocumentType
         {
-            get
-            {
-                return this.documentTypeField;
-            }
-            set
-            {
+            get { return this.documentTypeField; }
+            set {
                 if ((documentTypeField.Equals(value) != true))
                 {
                     this.documentTypeField = value;
@@ -743,12 +343,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool DocumentTypeSpecified
         {
-            get
-            {
-                return this.documentTypeFieldSpecified;
-            }
-            set
-            {
+            get { return this.documentTypeFieldSpecified; }
+            set {
                 if ((documentTypeFieldSpecified.Equals(value) != true))
                 {
                     this.documentTypeFieldSpecified = value;
@@ -758,26 +354,8 @@ namespace ebIModels.Models
         }
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
     }
     public enum DocumentTypeType
@@ -814,49 +392,13 @@ namespace ebIModels.Models
         }
         public InvoiceRootExtensionType1 InvoiceRootExtension
         {
-            get
-            {
-                return this.invoiceRootExtensionField;
-            }
-            set
-            {
-                if ((this.invoiceRootExtensionField != null))
-                {
-                    if ((invoiceRootExtensionField.Equals(value) != true))
-                    {
-                        this.invoiceRootExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceRootExtensionField = value;
-
-                }
-            }
+            get { return this.invoiceRootExtensionField; }
+            set { this.invoiceRootExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -866,26 +408,8 @@ namespace ebIModels.Models
         [XmlAnyElement(Order = 0)]
         public System.Xml.XmlElement Any
         {
-            get
-            {
-                return this.anyField;
-            }
-            set
-            {
-                if ((this.anyField != null))
-                {
-                    if ((anyField.Equals(value) != true))
-                    {
-                        this.anyField = value;
-
-                    }
-                }
-                else
-                {
-                    this.anyField = value;
-
-                }
-            }
+            get { return this.anyField; }
+            set { this.anyField = value; }
         }
 
     }
@@ -904,49 +428,13 @@ namespace ebIModels.Models
         }
         public PresentationDetailsExtensionType1 PresentationDetailsExtension
         {
-            get
-            {
-                return this.presentationDetailsExtensionField;
-            }
-            set
-            {
-                if ((this.presentationDetailsExtensionField != null))
-                {
-                    if ((presentationDetailsExtensionField.Equals(value) != true))
-                    {
-                        this.presentationDetailsExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.presentationDetailsExtensionField = value;
-
-                }
-            }
+            get { return this.presentationDetailsExtensionField; }
+            set { this.presentationDetailsExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -964,81 +452,23 @@ namespace ebIModels.Models
         }
         public string URL
         {
-            get
-            {
-                return this.uRLField;
-            }
-            set
-            {
-                if ((this.uRLField != null))
-                {
-                    if ((uRLField.Equals(value) != true))
-                    {
-                        this.uRLField = value;
-
-                    }
-                }
-                else
-                {
-                    this.uRLField = value;
-
-                }
-            }
+            get { return this.uRLField; }
+            set { this.uRLField = value; }
         }
         public string LogoURL
         {
-            get
-            {
-                return this.logoURLField;
-            }
-            set
-            {
-                if ((this.logoURLField != null))
-                {
-                    if ((logoURLField.Equals(value) != true))
-                    {
-                        this.logoURLField = value;
-
-                    }
-                }
-                else
-                {
-                    this.logoURLField = value;
-
-                }
-            }
+            get { return this.logoURLField; }
+            set { this.logoURLField = value; }
         }
         public string LayoutID
         {
-            get
-            {
-                return this.layoutIDField;
-            }
-            set
-            {
-                if ((this.layoutIDField != null))
-                {
-                    if ((layoutIDField.Equals(value) != true))
-                    {
-                        this.layoutIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.layoutIDField = value;
-
-                }
-            }
+            get { return this.layoutIDField; }
+            set { this.layoutIDField = value; }
         }
         public bool SuppressZero
         {
-            get
-            {
-                return this.suppressZeroField;
-            }
-            set
-            {
+            get { return this.suppressZeroField; }
+            set {
                 if ((suppressZeroField.Equals(value) != true))
                 {
                     this.suppressZeroField = value;
@@ -1049,12 +479,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool SuppressZeroSpecified
         {
-            get
-            {
-                return this.suppressZeroFieldSpecified;
-            }
-            set
-            {
+            get { return this.suppressZeroFieldSpecified; }
+            set {
                 if ((suppressZeroFieldSpecified.Equals(value) != true))
                 {
                     this.suppressZeroFieldSpecified = value;
@@ -1064,26 +490,8 @@ namespace ebIModels.Models
         }
         public PresentationDetailsExtensionType PresentationDetailsExtension
         {
-            get
-            {
-                return this.presentationDetailsExtensionField;
-            }
-            set
-            {
-                if ((this.presentationDetailsExtensionField != null))
-                {
-                    if ((presentationDetailsExtensionField.Equals(value) != true))
-                    {
-                        this.presentationDetailsExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.presentationDetailsExtensionField = value;
-
-                }
-            }
+            get { return this.presentationDetailsExtensionField; }
+            set { this.presentationDetailsExtensionField = value; }
         }
 
     }
@@ -1102,49 +510,13 @@ namespace ebIModels.Models
         }
         public PaymentConditionsExtensionType1 PaymentConditionsExtension
         {
-            get
-            {
-                return this.paymentConditionsExtensionField;
-            }
-            set
-            {
-                if ((this.paymentConditionsExtensionField != null))
-                {
-                    if ((paymentConditionsExtensionField.Equals(value) != true))
-                    {
-                        this.paymentConditionsExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.paymentConditionsExtensionField = value;
-
-                }
-            }
+            get { return this.paymentConditionsExtensionField; }
+            set { this.paymentConditionsExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -1159,12 +531,8 @@ namespace ebIModels.Models
         private bool amountFieldSpecified;
         public System.DateTime PaymentDate
         {
-            get
-            {
-                return this.paymentDateField;
-            }
-            set
-            {
+            get { return this.paymentDateField; }
+            set {
                 if ((paymentDateField.Equals(value) != true))
                 {
                     this.paymentDateField = value;
@@ -1174,36 +542,14 @@ namespace ebIModels.Models
         }
         public decimal? BaseAmount
         {
-            get
-            {
-                return this.baseAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.baseAmountField != null))
-                {
-                    if ((baseAmountField.Equals(value) != true))
-                    {
-                        this.baseAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.baseAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.baseAmountField.FixedFraction(2); }
+            set { this.baseAmountField = value; }
         }
         [XmlIgnore()]
         public bool BaseAmountSpecified
         {
-            get
-            {
-                return this.baseAmountFieldSpecified;
-            }
-            set
-            {
+            get { return this.baseAmountFieldSpecified; }
+            set {
                 if ((baseAmountFieldSpecified.Equals(value) != true))
                 {
                     this.baseAmountFieldSpecified = value;
@@ -1213,36 +559,14 @@ namespace ebIModels.Models
         }
         public decimal? Percentage
         {
-            get
-            {
-                return this.percentageField;
-            }
-            set
-            {
-                if ((this.percentageField != null))
-                {
-                    if ((percentageField.Equals(value) != true))
-                    {
-                        this.percentageField = value;
-
-                    }
-                }
-                else
-                {
-                    this.percentageField = value;
-
-                }
-            }
+            get { return this.percentageField; }
+            set { this.percentageField = value; }
         }
         [XmlIgnore()]
         public bool PercentageSpecified
         {
-            get
-            {
-                return this.percentageFieldSpecified;
-            }
-            set
-            {
+            get { return this.percentageFieldSpecified; }
+            set {
                 if ((percentageFieldSpecified.Equals(value) != true))
                 {
                     this.percentageFieldSpecified = value;
@@ -1252,36 +576,14 @@ namespace ebIModels.Models
         }
         public decimal? Amount
         {
-            get
-            {
-                return this.amountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.amountField != null))
-                {
-                    if ((amountField.Equals(value) != true))
-                    {
-                        this.amountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.amountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.amountField.FixedFraction(2); }
+            set { this.amountField = value; }
         }
         [XmlIgnore()]
         public bool AmountSpecified
         {
-            get
-            {
-                return this.amountFieldSpecified;
-            }
-            set
-            {
+            get { return this.amountFieldSpecified; }
+            set {
                 if ((amountFieldSpecified.Equals(value) != true))
                 {
                     this.amountFieldSpecified = value;
@@ -1307,12 +609,8 @@ namespace ebIModels.Models
         }
         public System.DateTime DueDate
         {
-            get
-            {
-                return this.dueDateField;
-            }
-            set
-            {
+            get { return this.dueDateField; }
+            set {
                 if ((dueDateField.Equals(value) != true))
                 {
                     this.dueDateField = value;
@@ -1322,59 +620,19 @@ namespace ebIModels.Models
         }
         public List<DiscountType> Discount
         {
-            get
-            {
-                return this.discountField;
-            }
-            set
-            {
-                if ((this.discountField != null))
-                {
-                    if ((discountField.Equals(value) != true))
-                    {
-                        this.discountField = value;
-
-                    }
-                }
-                else
-                {
-                    this.discountField = value;
-
-                }
-            }
+            get { return this.discountField; }
+            set { this.discountField = value; }
         }
         public decimal? MinimumPayment
         {
-            get
-            {
-                return this.minimumPaymentField;
-            }
-            set
-            {
-                if ((this.minimumPaymentField != null))
-                {
-                    if ((minimumPaymentField.Equals(value) != true))
-                    {
-                        this.minimumPaymentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.minimumPaymentField = value;
-
-                }
-            }
+            get { return this.minimumPaymentField; }
+            set { this.minimumPaymentField = value; }
         }
         [XmlIgnore()]
         public bool MinimumPaymentSpecified
         {
-            get
-            {
-                return this.minimumPaymentFieldSpecified;
-            }
-            set
-            {
+            get { return this.minimumPaymentFieldSpecified; }
+            set {
                 if ((minimumPaymentFieldSpecified.Equals(value) != true))
                 {
                     this.minimumPaymentFieldSpecified = value;
@@ -1384,49 +642,13 @@ namespace ebIModels.Models
         }
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
         public PaymentConditionsExtensionType PaymentConditionsExtension
         {
-            get
-            {
-                return this.paymentConditionsExtensionField;
-            }
-            set
-            {
-                if ((this.paymentConditionsExtensionField != null))
-                {
-                    if ((paymentConditionsExtensionField.Equals(value) != true))
-                    {
-                        this.paymentConditionsExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.paymentConditionsExtensionField = value;
-
-                }
-            }
+            get { return this.paymentConditionsExtensionField; }
+            set { this.paymentConditionsExtensionField = value; }
         }
 
     }
@@ -1445,49 +667,13 @@ namespace ebIModels.Models
         }
         public PaymentMethodExtensionType1 PaymentMethodExtension
         {
-            get
-            {
-                return this.paymentMethodExtensionField;
-            }
-            set
-            {
-                if ((this.paymentMethodExtensionField != null))
-                {
-                    if ((paymentMethodExtensionField.Equals(value) != true))
-                    {
-                        this.paymentMethodExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.paymentMethodExtensionField = value;
-
-                }
-            }
+            get { return this.paymentMethodExtensionField; }
+            set { this.paymentMethodExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -1497,50 +683,14 @@ namespace ebIModels.Models
         private string valueField = "";
         public string CheckSum
         {
-            get
-            {
-                return this.checkSumField;
-            }
-            set
-            {
-                if ((this.checkSumField != null))
-                {
-                    if ((checkSumField.Equals(value) != true))
-                    {
-                        this.checkSumField = value;
-
-                    }
-                }
-                else
-                {
-                    this.checkSumField = value;
-
-                }
-            }
+            get { return this.checkSumField; }
+            set { this.checkSumField = value; }
         }
         [XmlText()]
         public string Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -1550,12 +700,8 @@ namespace ebIModels.Models
         private string valueField = "";
         public CountryCodeType BankCodeType1
         {
-            get
-            {
-                return this.bankCodeType1Field;
-            }
-            set
-            {
+            get { return this.bankCodeType1Field; }
+            set {
                 if ((bankCodeType1Field.Equals(value) != true))
                 {
                     this.bankCodeType1Field = value;
@@ -1566,26 +712,8 @@ namespace ebIModels.Models
         [XmlText(DataType = "integer")]
         public string Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -2104,141 +1232,33 @@ namespace ebIModels.Models
         }
         public string BankName
         {
-            get
-            {
-                return this.bankNameField;
-            }
-            set
-            {
-                if ((this.bankNameField != null))
-                {
-                    if ((bankNameField.Equals(value) != true))
-                    {
-                        this.bankNameField = value;
-
-                    }
-                }
-                else
-                {
-                    this.bankNameField = value;
-
-                }
-            }
+            get { return this.bankNameField; }
+            set { this.bankNameField = value; }
         }
         public BankCodeType BankCode
         {
-            get
-            {
-                return this.bankCodeField;
-            }
-            set
-            {
-                if ((this.bankCodeField != null))
-                {
-                    if ((bankCodeField.Equals(value) != true))
-                    {
-                        this.bankCodeField = value;
-
-                    }
-                }
-                else
-                {
-                    this.bankCodeField = value;
-
-                }
-            }
+            get { return this.bankCodeField; }
+            set { this.bankCodeField = value; }
         }
         public string BIC
         {
-            get
-            {
-                return this.bICField;
-            }
-            set
-            {
-                if ((this.bICField != null))
-                {
-                    if ((bICField.Equals(value) != true))
-                    {
-                        this.bICField = value;
-
-                    }
-                }
-                else
-                {
-                    this.bICField = value;
-
-                }
-            }
+            get { return this.bICField; }
+            set { this.bICField = value; }
         }
         public string BankAccountNr
         {
-            get
-            {
-                return this.bankAccountNrField;
-            }
-            set
-            {
-                if ((this.bankAccountNrField != null))
-                {
-                    if ((bankAccountNrField.Equals(value) != true))
-                    {
-                        this.bankAccountNrField = value;
-
-                    }
-                }
-                else
-                {
-                    this.bankAccountNrField = value;
-
-                }
-            }
+            get { return this.bankAccountNrField; }
+            set { this.bankAccountNrField = value; }
         }
         public string IBAN
         {
-            get
-            {
-                return this.iBANField;
-            }
-            set
-            {
-                if ((this.iBANField != null))
-                {
-                    if ((iBANField.Equals(value) != true))
-                    {
-                        this.iBANField = value;
-
-                    }
-                }
-                else
-                {
-                    this.iBANField = value;
-
-                }
-            }
+            get { return this.iBANField; }
+            set { this.iBANField = value; }
         }
         public string BankAccountOwner
         {
-            get
-            {
-                return this.bankAccountOwnerField;
-            }
-            set
-            {
-                if ((this.bankAccountOwnerField != null))
-                {
-                    if ((bankAccountOwnerField.Equals(value) != true))
-                    {
-                        this.bankAccountOwnerField = value;
-
-                    }
-                }
-                else
-                {
-                    this.bankAccountOwnerField = value;
-
-                }
-            }
+            get { return this.bankAccountOwnerField; }
+            set { this.bankAccountOwnerField = value; }
         }
 
     }
@@ -2258,58 +1278,18 @@ namespace ebIModels.Models
         }
         public List<AccountType> BeneficiaryAccount
         {
-            get
-            {
-                return this.beneficiaryAccountField;
-            }
-            set
-            {
-                if ((this.beneficiaryAccountField != null))
-                {
-                    if ((beneficiaryAccountField.Equals(value) != true))
-                    {
-                        this.beneficiaryAccountField = value;
-
-                    }
-                }
-                else
-                {
-                    this.beneficiaryAccountField = value;
-
-                }
-            }
+            get { return this.beneficiaryAccountField; }
+            set { this.beneficiaryAccountField = value; }
         }
         public PaymentReferenceType PaymentReference
         {
-            get
-            {
-                return this.paymentReferenceField;
-            }
-            set
-            {
-                if ((this.paymentReferenceField != null))
-                {
-                    if ((paymentReferenceField.Equals(value) != true))
-                    {
-                        this.paymentReferenceField = value;
-
-                    }
-                }
-                else
-                {
-                    this.paymentReferenceField = value;
-
-                }
-            }
+            get { return this.paymentReferenceField; }
+            set { this.paymentReferenceField = value; }
         }
         public bool ConsolidatorPayable
         {
-            get
-            {
-                return this.consolidatorPayableField;
-            }
-            set
-            {
+            get { return this.consolidatorPayableField; }
+            set {
                 if ((consolidatorPayableField.Equals(value) != true))
                 {
                     this.consolidatorPayableField = value;
@@ -2320,12 +1300,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool ConsolidatorPayableSpecified
         {
-            get
-            {
-                return this.consolidatorPayableFieldSpecified;
-            }
-            set
-            {
+            get { return this.consolidatorPayableFieldSpecified; }
+            set {
                 if ((consolidatorPayableFieldSpecified.Equals(value) != true))
                 {
                     this.consolidatorPayableFieldSpecified = value;
@@ -2346,12 +1322,8 @@ namespace ebIModels.Models
         private System.DateTime debitCollectionDateField;
         public SEPADirectDebitTypeType Type
         {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
+            get { return this.typeField; }
+            set {
                 if ((typeField.Equals(value) != true))
                 {
                     this.typeField = value;
@@ -2361,127 +1333,33 @@ namespace ebIModels.Models
         }
         public string BIC
         {
-            get
-            {
-                return this.bICField;
-            }
-            set
-            {
-                if ((this.bICField != null))
-                {
-                    if ((bICField.Equals(value) != true))
-                    {
-                        this.bICField = value;
-
-                    }
-                }
-                else
-                {
-                    this.bICField = value;
-
-                }
-            }
+            get { return this.bICField; }
+            set { this.bICField = value; }
         }
         public string IBAN
         {
-            get
-            {
-                return this.iBANField;
-            }
-            set
-            {
-                if ((this.iBANField != null))
-                {
-                    if ((iBANField.Equals(value) != true))
-                    {
-                        this.iBANField = value;
-
-                    }
-                }
-                else
-                {
-                    this.iBANField = value;
-
-                }
-            }
+            get { return this.iBANField; }
+            set { this.iBANField = value; }
         }
         public string BankAccountOwner
         {
-            get
-            {
-                return this.bankAccountOwnerField;
-            }
-            set
-            {
-                if ((this.bankAccountOwnerField != null))
-                {
-                    if ((bankAccountOwnerField.Equals(value) != true))
-                    {
-                        this.bankAccountOwnerField = value;
-
-                    }
-                }
-                else
-                {
-                    this.bankAccountOwnerField = value;
-
-                }
-            }
+            get { return this.bankAccountOwnerField; }
+            set { this.bankAccountOwnerField = value; }
         }
         public string CreditorID
         {
-            get
-            {
-                return this.creditorIDField;
-            }
-            set
-            {
-                if ((this.creditorIDField != null))
-                {
-                    if ((creditorIDField.Equals(value) != true))
-                    {
-                        this.creditorIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.creditorIDField = value;
-
-                }
-            }
+            get { return this.creditorIDField; }
+            set { this.creditorIDField = value; }
         }
         public string MandateReference
         {
-            get
-            {
-                return this.mandateReferenceField;
-            }
-            set
-            {
-                if ((this.mandateReferenceField != null))
-                {
-                    if ((mandateReferenceField.Equals(value) != true))
-                    {
-                        this.mandateReferenceField = value;
-
-                    }
-                }
-                else
-                {
-                    this.mandateReferenceField = value;
-
-                }
-            }
+            get { return this.mandateReferenceField; }
+            set { this.mandateReferenceField = value; }
         }
         public System.DateTime DebitCollectionDate
         {
-            get
-            {
-                return this.debitCollectionDateField;
-            }
-            set
-            {
+            get { return this.debitCollectionDateField; }
+            set {
                 if ((debitCollectionDateField.Equals(value) != true))
                 {
                     this.debitCollectionDateField = value;
@@ -2518,72 +1396,18 @@ namespace ebIModels.Models
         }
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
         public object Item
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                if ((this.itemField != null))
-                {
-                    if ((itemField.Equals(value) != true))
-                    {
-                        this.itemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemField = value;
-
-                }
-            }
+            get { return this.itemField; }
+            set { this.itemField = value; }
         }
         public PaymentMethodExtensionType PaymentMethodExtension
         {
-            get
-            {
-                return this.paymentMethodExtensionField;
-            }
-            set
-            {
-                if ((this.paymentMethodExtensionField != null))
-                {
-                    if ((paymentMethodExtensionField.Equals(value) != true))
-                    {
-                        this.paymentMethodExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.paymentMethodExtensionField = value;
-
-                }
-            }
+            get { return this.paymentMethodExtensionField; }
+            set { this.paymentMethodExtensionField = value; }
         }
 
     }
@@ -2602,49 +1426,13 @@ namespace ebIModels.Models
         }
         public TaxExtensionType1 TaxExtension
         {
-            get
-            {
-                return this.taxExtensionField;
-            }
-            set
-            {
-                if ((this.taxExtensionField != null))
-                {
-                    if ((taxExtensionField.Equals(value) != true))
-                    {
-                        this.taxExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.taxExtensionField = value;
-
-                }
-            }
+            get { return this.taxExtensionField; }
+            set { this.taxExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -2654,49 +1442,13 @@ namespace ebIModels.Models
         private decimal? amountField;
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
         public decimal? Amount
         {
-            get
-            {
-                return this.amountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.amountField != null))
-                {
-                    if ((amountField.Equals(value) != true))
-                    {
-                        this.amountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.amountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.amountField.FixedFraction(2); }
+            set { this.amountField = value; }
         }
 
     }
@@ -2707,72 +1459,18 @@ namespace ebIModels.Models
         private decimal? amountField;
         public decimal? TaxedAmount
         {
-            get
-            {
-                return this.taxedAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.taxedAmountField != null))
-                {
-                    if ((taxedAmountField.Equals(value) != true))
-                    {
-                        this.taxedAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.taxedAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.taxedAmountField.FixedFraction(2); }
+            set { this.taxedAmountField = value; }
         }
         public object Item
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                if ((this.itemField != null))
-                {
-                    if ((itemField.Equals(value) != true))
-                    {
-                        this.itemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemField = value;
-
-                }
-            }
+            get { return this.itemField; }
+            set { this.itemField = value; }
         }
         public decimal? Amount
         {
-            get
-            {
-                return this.amountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.amountField != null))
-                {
-                    if ((amountField.Equals(value) != true))
-                    {
-                        this.amountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.amountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.amountField.FixedFraction(2); }
+            set { this.amountField = value; }
         }
     }
     public partial class TaxExemptionType
@@ -2781,50 +1479,14 @@ namespace ebIModels.Models
         private string valueField = "";
         public string TaxExemptionCode
         {
-            get
-            {
-                return this.taxExemptionCodeField;
-            }
-            set
-            {
-                if ((this.taxExemptionCodeField != null))
-                {
-                    if ((taxExemptionCodeField.Equals(value) != true))
-                    {
-                        this.taxExemptionCodeField = value;
-
-                    }
-                }
-                else
-                {
-                    this.taxExemptionCodeField = value;
-
-                }
-            }
+            get { return this.taxExemptionCodeField; }
+            set { this.taxExemptionCodeField = value; }
         }
         [XmlText()]
         public string Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -2834,50 +1496,16 @@ namespace ebIModels.Models
         private decimal? valueField;
         public string TaxCode
         {
-            get
-            {
-                return this.taxCodeField;
-            }
-            set
-            {
-                if ((this.taxCodeField != null))
-                {
-                    if ((taxCodeField.Equals(value) != true))
-                    {
-                        this.taxCodeField = value;
-
-                    }
-                }
-                else
-                {
-                    this.taxCodeField = value;
-
-                }
-            }
+            get { return this.taxCodeField; }
+            set { this.taxCodeField = value; }
         }
         [XmlText()]
         public decimal? Value
         {
-            get
-            {
+            get {
                 return this.valueField;
             }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            set { this.valueField = value; }
         }
 
     }
@@ -2892,79 +1520,107 @@ namespace ebIModels.Models
             this.otherTaxField = new List<OtherTaxType>();
             this.vATField = new List<VATItemType>();
         }
-        [XmlArray(Order = 0)]
-        [XmlArrayItem("VATItem", IsNullable = false)]
+        //[XmlArray(Order = 0)]
+        //[XmlArrayItem("VATItem", IsNullable = false)]
         public List<VATItemType> VAT
         {
-            get
-            {
-                return this.vATField;
-            }
-            set
-            {
-                if ((this.vATField != null))
-                {
-                    if ((vATField.Equals(value) != true))
-                    {
-                        this.vATField = value;
-
-                    }
-                }
-                else
-                {
-                    this.vATField = value;
-
-                }
-            }
+            get { return this.vATField; }
+            set { this.vATField = value; }
         }
         public List<OtherTaxType> OtherTax
         {
-            get
-            {
-                return this.otherTaxField;
-            }
-            set
-            {
-                if ((this.otherTaxField != null))
-                {
-                    if ((otherTaxField.Equals(value) != true))
-                    {
-                        this.otherTaxField = value;
-
-                    }
-                }
-                else
-                {
-                    this.otherTaxField = value;
-
-                }
-            }
+            get { return this.otherTaxField; }
+            set { this.otherTaxField = value; }
         }
         public TaxExtensionType TaxExtension
         {
-            get
-            {
-                return this.taxExtensionField;
-            }
-            set
-            {
-                if ((this.taxExtensionField != null))
-                {
-                    if ((taxExtensionField.Equals(value) != true))
-                    {
-                        this.taxExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.taxExtensionField = value;
-
-                }
-            }
+            get { return this.taxExtensionField; }
+            set { this.taxExtensionField = value; }
         }
 
     }
+    public partial class AccountingCurrencyAmountType
+    {
+
+        private string currencyField;
+
+        private decimal valueField;
+
+        /// <remarks/>
+        public string Currency
+        {
+            get { return this.currencyField; }
+            set { this.currencyField = value; }
+        }
+
+        /// <remarks/>
+        public decimal Value
+        {
+            get { return this.valueField; }
+            set { this.valueField = value; }
+        }
+    }
+    public partial class TaxItemType
+    {
+
+        private decimal taxableAmountField;
+
+        private TaxPercentType taxPercentField;
+
+        private decimal taxAmountField;
+
+        private bool taxAmountFieldSpecified;
+
+        private AccountingCurrencyAmountType accountingCurrencyAmountField;
+
+        private string commentField;
+
+        /// <remarks/>
+        public decimal TaxableAmount
+        {
+            get { return this.taxableAmountField; }
+            set { this.taxableAmountField = value; }
+        }
+
+        /// <remarks/>
+        public TaxPercentType TaxPercent
+        {
+            get { return this.taxPercentField; }
+            set { this.taxPercentField = value; }
+        }
+
+        /// <remarks/>
+        public decimal TaxAmount
+        {
+            get { return this.taxAmountField; }
+            set { this.taxAmountField = value; }
+        }
+    }
+    public partial class TaxPercentType
+    {
+
+        private string taxCategoryCodeField;
+
+        private decimal valueField;
+
+        /// <summary>
+        /// Gets or sets the tax category code.
+        /// </summary>
+        /// <value>
+        /// The tax category code according to ebInterface 5p0: Empfohlene Codes für TaxCategoryCode        
+        /// </value>
+        public string TaxCategoryCode
+        {
+            get { return this.taxCategoryCodeField; }
+            set { taxCategoryCodeField = value; }
+        }
+        public decimal Value
+        {
+            get { return this.valueField; }
+            set { this.valueField = value; }
+        }
+    }
+
     public partial class ReductionAndSurchargeDetailsExtensionType1
     {
 
@@ -2980,49 +1636,13 @@ namespace ebIModels.Models
         }
         public ReductionAndSurchargeDetailsExtensionType1 ReductionAndSurchargeDetailsExtension
         {
-            get
-            {
-                return this.reductionAndSurchargeDetailsExtensionField;
-            }
-            set
-            {
-                if ((this.reductionAndSurchargeDetailsExtensionField != null))
-                {
-                    if ((reductionAndSurchargeDetailsExtensionField.Equals(value) != true))
-                    {
-                        this.reductionAndSurchargeDetailsExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.reductionAndSurchargeDetailsExtensionField = value;
-
-                }
-            }
+            get { return this.reductionAndSurchargeDetailsExtensionField; }
+            set { this.reductionAndSurchargeDetailsExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -3040,73 +1660,19 @@ namespace ebIModels.Models
         [XmlChoiceIdentifier("ItemsElementName")]
         public List<object> Items
         {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                if ((this.itemsField != null))
-                {
-                    if ((itemsField.Equals(value) != true))
-                    {
-                        this.itemsField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemsField = value;
-
-                }
-            }
+            get { return this.itemsField; }
+            set { this.itemsField = value; }
         }
         [XmlIgnore()]
         public List<ItemsChoiceType1> ItemsElementName
         {
-            get
-            {
-                return this.itemsElementNameField;
-            }
-            set
-            {
-                if ((this.itemsElementNameField != null))
-                {
-                    if ((itemsElementNameField.Equals(value) != true))
-                    {
-                        this.itemsElementNameField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemsElementNameField = value;
-
-                }
-            }
+            get { return this.itemsElementNameField; }
+            set { this.itemsElementNameField = value; }
         }
         public ReductionAndSurchargeDetailsExtensionType ReductionAndSurchargeDetailsExtension
         {
-            get
-            {
-                return this.reductionAndSurchargeDetailsExtensionField;
-            }
-            set
-            {
-                if ((this.reductionAndSurchargeDetailsExtensionField != null))
-                {
-                    if ((reductionAndSurchargeDetailsExtensionField.Equals(value) != true))
-                    {
-                        this.reductionAndSurchargeDetailsExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.reductionAndSurchargeDetailsExtensionField = value;
-
-                }
-            }
+            get { return this.reductionAndSurchargeDetailsExtensionField; }
+            set { this.reductionAndSurchargeDetailsExtensionField = value; }
         }
 
     }
@@ -3119,26 +1685,8 @@ namespace ebIModels.Models
         }
         public VATRateType VATRate
         {
-            get
-            {
-                return this.vATRateField;
-            }
-            set
-            {
-                if ((this.vATRateField != null))
-                {
-                    if ((vATRateField.Equals(value) != true))
-                    {
-                        this.vATRateField = value;
-
-                    }
-                }
-                else
-                {
-                    this.vATRateField = value;
-
-                }
-            }
+            get { return this.vATRateField; }
+            set { this.vATRateField = value; }
         }
 
     }
@@ -3153,59 +1701,19 @@ namespace ebIModels.Models
         private string commentField = "";
         public decimal? BaseAmount
         {
-            get
-            {
-                return this.baseAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.baseAmountField != null))
-                {
-                    if ((baseAmountField.Equals(value) != true))
-                    {
-                        this.baseAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.baseAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.baseAmountField.FixedFraction(2); }
+            set { this.baseAmountField = value; }
         }
         public decimal? Percentage
         {
-            get
-            {
-                return this.percentageField;
-            }
-            set
-            {
-                if ((this.percentageField != null))
-                {
-                    if ((percentageField.Equals(value) != true))
-                    {
-                        this.percentageField = value;
-
-                    }
-                }
-                else
-                {
-                    this.percentageField = value;
-
-                }
-            }
+            get { return this.percentageField; }
+            set { this.percentageField = value; }
         }
         [XmlIgnore()]
         public bool PercentageSpecified
         {
-            get
-            {
-                return this.percentageFieldSpecified;
-            }
-            set
-            {
+            get { return this.percentageFieldSpecified; }
+            set {
                 if ((percentageFieldSpecified.Equals(value) != true))
                 {
                     this.percentageFieldSpecified = value;
@@ -3215,72 +1723,18 @@ namespace ebIModels.Models
         }
         public decimal? Amount
         {
-            get
-            {
-                return this.amountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.amountField != null))
-                {
-                    if ((amountField.Equals(value) != true))
-                    {
-                        this.amountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.amountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.amountField.FixedFraction(2); }
+            set { this.amountField = value; }
         }
         public string TaxID
         {
-            get
-            {
-                return this.taxIDField;
-            }
-            set
-            {
-                if ((this.taxIDField != null))
-                {
-                    if ((taxIDField.Equals(value) != true))
-                    {
-                        this.taxIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.taxIDField = value;
-
-                }
-            }
+            get { return this.taxIDField; }
+            set { this.taxIDField = value; }
         }
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
 
     }
@@ -3293,26 +1747,8 @@ namespace ebIModels.Models
         }
         public VATRateType VATRate
         {
-            get
-            {
-                return this.vATRateField;
-            }
-            set
-            {
-                if ((this.vATRateField != null))
-                {
-                    if ((vATRateField.Equals(value) != true))
-                    {
-                        this.vATRateField = value;
-
-                    }
-                }
-                else
-                {
-                    this.vATRateField = value;
-
-                }
-            }
+            get { return this.vATRateField; }
+            set { this.vATRateField = value; }
         }
 
     }
@@ -3327,59 +1763,19 @@ namespace ebIModels.Models
         private string commentField = "";
         public decimal? BaseAmount
         {
-            get
-            {
-                return this.baseAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.baseAmountField != null))
-                {
-                    if ((baseAmountField.Equals(value) != true))
-                    {
-                        this.baseAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.baseAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.baseAmountField.FixedFraction(2); }
+            set { this.baseAmountField = value; }
         }
         public decimal? Percentage
         {
-            get
-            {
-                return this.percentageField;
-            }
-            set
-            {
-                if ((this.percentageField != null))
-                {
-                    if ((percentageField.Equals(value) != true))
-                    {
-                        this.percentageField = value;
-
-                    }
-                }
-                else
-                {
-                    this.percentageField = value;
-
-                }
-            }
+            get { return this.percentageField; }
+            set { this.percentageField = value; }
         }
         [XmlIgnore()]
         public bool PercentageSpecified
         {
-            get
-            {
-                return this.percentageFieldSpecified;
-            }
-            set
-            {
+            get { return this.percentageFieldSpecified; }
+            set {
                 if ((percentageFieldSpecified.Equals(value) != true))
                 {
                     this.percentageFieldSpecified = value;
@@ -3389,36 +1785,14 @@ namespace ebIModels.Models
         }
         public decimal? Amount
         {
-            get
-            {
-                return this.amountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.amountField != null))
-                {
-                    if ((amountField.Equals(value) != true))
-                    {
-                        this.amountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.amountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.amountField.FixedFraction(2); }
+            set { this.amountField = value; }
         }
         [XmlIgnore()]
         public bool AmountSpecified
         {
-            get
-            {
-                return this.amountFieldSpecified;
-            }
-            set
-            {
+            get { return this.amountFieldSpecified; }
+            set {
                 if ((amountFieldSpecified.Equals(value) != true))
                 {
                     this.amountFieldSpecified = value;
@@ -3428,26 +1802,8 @@ namespace ebIModels.Models
         }
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
 
     }
@@ -3467,12 +1823,8 @@ namespace ebIModels.Models
         private string valueField = "";
         public System.DateTime Date
         {
-            get
-            {
-                return this.dateField;
-            }
-            set
-            {
+            get { return this.dateField; }
+            set {
                 if ((dateField.Equals(value) != true))
                 {
                     this.dateField = value;
@@ -3483,12 +1835,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool DateSpecified
         {
-            get
-            {
-                return this.dateFieldSpecified;
-            }
-            set
-            {
+            get { return this.dateFieldSpecified; }
+            set {
                 if ((dateFieldSpecified.Equals(value) != true))
                 {
                     this.dateFieldSpecified = value;
@@ -3499,26 +1847,8 @@ namespace ebIModels.Models
         [XmlText()]
         public string Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -3533,72 +1863,18 @@ namespace ebIModels.Models
         }
         public string Description
         {
-            get
-            {
-                return this.descriptionField;
-            }
-            set
-            {
-                if ((this.descriptionField != null))
-                {
-                    if ((descriptionField.Equals(value) != true))
-                    {
-                        this.descriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.descriptionField = value;
-
-                }
-            }
+            get { return this.descriptionField; }
+            set { this.descriptionField = value; }
         }
         public decimal? LineItemAmount
         {
-            get
-            {
-                return this.lineItemAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.lineItemAmountField != null))
-                {
-                    if ((lineItemAmountField.Equals(value) != true))
-                    {
-                        this.lineItemAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.lineItemAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.lineItemAmountField.FixedFraction(2); }
+            set { this.lineItemAmountField = value; }
         }
         public ReasonType Reason
         {
-            get
-            {
-                return this.reasonField;
-            }
-            set
-            {
-                if ((this.reasonField != null))
-                {
-                    if ((reasonField.Equals(value) != true))
-                    {
-                        this.reasonField = value;
-
-                    }
-                }
-                else
-                {
-                    this.reasonField = value;
-
-                }
-            }
+            get { return this.reasonField; }
+            set { this.reasonField = value; }
         }
 
     }
@@ -3607,26 +1883,8 @@ namespace ebIModels.Models
         private string beneficiarySocialInsuranceNumberField = "";
         public string BeneficiarySocialInsuranceNumber
         {
-            get
-            {
-                return this.beneficiarySocialInsuranceNumberField;
-            }
-            set
-            {
-                if ((this.beneficiarySocialInsuranceNumberField != null))
-                {
-                    if ((beneficiarySocialInsuranceNumberField.Equals(value) != true))
-                    {
-                        this.beneficiarySocialInsuranceNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.beneficiarySocialInsuranceNumberField = value;
-
-                }
-            }
+            get { return this.beneficiarySocialInsuranceNumberField; }
+            set { this.beneficiarySocialInsuranceNumberField = value; }
         }
 
     }
@@ -3641,49 +1899,13 @@ namespace ebIModels.Models
         }
         public ListLineItemExtensionType1 ListLineItemExtension
         {
-            get
-            {
-                return this.listLineItemExtensionField;
-            }
-            set
-            {
-                if ((this.listLineItemExtensionField != null))
-                {
-                    if ((listLineItemExtensionField.Equals(value) != true))
-                    {
-                        this.listLineItemExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.listLineItemExtensionField = value;
-
-                }
-            }
+            get { return this.listLineItemExtensionField; }
+            set { this.listLineItemExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -3693,50 +1915,14 @@ namespace ebIModels.Models
         private string valueField = "";
         public string ClassificationSchema
         {
-            get
-            {
-                return this.classificationSchemaField;
-            }
-            set
-            {
-                if ((this.classificationSchemaField != null))
-                {
-                    if ((classificationSchemaField.Equals(value) != true))
-                    {
-                        this.classificationSchemaField = value;
-
-                    }
-                }
-                else
-                {
-                    this.classificationSchemaField = value;
-
-                }
-            }
+            get { return this.classificationSchemaField; }
+            set { this.classificationSchemaField = value; }
         }
         [XmlText()]
         public string Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -3760,187 +1946,43 @@ namespace ebIModels.Models
         }
         public List<string> SerialNumber
         {
-            get
-            {
-                return this.serialNumberField;
-            }
-            set
-            {
-                if ((this.serialNumberField != null))
-                {
-                    if ((serialNumberField.Equals(value) != true))
-                    {
-                        this.serialNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.serialNumberField = value;
-
-                }
-            }
+            get { return this.serialNumberField; }
+            set { this.serialNumberField = value; }
         }
         public List<string> ChargeNumber
         {
-            get
-            {
-                return this.chargeNumberField;
-            }
-            set
-            {
-                if ((this.chargeNumberField != null))
-                {
-                    if ((chargeNumberField.Equals(value) != true))
-                    {
-                        this.chargeNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.chargeNumberField = value;
-
-                }
-            }
+            get { return this.chargeNumberField; }
+            set { this.chargeNumberField = value; }
         }
         public List<ClassificationType> Classification
         {
-            get
-            {
-                return this.classificationField;
-            }
-            set
-            {
-                if ((this.classificationField != null))
-                {
-                    if ((classificationField.Equals(value) != true))
-                    {
-                        this.classificationField = value;
-
-                    }
-                }
-                else
-                {
-                    this.classificationField = value;
-
-                }
-            }
+            get { return this.classificationField; }
+            set { this.classificationField = value; }
         }
         public UnitType AlternativeQuantity
         {
-            get
-            {
-                return this.alternativeQuantityField;
-            }
-            set
-            {
-                if ((this.alternativeQuantityField != null))
-                {
-                    if ((alternativeQuantityField.Equals(value) != true))
-                    {
-                        this.alternativeQuantityField = value;
-
-                    }
-                }
-                else
-                {
-                    this.alternativeQuantityField = value;
-
-                }
-            }
+            get { return this.alternativeQuantityField; }
+            set { this.alternativeQuantityField = value; }
         }
         public string Size
         {
-            get
-            {
-                return this.sizeField;
-            }
-            set
-            {
-                if ((this.sizeField != null))
-                {
-                    if ((sizeField.Equals(value) != true))
-                    {
-                        this.sizeField = value;
-
-                    }
-                }
-                else
-                {
-                    this.sizeField = value;
-
-                }
-            }
+            get { return this.sizeField; }
+            set { this.sizeField = value; }
         }
         public UnitType Weight
         {
-            get
-            {
-                return this.weightField;
-            }
-            set
-            {
-                if ((this.weightField != null))
-                {
-                    if ((weightField.Equals(value) != true))
-                    {
-                        this.weightField = value;
-
-                    }
-                }
-                else
-                {
-                    this.weightField = value;
-
-                }
-            }
+            get { return this.weightField; }
+            set { this.weightField = value; }
         }
         public string Boxes
         {
-            get
-            {
-                return this.boxesField;
-            }
-            set
-            {
-                if ((this.boxesField != null))
-                {
-                    if ((boxesField.Equals(value) != true))
-                    {
-                        this.boxesField = value;
-
-                    }
-                }
-                else
-                {
-                    this.boxesField = value;
-
-                }
-            }
+            get { return this.boxesField; }
+            set { this.boxesField = value; }
         }
         public string Color
         {
-            get
-            {
-                return this.colorField;
-            }
-            set
-            {
-                if ((this.colorField != null))
-                {
-                    if ((colorField.Equals(value) != true))
-                    {
-                        this.colorField = value;
-
-                    }
-                }
-                else
-                {
-                    this.colorField = value;
-
-                }
-            }
+            get { return this.colorField; }
+            set { this.colorField = value; }
         }
 
     }
@@ -3950,50 +1992,14 @@ namespace ebIModels.Models
         private decimal? valueField;
         public string Unit
         {
-            get
-            {
-                return this.unitField;
-            }
-            set
-            {
-                if ((this.unitField != null))
-                {
-                    if ((unitField.Equals(value) != true))
-                    {
-                        this.unitField = value;
-
-                    }
-                }
-                else
-                {
-                    this.unitField = value;
-
-                }
-            }
+            get { return this.unitField; }
+            set { this.unitField = value; }
         }
         [XmlText()]
         public decimal? Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -4009,50 +2015,14 @@ namespace ebIModels.Models
         [XmlChoiceIdentifier("ItemsElementName")]
         public List<object> Items
         {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                if ((this.itemsField != null))
-                {
-                    if ((itemsField.Equals(value) != true))
-                    {
-                        this.itemsField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemsField = value;
-
-                }
-            }
+            get { return this.itemsField; }
+            set { this.itemsField = value; }
         }
         [XmlIgnore()]
         public List<ItemsChoiceType> ItemsElementName
         {
-            get
-            {
-                return this.itemsElementNameField;
-            }
-            set
-            {
-                if ((this.itemsElementNameField != null))
-                {
-                    if ((itemsElementNameField.Equals(value) != true))
-                    {
-                        this.itemsElementNameField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemsElementNameField = value;
-
-                }
-            }
+            get { return this.itemsElementNameField; }
+            set { this.itemsElementNameField = value; }
         }
 
     }
@@ -4072,36 +2042,14 @@ namespace ebIModels.Models
         private decimal? valueField;
         public decimal? BaseQuantity
         {
-            get
-            {
-                return this.baseQuantityField;
-            }
-            set
-            {
-                if ((this.baseQuantityField != null))
-                {
-                    if ((baseQuantityField.Equals(value) != true))
-                    {
-                        this.baseQuantityField = value;
-
-                    }
-                }
-                else
-                {
-                    this.baseQuantityField = value.FixedFraction(4);
-
-                }
-            }
+            get { return this.baseQuantityField; }
+            set { this.baseQuantityField = value; }
         }
         [XmlIgnore()]
         public bool BaseQuantitySpecified
         {
-            get
-            {
-                return this.baseQuantityFieldSpecified;
-            }
-            set
-            {
+            get { return this.baseQuantityFieldSpecified; }
+            set {
                 if ((baseQuantityFieldSpecified.Equals(value) != true))
                 {
                     this.baseQuantityFieldSpecified = value;
@@ -4112,26 +2060,8 @@ namespace ebIModels.Models
         [XmlText()]
         public decimal? Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -4146,12 +2076,8 @@ namespace ebIModels.Models
         }
         public ArticleNumberTypeType ArticleNumberType1
         {
-            get
-            {
-                return this.articleNumberType1Field;
-            }
-            set
-            {
+            get { return this.articleNumberType1Field; }
+            set {
                 if ((articleNumberType1Field.Equals(value) != true))
                 {
                     this.articleNumberType1Field = value;
@@ -4162,12 +2088,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool ArticleNumberType1Specified
         {
-            get
-            {
-                return this.articleNumberType1FieldSpecified;
-            }
-            set
-            {
+            get { return this.articleNumberType1FieldSpecified; }
+            set {
                 if ((articleNumberType1FieldSpecified.Equals(value) != true))
                 {
                     this.articleNumberType1FieldSpecified = value;
@@ -4178,26 +2100,8 @@ namespace ebIModels.Models
         [XmlText()]
         public List<string> Text
         {
-            get
-            {
-                return this.textField;
-            }
-            set
-            {
-                if ((this.textField != null))
-                {
-                    if ((textField.Equals(value) != true))
-                    {
-                        this.textField = value;
-
-                    }
-                }
-                else
-                {
-                    this.textField = value;
-
-                }
-            }
+            get { return this.textField; }
+            set { this.textField = value; }
         }
 
     }
@@ -4243,150 +2147,45 @@ namespace ebIModels.Models
         }
         public string PositionNumber
         {
-            get
-            {
-                return this.positionNumberField;
-            }
-            set
-            {
-                if ((this.positionNumberField != null))
-                {
-                    if ((positionNumberField.Equals(value) != true))
-                    {
-                        this.positionNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.positionNumberField = value;
-
-                }
-            }
+            get { return this.positionNumberField; }
+            set { this.positionNumberField = value; }
         }
         public List<string> Description
         {
-            get
-            {
-                return this.descriptionField;
-            }
-            set
-            {
-                if ((this.descriptionField != null))
-                {
-                    if ((descriptionField.Equals(value) != true))
-                    {
-                        this.descriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.descriptionField = value;
-
-                }
-            }
+            get { return this.descriptionField; }
+            set { this.descriptionField = value; }
         }
         public List<ArticleNumberType> ArticleNumber
         {
-            get
-            {
-                return this.articleNumberField;
-            }
-            set
-            {
-                if ((this.articleNumberField != null))
-                {
-                    if ((articleNumberField.Equals(value) != true))
-                    {
-                        this.articleNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.articleNumberField = value;
-
-                }
-            }
+            get { return this.articleNumberField; }
+            set { this.articleNumberField = value; }
         }
         public UnitType Quantity
         {
-            get
-            {
-                return this.quantityField;
-            }
-            set
-            {
-                if ((this.quantityField != null))
-                {
-                    if ((quantityField.Equals(value) != true))
-                    {
-                        this.quantityField = value;
-
-                    }
-                }
-                else
-                {
-                    this.quantityField = value;
-
-                }
-            }
+            get { return this.quantityField; }
+            set { this.quantityField = value; }
         }
         public UnitPriceType UnitPrice
         {
-            get
-            {
-                return this.unitPriceField;
-            }
-            set
-            {
-                if ((this.unitPriceField != null))
-                {
-                    if ((unitPriceField.Equals(value) != true))
-                    {
-                        this.unitPriceField = value;
-
-                    }
-                }
-                else
-                {
-                    this.unitPriceField = value;
-
-                }
-            }
+            get { return this.unitPriceField; }
+            set { this.unitPriceField = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the  TAX item.
+        /// </summary>
+        /// <value>
+        /// The item.
+        /// </value>
         public object Item
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                if ((this.itemField != null))
-                {
-                    if ((itemField.Equals(value) != true))
-                    {
-                        this.itemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemField = value;
-
-                }
-            }
+            get { return this.itemField; }
+          internal  set { this.itemField = value; }
         }
         public bool DiscountFlag
         {
-            get
-            {
-                return this.discountFlagField;
-            }
-            set
-            {
+            get { return this.discountFlagField; }
+            set {
                 if ((discountFlagField.Equals(value) != true))
                 {
                     this.discountFlagField = value;
@@ -4397,12 +2196,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool DiscountFlagSpecified
         {
-            get
-            {
-                return this.discountFlagFieldSpecified;
-            }
-            set
-            {
+            get { return this.discountFlagFieldSpecified; }
+            set {
                 if ((discountFlagFieldSpecified.Equals(value) != true))
                 {
                     this.discountFlagFieldSpecified = value;
@@ -4412,164 +2207,38 @@ namespace ebIModels.Models
         }
         public ReductionAndSurchargeListLineItemDetailsType ReductionAndSurchargeListLineItemDetails
         {
-            get
-            {
-                return this.reductionAndSurchargeListLineItemDetailsField;
-            }
-            set
-            {
-                if ((this.reductionAndSurchargeListLineItemDetailsField != null))
-                {
-                    if ((reductionAndSurchargeListLineItemDetailsField.Equals(value) != true))
-                    {
-                        this.reductionAndSurchargeListLineItemDetailsField = value;
-
-                    }
-                }
-                else
-                {
-                    this.reductionAndSurchargeListLineItemDetailsField = value;
-
-                }
-            }
+            get { return this.reductionAndSurchargeListLineItemDetailsField; }
+            set { this.reductionAndSurchargeListLineItemDetailsField = value; }
         }
         public DeliveryType Delivery
         {
-            get
-            {
-                return this.deliveryField;
-            }
-            set
-            {
-                if ((this.deliveryField != null))
-                {
-                    if ((deliveryField.Equals(value) != true))
-                    {
-                        this.deliveryField = value;
-
-                    }
-                }
-                else
-                {
-                    this.deliveryField = value;
-
-                }
-            }
+            get { return this.deliveryField; }
+            set { this.deliveryField = value; }
         }
         public OrderReferenceDetailType BillersOrderReference
         {
-            get
-            {
-                return this.billersOrderReferenceField;
-            }
-            set
-            {
-                if ((this.billersOrderReferenceField != null))
-                {
-                    if ((billersOrderReferenceField.Equals(value) != true))
-                    {
-                        this.billersOrderReferenceField = value;
-
-                    }
-                }
-                else
-                {
-                    this.billersOrderReferenceField = value;
-
-                }
-            }
+            get { return this.billersOrderReferenceField; }
+            set { this.billersOrderReferenceField = value; }
         }
         public OrderReferenceDetailType InvoiceRecipientsOrderReference
         {
-            get
-            {
-                return this.invoiceRecipientsOrderReferenceField;
-            }
-            set
-            {
-                if ((this.invoiceRecipientsOrderReferenceField != null))
-                {
-                    if ((invoiceRecipientsOrderReferenceField.Equals(value) != true))
-                    {
-                        this.invoiceRecipientsOrderReferenceField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceRecipientsOrderReferenceField = value;
-
-                }
-            }
+            get { return this.invoiceRecipientsOrderReferenceField; }
+            set { this.invoiceRecipientsOrderReferenceField = value; }
         }
         public AdditionalInformationType AdditionalInformation
         {
-            get
-            {
-                return this.additionalInformationField;
-            }
-            set
-            {
-                if ((this.additionalInformationField != null))
-                {
-                    if ((additionalInformationField.Equals(value) != true))
-                    {
-                        this.additionalInformationField = value;
-
-                    }
-                }
-                else
-                {
-                    this.additionalInformationField = value;
-
-                }
-            }
+            get { return this.additionalInformationField; }
+            set { this.additionalInformationField = value; }
         }
         public decimal? LineItemAmount
         {
-            get
-            {
-                return this.lineItemAmountField.FixedFraction(2);
-            }
-            set
-            {
-                if ((this.lineItemAmountField != null))
-                {
-                    if ((lineItemAmountField.Equals(value) != true))
-                    {
-                        this.lineItemAmountField = value.FixedFraction(2);
-
-                    }
-                }
-                else
-                {
-                    this.lineItemAmountField = value.FixedFraction(2);
-
-                }
-            }
+            get { return this.lineItemAmountField.FixedFraction(2); }
+            set { this.lineItemAmountField = value; }
         }
         public ListLineItemExtensionType ListLineItemExtension
         {
-            get
-            {
-                return this.listLineItemExtensionField;
-            }
-            set
-            {
-                if ((this.listLineItemExtensionField != null))
-                {
-                    if ((listLineItemExtensionField.Equals(value) != true))
-                    {
-                        this.listLineItemExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.listLineItemExtensionField = value;
-
-                }
-            }
+            get { return this.listLineItemExtensionField; }
+            set { this.listLineItemExtensionField = value; }
         }
         public void RecalcLineItem()
         {
@@ -4598,118 +2267,28 @@ namespace ebIModels.Models
         }
         public string DeliveryID
         {
-            get
-            {
-                return this.deliveryIDField;
-            }
-            set
-            {
-                if ((this.deliveryIDField != null))
-                {
-                    if ((deliveryIDField.Equals(value) != true))
-                    {
-                        this.deliveryIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.deliveryIDField = value;
-
-                }
-            }
+            get { return this.deliveryIDField; }
+            set { this.deliveryIDField = value; }
         }
         public object Item
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                if ((this.itemField != null))
-                {
-                    if ((itemField.Equals(value) != true))
-                    {
-                        this.itemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemField = value;
-
-                }
-            }
+            get { return this.itemField; }
+            set { this.itemField = value; }
         }
         public AddressType Address
         {
-            get
-            {
-                return this.addressField;
-            }
-            set
-            {
-                if ((this.addressField != null))
-                {
-                    if ((addressField.Equals(value) != true))
-                    {
-                        this.addressField = value;
-
-                    }
-                }
-                else
-                {
-                    this.addressField = value;
-
-                }
-            }
+            get { return this.addressField; }
+            set { this.addressField = value; }
         }
         public string Description
         {
-            get
-            {
-                return this.descriptionField;
-            }
-            set
-            {
-                if ((this.descriptionField != null))
-                {
-                    if ((descriptionField.Equals(value) != true))
-                    {
-                        this.descriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.descriptionField = value;
-
-                }
-            }
+            get { return this.descriptionField; }
+            set { this.descriptionField = value; }
         }
         public DeliveryExtensionType DeliveryExtension
         {
-            get
-            {
-                return this.deliveryExtensionField;
-            }
-            set
-            {
-                if ((this.deliveryExtensionField != null))
-                {
-                    if ((deliveryExtensionField.Equals(value) != true))
-                    {
-                        this.deliveryExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.deliveryExtensionField = value;
-
-                }
-            }
+            get { return this.deliveryExtensionField; }
+            set { this.deliveryExtensionField = value; }
         }
 
     }
@@ -4719,12 +2298,8 @@ namespace ebIModels.Models
         private System.DateTime? toDateField;
         public System.DateTime? FromDate
         {
-            get
-            {
-                return this.fromDateField;
-            }
-            set
-            {
+            get { return this.fromDateField; }
+            set {
                 if ((fromDateField.Equals(value) != true))
                 {
                     this.fromDateField = value;
@@ -4734,12 +2309,8 @@ namespace ebIModels.Models
         }
         public System.DateTime? ToDate
         {
-            get
-            {
-                return this.toDateField;
-            }
-            set
-            {
+            get { return this.toDateField; }
+            set {
                 if ((toDateField.Equals(value) != true))
                 {
                     this.toDateField = value;
@@ -4780,279 +2351,63 @@ namespace ebIModels.Models
         }
         public List<AddressIdentifierType> AddressIdentifier
         {
-            get
-            {
-                return this.addressIdentifierField;
-            }
-            set
-            {
-                if ((this.addressIdentifierField != null))
-                {
-                    if ((addressIdentifierField.Equals(value) != true))
-                    {
-                        this.addressIdentifierField = value;
-
-                    }
-                }
-                else
-                {
-                    this.addressIdentifierField = value;
-
-                }
-            }
+            get { return this.addressIdentifierField; }
+            set { this.addressIdentifierField = value; }
         }
         public string Salutation
         {
-            get
-            {
-                return this.salutationField;
-            }
-            set
-            {
-                if ((this.salutationField != null))
-                {
-                    if ((salutationField.Equals(value) != true))
-                    {
-                        this.salutationField = value;
-
-                    }
-                }
-                else
-                {
-                    this.salutationField = value;
-
-                }
-            }
+            get { return this.salutationField; }
+            set { this.salutationField = value; }
         }
         public string Name
         {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                if ((this.nameField != null))
-                {
-                    if ((nameField.Equals(value) != true))
-                    {
-                        this.nameField = value;
-
-                    }
-                }
-                else
-                {
-                    this.nameField = value;
-
-                }
-            }
+            get { return this.nameField; }
+            set { this.nameField = value; }
         }
         public string Street
         {
-            get
-            {
-                return this.streetField;
-            }
-            set
-            {
-                if ((this.streetField != null))
-                {
-                    if ((streetField.Equals(value) != true))
-                    {
-                        this.streetField = value;
-
-                    }
-                }
-                else
-                {
-                    this.streetField = value;
-
-                }
-            }
+            get { return this.streetField; }
+            set { this.streetField = value; }
         }
         public string POBox
         {
-            get
-            {
-                return this.pOBoxField;
-            }
-            set
-            {
-                if ((this.pOBoxField != null))
-                {
-                    if ((pOBoxField.Equals(value) != true))
-                    {
-                        this.pOBoxField = value;
-
-                    }
-                }
-                else
-                {
-                    this.pOBoxField = value;
-
-                }
-            }
+            get { return this.pOBoxField; }
+            set { this.pOBoxField = value; }
         }
         public string Town
         {
-            get
-            {
-                return this.townField;
-            }
-            set
-            {
-                if ((this.townField != null))
-                {
-                    if ((townField.Equals(value) != true))
-                    {
-                        this.townField = value;
-
-                    }
-                }
-                else
-                {
-                    this.townField = value;
-
-                }
-            }
+            get { return this.townField; }
+            set { this.townField = value; }
         }
         public string ZIP
         {
-            get
-            {
-                return this.zIPField;
-            }
-            set
-            {
-                if ((this.zIPField != null))
-                {
-                    if ((zIPField.Equals(value) != true))
-                    {
-                        this.zIPField = value;
-
-                    }
-                }
-                else
-                {
-                    this.zIPField = value;
-
-                }
-            }
+            get { return this.zIPField; }
+            set { this.zIPField = value; }
         }
         public CountryType Country
         {
-            get
-            {
-                return this.countryField;
-            }
-            set
-            {
-                if ((this.countryField != null))
-                {
-                    if ((countryField.Equals(value) != true))
-                    {
-                        this.countryField = value;
-
-                    }
-                }
-                else
-                {
-                    this.countryField = value;
-
-                }
-            }
+            get { return this.countryField; }
+            set { this.countryField = value; }
         }
         public string Phone
         {
-            get
-            {
-                return this.phoneField;
-            }
-            set
-            {
-                if ((this.phoneField != null))
-                {
-                    if ((phoneField.Equals(value) != true))
-                    {
-                        this.phoneField = value;
-
-                    }
-                }
-                else
-                {
-                    this.phoneField = value;
-
-                }
-            }
+            get { return this.phoneField; }
+            set { this.phoneField = value; }
         }
         public string Email
         {
-            get
-            {
-                return this.emailField;
-            }
-            set
-            {
-                if ((this.emailField != null))
-                {
-                    if ((emailField.Equals(value) != true))
-                    {
-                        this.emailField = value;
-
-                    }
-                }
-                else
-                {
-                    this.emailField = value;
-
-                }
-            }
+            get { return this.emailField; }
+            set { this.emailField = value; }
         }
         public string Contact
         {
-            get
-            {
-                return this.contactField;
-            }
-            set
-            {
-                if ((this.contactField != null))
-                {
-                    if ((contactField.Equals(value) != true))
-                    {
-                        this.contactField = value;
-
-                    }
-                }
-                else
-                {
-                    this.contactField = value;
-
-                }
-            }
+            get { return this.contactField; }
+            set { this.contactField = value; }
         }
         public List<string> AddressExtension
         {
-            get
-            {
-                return this.addressExtensionField;
-            }
-            set
-            {
-                if ((this.addressExtensionField != null))
-                {
-                    if ((addressExtensionField.Equals(value) != true))
-                    {
-                        this.addressExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.addressExtensionField = value;
-
-                }
-            }
+            get { return this.addressExtensionField; }
+            set { this.addressExtensionField = value; }
         }
 
     }
@@ -5063,12 +2418,8 @@ namespace ebIModels.Models
         private string valueField = "";
         public AddressIdentifierTypeType AddressIdentifierType1
         {
-            get
-            {
-                return this.addressIdentifierType1Field;
-            }
-            set
-            {
+            get { return this.addressIdentifierType1Field; }
+            set {
                 if ((addressIdentifierType1Field.Equals(value) != true))
                 {
                     this.addressIdentifierType1Field = value;
@@ -5079,12 +2430,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool AddressIdentifierType1Specified
         {
-            get
-            {
-                return this.addressIdentifierType1FieldSpecified;
-            }
-            set
-            {
+            get { return this.addressIdentifierType1FieldSpecified; }
+            set {
                 if ((addressIdentifierType1FieldSpecified.Equals(value) != true))
                 {
                     this.addressIdentifierType1FieldSpecified = value;
@@ -5095,26 +2442,8 @@ namespace ebIModels.Models
         [XmlText()]
         public string Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -5138,12 +2467,8 @@ namespace ebIModels.Models
         }
         public CountryCodeType CountryCode
         {
-            get
-            {
-                return this.countryCodeField;
-            }
-            set
-            {
+            get { return this.countryCodeField; }
+            set {
                 if ((countryCodeField.Equals(value) != true))
                 {
                     this.countryCodeField = value;
@@ -5154,12 +2479,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool CountryCodeSpecified
         {
-            get
-            {
-                return this.countryCodeFieldSpecified;
-            }
-            set
-            {
+            get { return this.countryCodeFieldSpecified; }
+            set {
                 if ((countryCodeFieldSpecified.Equals(value) != true))
                 {
                     this.countryCodeFieldSpecified = value;
@@ -5170,26 +2491,8 @@ namespace ebIModels.Models
         [XmlText()]
         public List<string> Text
         {
-            get
-            {
-                return this.textField;
-            }
-            set
-            {
-                if ((this.textField != null))
-                {
-                    if ((textField.Equals(value) != true))
-                    {
-                        this.textField = value;
-
-                    }
-                }
-                else
-                {
-                    this.textField = value;
-
-                }
-            }
+            get { return this.textField; }
+            set { this.textField = value; }
         }
 
     }
@@ -5204,49 +2507,13 @@ namespace ebIModels.Models
         }
         public DeliveryExtensionType1 DeliveryExtension
         {
-            get
-            {
-                return this.deliveryExtensionField;
-            }
-            set
-            {
-                if ((this.deliveryExtensionField != null))
-                {
-                    if ((deliveryExtensionField.Equals(value) != true))
-                    {
-                        this.deliveryExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.deliveryExtensionField = value;
-
-                }
-            }
+            get { return this.deliveryExtensionField; }
+            set { this.deliveryExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -5259,26 +2526,8 @@ namespace ebIModels.Models
         private string orderPositionNumberField = "";
         public string OrderPositionNumber
         {
-            get
-            {
-                return this.orderPositionNumberField;
-            }
-            set
-            {
-                if ((this.orderPositionNumberField != null))
-                {
-                    if ((orderPositionNumberField.Equals(value) != true))
-                    {
-                        this.orderPositionNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.orderPositionNumberField = value;
-
-                }
-            }
+            get { return this.orderPositionNumberField; }
+            set { this.orderPositionNumberField = value; }
         }
 
     }
@@ -5291,35 +2540,13 @@ namespace ebIModels.Models
         private string descriptionField = "";
         public string OrderID
         {
-            get
-            {
-                return this.orderIDField;
-            }
-            set
-            {
-                if ((this.orderIDField != null))
-                {
-                    if ((orderIDField.Equals(value) != true))
-                    {
-                        this.orderIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.orderIDField = value;
-
-                }
-            }
+            get { return this.orderIDField; }
+            set { this.orderIDField = value; }
         }
         public System.DateTime ReferenceDate
         {
-            get
-            {
-                return this.referenceDateField;
-            }
-            set
-            {
+            get { return this.referenceDateField; }
+            set {
                 if ((referenceDateField.Equals(value) != true))
                 {
                     this.referenceDateField = value;
@@ -5330,12 +2557,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool ReferenceDateSpecified
         {
-            get
-            {
-                return this.referenceDateFieldSpecified;
-            }
-            set
-            {
+            get { return this.referenceDateFieldSpecified; }
+            set {
                 if ((referenceDateFieldSpecified.Equals(value) != true))
                 {
                     this.referenceDateFieldSpecified = value;
@@ -5345,26 +2568,8 @@ namespace ebIModels.Models
         }
         public string Description
         {
-            get
-            {
-                return this.descriptionField;
-            }
-            set
-            {
-                if ((this.descriptionField != null))
-                {
-                    if ((descriptionField.Equals(value) != true))
-                    {
-                        this.descriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.descriptionField = value;
-
-                }
-            }
+            get { return this.descriptionField; }
+            set { this.descriptionField = value; }
         }
 
     }
@@ -5379,72 +2584,18 @@ namespace ebIModels.Models
         }
         public string HeaderDescription
         {
-            get
-            {
-                return this.headerDescriptionField;
-            }
-            set
-            {
-                if ((this.headerDescriptionField != null))
-                {
-                    if ((headerDescriptionField.Equals(value) != true))
-                    {
-                        this.headerDescriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.headerDescriptionField = value;
-
-                }
-            }
+            get { return this.headerDescriptionField; }
+            set { this.headerDescriptionField = value; }
         }
         public List<ListLineItemType> ListLineItem
         {
-            get
-            {
-                return this.listLineItemField;
-            }
-            set
-            {
-                if ((this.listLineItemField != null))
-                {
-                    if ((listLineItemField.Equals(value) != true))
-                    {
-                        this.listLineItemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.listLineItemField = value;
-
-                }
-            }
+            get { return this.listLineItemField; }
+            set { this.listLineItemField = value; }
         }
         public string FooterDescription
         {
-            get
-            {
-                return this.footerDescriptionField;
-            }
-            set
-            {
-                if ((this.footerDescriptionField != null))
-                {
-                    if ((footerDescriptionField.Equals(value) != true))
-                    {
-                        this.footerDescriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.footerDescriptionField = value;
-
-                }
-            }
+            get { return this.footerDescriptionField; }
+            set { this.footerDescriptionField = value; }
         }
     }
     public partial class DetailsType
@@ -5460,95 +2611,23 @@ namespace ebIModels.Models
         }
         public string HeaderDescription
         {
-            get
-            {
-                return this.headerDescriptionField;
-            }
-            set
-            {
-                if ((this.headerDescriptionField != null))
-                {
-                    if ((headerDescriptionField.Equals(value) != true))
-                    {
-                        this.headerDescriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.headerDescriptionField = value;
-
-                }
-            }
+            get { return this.headerDescriptionField; }
+            set { this.headerDescriptionField = value; }
         }
         public List<ItemListType> ItemList
         {
-            get
-            {
-                return this.itemListField;
-            }
-            set
-            {
-                if ((this.itemListField != null))
-                {
-                    if ((itemListField.Equals(value) != true))
-                    {
-                        this.itemListField = value;
-
-                    }
-                }
-                else
-                {
-                    this.itemListField = value;
-
-                }
-            }
+            get { return this.itemListField; }
+            set { this.itemListField = value; }
         }
         public string FooterDescription
         {
-            get
-            {
-                return this.footerDescriptionField;
-            }
-            set
-            {
-                if ((this.footerDescriptionField != null))
-                {
-                    if ((footerDescriptionField.Equals(value) != true))
-                    {
-                        this.footerDescriptionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.footerDescriptionField = value;
-
-                }
-            }
+            get { return this.footerDescriptionField; }
+            set { this.footerDescriptionField = value; }
         }
         public List<BelowTheLineItemType> BelowTheLineItem
         {
-            get
-            {
-                return this.belowTheLineItemField;
-            }
-            set
-            {
-                if ((this.belowTheLineItemField != null))
-                {
-                    if ((belowTheLineItemField.Equals(value) != true))
-                    {
-                        this.belowTheLineItemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.belowTheLineItemField = value;
-
-                }
-            }
+            get { return this.belowTheLineItemField; }
+            set { this.belowTheLineItemField = value; }
         }
 
         public void RecalcItemList()
@@ -5577,49 +2656,13 @@ namespace ebIModels.Models
         }
         public OrderingPartyExtensionType1 OrderingPartyExtension
         {
-            get
-            {
-                return this.orderingPartyExtensionField;
-            }
-            set
-            {
-                if ((this.orderingPartyExtensionField != null))
-                {
-                    if ((orderingPartyExtensionField.Equals(value) != true))
-                    {
-                        this.orderingPartyExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.orderingPartyExtensionField = value;
-
-                }
-            }
+            get { return this.orderingPartyExtensionField; }
+            set { this.orderingPartyExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -5638,49 +2681,13 @@ namespace ebIModels.Models
         }
         public InvoiceRecipientExtensionType1 InvoiceRecipientExtension
         {
-            get
-            {
-                return this.invoiceRecipientExtensionField;
-            }
-            set
-            {
-                if ((this.invoiceRecipientExtensionField != null))
-                {
-                    if ((invoiceRecipientExtensionField.Equals(value) != true))
-                    {
-                        this.invoiceRecipientExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceRecipientExtensionField = value;
-
-                }
-            }
+            get { return this.invoiceRecipientExtensionField; }
+            set { this.invoiceRecipientExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -5689,26 +2696,8 @@ namespace ebIModels.Models
         private string billersContractPartnerNumberField = "";
         public string BillersContractPartnerNumber
         {
-            get
-            {
-                return this.billersContractPartnerNumberField;
-            }
-            set
-            {
-                if ((this.billersContractPartnerNumberField != null))
-                {
-                    if ((billersContractPartnerNumberField.Equals(value) != true))
-                    {
-                        this.billersContractPartnerNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.billersContractPartnerNumberField = value;
-
-                }
-            }
+            get { return this.billersContractPartnerNumberField; }
+            set { this.billersContractPartnerNumberField = value; }
         }
 
     }
@@ -5723,49 +2712,13 @@ namespace ebIModels.Models
         }
         public BillerExtensionType1 BillerExtension
         {
-            get
-            {
-                return this.billerExtensionField;
-            }
-            set
-            {
-                if ((this.billerExtensionField != null))
-                {
-                    if ((billerExtensionField.Equals(value) != true))
-                    {
-                        this.billerExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.billerExtensionField = value;
-
-                }
-            }
+            get { return this.billerExtensionField; }
+            set { this.billerExtensionField = value; }
         }
         public CustomType Custom
         {
-            get
-            {
-                return this.customField;
-            }
-            set
-            {
-                if ((this.customField != null))
-                {
-                    if ((customField.Equals(value) != true))
-                    {
-                        this.customField = value;
-
-                    }
-                }
-                else
-                {
-                    this.customField = value;
-
-                }
-            }
+            get { return this.customField; }
+            set { this.customField = value; }
         }
 
     }
@@ -5775,50 +2728,14 @@ namespace ebIModels.Models
         private string valueField = "";
         public string IdentificationType
         {
-            get
-            {
-                return this.identificationTypeField;
-            }
-            set
-            {
-                if ((this.identificationTypeField != null))
-                {
-                    if ((identificationTypeField.Equals(value) != true))
-                    {
-                        this.identificationTypeField = value;
-
-                    }
-                }
-                else
-                {
-                    this.identificationTypeField = value;
-
-                }
-            }
+            get { return this.identificationTypeField; }
+            set { this.identificationTypeField = value; }
         }
         [XmlText()]
         public string Value
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                if ((this.valueField != null))
-                {
-                    if ((valueField.Equals(value) != true))
-                    {
-                        this.valueField = value;
-
-                    }
-                }
-                else
-                {
-                    this.valueField = value;
-
-                }
-            }
+            get { return this.valueField; }
+            set { this.valueField = value; }
         }
 
     }
@@ -5839,95 +2756,23 @@ namespace ebIModels.Models
         }
         public string VATIdentificationNumber
         {
-            get
-            {
-                return this.vATIdentificationNumberField;
-            }
-            set
-            {
-                if ((this.vATIdentificationNumberField != null))
-                {
-                    if ((vATIdentificationNumberField.Equals(value) != true))
-                    {
-                        this.vATIdentificationNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.vATIdentificationNumberField = value;
-
-                }
-            }
+            get { return this.vATIdentificationNumberField; }
+            set { this.vATIdentificationNumberField = value; }
         }
         public List<FurtherIdentificationType> FurtherIdentification
         {
-            get
-            {
-                return this.furtherIdentificationField;
-            }
-            set
-            {
-                if ((this.furtherIdentificationField != null))
-                {
-                    if ((furtherIdentificationField.Equals(value) != true))
-                    {
-                        this.furtherIdentificationField = value;
-
-                    }
-                }
-                else
-                {
-                    this.furtherIdentificationField = value;
-
-                }
-            }
+            get { return this.furtherIdentificationField; }
+            set { this.furtherIdentificationField = value; }
         }
         public OrderReferenceType OrderReference
         {
-            get
-            {
-                return this.orderReferenceField;
-            }
-            set
-            {
-                if ((this.orderReferenceField != null))
-                {
-                    if ((orderReferenceField.Equals(value) != true))
-                    {
-                        this.orderReferenceField = value;
-
-                    }
-                }
-                else
-                {
-                    this.orderReferenceField = value;
-
-                }
-            }
+            get { return this.orderReferenceField; }
+            set { this.orderReferenceField = value; }
         }
         public AddressType Address
         {
-            get
-            {
-                return this.addressField;
-            }
-            set
-            {
-                if ((this.addressField != null))
-                {
-                    if ((addressField.Equals(value) != true))
-                    {
-                        this.addressField = value;
-
-                    }
-                }
-                else
-                {
-                    this.addressField = value;
-
-                }
-            }
+            get { return this.addressField; }
+            set { this.addressField = value; }
         }
 
     }
@@ -5941,49 +2786,13 @@ namespace ebIModels.Models
         }
         public string BillersOrderingPartyID
         {
-            get
-            {
-                return this.billersOrderingPartyIDField;
-            }
-            set
-            {
-                if ((this.billersOrderingPartyIDField != null))
-                {
-                    if ((billersOrderingPartyIDField.Equals(value) != true))
-                    {
-                        this.billersOrderingPartyIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.billersOrderingPartyIDField = value;
-
-                }
-            }
+            get { return this.billersOrderingPartyIDField; }
+            set { this.billersOrderingPartyIDField = value; }
         }
         public OrderingPartyExtensionType OrderingPartyExtension
         {
-            get
-            {
-                return this.orderingPartyExtensionField;
-            }
-            set
-            {
-                if ((this.orderingPartyExtensionField != null))
-                {
-                    if ((orderingPartyExtensionField.Equals(value) != true))
-                    {
-                        this.orderingPartyExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.orderingPartyExtensionField = value;
-
-                }
-            }
+            get { return this.orderingPartyExtensionField; }
+            set { this.orderingPartyExtensionField = value; }
         }
 
     }
@@ -5999,95 +2808,23 @@ namespace ebIModels.Models
         }
         public string BillersInvoiceRecipientID
         {
-            get
-            {
-                return this.billersInvoiceRecipientIDField;
-            }
-            set
-            {
-                if ((this.billersInvoiceRecipientIDField != null))
-                {
-                    if ((billersInvoiceRecipientIDField.Equals(value) != true))
-                    {
-                        this.billersInvoiceRecipientIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.billersInvoiceRecipientIDField = value;
-
-                }
-            }
+            get { return this.billersInvoiceRecipientIDField; }
+            set { this.billersInvoiceRecipientIDField = value; }
         }
         public string AccountingArea
         {
-            get
-            {
-                return this.accountingAreaField;
-            }
-            set
-            {
-                if ((this.accountingAreaField != null))
-                {
-                    if ((accountingAreaField.Equals(value) != true))
-                    {
-                        this.accountingAreaField = value;
-
-                    }
-                }
-                else
-                {
-                    this.accountingAreaField = value;
-
-                }
-            }
+            get { return this.accountingAreaField; }
+            set { this.accountingAreaField = value; }
         }
         public string SubOrganizationID
         {
-            get
-            {
-                return this.subOrganizationIDField;
-            }
-            set
-            {
-                if ((this.subOrganizationIDField != null))
-                {
-                    if ((subOrganizationIDField.Equals(value) != true))
-                    {
-                        this.subOrganizationIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.subOrganizationIDField = value;
-
-                }
-            }
+            get { return this.subOrganizationIDField; }
+            set { this.subOrganizationIDField = value; }
         }
         public InvoiceRecipientExtensionType InvoiceRecipientExtension
         {
-            get
-            {
-                return this.invoiceRecipientExtensionField;
-            }
-            set
-            {
-                if ((this.invoiceRecipientExtensionField != null))
-                {
-                    if ((invoiceRecipientExtensionField.Equals(value) != true))
-                    {
-                        this.invoiceRecipientExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceRecipientExtensionField = value;
-
-                }
-            }
+            get { return this.invoiceRecipientExtensionField; }
+            set { this.invoiceRecipientExtensionField = value; }
         }
 
     }
@@ -6101,49 +2838,13 @@ namespace ebIModels.Models
         }
         public string InvoiceRecipientsBillerID
         {
-            get
-            {
-                return this.invoiceRecipientsBillerIDField;
-            }
-            set
-            {
-                if ((this.invoiceRecipientsBillerIDField != null))
-                {
-                    if ((invoiceRecipientsBillerIDField.Equals(value) != true))
-                    {
-                        this.invoiceRecipientsBillerIDField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceRecipientsBillerIDField = value;
-
-                }
-            }
+            get { return this.invoiceRecipientsBillerIDField; }
+            set { this.invoiceRecipientsBillerIDField = value; }
         }
         public BillerExtensionType BillerExtension
         {
-            get
-            {
-                return this.billerExtensionField;
-            }
-            set
-            {
-                if ((this.billerExtensionField != null))
-                {
-                    if ((billerExtensionField.Equals(value) != true))
-                    {
-                        this.billerExtensionField = value;
-
-                    }
-                }
-                else
-                {
-                    this.billerExtensionField = value;
-
-                }
-            }
+            get { return this.billerExtensionField; }
+            set { this.billerExtensionField = value; }
         }
 
     }
@@ -6157,35 +2858,13 @@ namespace ebIModels.Models
         private string commentField = "";
         public string InvoiceNumber
         {
-            get
-            {
-                return this.invoiceNumberField;
-            }
-            set
-            {
-                if ((this.invoiceNumberField != null))
-                {
-                    if ((invoiceNumberField.Equals(value) != true))
-                    {
-                        this.invoiceNumberField = value;
-
-                    }
-                }
-                else
-                {
-                    this.invoiceNumberField = value;
-
-                }
-            }
+            get { return this.invoiceNumberField; }
+            set { this.invoiceNumberField = value; }
         }
         public System.DateTime InvoiceDate
         {
-            get
-            {
-                return this.invoiceDateField;
-            }
-            set
-            {
+            get { return this.invoiceDateField; }
+            set {
                 if ((invoiceDateField.Equals(value) != true))
                 {
                     this.invoiceDateField = value;
@@ -6196,12 +2875,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool InvoiceDateSpecified
         {
-            get
-            {
-                return this.invoiceDateFieldSpecified;
-            }
-            set
-            {
+            get { return this.invoiceDateFieldSpecified; }
+            set {
                 if ((invoiceDateFieldSpecified.Equals(value) != true))
                 {
                     this.invoiceDateFieldSpecified = value;
@@ -6211,12 +2886,8 @@ namespace ebIModels.Models
         }
         public DocumentTypeType DocumentType
         {
-            get
-            {
-                return this.documentTypeField;
-            }
-            set
-            {
+            get { return this.documentTypeField; }
+            set {
                 if ((documentTypeField.Equals(value) != true))
                 {
                     this.documentTypeField = value;
@@ -6227,12 +2898,8 @@ namespace ebIModels.Models
         [XmlIgnore()]
         public bool DocumentTypeSpecified
         {
-            get
-            {
-                return this.documentTypeFieldSpecified;
-            }
-            set
-            {
+            get { return this.documentTypeFieldSpecified; }
+            set {
                 if ((documentTypeFieldSpecified.Equals(value) != true))
                 {
                     this.documentTypeFieldSpecified = value;
@@ -6242,26 +2909,8 @@ namespace ebIModels.Models
         }
         public string Comment
         {
-            get
-            {
-                return this.commentField;
-            }
-            set
-            {
-                if ((this.commentField != null))
-                {
-                    if ((commentField.Equals(value) != true))
-                    {
-                        this.commentField = value;
-
-                    }
-                }
-                else
-                {
-                    this.commentField = value;
-
-                }
-            }
+            get { return this.commentField; }
+            set { this.commentField = value; }
         }
 
     }
@@ -7628,26 +4277,8 @@ namespace ebIModels.Models
         }
         public List<VATItemType> VATItem
         {
-            get
-            {
-                return this.vATItemField;
-            }
-            set
-            {
-                if ((this.vATItemField != null))
-                {
-                    if ((vATItemField.Equals(value) != true))
-                    {
-                        this.vATItemField = value;
-
-                    }
-                }
-                else
-                {
-                    this.vATItemField = value;
-
-                }
-            }
+            get { return this.vATItemField; }
+            set { this.vATItemField = value; }
         }
     }
 
@@ -7663,14 +4294,8 @@ namespace ebIModels.Models
 
         public string Key
         {
-            get
-            {
-                return this.keyField;
-            }
-            set
-            {
-                this.keyField = value;
-            }
+            get { return this.keyField; }
+            set { this.keyField = value; }
         }
     }
 }
