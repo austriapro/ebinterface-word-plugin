@@ -111,6 +111,7 @@ namespace SettingsManager
             get { return Settings.Default.SetVStBerechtigt; }
             set { Settings.Default.SetVStBerechtigt = value; }
         }
+        public const string VStBefreitCode = "E";
         public string VStText
         {
             get { return Settings.Default.SetVStText; }

@@ -108,7 +108,7 @@ namespace ebIModels.Schema
         public const string VatIdDefault = "00000000";
         public static IInvoiceType CreateInvoice()
         {
-            IInvoiceType invoice = new Models.InvoiceType();
+            IInvoiceType invoice = new Models.InvoiceModel();
             // invoice.Biller.Address.Country.CountryCodeText = CountryCodeType.AT.ToString();
             invoice.Biller.Address.Country = new CountryType(CountryCodeType.AT);
             invoice.InvoiceRecipient.Address.Country = new CountryType(CountryCodeType.AT);

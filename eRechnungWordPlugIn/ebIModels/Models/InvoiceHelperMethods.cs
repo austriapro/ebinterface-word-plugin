@@ -12,7 +12,7 @@ using ebIModels.Schema;
 
 namespace ebIModels.Models
 {
-    public partial class InvoiceType 
+    public partial class InvoiceModel 
     {
 
 
@@ -402,7 +402,7 @@ namespace ebIModels.Models
         /// <returns>Eine <see cref="ebInterfaceResult"/> Instanz</returns>
         public static ebInterfaceResult IsValidErbInvoice(string erbInvoice)
         {
-            var inv = (InvoiceType)InvoiceFactory.LoadXml(erbInvoice);
+            var inv = (InvoiceModel)InvoiceFactory.LoadXml(erbInvoice);
             ebInterfaceResult result = inv.IsValidErbInvoice();
             return result;
         }

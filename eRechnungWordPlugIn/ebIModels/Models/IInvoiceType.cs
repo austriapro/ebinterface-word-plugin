@@ -62,13 +62,10 @@ namespace ebIModels.Models
 
         PaymentConditionsType PaymentConditions { get; set; }
 
-        PresentationDetailsType PresentationDetails { get; set; }
-
+   
         string Comment { get; set; }
 
-        InvoiceRootExtensionType InvoiceRootExtension { get; set; }
-
-        string GeneratingSystem { get; set; }
+         string GeneratingSystem { get; set; }
 
         DocumentTypeType DocumentType { get; set; }
 
@@ -76,19 +73,14 @@ namespace ebIModels.Models
 
         bool ManualProcessing { get; set; }
 
-        [XmlIgnore()]
-        bool ManualProcessingSpecified { get; set; }
-
         string DocumentTitle { get; set; }
 
         LanguageType Language { get; set; }
 
-        [XmlIgnore()]
         bool LanguageSpecified { get; set; }
 
         bool IsDuplicate { get; set; }
 
-        [XmlIgnore()]
         bool IsDuplicateSpecified { get; set; }
 
         InvoiceSubtype InvoiceSubtype { get; set; }

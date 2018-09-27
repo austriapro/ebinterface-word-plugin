@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ebIModels.Models
 {
-    public partial class InvoiceType
+    public partial class InvoiceModel
     {
 
         // public decimal? NetAmount { get; set; }
@@ -21,8 +21,7 @@ namespace ebIModels.Models
         public decimal? PrepaidAmount
         {
             get => this.prepaidAmountField.FixedFraction(2);
-            set
-            {
+            set {
                 this.prepaidAmountField = value.FixedFraction(2);
             }
         }
@@ -44,39 +43,23 @@ namespace ebIModels.Models
         {
             decimal gesamtBetrag = 0;
             decimal nettoBetrag = 0;
-            decimal amount = 0;
-            if (Tax != null && Tax.VAT != null)
+            decimal taxAmount = 0;
+            if (Tax != null)
             {
-                foreach (var vatItem in this.Tax.VAT)
+                foreach (var vatItem in this.Tax.TaxItem)
                 {
-                    if (vatItem.Item is VATRateType)
-                    {
-                        VATRateType vatRate = vatItem.Item as VATRateType;
-                        gesamtBetrag += (vatItem.TaxedAmount ?? 0) + (vatItem.Amount ?? 0);
-                        nettoBetrag += (vatItem.TaxedAmount ?? 0);
-                        amount += (vatItem.Amount ?? 0);
-                    }
-                    if (vatItem.Item is TaxExemptionType)
-                    {
-                        gesamtBetrag += (vatItem.TaxedAmount ?? 0);
-                        nettoBetrag += (vatItem.TaxedAmount ?? 0);
-                        //amount += (vatItem.Amount ?? 0);
-                    }
+
+                    gesamtBetrag += vatItem.TaxableAmount;
+                    nettoBetrag += vatItem.TaxableAmount - vatItem.TaxAmount;
+                    taxAmount += vatItem.TaxAmount;
                 }
 
             }
             TotalGrossAmount = gesamtBetrag;
 
-            PayableAmount = gesamtBetrag;
-            if (Details.BelowTheLineItem.Count > 0)
-            {
-                foreach (BelowTheLineItemType item in Details.BelowTheLineItem)
-                {
-                    PayableAmount += item.LineItemAmount;
-                }
-            }
+            PayableAmount = gesamtBetrag + PrepaidAmount;
             NetAmount = nettoBetrag;
-            TaxAmountTotal = amount;
+            TaxAmountTotal = taxAmount;
         }
     }
 
@@ -116,20 +99,14 @@ namespace ebIModels.Models
         // private readonly ICountryCodes _countryCodes = new CountryCodesModels();
         public CountryType(CountryCodeType country)
         {
-            countryCodeField = country;
-            countryCodeFieldSpecified = true;
-            textField = new List<string>();
             var cText = CountryCodes.GetFromCode(country.ToString());
-            textField.Add(cText.Country);
         }
         public string CountryCodeText
         {
-            get
-            {
+            get {
                 return CountryCode.ToString();
             }
-            set
-            {
+            set {
                 if (CountryCode.ToString().Equals(value) == true)
                     return;
                 string val = value;
@@ -159,62 +136,28 @@ namespace ebIModels.Models
         public static TaxType GetTaxTypeList(List<ItemListType> itemList, bool isTaxExemption, string vatText)
         {
             TaxType tax = new TaxType();
-            tax.VAT = new List<VATItemType>();
-            if (isTaxExemption)
-            {
-                TaxExemptionType taxEx = new TaxExemptionType()
-                {
-                    TaxExemptionCode = null,
-                    Value = vatText
-                };
 
-            }
             if (itemList.Count == 0)
                 return tax;
             // Dictionary für alle USt Angaben
-            Dictionary<decimal, VATItemType> taxItems = new Dictionary<decimal, VATItemType>();
+            Dictionary<decimal, TaxItemType> taxItems = new Dictionary<decimal, TaxItemType>();
             foreach (ItemListType itemListType in itemList)
             {
                 foreach (ListLineItemType lineItem in itemListType.ListLineItem)
                 {
-                    if (lineItem.Item != null)
+                    if (lineItem.TaxItem != null)
                     {
-                        if (lineItem.Item is VATRateType && !isTaxExemption)
+
+                        var taxValue = lineItem.TaxItem.TaxPercent;
+                        decimal taxVal = taxValue.Value;
+                        if (taxItems.ContainsKey(taxVal))
                         {
-                            var taxValue = lineItem.Item as VATRateType;
-                            decimal taxVal = taxValue.Value ?? -1;
-                            if (taxItems.ContainsKey(taxVal))
-                            {
-                                taxItems[taxVal].TaxedAmount += lineItem.LineItemAmount;
-                                //taxItems[taxVal].Amount += (lineItem.LineItemAmount * taxValue.Value / 100); // Bad Idea produces to differences
-                            }
-                            else
-                            {
-                                taxItems.Add(taxVal, new VATItemType()
-                                {
-                                    //Amount = (lineItem.LineItemAmount * taxValue.Value / 100),
-                                    Item = new VATRateType() { TaxCode = taxValue.TaxCode, Value = taxValue.Value },
-                                    TaxedAmount = lineItem.LineItemAmount
-                                });
-                            }
+                            taxItems[taxVal].TaxableAmount += lineItem.LineItemAmount.GetValueOrDefault();
+                            //taxItems[taxVal].Amount += (lineItem.LineItemAmount * taxValue.Value / 100); // Bad Idea produces to differences
                         }
-                        if (lineItem.Item is TaxExemptionType)
+                        else
                         {
-                            decimal taxVal = 0;
-                            if (taxItems.ContainsKey(taxVal))
-                            {
-                                taxItems[taxVal].TaxedAmount += lineItem.LineItemAmount;
-                                taxItems[taxVal].Amount = 0;
-                            }
-                            else
-                            {
-                                taxItems.Add(taxVal, new VATItemType()
-                                {
-                                    Amount = 0,
-                                    Item = new TaxExemptionType() { TaxExemptionCode = null, Value = vatText },
-                                    TaxedAmount = lineItem.LineItemAmount
-                                });
-                            }
+                            taxItems.Add(taxVal, lineItem.TaxItem);
                         }
                     }
 
@@ -222,12 +165,9 @@ namespace ebIModels.Models
             }
             foreach (var taxItem in taxItems)
             {
-                if (taxItem.Value.Item is VATRateType)
-                {
-                    VATRateType vatRate = (VATRateType)taxItem.Value.Item;
-                    taxItem.Value.Amount = taxItem.Value.TaxedAmount * vatRate.Value / 100;
-                }
-                tax.VAT.Add(taxItem.Value);
+                var item = taxItem.Value;
+                item.TaxPercent.Value = (item.TaxableAmount * item.TaxPercent.Value / 100).FixedFraction(2);
+                tax.TaxItem.Add(item);
             }
             return tax;
         }
@@ -240,8 +180,7 @@ namespace ebIModels.Models
         public bool BestellPositionErforderlich
         {
             get { return _bestellPositionErforderlich; }
-            set
-            {
+            set {
                 if (_bestellPositionErforderlich == value)
                     return;
                 _bestellPositionErforderlich = value;

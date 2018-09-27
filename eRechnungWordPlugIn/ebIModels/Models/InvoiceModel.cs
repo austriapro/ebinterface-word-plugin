@@ -8,7 +8,7 @@ using ExtensionMethods;
 
 namespace ebIModels.Models
 {
-    public partial class InvoiceType : Schema.InvoiceType, IInvoiceType
+    public partial class InvoiceModel : Schema.InvoiceType, IInvoiceType
     {
         private string invoiceNumberField = "";
         private System.DateTime invoiceDateField;
@@ -40,7 +40,7 @@ namespace ebIModels.Models
         private bool isDuplicateFieldSpecified;
         private List<AdditionalInformationType> additionalInformation;
 
-        public InvoiceType()
+        public InvoiceModel()
         {
             this.invoiceRootExtensionField = new InvoiceRootExtensionType();
             this.presentationDetailsField = new PresentationDetailsType();
@@ -55,8 +55,6 @@ namespace ebIModels.Models
             this.billerField = new BillerType();
             this.deliveryField = new DeliveryType();
             this.relatedDocumentField = new List<RelatedDocumentType>();
-
-
         }
 
 
@@ -121,7 +119,7 @@ namespace ebIModels.Models
         public TaxType Tax
         {
             get { return this.taxField; }
-            internal set { this.taxField = value; }
+            set { this.taxField = value; }
         }
         public decimal? TotalGrossAmount
         {
@@ -144,11 +142,7 @@ namespace ebIModels.Models
             get { return this.paymentConditionsField; }
             set { this.paymentConditionsField = value; }
         }
-        public PresentationDetailsType PresentationDetails
-        {
-            get { return this.presentationDetailsField; }
-            set { this.presentationDetailsField = value; }
-        }
+
         public string Comment
         {
             get { return this.commentField; }
@@ -197,7 +191,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool ManualProcessingSpecified
         {
             get { return this.manualProcessingFieldSpecified; }
@@ -225,7 +218,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool LanguageSpecified
         {
             get { return this.languageFieldSpecified; }
@@ -248,7 +240,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool IsDuplicateSpecified
         {
             get { return this.isDuplicateFieldSpecified; }
@@ -260,7 +251,6 @@ namespace ebIModels.Models
                 }
             }
         }
-
         public List<AdditionalInformationType> AdditionalInformation { get { return additionalInformation; } set { additionalInformation = value; } }
 
         public override ebInterfaceResult Save(string file)
@@ -306,6 +296,43 @@ namespace ebIModels.Models
             inv.SaveTemplate(filename);
         }
     }
+
+    public partial class TaxType
+    {
+        public TaxType()
+        {
+            taxItemField = new List<TaxItemType>();
+            otherTaxField = new List<OtherTaxType>();
+        }
+        private List<TaxItemType> taxItemField;
+
+        private List<OtherTaxType> otherTaxField;
+
+        /// <remarks/>
+        
+        public List<TaxItemType> TaxItem
+        {
+            get {
+                return this.taxItemField;
+            }
+            set {
+                this.taxItemField = value;
+            }
+        }
+
+        /// <remarks/>
+
+        public List<OtherTaxType> OtherTax
+        {
+            get {
+                return this.otherTaxField;
+            }
+            set {
+                this.otherTaxField = value;
+            }
+        }
+    }
+
     public partial class CancelledOriginalDocumentType
     {
         private string invoiceNumberField = "";
@@ -340,7 +367,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool DocumentTypeSpecified
         {
             get { return this.documentTypeFieldSpecified; }
@@ -405,7 +431,7 @@ namespace ebIModels.Models
     public partial class CustomType
     {
         private System.Xml.XmlElement anyField;
-        [XmlAnyElement(Order = 0)]
+        
         public System.Xml.XmlElement Any
         {
             get { return this.anyField; }
@@ -476,7 +502,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool SuppressZeroSpecified
         {
             get { return this.suppressZeroFieldSpecified; }
@@ -545,7 +570,6 @@ namespace ebIModels.Models
             get { return this.baseAmountField.FixedFraction(2); }
             set { this.baseAmountField = value; }
         }
-        [XmlIgnore()]
         public bool BaseAmountSpecified
         {
             get { return this.baseAmountFieldSpecified; }
@@ -562,7 +586,6 @@ namespace ebIModels.Models
             get { return this.percentageField; }
             set { this.percentageField = value; }
         }
-        [XmlIgnore()]
         public bool PercentageSpecified
         {
             get { return this.percentageFieldSpecified; }
@@ -579,7 +602,6 @@ namespace ebIModels.Models
             get { return this.amountField.FixedFraction(2); }
             set { this.amountField = value; }
         }
-        [XmlIgnore()]
         public bool AmountSpecified
         {
             get { return this.amountFieldSpecified; }
@@ -628,7 +650,6 @@ namespace ebIModels.Models
             get { return this.minimumPaymentField; }
             set { this.minimumPaymentField = value; }
         }
-        [XmlIgnore()]
         public bool MinimumPaymentSpecified
         {
             get { return this.minimumPaymentFieldSpecified; }
@@ -686,8 +707,7 @@ namespace ebIModels.Models
             get { return this.checkSumField; }
             set { this.checkSumField = value; }
         }
-        [XmlText()]
-        public string Value
+                public string Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
@@ -709,8 +729,7 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlText(DataType = "integer")]
-        public string Value
+                public string Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
@@ -1297,7 +1316,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool ConsolidatorPayableSpecified
         {
             get { return this.consolidatorPayableFieldSpecified; }
@@ -1411,349 +1429,47 @@ namespace ebIModels.Models
         }
 
     }
-    public partial class TaxExtensionType1
-    {
 
-    }
-    public partial class TaxExtensionType
-    {
-        private TaxExtensionType1 taxExtensionField;
-        private CustomType customField;
-        public TaxExtensionType()
-        {
-            this.customField = new CustomType();
-            this.taxExtensionField = new TaxExtensionType1();
-        }
-        public TaxExtensionType1 TaxExtension
-        {
-            get { return this.taxExtensionField; }
-            set { this.taxExtensionField = value; }
-        }
-        public CustomType Custom
-        {
-            get { return this.customField; }
-            set { this.customField = value; }
-        }
 
-    }
-    public partial class OtherTaxType
-    {
-        private string commentField = "";
-        private decimal? amountField;
-        public string Comment
-        {
-            get { return this.commentField; }
-            set { this.commentField = value; }
-        }
-        public decimal? Amount
-        {
-            get { return this.amountField.FixedFraction(2); }
-            set { this.amountField = value; }
-        }
 
-    }
-    public partial class VATItemType
-    {
-        private decimal? taxedAmountField;
-        private object itemField;
-        private decimal? amountField;
-        public decimal? TaxedAmount
-        {
-            get { return this.taxedAmountField.FixedFraction(2); }
-            set { this.taxedAmountField = value; }
-        }
-        public object Item
-        {
-            get { return this.itemField; }
-            set { this.itemField = value; }
-        }
-        public decimal? Amount
-        {
-            get { return this.amountField.FixedFraction(2); }
-            set { this.amountField = value; }
-        }
-    }
-    public partial class TaxExemptionType
-    {
-        private string taxExemptionCodeField = "";
-        private string valueField = "";
-        public string TaxExemptionCode
-        {
-            get { return this.taxExemptionCodeField; }
-            set { this.taxExemptionCodeField = value; }
-        }
-        [XmlText()]
-        public string Value
-        {
-            get { return this.valueField; }
-            set { this.valueField = value; }
-        }
 
-    }
-    public partial class VATRateType
-    {
-        private string taxCodeField = "";
-        private decimal? valueField;
-        public string TaxCode
-        {
-            get { return this.taxCodeField; }
-            set { this.taxCodeField = value; }
-        }
-        [XmlText()]
-        public decimal? Value
-        {
-            get {
-                return this.valueField;
-            }
-            set { this.valueField = value; }
-        }
-
-    }
-    public partial class TaxType
-    {
-        private List<VATItemType> vATField;
-        private List<OtherTaxType> otherTaxField;
-        private TaxExtensionType taxExtensionField;
-        public TaxType()
-        {
-            this.taxExtensionField = new TaxExtensionType();
-            this.otherTaxField = new List<OtherTaxType>();
-            this.vATField = new List<VATItemType>();
-        }
-        //[XmlArray(Order = 0)]
-        //[XmlArrayItem("VATItem", IsNullable = false)]
-        public List<VATItemType> VAT
-        {
-            get { return this.vATField; }
-            set { this.vATField = value; }
-        }
-        public List<OtherTaxType> OtherTax
-        {
-            get { return this.otherTaxField; }
-            set { this.otherTaxField = value; }
-        }
-        public TaxExtensionType TaxExtension
-        {
-            get { return this.taxExtensionField; }
-            set { this.taxExtensionField = value; }
-        }
-
-    }
-    public partial class AccountingCurrencyAmountType
-    {
-
-        private string currencyField;
-
-        private decimal valueField;
-
-        /// <remarks/>
-        public string Currency
-        {
-            get { return this.currencyField; }
-            set { this.currencyField = value; }
-        }
-
-        /// <remarks/>
-        public decimal Value
-        {
-            get { return this.valueField; }
-            set { this.valueField = value; }
-        }
-    }
-    public partial class TaxItemType
-    {
-
-        private decimal taxableAmountField;
-
-        private TaxPercentType taxPercentField;
-
-        private decimal taxAmountField;
-
-        private bool taxAmountFieldSpecified;
-
-        private AccountingCurrencyAmountType accountingCurrencyAmountField;
-
-        private string commentField;
-
-        /// <remarks/>
-        public decimal TaxableAmount
-        {
-            get { return this.taxableAmountField; }
-            set { this.taxableAmountField = value; }
-        }
-
-        /// <remarks/>
-        public TaxPercentType TaxPercent
-        {
-            get { return this.taxPercentField; }
-            set { this.taxPercentField = value; }
-        }
-
-        /// <remarks/>
-        public decimal TaxAmount
-        {
-            get { return this.taxAmountField; }
-            set { this.taxAmountField = value; }
-        }
-    }
-    public partial class TaxPercentType
-    {
-
-        private string taxCategoryCodeField;
-
-        private decimal valueField;
-
-        /// <summary>
-        /// Gets or sets the tax category code.
-        /// </summary>
-        /// <value>
-        /// The tax category code according to ebInterface 5p0: Empfohlene Codes für TaxCategoryCode        
-        /// </value>
-        public string TaxCategoryCode
-        {
-            get { return this.taxCategoryCodeField; }
-            set { taxCategoryCodeField = value; }
-        }
-        public decimal Value
-        {
-            get { return this.valueField; }
-            set { this.valueField = value; }
-        }
-    }
-
-    public partial class ReductionAndSurchargeDetailsExtensionType1
-    {
-
-    }
-    public partial class ReductionAndSurchargeDetailsExtensionType
-    {
-        private ReductionAndSurchargeDetailsExtensionType1 reductionAndSurchargeDetailsExtensionField;
-        private CustomType customField;
-        public ReductionAndSurchargeDetailsExtensionType()
-        {
-            this.customField = new CustomType();
-            this.reductionAndSurchargeDetailsExtensionField = new ReductionAndSurchargeDetailsExtensionType1();
-        }
-        public ReductionAndSurchargeDetailsExtensionType1 ReductionAndSurchargeDetailsExtension
-        {
-            get { return this.reductionAndSurchargeDetailsExtensionField; }
-            set { this.reductionAndSurchargeDetailsExtensionField = value; }
-        }
-        public CustomType Custom
-        {
-            get { return this.customField; }
-            set { this.customField = value; }
-        }
-
-    }
     public partial class ReductionAndSurchargeDetailsType
     {
         private List<object> itemsField;
         private List<ItemsChoiceType1> itemsElementNameField;
-        private ReductionAndSurchargeDetailsExtensionType reductionAndSurchargeDetailsExtensionField;
         public ReductionAndSurchargeDetailsType()
         {
-            this.reductionAndSurchargeDetailsExtensionField = new ReductionAndSurchargeDetailsExtensionType();
             this.itemsElementNameField = new List<ItemsChoiceType1>();
             this.itemsField = new List<object>();
         }
-        [XmlChoiceIdentifier("ItemsElementName")]
-        public List<object> Items
+                public List<object> Items
         {
             get { return this.itemsField; }
             set { this.itemsField = value; }
         }
-        [XmlIgnore()]
         public List<ItemsChoiceType1> ItemsElementName
         {
             get { return this.itemsElementNameField; }
             set { this.itemsElementNameField = value; }
         }
-        public ReductionAndSurchargeDetailsExtensionType ReductionAndSurchargeDetailsExtension
-        {
-            get { return this.reductionAndSurchargeDetailsExtensionField; }
-            set { this.reductionAndSurchargeDetailsExtensionField = value; }
-        }
 
     }
-    public partial class OtherVATableTaxType : OtherVATableTaxBaseType
-    {
-        private VATRateType vATRateField;
-        public OtherVATableTaxType()
-        {
-            this.vATRateField = new VATRateType();
-        }
-        public VATRateType VATRate
-        {
-            get { return this.vATRateField; }
-            set { this.vATRateField = value; }
-        }
 
-    }
-    [XmlInclude(typeof(OtherVATableTaxType))]
-    public partial class OtherVATableTaxBaseType
-    {
-        private decimal? baseAmountField;
-        private decimal? percentageField;
-        private bool percentageFieldSpecified;
-        private decimal? amountField;
-        private string taxIDField = "";
-        private string commentField = "";
-        public decimal? BaseAmount
-        {
-            get { return this.baseAmountField.FixedFraction(2); }
-            set { this.baseAmountField = value; }
-        }
-        public decimal? Percentage
-        {
-            get { return this.percentageField; }
-            set { this.percentageField = value; }
-        }
-        [XmlIgnore()]
-        public bool PercentageSpecified
-        {
-            get { return this.percentageFieldSpecified; }
-            set {
-                if ((percentageFieldSpecified.Equals(value) != true))
-                {
-                    this.percentageFieldSpecified = value;
-
-                }
-            }
-        }
-        public decimal? Amount
-        {
-            get { return this.amountField.FixedFraction(2); }
-            set { this.amountField = value; }
-        }
-        public string TaxID
-        {
-            get { return this.taxIDField; }
-            set { this.taxIDField = value; }
-        }
-        public string Comment
-        {
-            get { return this.commentField; }
-            set { this.commentField = value; }
-        }
-
-    }
     public partial class ReductionAndSurchargeType : ReductionAndSurchargeBaseType
     {
-        private VATRateType vATRateField;
+        private TaxItemType taxItem;
         public ReductionAndSurchargeType()
         {
-            this.vATRateField = new VATRateType();
+            this.taxItem = new TaxItemType();
         }
-        public VATRateType VATRate
+        public TaxItemType TaxItem
         {
-            get { return this.vATRateField; }
-            set { this.vATRateField = value; }
+            get { return this.taxItem; }
+            set { this.taxItem = value; }
         }
 
     }
-    [XmlInclude(typeof(ReductionAndSurchargeType))]
-    public partial class ReductionAndSurchargeBaseType
+        public partial class ReductionAndSurchargeBaseType
     {
         private decimal? baseAmountField;
         private decimal? percentageField;
@@ -1771,7 +1487,6 @@ namespace ebIModels.Models
             get { return this.percentageField; }
             set { this.percentageField = value; }
         }
-        [XmlIgnore()]
         public bool PercentageSpecified
         {
             get { return this.percentageFieldSpecified; }
@@ -1788,7 +1503,6 @@ namespace ebIModels.Models
             get { return this.amountField.FixedFraction(2); }
             set { this.amountField = value; }
         }
-        [XmlIgnore()]
         public bool AmountSpecified
         {
             get { return this.amountFieldSpecified; }
@@ -1832,7 +1546,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool DateSpecified
         {
             get { return this.dateFieldSpecified; }
@@ -1844,71 +1557,40 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlText()]
-        public string Value
+                public string Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
         }
 
     }
-    public partial class BelowTheLineItemType
-    {
-        private string descriptionField = "";
-        private decimal? lineItemAmountField;
-        private ReasonType reasonField;
-        public BelowTheLineItemType()
-        {
-            this.reasonField = new ReasonType();
-        }
-        public string Description
-        {
-            get { return this.descriptionField; }
-            set { this.descriptionField = value; }
-        }
-        public decimal? LineItemAmount
-        {
-            get { return this.lineItemAmountField.FixedFraction(2); }
-            set { this.lineItemAmountField = value; }
-        }
-        public ReasonType Reason
-        {
-            get { return this.reasonField; }
-            set { this.reasonField = value; }
-        }
+    //public partial class BelowTheLineItemType
+    //{
+    //    private string descriptionField = "";
+    //    private decimal? lineItemAmountField;
+    //    private ReasonType reasonField;
+    //    public BelowTheLineItemType()
+    //    {
+    //        this.reasonField = new ReasonType();
+    //    }
+    //    public string Description
+    //    {
+    //        get { return this.descriptionField; }
+    //        set { this.descriptionField = value; }
+    //    }
+    //    public decimal? LineItemAmount
+    //    {
+    //        get { return this.lineItemAmountField.FixedFraction(2); }
+    //        set { this.lineItemAmountField = value; }
+    //    }
+    //    public ReasonType Reason
+    //    {
+    //        get { return this.reasonField; }
+    //        set { this.reasonField = value; }
+    //    }
 
-    }
-    public partial class ListLineItemExtensionType1
-    {
-        private string beneficiarySocialInsuranceNumberField = "";
-        public string BeneficiarySocialInsuranceNumber
-        {
-            get { return this.beneficiarySocialInsuranceNumberField; }
-            set { this.beneficiarySocialInsuranceNumberField = value; }
-        }
+    //}
 
-    }
-    public partial class ListLineItemExtensionType
-    {
-        private ListLineItemExtensionType1 listLineItemExtensionField;
-        private CustomType customField;
-        public ListLineItemExtensionType()
-        {
-            this.customField = new CustomType();
-            this.listLineItemExtensionField = new ListLineItemExtensionType1();
-        }
-        public ListLineItemExtensionType1 ListLineItemExtension
-        {
-            get { return this.listLineItemExtensionField; }
-            set { this.listLineItemExtensionField = value; }
-        }
-        public CustomType Custom
-        {
-            get { return this.customField; }
-            set { this.customField = value; }
-        }
-
-    }
     public partial class ClassificationType
     {
         private string classificationSchemaField = "";
@@ -1918,8 +1600,7 @@ namespace ebIModels.Models
             get { return this.classificationSchemaField; }
             set { this.classificationSchemaField = value; }
         }
-        [XmlText()]
-        public string Value
+                public string Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
@@ -1995,8 +1676,7 @@ namespace ebIModels.Models
             get { return this.unitField; }
             set { this.unitField = value; }
         }
-        [XmlText()]
-        public decimal? Value
+                public decimal? Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
@@ -2012,13 +1692,11 @@ namespace ebIModels.Models
             this.itemsElementNameField = new List<ItemsChoiceType>();
             this.itemsField = new List<object>();
         }
-        [XmlChoiceIdentifier("ItemsElementName")]
-        public List<object> Items
+                public List<object> Items
         {
             get { return this.itemsField; }
             set { this.itemsField = value; }
         }
-        [XmlIgnore()]
         public List<ItemsChoiceType> ItemsElementName
         {
             get { return this.itemsElementNameField; }
@@ -2045,7 +1723,6 @@ namespace ebIModels.Models
             get { return this.baseQuantityField; }
             set { this.baseQuantityField = value; }
         }
-        [XmlIgnore()]
         public bool BaseQuantitySpecified
         {
             get { return this.baseQuantityFieldSpecified; }
@@ -2057,8 +1734,7 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlText()]
-        public decimal? Value
+                public decimal? Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
@@ -2085,7 +1761,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool ArticleNumberType1Specified
         {
             get { return this.articleNumberType1FieldSpecified; }
@@ -2097,8 +1772,7 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlText()]
-        public List<string> Text
+                public List<string> Text
         {
             get { return this.textField; }
             set { this.textField = value; }
@@ -2123,7 +1797,8 @@ namespace ebIModels.Models
         private List<ArticleNumberType> articleNumberField;
         private UnitType quantityField;
         private UnitPriceType unitPriceField;
-        private object itemField;
+
+        private TaxItemType taxItem;
         private bool discountFlagField;
         private bool discountFlagFieldSpecified;
         private ReductionAndSurchargeListLineItemDetailsType reductionAndSurchargeListLineItemDetailsField;
@@ -2132,10 +1807,8 @@ namespace ebIModels.Models
         private OrderReferenceDetailType invoiceRecipientsOrderReferenceField;
         private AdditionalInformationType additionalInformationField;
         private decimal? lineItemAmountField;
-        private ListLineItemExtensionType listLineItemExtensionField;
         public ListLineItemType()
         {
-            this.listLineItemExtensionField = new ListLineItemExtensionType();
             this.invoiceRecipientsOrderReferenceField = new OrderReferenceDetailType();
             this.billersOrderReferenceField = new OrderReferenceDetailType();
             this.deliveryField = new DeliveryType();
@@ -2172,16 +1845,25 @@ namespace ebIModels.Models
         }
 
         /// <summary>
-        /// Gets or sets the  TAX item.
+        /// Gets or sets the  TAX item in ebInterface before V5P0.
         /// </summary>
         /// <value>
         /// The item.
         /// </value>
-        public object Item
+        //public object Item
+        //{
+        //    get { return this.itemField; }
+        //    set { this.itemField = value;
+        //         this.taxItem = SetTaxItem(this.itemField);
+        //    }
+        //}
+
+        public TaxItemType TaxItem
         {
-            get { return this.itemField; }
-          internal  set { this.itemField = value; }
+            get { return this.taxItem; }
+            set { this.taxItem = value; }
         }
+
         public bool DiscountFlag
         {
             get { return this.discountFlagField; }
@@ -2193,7 +1875,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool DiscountFlagSpecified
         {
             get { return this.discountFlagFieldSpecified; }
@@ -2234,11 +1915,6 @@ namespace ebIModels.Models
         {
             get { return this.lineItemAmountField.FixedFraction(2); }
             set { this.lineItemAmountField = value; }
-        }
-        public ListLineItemExtensionType ListLineItemExtension
-        {
-            get { return this.listLineItemExtensionField; }
-            set { this.listLineItemExtensionField = value; }
         }
         public void RecalcLineItem()
         {
@@ -2337,7 +2013,7 @@ namespace ebIModels.Models
         public AddressType()
         {
             this.addressExtensionField = new List<string>();
-            this.countryField = new CountryType();
+            this.countryField = new CountryType(CountryCodeType.AT);
             this.addressIdentifierField = new List<AddressIdentifierType>();
             salutationField = "";
             nameField = "";
@@ -2427,7 +2103,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool AddressIdentifierType1Specified
         {
             get { return this.addressIdentifierType1FieldSpecified; }
@@ -2439,8 +2114,7 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlText()]
-        public string Value
+                public string Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
@@ -2455,46 +2129,6 @@ namespace ebIModels.Models
         DUNS,
 
         ProprietaryAddressID,
-    }
-    public partial class CountryType
-    {
-        private CountryCodeType countryCodeField;
-        private bool countryCodeFieldSpecified;
-        private List<string> textField;
-        public CountryType()
-        {
-            this.textField = new List<string>();
-        }
-        public CountryCodeType CountryCode
-        {
-            get { return this.countryCodeField; }
-            set {
-                if ((countryCodeField.Equals(value) != true))
-                {
-                    this.countryCodeField = value;
-
-                }
-            }
-        }
-        [XmlIgnore()]
-        public bool CountryCodeSpecified
-        {
-            get { return this.countryCodeFieldSpecified; }
-            set {
-                if ((countryCodeFieldSpecified.Equals(value) != true))
-                {
-                    this.countryCodeFieldSpecified = value;
-
-                }
-            }
-        }
-        [XmlText()]
-        public List<string> Text
-        {
-            get { return this.textField; }
-            set { this.textField = value; }
-        }
-
     }
     public partial class DeliveryExtensionType
     {
@@ -2531,8 +2165,7 @@ namespace ebIModels.Models
         }
 
     }
-    [XmlInclude(typeof(OrderReferenceDetailType))]
-    public partial class OrderReferenceType
+        public partial class OrderReferenceType
     {
         private string orderIDField = "";
         private System.DateTime referenceDateField;
@@ -2554,7 +2187,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool ReferenceDateSpecified
         {
             get { return this.referenceDateFieldSpecified; }
@@ -2603,10 +2235,8 @@ namespace ebIModels.Models
         private string headerDescriptionField = "";
         private List<ItemListType> itemListField;
         private string footerDescriptionField = "";
-        private List<BelowTheLineItemType> belowTheLineItemField;
         public DetailsType()
         {
-            this.belowTheLineItemField = new List<BelowTheLineItemType>();
             this.itemListField = new List<ItemListType>();
         }
         public string HeaderDescription
@@ -2623,11 +2253,6 @@ namespace ebIModels.Models
         {
             get { return this.footerDescriptionField; }
             set { this.footerDescriptionField = value; }
-        }
-        public List<BelowTheLineItemType> BelowTheLineItem
-        {
-            get { return this.belowTheLineItemField; }
-            set { this.belowTheLineItemField = value; }
         }
 
         public void RecalcItemList()
@@ -2666,62 +2291,7 @@ namespace ebIModels.Models
         }
 
     }
-    public partial class InvoiceRecipientExtensionType1
-    {
 
-    }
-    public partial class InvoiceRecipientExtensionType
-    {
-        private InvoiceRecipientExtensionType1 invoiceRecipientExtensionField;
-        private CustomType customField;
-        public InvoiceRecipientExtensionType()
-        {
-            this.customField = new CustomType();
-            this.invoiceRecipientExtensionField = new InvoiceRecipientExtensionType1();
-        }
-        public InvoiceRecipientExtensionType1 InvoiceRecipientExtension
-        {
-            get { return this.invoiceRecipientExtensionField; }
-            set { this.invoiceRecipientExtensionField = value; }
-        }
-        public CustomType Custom
-        {
-            get { return this.customField; }
-            set { this.customField = value; }
-        }
-
-    }
-    public partial class BillerExtensionType1
-    {
-        private string billersContractPartnerNumberField = "";
-        public string BillersContractPartnerNumber
-        {
-            get { return this.billersContractPartnerNumberField; }
-            set { this.billersContractPartnerNumberField = value; }
-        }
-
-    }
-    public partial class BillerExtensionType
-    {
-        private BillerExtensionType1 billerExtensionField;
-        private CustomType customField;
-        public BillerExtensionType()
-        {
-            this.customField = new CustomType();
-            this.billerExtensionField = new BillerExtensionType1();
-        }
-        public BillerExtensionType1 BillerExtension
-        {
-            get { return this.billerExtensionField; }
-            set { this.billerExtensionField = value; }
-        }
-        public CustomType Custom
-        {
-            get { return this.customField; }
-            set { this.customField = value; }
-        }
-
-    }
     public partial class FurtherIdentificationType
     {
         private string identificationTypeField = "";
@@ -2731,17 +2301,13 @@ namespace ebIModels.Models
             get { return this.identificationTypeField; }
             set { this.identificationTypeField = value; }
         }
-        [XmlText()]
-        public string Value
+                public string Value
         {
             get { return this.valueField; }
             set { this.valueField = value; }
         }
 
     }
-    [XmlInclude(typeof(OrderingPartyType))]
-    [XmlInclude(typeof(InvoiceRecipientType))]
-    [XmlInclude(typeof(BillerType))]
     public partial class AbstractPartyType
     {
         private string vATIdentificationNumberField = "";
@@ -2801,10 +2367,9 @@ namespace ebIModels.Models
         private string billersInvoiceRecipientIDField = "";
         private string accountingAreaField = "";
         private string subOrganizationIDField = "";
-        private InvoiceRecipientExtensionType invoiceRecipientExtensionField;
         public InvoiceRecipientType()
         {
-            this.invoiceRecipientExtensionField = new InvoiceRecipientExtensionType();
+
         }
         public string BillersInvoiceRecipientID
         {
@@ -2821,30 +2386,19 @@ namespace ebIModels.Models
             get { return this.subOrganizationIDField; }
             set { this.subOrganizationIDField = value; }
         }
-        public InvoiceRecipientExtensionType InvoiceRecipientExtension
-        {
-            get { return this.invoiceRecipientExtensionField; }
-            set { this.invoiceRecipientExtensionField = value; }
-        }
 
     }
     public partial class BillerType : AbstractPartyType
     {
         private string invoiceRecipientsBillerIDField = "";
-        private BillerExtensionType billerExtensionField;
         public BillerType()
         {
-            this.billerExtensionField = new BillerExtensionType();
+
         }
         public string InvoiceRecipientsBillerID
         {
             get { return this.invoiceRecipientsBillerIDField; }
             set { this.invoiceRecipientsBillerIDField = value; }
-        }
-        public BillerExtensionType BillerExtension
-        {
-            get { return this.billerExtensionField; }
-            set { this.billerExtensionField = value; }
         }
 
     }
@@ -2872,7 +2426,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool InvoiceDateSpecified
         {
             get { return this.invoiceDateFieldSpecified; }
@@ -2895,7 +2448,6 @@ namespace ebIModels.Models
                 }
             }
         }
-        [XmlIgnore()]
         public bool DocumentTypeSpecified
         {
             get { return this.documentTypeFieldSpecified; }
@@ -2916,1386 +2468,144 @@ namespace ebIModels.Models
     }
     public enum CurrencyType
     {
-
-        AED,
-
-        AFN,
-
-        ALL,
-
-        AMD,
-
-        ANG,
-
-        AOA,
-
-        ARS,
-
-        AUD,
-
-        AWG,
-
-        AZN,
-
-        BAM,
-
-        BBD,
-
-        BDT,
-
-        BGN,
-
-        BHD,
-
-        BIF,
-
-        BMD,
-
-        BND,
-
-        BOB,
-
-        BOV,
-
-        BRL,
-
-        BSD,
-
-        BTN,
-
-        BWP,
-
-        BYR,
-
-        BZD,
-
-        CAD,
-
-        CDF,
-
-        CHE,
-
-        CHF,
-
-        CHW,
-
-        CLF,
-
-        CLP,
-
-        CNY,
-
-        COP,
-
-        COU,
-
-        CRC,
-
-        CUC,
-
-        CUP,
-
-        CVE,
-
-        CZK,
-
-        DJF,
-
-        DKK,
-
-        DOP,
-
-        DZD,
-
-        EGP,
-
-        ERN,
-
-        ETB,
-
-        EUR,
-
-        FJD,
-
-        FKP,
-
-        GBP,
-
-        GEL,
-
-        GHS,
-
-        GIP,
-
-        GMD,
-
-        GNF,
-
-        GTQ,
-
-        GYD,
-
-        HKD,
-
-        HNL,
-
-        HRK,
-
-        HTG,
-
-        HUF,
-
-        IDR,
-
-        ILS,
-
-        INR,
-
-        IQD,
-
-        IRR,
-
-        ISK,
-
-        JMD,
-
-        JOD,
-
-        JPY,
-
-        KES,
-
-        KGS,
-
-        KHR,
-
-        KMF,
-
-        KPW,
-
-        KRW,
-
-        KWD,
-
-        KYD,
-
-        KZT,
-
-        LAK,
-
-        LBP,
-
-        LKR,
-
-        LRD,
-
-        LSL,
-
-        LTL,
-
-        LVL,
-
-        LYD,
-
-        MAD,
-
-        MDL,
-
-        MGA,
-
-        MKD,
-
-        MMK,
-
-        MNT,
-
-        MOP,
-
-        MRO,
-
-        MUR,
-
-        MVR,
-
-        MWK,
-
-        MXN,
-
-        MXV,
-
-        MYR,
-
-        MZN,
-
-        NAD,
-
-        NGN,
-
-        NIO,
-
-        NOK,
-
-        NPR,
-
-        NZD,
-
-        OMR,
-
-        PAB,
-
-        PEN,
-
-        PGK,
-
-        PHP,
-
-        PKR,
-
-        PLN,
-
-        PYG,
-
-        QAR,
-
-        RON,
-
-        RSD,
-
-        RUB,
-
-        RWF,
-
-        SAR,
-
-        SBD,
-
-        SCR,
-
-        SDG,
-
-        SEK,
-
-        SGD,
-
-        SHP,
-
-        SLL,
-
-        SOS,
-
-        SRD,
-
-        SSP,
-
-        STD,
-
-        SVC,
-
-        SYP,
-
-        SZL,
-
-        THB,
-
-        TJS,
-
-        TMT,
-
-        TND,
-
-        TOP,
-
-        TRY,
-
-        TTD,
-
-        TWD,
-
-        TZS,
-
-        UAH,
-
-        UGX,
-
-        USD,
-
-        USN,
-
-        USS,
-
-        UYI,
-
-        UYU,
-
-        UZS,
-
-        VEF,
-
-        VND,
-
-        VUV,
-
-        WST,
-
-        XAF,
-
-        XAG,
-
-        XAU,
-
-        XBA,
-
-        XBB,
-
-        XBC,
-
-        XBD,
-
-        XCD,
-
-        XDR,
-
-        XFU,
-
-        XOF,
-
-        XPD,
-
-        XPF,
-
-        XPT,
-
-        XSU,
-
-        XTS,
-
-        XUA,
-
-        XXX,
-
-        YER,
-
-        ZAR,
-
-        ZMK,
-
-        ZWL,
+        EUR
     }
     public enum LanguageType
     {
-
-        aar,
-
-        abk,
-
-        ace,
-
-        ach,
-
-        ada,
-
-        ady,
-
-        afa,
-
-        afh,
-
-        afr,
-
-        aka,
-
-        akk,
-
-        alb,
-
-        ale,
-
-        alg,
-
-        amh,
-
-        ang,
-
-        apa,
-
-        ara,
-
-        arc,
-
-        arg,
-
-        arm,
-
-        arn,
-
-        arp,
-
-        art,
-
-        arw,
-
-        asm,
-
-        ast,
-
-        ath,
-
-        aus,
-
-        ava,
-
-        ave,
-
-        awa,
-
-        aym,
-
-        aze,
-
-        bad,
-
-        bai,
-
-        bak,
-
-        bal,
-
-        bam,
-
-        ban,
-
-        baq,
-
-        bas,
-
-        bat,
-
-        bej,
-
-        bem,
-
-        ben,
-
-        ber,
-
-        bho,
-
-        bih,
-
-        bik,
-
-        bin,
-
-        bis,
-
-        bla,
-
-        bnt,
-
-        bod,
-
-        bos,
-
-        bra,
-
-        bre,
-
-        btk,
-
-        bua,
-
-        bug,
-
-        bul,
-
-        bur,
-
-        byn,
-
-        cad,
-
-        cai,
-
-        car,
-
-        cat,
-
-        cau,
-
-        ceb,
-
-        cel,
-
-        ces,
-
-        cha,
-
-        chb,
-
-        che,
-
-        chg,
-
-        chi,
-
-        chk,
-
-        chm,
-
-        chn,
-
-        cho,
-
-        chp,
-
-        chr,
-
-        chu,
-
-        chv,
-
-        chy,
-
-        cmc,
-
-        cop,
-
-        cor,
-
-        cos,
-
-        cpe,
-
-        cpf,
-
-        cpp,
-
-        cre,
-
-        crh,
-
-        crp,
-
-        csb,
-
-        cus,
-
-        cym,
-
-        cze,
-
-        dak,
-
-        dan,
-
-        dar,
-
-        day,
-
-        del,
-
-        den,
-
-        deu,
-
-        dgr,
-
-        din,
-
-        div,
-
-        doi,
-
-        dra,
-
-        dsb,
-
-        dua,
-
-        dum,
-
-        dut,
-
-        dyu,
-
-        dzo,
-
-        efi,
-
-        egy,
-
-        eka,
-
-        ell,
-
-        elx,
-
-        eng,
-
-        enm,
-
-        epo,
-
-        est,
-
-        eus,
-
-        ewe,
-
-        ewo,
-
-        fan,
-
-        fao,
-
-        fas,
-
-        fat,
-
-        fij,
-
-        fil,
-
-        fin,
-
-        fiu,
-
-        fon,
-
-        fra,
-
-        fre,
-
-        frm,
-
-        fro,
-
-        fry,
-
-        ful,
-
-        fur,
-
-        gaa,
-
-        gay,
-
-        gba,
-
-        gem,
-
-        geo,
-
-        ger,
-
-        gez,
-
-        gil,
-
-        gla,
-
-        gle,
-
-        glg,
-
-        glv,
-
-        gmh,
-
-        goh,
-
-        gon,
-
-        gor,
-
-        got,
-
-        grb,
-
-        grc,
-
-        gre,
-
-        grn,
-
-        guj,
-
-        gwi,
-
-        hai,
-
-        hat,
-
-        hau,
-
-        haw,
-
-        heb,
-
-        her,
-
-        hil,
-
-        him,
-
-        hin,
-
-        hit,
-
-        hmn,
-
-        hmo,
-
-        hrv,
-
-        hsb,
-
-        hun,
-
-        hup,
-
-        hye,
-
-        iba,
-
-        ibo,
-
-        ice,
-
-        ido,
-
-        iii,
-
-        ijo,
-
-        iku,
-
-        ile,
-
-        ilo,
-
-        ina,
-
-        inc,
-
-        ind,
-
-        ine,
-
-        inh,
-
-        ipk,
-
-        ira,
-
-        iro,
-
-        isl,
-
-        ita,
-
-        jav,
-
-        jbo,
-
-        jpn,
-
-        jpr,
-
-        jrb,
-
-        kaa,
-
-        kab,
-
-        kac,
-
-        kal,
-
-        kam,
-
-        kan,
-
-        kar,
-
-        kas,
-
-        kat,
-
-        kau,
-
-        kaw,
-
-        kaz,
-
-        kbd,
-
-        kha,
-
-        khi,
-
-        khm,
-
-        kho,
-
-        kik,
-
-        kin,
-
-        kir,
-
-        kmb,
-
-        kok,
-
-        kom,
-
-        kon,
-
-        kor,
-
-        kos,
-
-        kpe,
-
-        krc,
-
-        kro,
-
-        kru,
-
-        kua,
-
-        kum,
-
-        kur,
-
-        kut,
-
-        lad,
-
-        lah,
-
-        lam,
-
-        lao,
-
-        lat,
-
-        lav,
-
-        lez,
-
-        lim,
-
-        lin,
-
-        lit,
-
-        lol,
-
-        loz,
-
-        ltz,
-
-        lua,
-
-        lub,
-
-        lug,
-
-        lui,
-
-        lun,
-
-        luo,
-
-        lus,
-
-        mac,
-
-        mad,
-
-        mag,
-
-        mah,
-
-        mai,
-
-        mak,
-
-        mal,
-
-        man,
-
-        mao,
-
-        map,
-
-        mar,
-
-        mas,
-
-        may,
-
-        mdf,
-
-        mdr,
-
-        men,
-
-        mga,
-
-        mic,
-
-        min,
-
-        mis,
-
-        mkd,
-
-        mkh,
-
-        mlg,
-
-        mlt,
-
-        mnc,
-
-        mni,
-
-        mno,
-
-        moh,
-
-        mol,
-
-        mon,
-
-        mos,
-
-        mri,
-
-        msa,
-
-        mul,
-
-        mun,
-
-        mus,
-
-        mwl,
-
-        mwr,
-
-        mya,
-
-        myn,
-
-        myv,
-
-        nah,
-
-        nai,
-
-        nap,
-
-        nau,
-
-        nav,
-
-        nbl,
-
-        nde,
-
-        ndo,
-
-        nds,
-
-        nep,
-
-        @new,
-
-        nia,
-
-        nic,
-
-        niu,
-
-        nld,
-
-        nno,
-
-        nob,
-
-        nog,
-
-        non,
-
-        nor,
-
-        nso,
-
-        nub,
-
-        nwc,
-
-        nya,
-
-        nym,
-
-        nyn,
-
-        nyo,
-
-        nzi,
-
-        oci,
-
-        oji,
-
-        ori,
-
-        orm,
-
-        osa,
-
-        oss,
-
-        ota,
-
-        oto,
-
-        paa,
-
-        pag,
-
-        pal,
-
-        pam,
-
-        pan,
-
-        pap,
-
-        pau,
-
-        peo,
-
-        per,
-
-        phi,
-
-        phn,
-
-        pli,
-
-        pol,
-
-        pon,
-
-        por,
-
-        pra,
-
-        pro,
-
-        pus,
-
-        que,
-
-        raj,
-
-        rap,
-
-        rar,
-
-        roa,
-
-        roh,
-
-        rom,
-
-        ron,
-
-        rum,
-
-        run,
-
-        rus,
-
-        sad,
-
-        sag,
-
-        sah,
-
-        sai,
-
-        sal,
-
-        sam,
-
-        san,
-
-        sas,
-
-        sat,
-
-        scc,
-
-        scn,
-
-        sco,
-
-        scr,
-
-        sel,
-
-        sem,
-
-        sga,
-
-        sgn,
-
-        shn,
-
-        sid,
-
-        sin,
-
-        sio,
-
-        sit,
-
-        sla,
-
-        slk,
-
-        slo,
-
-        slv,
-
-        sma,
-
-        sme,
-
-        smi,
-
-        smj,
-
-        smn,
-
-        smo,
-
-        sms,
-
-        sna,
-
-        snd,
-
-        snk,
-
-        sog,
-
-        som,
-
-        son,
-
-        sot,
-
-        spa,
-
-        sqi,
-
-        srd,
-
-        srp,
-
-        srr,
-
-        ssa,
-
-        ssw,
-
-        suk,
-
-        sun,
-
-        sus,
-
-        sux,
-
-        swa,
-
-        swe,
-
-        syr,
-
-        tah,
-
-        tai,
-
-        tam,
-
-        tat,
-
-        tel,
-
-        tem,
-
-        ter,
-
-        tet,
-
-        tgk,
-
-        tgl,
-
-        tha,
-
-        tib,
-
-        tig,
-
-        tir,
-
-        tiv,
-
-        tkl,
-
-        tlh,
-
-        tli,
-
-        tmh,
-
-        tog,
-
-        ton,
-
-        tpi,
-
-        tsi,
-
-        tsn,
-
-        tso,
-
-        tuk,
-
-        tum,
-
-        tup,
-
-        tur,
-
-        tut,
-
-        tvl,
-
-        twi,
-
-        tyv,
-
-        udm,
-
-        uga,
-
-        uig,
-
-        ukr,
-
-        umb,
-
-        und,
-
-        urd,
-
-        uzb,
-
-        vai,
-
-        ven,
-
-        vie,
-
-        vol,
-
-        vot,
-
-        wak,
-
-        wal,
-
-        war,
-
-        was,
-
-        wel,
-
-        wen,
-
-        wln,
-
-        wol,
-
-        xal,
-
-        xho,
-
-        yao,
-
-        yap,
-
-        yid,
-
-        yor,
-
-        ypk,
-
-        zap,
-
-        zen,
-
-        zha,
-
-        zho,
-
-        znd,
-
-        zul,
-
-        zun,
-    }
-    public partial class VATType
-    {
-        private List<VATItemType> vATItemField;
-        public VATType()
-        {
-            this.vATItemField = new List<VATItemType>();
-        }
-        public List<VATItemType> VATItem
-        {
-            get { return this.vATItemField; }
-            set { this.vATItemField = value; }
-        }
+        ger
     }
 
-    // Mit ebInterface 5p0
-    public partial class AdditionalInformationType
+    // TAX mit ebInterface 5p0
+
+    public partial class TaxItemType
     {
 
-        private string keyField;
+        private decimal taxableAmountField;
 
-        private string valueField;
+        private TaxPercentType taxPercentField;
+
+        private decimal taxAmountField;
+
+        private bool taxAmountFieldSpecified;
+
+        private string commentField;
+
+        /// <remarks/>
+        public decimal TaxableAmount
+        {
+            get {
+                return this.taxableAmountField;
+            }
+            set {
+                this.taxableAmountField = value;
+            }
+        }
+
+        /// <remarks/>
+        public TaxPercentType TaxPercent
+        {
+            get {
+                return this.taxPercentField;
+            }
+            set {
+                this.taxPercentField = value;
+            }
+        }
+
+        /// <remarks/>
+        public decimal TaxAmount
+        {
+            get {
+                return this.taxAmountField;
+            }
+            set {
+                this.taxAmountField = value;
+            }
+        }
 
         /// <remarks/>
 
-        public string Key
+        public bool TaxAmountSpecified
         {
-            get { return this.keyField; }
-            set { this.keyField = value; }
+            get {
+                return this.taxAmountFieldSpecified;
+            }
+            set {
+                this.taxAmountFieldSpecified = value;
+            }
+        }
+
+
+        /// <remarks/>
+        public string Comment
+        {
+            get {
+                return this.commentField;
+            }
+            set {
+                this.commentField = value;
+            }
         }
     }
+    public partial class TaxPercentType
+    {
+
+        private string taxCategoryCodeField;
+
+        private decimal valueField;
+
+
+
+        public string TaxCategoryCode
+        {
+            get {
+                return this.taxCategoryCodeField;
+            }
+            set {
+                this.taxCategoryCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public decimal Value
+        {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+
+    public partial class OtherTaxType
+    {
+
+        private string commentField;
+
+        private decimal amountField;
+
+        /// <remarks/>
+        public string Comment
+        {
+            get {
+                return this.commentField;
+            }
+            set {
+                this.commentField = value;
+            }
+        }
+
+        /// <remarks/>
+        public decimal Amount
+        {
+            get {
+                return this.amountField;
+            }
+            set {
+                this.amountField = value;
+            }
+        }
+    }
+
 }

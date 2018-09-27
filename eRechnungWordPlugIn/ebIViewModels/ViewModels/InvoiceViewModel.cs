@@ -44,7 +44,7 @@ using WinFormsMvvm.DialogService;
 using WinFormsMvvm.DialogService.FrameworkDialogs.OpenFile;
 using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
 using DropDownListViewModels = ebIViewModels.Services.DropDownListViewModels;
-using InvoiceType = ebIModels.Models.InvoiceType;
+using InvoiceModel = ebIModels.Models.InvoiceModel;
 using ValidationResult = Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult;
 using ebIServices;
 using LogService;
@@ -1566,7 +1566,7 @@ namespace ebIViewModels.ViewModels
         internal virtual void LoadTemplateWithProgressBar(string filename)
         {
             Log.TraceWrite(CallerInfo.Create(), "entering filename={0}", filename ?? "(null)");
-            InvoiceType inv = InvoiceFactory.LoadTemplate(filename) as InvoiceType;
+            InvoiceModel inv = InvoiceFactory.LoadTemplate(filename) as InvoiceModel;
 
             DialogResult rc;
             _clearVat = false;
