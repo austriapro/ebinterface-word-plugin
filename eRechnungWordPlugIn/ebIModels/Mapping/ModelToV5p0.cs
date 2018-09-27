@@ -17,7 +17,7 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">ebInterface 5p0 InvoiceType</param>
         /// <returns></returns>
-        public static V5P0.InvoiceType MapModelToV5p0(Model.IInvoiceType source)
+        public static V5P0.InvoiceType MapModelToV5p0(Model.IInvoiceModel source)
         {
             V5P0.InvoiceType invoice = new V5P0.InvoiceType();
             mappingErrors = new List<MappingError>();

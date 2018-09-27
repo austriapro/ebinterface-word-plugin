@@ -66,7 +66,7 @@ namespace eRechnung
         internal RibbonViewModel RibbonViewModel;
         internal InvoiceViewModel InvoiceViewModel;
         internal ErrorActionsPaneControl ErrorActionsPane;
-        internal static IInvoiceType Invoice;
+        internal static IInvoiceModel Invoice;
         internal Dictionary<string, ContentControlContainer> CcContainer = new Dictionary<string, ContentControlContainer>();
 
         internal IDialogService Dialogs;

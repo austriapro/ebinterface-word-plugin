@@ -18,9 +18,9 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">ebInterface 5p0 InvoiceType</param>
         /// <returns></returns>
-        public static IInvoiceType MapV5p0ToVm(V5P0.InvoiceType source)
+        public static IInvoiceModel MapV5p0ToVm(V5P0.InvoiceType source)
         {
-            IInvoiceType invoice = InvoiceFactory.CreateInvoice();
+            IInvoiceModel invoice = InvoiceFactory.CreateInvoice();
             mappingErrors = new List<MappingError>();
 
             // GeneratingSystem xs:string

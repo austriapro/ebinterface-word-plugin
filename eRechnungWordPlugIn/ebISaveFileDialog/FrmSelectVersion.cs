@@ -11,7 +11,7 @@ using FileDialogExtenders;
 using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
 using ebIModels.Schema;
 using ebISaveFileDialog;
-using static ebIModels.Schema.InvoiceType;
+using static ebIModels.Schema.InvoiceModel;
 
 namespace ebISaveFileDialog 
 {

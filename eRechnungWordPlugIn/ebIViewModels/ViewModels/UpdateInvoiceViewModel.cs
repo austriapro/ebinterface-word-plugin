@@ -109,7 +109,7 @@ namespace ebIViewModels.ViewModels
 
         private UnityContainer _uc;
 
-        public UpdateInvoiceViewModel(UnityContainer uc,IDialogService dlg, IInvoiceType invoice) : base(dlg)
+        public UpdateInvoiceViewModel(UnityContainer uc,IDialogService dlg, IInvoiceModel invoice) : base(dlg)
         {
             
             _uc = uc;

@@ -20,7 +20,7 @@ namespace ebIModels.Models.Tests
             const string fn = @"Daten\testTemplateInvoiceTest.xml";
             const string save4p1Fn = @"Daten\Save4p1.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn);
-            invoice.Save(save4p1Fn, Schema.InvoiceType.ebIVersion.V4P1);
+            invoice.Save(save4p1Fn, Schema.InvoiceModel.ebIVersion.V4P1);
 
             XDocument xInv = XDocument.Load(save4p1Fn);
             var attrs = xInv.Root.Attributes().Where(p => p.IsNamespaceDeclaration == true).FirstOrDefault(x=>x.Name.LocalName=="eb");
@@ -34,7 +34,7 @@ namespace ebIModels.Models.Tests
             const string fn = @"Daten\testTemplateInvoiceTest.xml";
             const string save4p1Fn = @"Daten\Save4p2.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn);
-            invoice.Save(save4p1Fn, Schema.InvoiceType.ebIVersion.V4P2);
+            invoice.Save(save4p1Fn, Schema.InvoiceModel.ebIVersion.V4P2);
 
             XDocument xInv = XDocument.Load(save4p1Fn);
             var attrs = xInv.Root.Attributes().Where(p => p.IsNamespaceDeclaration == true).FirstOrDefault(x => x.Name.LocalName == "eb");
@@ -49,7 +49,7 @@ namespace ebIModels.Models.Tests
             const string fn = @"Daten\testTemplateInvoiceTest.xml";
             const string save4p1Fn = @"Daten\Save4p3.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn);
-            invoice.Save(save4p1Fn, Schema.InvoiceType.ebIVersion.V4P3);
+            invoice.Save(save4p1Fn, Schema.InvoiceModel.ebIVersion.V4P3);
 
             XDocument xInv = XDocument.Load(save4p1Fn);
             var attrs = xInv.Root.Attributes().Where(p => p.IsNamespaceDeclaration == true).FirstOrDefault(x => x.Name.LocalName == "eb");

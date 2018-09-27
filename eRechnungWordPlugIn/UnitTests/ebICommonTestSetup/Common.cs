@@ -24,7 +24,7 @@ namespace ebICommonTestSetup
         private const string DataFolder = "Daten";
 
         public IUnityContainer UContainer;
-        public IInvoiceType Invoice;
+        public IInvoiceModel Invoice;
 
         public Common()
         {
@@ -44,7 +44,7 @@ namespace ebICommonTestSetup
             var dirList = Directory.GetFiles(DataFolder, "*.xml");
             foreach (string templFileName in dirList)
             {
-                IInvoiceType inv = InvoiceFactory.LoadTemplate(templFileName);
+                IInvoiceModel inv = InvoiceFactory.LoadTemplate(templFileName);
                 DateTime oldInvDate = inv.InvoiceDate;   // Save Invoicedate
                 inv.InvoiceDate = DateTime.Today;
                 int days = inv.InvoiceDate.Days(oldInvDate);

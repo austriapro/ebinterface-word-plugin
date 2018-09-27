@@ -11,7 +11,7 @@ using ExtensionMethods;
 
 namespace ebIModels.Schema.ebInterface4p0
 {
-    public partial class InvoiceType : ebIModels.Schema.InvoiceType
+    public partial class InvoiceType : ebIModels.Schema.InvoiceModel
     {
 
         public InvoiceType()

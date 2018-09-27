@@ -50,7 +50,7 @@ using ebIServices;
 using LogService;
 using ebISaveFileDialog;
 using FileDialogExtenders;
-using static ebIModels.Schema.InvoiceType;
+using static ebIModels.Schema.InvoiceModel;
 using ebIModels.Mapping;
 
 namespace ebIViewModels.ViewModels
@@ -1194,7 +1194,7 @@ namespace ebIViewModels.ViewModels
         private readonly string[] _reText2 = { "Summe MwSt", "{0}: Summe MwSt" };
         private readonly string[] _reText3 = { "Rechnungsbetrag inkl. MwSt", "Gesamt" };
 
-        internal IInvoiceType _invoice;
+        internal IInvoiceModel _invoice;
         private UniversalBankTransactionType _bankTx;
         // private readonly IPlugInSettings _settings;
         internal ProgressViewModel _progressView;
@@ -1211,7 +1211,7 @@ namespace ebIViewModels.ViewModels
 
             IUnityContainer uc,
             DocumentTypeModels documentTypes,
-            IInvoiceType invoice,
+            IInvoiceModel invoice,
             IDialogService dialog, ISaveFileDialog saveDlg, IOpenFileDialog openDlg,
             RelatedDocumentViewModel relatedDoc, IStartProcessDienst process,
             ProgressViewModel progressView)
@@ -1769,7 +1769,7 @@ namespace ebIViewModels.ViewModels
 
         public virtual void Clear()
         {
-            IInvoiceType inv = InvoiceFactory.CreateInvoice();
+            IInvoiceModel inv = InvoiceFactory.CreateInvoice();
             _invoice = inv;
             VmLieferDatum = new DateTime();
             RelatedDoc.Clear();

@@ -11,13 +11,13 @@ using ExtensionMethods;
 
 namespace ebIModels.Schema.ebInterface4p2
 {
-    public partial class InvoiceType : ebIModels.Schema.InvoiceType
+    public partial class InvoiceType : ebIModels.Schema.InvoiceModel
     {
 
         public void SetInvoiceVersion()
         {
             base.CurrentSchema = _schemaInfo;
-            base.Version = Schema.InvoiceType.ebIVersion.V4P2;
+            base.Version = Schema.InvoiceModel.ebIVersion.V4P2;
         }
 
         //// ToDo Refactor and move code to ebInterface.cs

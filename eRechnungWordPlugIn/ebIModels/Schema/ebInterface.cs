@@ -21,7 +21,7 @@ namespace ebIModels.Schema
     /// </summary>
     [XmlType(Namespace = "http://www.ebinterface.at/schema/0p0/")]
     [XmlRoot("Invoice", Namespace = "http://www.ebinterface.at/schema/0p0/", IsNullable = false)]
-    public partial class InvoiceType : object 
+    public partial class InvoiceModel : object 
     {
         public enum ebIVersion
         {
@@ -210,19 +210,19 @@ namespace ebIModels.Schema
                 //case InvoiceType.ebIVersion.V3P02:
                 //    schemas = ebInterface3p02.InvoiceType._schemaInfo;
                 //    break;
-                case InvoiceType.ebIVersion.V4P0:
+                case InvoiceModel.ebIVersion.V4P0:
                     schemas = ebInterface4p0.InvoiceType._schemaInfo;
                     break;
-                case InvoiceType.ebIVersion.V4P1:
+                case InvoiceModel.ebIVersion.V4P1:
                     schemas = ebInterface4p1.InvoiceType._schemaInfo;
                     break;
-                case InvoiceType.ebIVersion.V4P2:
+                case InvoiceModel.ebIVersion.V4P2:
                     schemas = ebInterface4p2.InvoiceType._schemaInfo;
                     break;
-                case InvoiceType.ebIVersion.V4P3:
+                case InvoiceModel.ebIVersion.V4P3:
                     schemas = ebInterface4p3.InvoiceType._schemaInfo;
                     break;
-                case InvoiceType.ebIVersion.V5P0:
+                case InvoiceModel.ebIVersion.V5P0:
                     schemas = ebInterface5p0.InvoiceType._schemaInfo;
                     break;
                 default:

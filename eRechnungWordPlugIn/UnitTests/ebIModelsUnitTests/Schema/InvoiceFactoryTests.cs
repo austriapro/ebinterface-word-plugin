@@ -85,7 +85,7 @@ namespace ebIModels.Schema.Tests
         public void LoadTemplate4P0AndSaveAs4P1Ok()
         {
             string fn = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";
-            var invoice = InvoiceFactory.LoadTemplate(fn) as InvoiceType;
+            var invoice = InvoiceFactory.LoadTemplate(fn) as InvoiceModel;
             invoice.Save(@"Daten\testSaveInvoice.xml");
             Assert.IsNotNull(invoice);
         }

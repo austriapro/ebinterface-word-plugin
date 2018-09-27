@@ -13,9 +13,9 @@ namespace ebIModels.Mapping
     public static class MappingService4p0ToVm
     {
 
-        public static IInvoiceType MapV4p0ToModel(V4P0.InvoiceType source)
+        public static IInvoiceModel MapV4p0ToModel(V4P0.InvoiceType source)
         {
-            IInvoiceType invoice = InvoiceFactory.CreateInvoice();
+            IInvoiceModel invoice = InvoiceFactory.CreateInvoice();
             try
             {
                 #region Rechnungskopf

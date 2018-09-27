@@ -137,6 +137,7 @@
     <Compile Include="Models\DocumentTypeModels.cs" />
     <Compile Include="Models\CountryCodeModel.cs" />
     <Compile Include="Models\IDocumentTypes.cs" />
+    <Compile Include="Models\IInvoiceModel.cs" />
     <Compile Include="Models\IInvoiceType.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\InvoiceExtensions.cs" />

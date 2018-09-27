@@ -16,7 +16,7 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        public static V4P1.InvoiceType MapModelToV4p1(VM.IInvoiceType source)
+        public static V4P1.InvoiceType MapModelToV4p1(VM.IInvoiceModel source)
         {
             V4P1.InvoiceType inv4P1 = new V4P1.InvoiceType(); // new V4P1.InvoiceType();
 

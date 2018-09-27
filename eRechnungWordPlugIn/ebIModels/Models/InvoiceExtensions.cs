@@ -17,14 +17,7 @@ namespace ebIModels.Models
             set { _netAmount = value.FixedFraction(2); }
         }
 
-        private decimal? prepaidAmountField;
-        public decimal? PrepaidAmount
-        {
-            get => this.prepaidAmountField.FixedFraction(2);
-            set {
-                this.prepaidAmountField = value.FixedFraction(2);
-            }
-        }
+
         //public decimal? TaxAmount { get; set; }
         private decimal? _taxAmountTotal;
 
@@ -94,27 +87,27 @@ namespace ebIModels.Models
             return fId.Value;
         }
     }
-    public partial class CountryType
-    {
-        // private readonly ICountryCodes _countryCodes = new CountryCodesModels();
-        public CountryType(CountryCodeType country)
-        {
-            var cText = CountryCodes.GetFromCode(country.ToString());
-        }
-        public string CountryCodeText
-        {
-            get {
-                return CountryCode.ToString();
-            }
-            set {
-                if (CountryCode.ToString().Equals(value) == true)
-                    return;
-                string val = value;
-                CountryCode = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), val);
-            }
-        }
+    //public partial class CountryType
+    //{
+    //    // private readonly ICountryCodes _countryCodes = new CountryCodesModels();
+    //    public CountryType(CountryCodeType country)
+    //    {
+    //        var cText = CountryCodes.GetFromCode(country.ToString());
+    //    }
+    //    public string CountryCodeText
+    //    {
+    //        get {
+    //            return CountryCode.ToString();
+    //        }
+    //        set {
+    //            if (CountryCode.ToString().Equals(value) == true)
+    //                return;
+    //            string val = value;
+    //            CountryCode = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), val);
+    //        }
+    //    }
 
-    }
+    //}
 
     public partial class FurtherIdentificationType
     {
@@ -152,7 +145,7 @@ namespace ebIModels.Models
                         decimal taxVal = taxValue.Value;
                         if (taxItems.ContainsKey(taxVal))
                         {
-                            taxItems[taxVal].TaxableAmount += lineItem.LineItemAmount.GetValueOrDefault();
+                            taxItems[taxVal].TaxableAmount += lineItem.LineItemAmount;
                             //taxItems[taxVal].Amount += (lineItem.LineItemAmount * taxValue.Value / 100); // Bad Idea produces to differences
                         }
                         else

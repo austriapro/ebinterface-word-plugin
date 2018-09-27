@@ -78,7 +78,7 @@ namespace eRechnung
             uc.RegisterType<FrmSelectVersion>();
 
             Invoice = InvoiceFactory.CreateInvoice();
-            uc.RegisterInstance<IInvoiceType>(Invoice, new ContainerControlledLifetimeManager());
+            uc.RegisterInstance<IInvoiceModel>(Invoice, new ContainerControlledLifetimeManager());
 
             // Viewmodels
 

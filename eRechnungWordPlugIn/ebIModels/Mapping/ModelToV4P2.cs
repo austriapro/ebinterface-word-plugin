@@ -16,9 +16,9 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        public static V4P2.InvoiceType MapModelToV4p2(VM.IInvoiceType source)
+        public static V4P2.InvoiceType MapModelToV4p2(VM.IInvoiceModel source)
         {
-            V4P2.InvoiceType inv4P2 = InvoiceFactory.CreateInvoice(InvoiceType.ebIVersion.V4P2) as V4P2.InvoiceType; // new V4P1.InvoiceType();
+            V4P2.InvoiceType inv4P2 = InvoiceFactory.CreateInvoice(InvoiceModel.ebIVersion.V4P2) as V4P2.InvoiceType; // new V4P1.InvoiceType();
 
             #region Rechnungskopf
             inv4P2.InvoiceSubtype = source.InvoiceSubtype;

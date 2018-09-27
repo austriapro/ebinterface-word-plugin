@@ -18,7 +18,7 @@ using WinFormsMvvm;
 using WinFormsMvvm.Controls;
 using WinFormsMvvm.DialogService;
 using LogService;
-using static ebIModels.Schema.InvoiceType;
+using static ebIModels.Schema.InvoiceModel;
 using ebIModels.Schema;
 using ebIModels.Mapping;
 

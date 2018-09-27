@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ebIModels.Schema;
-using static ebIModels.Schema.InvoiceType;
+using static ebIModels.Schema.InvoiceModel;
 
 namespace ebIModels.Models
 {
-    public interface IInvoiceType
+    public interface IInvoiceTypeX 
     {
-        Schema.InvoiceType.ebIVersion Version { get; set; }
+        Schema.InvoiceModel.ebIVersion Version { get; set; }
     
         string InvoiceNumber { get; set; }
 

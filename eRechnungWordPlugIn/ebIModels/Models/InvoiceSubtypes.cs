@@ -114,7 +114,7 @@ namespace ebIModels.Models
             //    VariantOption = ValidationRuleSet.Invalid
             //}
         };
-        public static InvoiceModel.ebIVersion AktuelleVersion { get; private set; } = Schema.InvoiceType.ebIVersion.V4P3;
+        public static InvoiceModel.ebIVersion AktuelleVersion { get; private set; } = Schema.InvoiceModel.ebIVersion.V4P3;
         public static List<InvoiceSubtype> GetList()
         {
             return Variants;

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace ebIModels.Schema.ebInterface3p02
 {
-    public partial class InvoiceType : ebIModels.Schema.InvoiceType
+    public partial class InvoiceType : ebIModels.Schema.InvoiceModel
     {
         //public InvoiceType()
         //{

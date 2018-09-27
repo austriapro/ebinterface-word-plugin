@@ -14,13 +14,13 @@ namespace ebIModels.Schema.ebInterface4p3
 
     }
 
-    public partial class InvoiceType : ebIModels.Schema.InvoiceType
+    public partial class InvoiceType : ebIModels.Schema.InvoiceModel
     {
 
         public void SetInvoiceVersion()
         {
             base.CurrentSchema = _schemaInfo;
-            base.Version = Schema.InvoiceType.ebIVersion.V4P3;
+            base.Version = Schema.InvoiceModel.ebIVersion.V4P3;
         }
 
 

@@ -18,9 +18,9 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">ebInterface4p1 InvoiceType</param>
         /// <returns>InvoiceType Model</returns>
-        public static IInvoiceType MapV4P1ToVm(V4P1.InvoiceType source)
+        public static IInvoiceModel MapV4P1ToVm(V4P1.InvoiceType source)
         {
-            IInvoiceType Invoice = InvoiceFactory.CreateInvoice(); 
+            IInvoiceModel Invoice = InvoiceFactory.CreateInvoice(); 
             #region Rechnungskopf
             Invoice.InvoiceNumber = source.InvoiceNumber;
             Invoice.InvoiceDate = source.InvoiceDate;

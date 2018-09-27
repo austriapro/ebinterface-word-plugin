@@ -323,7 +323,7 @@ namespace ebIViewModels.ViewModels
             }
 
         }
-        public void LoadFromInvoice(IInvoiceType invoice)
+        public void LoadFromInvoice(IInvoiceModel invoice)
         {
            var _invoice = invoice;
             _invoiceDate = _invoice.InvoiceDate;
