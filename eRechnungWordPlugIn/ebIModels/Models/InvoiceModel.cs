@@ -33,11 +33,11 @@ namespace ebIModels.Models
         private string commentField;
         private string generatingSystemField;
         private DocumentTypeType documentTypeField;
-        private string invoiceCurrencyField;
+        private CurrencyType invoiceCurrencyField;
         private bool manualProcessingField;
         private bool manualProcessingFieldSpecified;
         private string documentTitleField;
-        private string languageField;
+        private LanguageType languageField;
         private bool isDuplicateField;
         private bool isDuplicateFieldSpecified;
         /// <remarks/>
@@ -202,7 +202,7 @@ namespace ebIModels.Models
         }
 
         /// <remarks/>
-        public string InvoiceCurrency
+        public CurrencyType InvoiceCurrency
         {
             get { return this.invoiceCurrencyField; }
             set { this.invoiceCurrencyField = value; }
@@ -230,7 +230,7 @@ namespace ebIModels.Models
         }
 
         /// <remarks/>
-        public string Language
+        public LanguageType Language
         {
             get { return this.languageField; }
             set { this.languageField = value; }
@@ -545,7 +545,6 @@ namespace ebIModels.Models
     /// <remarks/>
     public partial class CountryType
     {
-
         private string countryCodeField;
         private string valueField;
         /// <remarks/>
@@ -574,6 +573,9 @@ namespace ebIModels.Models
         TO, TT, TN, TR, TM, TC, TV, UG, UA, AE, GB, US, UM, UY, UZ, VU, VE, VN, VG, VI, WF, EH, YE, ZM, ZW,
     }
 
+    public enum LanguageType { ger }
+
+    public enum CurrencyType { EUR }
     /// <remarks/>
     public partial class ContactType
     {
@@ -1181,10 +1183,10 @@ namespace ebIModels.Models
     public partial class AccountingCurrencyAmountType
     {
 
-        private string currencyField;
+        private CurrencyType currencyField;
         private decimal valueField;
         /// <remarks/>
-        public string Currency
+        public CurrencyType Currency
         {
             get { return this.currencyField; }
             set { this.currencyField = value; }

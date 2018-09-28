@@ -87,27 +87,27 @@ namespace ebIModels.Models
             return fId.Value;
         }
     }
-    //public partial class CountryType
-    //{
-    //    // private readonly ICountryCodes _countryCodes = new CountryCodesModels();
-    //    public CountryType(CountryCodeType country)
-    //    {
-    //        var cText = CountryCodes.GetFromCode(country.ToString());
-    //    }
-    //    public string CountryCodeText
-    //    {
-    //        get {
-    //            return CountryCode.ToString();
-    //        }
-    //        set {
-    //            if (CountryCode.ToString().Equals(value) == true)
-    //                return;
-    //            string val = value;
-    //            CountryCode = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), val);
-    //        }
-    //    }
+    public partial class CountryType
+    {
+        // private readonly ICountryCodes _countryCodes = new CountryCodesModels();
+        public CountryType(CountryCodeType country)
+        {
+            var cText = CountryCodes.GetFromCode(country.ToString());
+        }
+        public string CountryCodeText
+        {
+            get {
+                return CountryCode.ToString();
+            }
+            set {
+                if (CountryCode.ToString().Equals(value) == true)
+                    return;
+                string val = value;
+                CountryCode = ((CountryCodeType)Enum.Parse(typeof(CountryCodeType), val)).ToString();
+            }
+        }
 
-    //}
+    }
 
     public partial class FurtherIdentificationType
     {

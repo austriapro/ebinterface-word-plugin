@@ -7,7 +7,7 @@ namespace ebIModels.Models
 {
     public interface IInvoiceModel 
     {
-        Schema.InvoiceModel.ebIVersion Version { get;  }
+        Schema.InvoiceModel.ebIVersion Version { get; set; }
 
         List<AdditionalInformationType> AdditionalInformation { get; set; }
         BillerType Biller { get; set; }
@@ -18,13 +18,13 @@ namespace ebIModels.Models
         string DocumentTitle { get; set; }
         DocumentTypeType DocumentType { get; set; }
         string GeneratingSystem { get; set; }
-        string InvoiceCurrency { get; set; }
+        CurrencyType InvoiceCurrency { get; set; }
         DateTime InvoiceDate { get; set; }
         string InvoiceNumber { get; set; }
         InvoiceRecipientType InvoiceRecipient { get; set; }
         bool IsDuplicate { get; set; }
         bool IsDuplicateSpecified { get; set; }
-        string Language { get; set; }
+        LanguageType Language { get; set; }
         bool ManualProcessing { get; set; }
         bool ManualProcessingSpecified { get; set; }
         decimal? NetAmount { get; set; }
