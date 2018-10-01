@@ -58,8 +58,8 @@ namespace ebIViewModels.ViewModels
             foreach (VATItemType vatItemType in taxType.VAT)
             {
                 VatViewModel vatModel = new VatViewModel();
-                vatModel.VatBaseAmount = vatItemType.TaxedAmount ?? 0;
-                vatModel.VatAmount = vatItemType.Amount ?? 0;
+                vatModel.VatBaseAmount = vatItemType.TaxedAmount;
+                vatModel.VatAmount = vatItemType.Amount;
                 if (vatItemType.Item is TaxExemptionType) // Steuerbefreit ...
                 {
                     TaxExemptionType taxExemption = (TaxExemptionType)vatItemType.Item;
@@ -72,7 +72,7 @@ namespace ebIViewModels.ViewModels
                 {
                     vatModel.TaxExemption = false;
                     VATRateType rate = (VATRateType)vatItemType.Item;
-                    vatModel.VatPercent = rate.Value ?? 0;
+                    vatModel.VatPercent = rate.Value;
                     vatModel.TaxCode = rate.TaxCode;
                     
 

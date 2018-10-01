@@ -3,7 +3,7 @@
     /// <summary>
     /// Klasse für die Schema Liste
     /// </summary>
-    internal class ebISchema
+    public class EbISchema
     {
         public string Prefix;
         public string Url;

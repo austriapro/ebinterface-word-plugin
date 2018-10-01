@@ -50,7 +50,7 @@ using ebIServices;
 using LogService;
 using ebISaveFileDialog;
 using FileDialogExtenders;
-using static ebIModels.Schema.InvoiceModel;
+using static ebIModels.Models.InvoiceModel;
 using ebIModels.Mapping;
 
 namespace ebIViewModels.ViewModels
@@ -495,7 +495,7 @@ namespace ebIViewModels.ViewModels
             {
 
                 if (_invoice.Biller.OrderReference.ReferenceDateSpecified && _invoice.Biller.OrderReference.ReferenceDate == value) return;
-                _invoice.Biller.OrderReference.ReferenceDate = value ?? new DateTime();
+                _invoice.Biller.OrderReference.ReferenceDate = value;
                 _invoice.Biller.OrderReference.ReferenceDateSpecified = !(value == null);
                 OnPropertyChanged();
             }
@@ -691,7 +691,7 @@ namespace ebIViewModels.ViewModels
                 {
                     DateTime? lieferdatum = _invoice.Delivery.Item as DateTime?;
                     if (lieferdatum == value) return;
-                    _invoice.Delivery.Item = new PeriodType() { FromDate = value }; // (DateTime)(value ?? new DateTime());
+                    _invoice.Delivery.Item = new PeriodType() { FromDate = value }; // (DateTime)(value);
                 }
                 else
                 {
@@ -712,7 +712,7 @@ namespace ebIViewModels.ViewModels
 
         public string VmInvTotalNetAmount
         {
-            get { return (_invoice.NetAmount ?? 0).Decimal2(); }
+            get { return (_invoice.NetAmount).Decimal2(); }
             set
             {
                 decimal dec;
@@ -735,7 +735,7 @@ namespace ebIViewModels.ViewModels
 
         public string VmInvTaxAmount
         {
-            get { return PlugInSettings.Default.VStBerechtigt ? ((_invoice.TaxAmountTotal ?? 0).Decimal2()) : "0,00"; }
+            get { return PlugInSettings.Default.VStBerechtigt ? ((_invoice.TaxAmountTotal).Decimal2()) : "0,00"; }
         }
 
         public string VmInvTotalAmountText
@@ -745,11 +745,11 @@ namespace ebIViewModels.ViewModels
 
         public decimal VmInvTotalAmountDecimal
         {
-            get { return _invoice.TotalGrossAmount ?? 0; }
+            get { return _invoice.TotalGrossAmount; }
         }
         public string VmInvTotalAmount
         {
-            get { return (_invoice.TotalGrossAmount ?? 0).Decimal2(); }
+            get { return (_invoice.TotalGrossAmount).Decimal2(); }
             set
             {
                 decimal dec;
@@ -1277,7 +1277,7 @@ namespace ebIViewModels.ViewModels
                 return null;
             }
             string fn;
-            ebIVersion preSelectedVersion = InvoiceFactory.LatestVersion;
+            EbIVersion preSelectedVersion = InvoiceFactory.LatestVersion;
             if (!Enum.TryParse(PlugInSettings.Default.ebInterfaceVersionString,out preSelectedVersion))
             {
                preSelectedVersion = InvoiceFactory.LatestVersion;
@@ -1713,10 +1713,10 @@ namespace ebIViewModels.ViewModels
             _invoice.SaveTemplate(fileName);
         }
 
-        internal bool SaveEbinterface(string filename, ebIVersion saveAsVersion)
+        internal bool SaveEbinterface(string filename, EbIVersion saveAsVersion)
         {
             ClearPanel();
-            ebInterfaceResult ebIResult = _invoice.Save(filename,saveAsVersion);
+            EbInterfaceResult ebIResult = _invoice.Save(filename,saveAsVersion);
             if (ebIResult.ResultType == ResultType.IsValid)
             {
                 PublishToPanel(filename + " erfolgreich gespeichert.", "", "", "");

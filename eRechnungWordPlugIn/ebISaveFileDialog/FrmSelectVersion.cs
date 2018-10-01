@@ -11,7 +11,7 @@ using FileDialogExtenders;
 using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
 using ebIModels.Schema;
 using ebISaveFileDialog;
-using static ebIModels.Schema.InvoiceModel;
+using static ebIModels.Models.InvoiceModel;
 
 namespace ebISaveFileDialog 
 {
@@ -30,16 +30,16 @@ namespace ebISaveFileDialog
             //  this.comboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "SelectedVersion", true));
         }
 
-        public ebIVersion SelectedVersion { get; set; }
+        public EbIVersion SelectedVersion { get; set; }
       
-        public void SetSelectedVersion(ebIVersion version)
+        public void SetSelectedVersion(EbIVersion version)
         {
             comboBox1.SelectedItem = version.ToString();
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string sel = comboBox1.SelectedItem as string;
-            SelectedVersion = (ebIVersion)Enum.Parse(typeof(ebIVersion), sel);
+            SelectedVersion = (EbIVersion)Enum.Parse(typeof(EbIVersion), sel);
 
         }
     }

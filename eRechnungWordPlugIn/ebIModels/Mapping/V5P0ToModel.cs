@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ebIModels.Schema;
 
-namespace ebIModels.Mapping
+namespace ebIModels.Mapping.V5p0
 {
-    public static class V5P0ToModel
+    public static partial class MapInvoice
     {
 
         public static List<MappingError> mappingErrors;
@@ -18,7 +18,7 @@ namespace ebIModels.Mapping
         /// </summary>
         /// <param name="source">ebInterface 5p0 InvoiceType</param>
         /// <returns></returns>
-        public static IInvoiceModel MapV5p0ToVm(V5P0.InvoiceType source)
+        internal static IInvoiceModel MapV5p0ToVm(V5P0.InvoiceType source)
         {
             IInvoiceModel invoice = InvoiceFactory.CreateInvoice();
             mappingErrors = new List<MappingError>();

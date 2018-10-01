@@ -9,11 +9,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ebIModels.Schema.ebInterface5p0
 {
-    public class InvoiceInitializer5p0
-    {
-
-    }
-
     public partial class InvoiceType
     {
         public InvoiceType()

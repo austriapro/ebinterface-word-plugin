@@ -12,14 +12,17 @@ using ebIModels.Schema;
 
 namespace ebIModels.Models
 {
+    /// <summary>
+    /// Enthält die Datenprüfungen für eRechnung an doe öffentl. Verwaltung
+    /// </summary>
+    /// <seealso cref="ebIModels.Models.InvoiceModel" />
+    /// <seealso cref="ebIModels.Models.IInvoiceModel" />
     public partial class InvoiceModel 
     {
-
-
         /// <summary>
         /// Prüft ob Rechnung erb.gv.at. konform ist:
         /// </summary>
-        /// <returns>Eine <see cref="ebInterfaceResult"/> Instanz</returns>
+        /// <returns>Eine <see cref="EbInterfaceResult"/> Instanz</returns>
         /// <remarks>
         /// Folgende Prüfungen werden durchgeführt        
         /// <list type="bullet">
@@ -48,10 +51,11 @@ namespace ebIModels.Models
         ///  <item>Invoice/Biller/InvoiceRecipientsBillerID 10 Stell. alphanumerisch</item>
         /// </list>
         /// </remarks>
-        public ebInterfaceResult IsValidErbInvoice()
+        public EbInterfaceResult IsValidErbInvoice()
         {
-            ebInterfaceResult result = new ebInterfaceResult();
-            result = IsValidInvoice();
+            EbInterfaceResult result = new EbInterfaceResult();
+            Schema.ebInterface5p0.InvoiceType invoice = Mapping.MapInvoice.MapModelToV5p0(this);
+            
             if (result.ResultType != ResultType.IsValid)
             {
                 return result;
@@ -94,8 +98,7 @@ namespace ebIModels.Models
             // 10-stellig numerisch
 
             string msg = null;
-            OrderIdTypeType orderIdType;
-            msg = IsValidOrderIdBund(InvoiceRecipient.OrderReference.OrderID, out orderIdType);
+            msg = IsValidOrderIdBund(InvoiceRecipient.OrderReference.OrderID, out OrderIdTypeType orderIdType);
             if (msg != null)
             {
                 result.ResultMessages.Add(new ResultMessage()
@@ -172,7 +175,7 @@ namespace ebIModels.Models
 
 
             // A05 Biller E-Mail verpflichtend
-            if (string.IsNullOrWhiteSpace(Biller.Address.Email))
+            if (Biller.Address.Email.Count()<1)
             {
                 result.ResultMessages.Add(new ResultMessage()
                 {
@@ -399,11 +402,11 @@ namespace ebIModels.Models
         /// Determines whether [is valid erb invoice] [the specified erb invoice].
         /// </summary>
         /// <param name="erbInvoice">The erb invoice.</param>
-        /// <returns>Eine <see cref="ebInterfaceResult"/> Instanz</returns>
-        public static ebInterfaceResult IsValidErbInvoice(string erbInvoice)
+        /// <returns>Eine <see cref="EbInterfaceResult"/> Instanz</returns>
+        public static EbInterfaceResult IsValidErbInvoice(string erbInvoice)
         {
             var inv = (InvoiceModel)InvoiceFactory.LoadXml(erbInvoice);
-            ebInterfaceResult result = inv.IsValidErbInvoice();
+            EbInterfaceResult result = inv.IsValidErbInvoice();
             return result;
         }
 
@@ -411,11 +414,11 @@ namespace ebIModels.Models
         /// Determines whether [is valid erb invoice] [the specified erb invoice].
         /// </summary>
         /// <param name="erbInvoice">The erb invoice.</param>
-        /// <returns>Eine <see cref="ebInterfaceResult"/> Instanz</returns>
-        public static ebInterfaceResult IsValidErbInvoice(XmlDocument erbInvoice)
+        /// <returns>Eine <see cref="EbInterfaceResult"/> Instanz</returns>
+        public static EbInterfaceResult IsValidErbInvoice(XmlDocument erbInvoice)
         {
 
-            ebInterfaceResult result = IsValidErbInvoice(erbInvoice.InnerXml);
+            EbInterfaceResult result = IsValidErbInvoice(erbInvoice.InnerXml);
             return result;
         }
 

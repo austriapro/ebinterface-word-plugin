@@ -7,18 +7,18 @@ using V4P2 = ebIModels.Schema.ebInterface4p2;
 using ExtensionMethods;
 using VM = ebIModels.Models;
 
-namespace ebIModels.Mapping
+namespace ebIModels.Mapping.V4p2
 {
-    public static class MappingServiceVmTo4p2
+    public static partial class MapInvoice
     {
         /// <summary>
         /// Mapped InvoiceType Model auf ebInterface4p1
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        public static V4P2.InvoiceType MapModelToV4p2(VM.IInvoiceModel source)
+        internal static V4P2.InvoiceType MapModelToV4p2(VM.IInvoiceModel source)
         {
-            V4P2.InvoiceType inv4P2 = InvoiceFactory.CreateInvoice(InvoiceModel.ebIVersion.V4P2) as V4P2.InvoiceType; // new V4P1.InvoiceType();
+            V4P2.InvoiceType inv4P2 = InvoiceFactory.CreateInvoice(Models.EbIVersion.V4P2) as V4P2.InvoiceType; // new V4P1.InvoiceType();
 
             #region Rechnungskopf
             inv4P2.InvoiceSubtype = source.InvoiceSubtype;
@@ -80,8 +80,8 @@ namespace ebIModels.Mapping
                 if (delType.ToDate != null)
                 {
                     var deliveryType = new V4P2.PeriodType();
-                    deliveryType.FromDate = delType.FromDate ?? new DateTime();
-                    deliveryType.ToDate = delType.ToDate ?? new DateTime();
+                    deliveryType.FromDate = delType.FromDate;
+                    deliveryType.ToDate = delType.ToDate;
                     inv4P2.Delivery.Item = deliveryType;
                 }
                 else
@@ -155,12 +155,12 @@ namespace ebIModels.Mapping
                     // Menge
                     lineItem.Quantity = new V4P2.UnitType();
                     lineItem.Quantity.Unit = srcLineItem.Quantity.Unit;
-                    lineItem.Quantity.Value = srcLineItem.Quantity.Value.GetValueOrDefault();
+                    lineItem.Quantity.Value = srcLineItem.Quantity.Value;
 
                     // Einzelpreis
                     lineItem.UnitPrice = new V4P2.UnitPriceType()
                     {
-                        Value = srcLineItem.UnitPrice.Value.GetValueOrDefault()
+                        Value = srcLineItem.UnitPrice.Value
                     };
 
                     // Steuer
@@ -186,7 +186,7 @@ namespace ebIModels.Mapping
                         //lineItem.DiscountFlagSpecified = srcLineItem.DiscountFlagSpecified;
                     }
                     lineItem.Description = srcLineItem.Description.ToArray();
-                    lineItem.LineItemAmount = srcLineItem.LineItemAmount.GetValueOrDefault();
+                    lineItem.LineItemAmount = srcLineItem.LineItemAmount;
                     itemListLineItem.Add(lineItem);
                 }
                 itemList.ListLineItem = itemListLineItem.ToArray();
@@ -206,7 +206,7 @@ namespace ebIModels.Mapping
                         belowItems.Add(new V4P2.BelowTheLineItemType()
                         {
                             Description = item.Description,
-                            LineItemAmount = item.LineItemAmount ?? 0
+                            LineItemAmount = item.LineItemAmount
                         });
                             
                         }
@@ -225,8 +225,8 @@ namespace ebIModels.Mapping
             {
                 V4P2.VATItemType vatItemNeu = new V4P2.VATItemType()
                 {
-                    Amount = vatItem.Amount.GetValueOrDefault(),
-                    TaxedAmount = vatItem.TaxedAmount.GetValueOrDefault(),
+                    Amount = vatItem.Amount,
+                    TaxedAmount = vatItem.TaxedAmount,
                 };
 
                 vatItemNeu.Item = MapVatItemType(vatItem.Item);
@@ -246,9 +246,9 @@ namespace ebIModels.Mapping
             #endregion
 
             #region Amount
-            inv4P2.TotalGrossAmount = source.TotalGrossAmount.GetValueOrDefault();
+            inv4P2.TotalGrossAmount = source.TotalGrossAmount;
             inv4P2.PaymentMethod.Comment = source.PaymentMethod.Comment;
-            inv4P2.PayableAmount = source.PayableAmount.GetValueOrDefault();
+            inv4P2.PayableAmount = source.PayableAmount;
             #endregion
 
             #region PaymentMethod
@@ -286,12 +286,12 @@ namespace ebIModels.Mapping
                 {
                     V4P2.DiscountType discount = new V4P2.DiscountType()
                     {
-                        Amount = srcDiscount.Amount.GetValueOrDefault(),
+                        Amount = srcDiscount.Amount,
                         AmountSpecified = srcDiscount.AmountSpecified,
-                        BaseAmount = srcDiscount.BaseAmount.GetValueOrDefault(),
+                        BaseAmount = srcDiscount.BaseAmount,
                         BaseAmountSpecified = srcDiscount.BaseAmountSpecified,
                         PaymentDate = srcDiscount.PaymentDate,
-                        Percentage = srcDiscount.Percentage.GetValueOrDefault(),
+                        Percentage = srcDiscount.Percentage,
                         PercentageSpecified = srcDiscount.PercentageSpecified
                     };
                     discountList.Add(discount);
@@ -326,11 +326,11 @@ namespace ebIModels.Mapping
                 {
                     VM.ReductionAndSurchargeBaseType item = item1 as VM.ReductionAndSurchargeBaseType;
                     V4P2.ReductionAndSurchargeBaseType redBase = new V4P2.ReductionAndSurchargeBaseType();
-                    redBase.Amount = item.Amount ?? 0;
+                    redBase.Amount = item.Amount;
                     redBase.AmountSpecified = item.AmountSpecified;
-                    redBase.BaseAmount = item.BaseAmount ?? 0;
+                    redBase.BaseAmount = item.BaseAmount;
                     redBase.Comment = item.Comment;
-                    redBase.Percentage = item.Percentage ?? 0;
+                    redBase.Percentage = item.Percentage;
                     redBase.PercentageSpecified = item.PercentageSpecified;
                     lineRed.Items[i] = redBase;
                     i++;
@@ -365,7 +365,7 @@ namespace ebIModels.Mapping
                 var taxexNew = new V4P2.VATRateType();
                 var taxex = vatItem as VM.VATRateType;
                 taxexNew.TaxCode = taxex.TaxCode;
-                taxexNew.Value = taxex.Value ?? 0;
+                taxexNew.Value = taxex.Value;
                 return taxexNew;
             }
 

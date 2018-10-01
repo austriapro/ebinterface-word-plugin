@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using ebIModels.Schema;
-using static ebIModels.Schema.InvoiceModel;
+
 
 namespace ebIModels.Models
 {
     public interface IInvoiceModel 
     {
-        Schema.InvoiceModel.ebIVersion Version { get; set; }
+        Models.EbIVersion Version { get; set; }
 
         List<AdditionalInformationType> AdditionalInformation { get; set; }
         BillerType Biller { get; set; }
@@ -27,7 +27,7 @@ namespace ebIModels.Models
         LanguageType Language { get; set; }
         bool ManualProcessing { get; set; }
         bool ManualProcessingSpecified { get; set; }
-        decimal? NetAmount { get; set; }
+        decimal NetAmount { get; set; }
         OrderingPartyType OrderingParty { get; set; }
         decimal PayableAmount { get; set; }
         PaymentConditionsType PaymentConditions { get; set; }
@@ -39,15 +39,17 @@ namespace ebIModels.Models
         decimal RoundingAmount { get; set; }
         bool RoundingAmountSpecified { get; set; }
         TaxType Tax { get; set; }
-        decimal? TaxAmountTotal { get; set; }
+        decimal TaxAmountTotal { get; set; }
         decimal TotalGrossAmount { get; set; }
 
         InvoiceSubtype InvoiceSubtype { get; set; }
        // bool InitFromSettings { get; set; }
         void CalculateTotals();
         void SaveTemplate(string filename);
-        ebInterfaceResult IsValidErbInvoice();
-        ebInterfaceResult Save(string filename);
-       // ebInterfaceResult Save(string filename, ebIVersion version);
+        EbInterfaceResult IsValidInvoice(); 
+        EbInterfaceResult IsValidErbInvoice();
+        EbInterfaceResult Save(string filename);
+        EbInterfaceResult Save(string filename, EbIVersion version);
+
     }
 }

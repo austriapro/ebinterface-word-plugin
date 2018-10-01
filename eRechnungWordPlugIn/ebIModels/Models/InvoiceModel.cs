@@ -8,7 +8,13 @@ using ExtensionMethods;
 
 namespace ebIModels.Models
 {
-    public partial class InvoiceModel : Schema.InvoiceModel, IInvoiceModel
+    /// <summary>
+    /// Internes Datenmodel einer ebInteface Rechnung basierend auf ebInterface 5.0
+    /// Die benötigigten Ergänzungen sind in den Dateien 
+    /// </summary>
+    /// <seealso cref="ebIModels.Models.InvoiceModel" />
+    /// <seealso cref="ebIModels.Models.IInvoiceModel" />
+    public partial class InvoiceModel :  IInvoiceModel
     {
         private string invoiceNumberField;
         private System.DateTime invoiceDateField;
@@ -135,7 +141,9 @@ namespace ebIModels.Models
         public decimal PrepaidAmount
         {
             get { return this.prepaidAmountField; }
-            set { this.prepaidAmountField = value; }
+            set { this.prepaidAmountField = value;
+                // ToDo BelowTheLineItem setzen
+            }
         }
 
         /// <remarks/>
@@ -249,6 +257,8 @@ namespace ebIModels.Models
             get { return this.isDuplicateFieldSpecified; }
             set { this.isDuplicateFieldSpecified = value; }
         }
+
+ 
     }
 
     /// <remarks/>

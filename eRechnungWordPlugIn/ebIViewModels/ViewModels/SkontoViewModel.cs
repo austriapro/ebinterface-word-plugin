@@ -237,7 +237,7 @@ namespace ebIViewModels.ViewModels
                 _skontoFaelligDate = _invoiceDate;
                 _skontoTage = 0;
             }
-            _skontoProzent = discount.PercentageSpecified ? (discount.Percentage ?? 0) : 0;
+            _skontoProzent = discount.PercentageSpecified ? (discount.Percentage) : 0;
 
            
         }
@@ -252,7 +252,7 @@ namespace ebIViewModels.ViewModels
         //    _invoiceDueDate = invoice.PaymentConditions.InvoiceDueDate;
         //    _dueDays = _invoiceDueDate.Days(_invoiceDate);
         //    CurrentRuleSet = invoice.InvoiceSubtype.VariantOption;
-        //    _skontoBasisBetrag = invoice.TotalGrossAmount ?? 0;
+        //    _skontoBasisBetrag = invoice.TotalGrossAmount;
         //}
 
         public ValidationResults Results { get; private set; }

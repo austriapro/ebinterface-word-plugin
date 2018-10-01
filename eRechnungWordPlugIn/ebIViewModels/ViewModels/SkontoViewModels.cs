@@ -260,7 +260,7 @@ namespace ebIViewModels.ViewModels
             //skonto.InvoiceDate = InvoiceDate;
             //skonto.InvoiceDueDate = InvoiceDueDate;
             //skonto.CurrentRuleSet = CurrentValidationRuleset; // invoice.InvoiceSubtype.VariantOption;
-            //skonto.SkontoBasisBetrag = BaseAmount; //  invoice.TotalGrossAmount ?? 0;
+            //skonto.SkontoBasisBetrag = BaseAmount; //  invoice.TotalGrossAmount;
             //skonto.InvoiceDueDays = InvoiceDueDays;
            // skonto.UpdateFromSkontoListEntry(this);
         }
@@ -329,7 +329,7 @@ namespace ebIViewModels.ViewModels
             _invoiceDate = _invoice.InvoiceDate;
             _invoiceDueDate = _invoice.PaymentConditions.DueDate;
             _dueDays = _invoiceDueDate.Days(_invoiceDate);
-            _baseAmount = _invoice.TotalGrossAmount ?? 0;
+            _baseAmount = _invoice.TotalGrossAmount;
             SetFromPaymentConditions(_invoice.PaymentConditions);
         }
         public void Clear()

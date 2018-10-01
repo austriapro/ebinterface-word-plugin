@@ -890,7 +890,7 @@ namespace eRechnung
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetMenge), detail.Menge.Decimal4());
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetUnit), detail.EinheitDisplay);
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetUnitPreis), detail.EinzelPreis.Decimal4());
-                FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetRabatt), (detail.Rabatt ?? 0).Percent2());
+                FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetRabatt), (detail.Rabatt).Percent2());
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetMwSt), detail.VatSatz.Percent2());
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetGesamt), detail.NettoBetragZeile.Decimal2());
                 newRows--;

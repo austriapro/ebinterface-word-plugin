@@ -127,9 +127,9 @@ namespace ebIViewModels.ViewModels
                     det.ArtikelNr = articleNumberType.Text.FirstOrDefault();  // .UnescapeXml();
                 det.Bezeichnung = listLineItem.Description[0];  // .UnescapeXml();
                 det.Einheit = listLineItem.Quantity.Unit;
-                det.EinzelPreis = listLineItem.UnitPrice.Value ?? 0;
-                // det.GesamtBruttoBetrag = listLineItem.LineItemAmount ?? 0;
-                det.Menge = listLineItem.Quantity.Value ?? 0;
+                det.EinzelPreis = listLineItem.UnitPrice.Value;
+                // det.GesamtBruttoBetrag = listLineItem.LineItemAmount;
+                det.Menge = listLineItem.Quantity.Value;
                 if (listLineItem.Item is TaxExemptionType || (!PlugInSettings.Default.VStBerechtigt))
                 {
                     //det.Taxexemption = true;
@@ -140,12 +140,12 @@ namespace ebIViewModels.ViewModels
                     //det.Taxexemption = false;
                     VATRateType rate = (VATRateType)listLineItem.Item;
                     if (rate != null)
-                        det.VatSatz = rate.Value ?? 0;
+                        det.VatSatz = rate.Value;
                 }
                 if (listLineItem.ReductionAndSurchargeListLineItemDetails!=null)
                 {
                     var red = listLineItem.ReductionAndSurchargeListLineItemDetails.Items.FirstOrDefault() as ReductionAndSurchargeBaseType;
-                    if (red != null) det.Rabatt = red.Percentage ?? 0;
+                    if (red != null) det.Rabatt = red.Percentage;
                 }
                 // det.UpdateTotals();
                 details.DetailsList.Add(det);

@@ -133,7 +133,7 @@ namespace ebIViewModelsTests.ViewModels
         {
             InvVm.RelatedDoc.RefTypeSelected = RelatedDocumentViewModel.RefType.Verweis;
             InvVm.RelatedDoc.RefInvNumber = invNr;
-            InvVm.RelatedDoc.RefInvDate = date.GetValueOrDefault();
+            InvVm.RelatedDoc.RefInvDate = date;
             InvVm.RelatedDoc.RefSelectedDocType = dType.ToString();
             InvVm.RelatedDoc.RefComment = comment;
             InvVm.SaveTemplateCommand.Execute(SaveTempRelated);

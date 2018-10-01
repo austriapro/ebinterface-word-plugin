@@ -19,18 +19,11 @@ namespace ebIModels.Schema
 
         private static readonly Dictionary<string, ebInterfaceVersion> InvoiceTypes = new Dictionary<string, ebInterfaceVersion>
         {
-            {"http://www.ebinterface.at/schema/4p0/",
-                    new ebInterfaceVersion
-                        {
-                            Version = Schema.InvoiceModel.ebIVersion.V4P0,
-                            VersionType = typeof(Schema.ebInterface4p0.InvoiceType),
-                            IsSaveSupported = false
-                        }
-            },
+
             {"http://www.ebinterface.at/schema/4p1/",
                     new ebInterfaceVersion
                         {
-                            Version = Schema.InvoiceModel.ebIVersion.V4P1,
+                            Version = Models.EbIVersion.V4P1,
                             VersionType = typeof(Schema.ebInterface4p1.InvoiceType),
                             IsSaveSupported = true
 
@@ -39,7 +32,7 @@ namespace ebIModels.Schema
                 {"http://www.ebinterface.at/schema/4p2/",
                     new ebInterfaceVersion
                         {
-                            Version = Schema.InvoiceModel.ebIVersion.V4P2,
+                            Version = Models.EbIVersion.V4P2,
                             VersionType = typeof(Schema.ebInterface4p2.InvoiceType),
                             IsSaveSupported = true
                         }
@@ -47,7 +40,7 @@ namespace ebIModels.Schema
                 {"http://www.ebinterface.at/schema/4p3/",
                     new ebInterfaceVersion
                         {
-                            Version = Schema.InvoiceModel.ebIVersion.V4P3,
+                            Version = Models.EbIVersion.V4P3,
                             VersionType = typeof(Schema.ebInterface4p3.InvoiceType),
                             IsSaveSupported = true
                         }
@@ -55,7 +48,7 @@ namespace ebIModels.Schema
                 {"http://www.ebinterface.at/schema/5p0/",
                     new ebInterfaceVersion
                         {
-                            Version = Schema.InvoiceModel.ebIVersion.V5P0,
+                            Version = Models.EbIVersion.V5P0,
                             VersionType = typeof(Schema.ebInterface5p0.InvoiceType),
                             IsSaveSupported = true
                         }
@@ -63,39 +56,6 @@ namespace ebIModels.Schema
 
             };
 
-        public static readonly InvoiceModel.ebIVersion LatestVersion = InvoiceModel.ebIVersion.V5P0;
-        /// <summary>
-        /// Erzeugt eine neue ebInterface Instanz der angegebenen Version 
-        /// </summary>
-        /// <param name="version">ebInterface Version <seealso cref="Version"/></param>
-        /// <returns>Eine neue <see cref="Schema.InvoiceModel"/> Instanz</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">version</exception>
-        public static Schema.InvoiceModel CreateInvoice(Schema.InvoiceModel.ebIVersion version)
-        {
-            Schema.InvoiceModel invoice = null;
-            switch (version)
-            {
-                //case Schema.InvoiceType.ebIVersion.V3P02:
-                //    invoice = new Schema.ebInterface3p02.InvoiceType();
-                //    break;
-                case Schema.InvoiceModel.ebIVersion.V4P0:
-                    invoice = new Schema.ebInterface4p0.InvoiceType();
-                    break;
-                case Schema.InvoiceModel.ebIVersion.V4P1:
-                    invoice = new Schema.ebInterface4p1.InvoiceType();
-                    break;
-                case Schema.InvoiceModel.ebIVersion.V4P2:
-                    invoice = new Schema.ebInterface4p2.InvoiceType();
-                    break;
-                case Schema.InvoiceModel.ebIVersion.V5P0:
-                    invoice = new Schema.ebInterface5p0.InvoiceType();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("version");
-            }
-
-            return invoice;
-        }
 
         public static List<string> GetVersionsWithSaveSupported()
         {
@@ -134,57 +94,29 @@ namespace ebIModels.Schema
         public static IInvoiceModel LoadXmlVm(string xmlInvoice)
         {
             ebInterfaceVersion version = GetVersion(xmlInvoice);
-            Schema.InvoiceModel inv = Deserialize(xmlInvoice, version.VersionType);
-            Models.IInvoiceModel invModel;
-
-            switch (inv.Version)
-            {
-                //case Schema.InvoiceType.ebIVersion.V3P02:
-                //    throw new NotImplementedException("Version 3p02 derzeit nicht unterstützt");
-                // break;
-                case Schema.InvoiceModel.ebIVersion.V4P0:
-                    invModel = MappingService4p0ToVm.MapV4p0ToModel(inv as Schema.ebInterface4p0.InvoiceType);
-                    invModel.Version = InvoiceModel.ebIVersion.V4P0;
-                    return invModel;
-                // break;
-                case Schema.InvoiceModel.ebIVersion.V4P1:
-                    invModel = MappingService4p1ToVm.MapV4P1ToVm(inv as Schema.ebInterface4p1.InvoiceType);
-                    invModel.Version = InvoiceModel.ebIVersion.V4P1;
-                    return invModel;
-                // break;
-                case Schema.InvoiceModel.ebIVersion.V4P2:
-                    invModel = MappingService4p2ToVm.MapV4P2ToVm(inv as Schema.ebInterface4p2.InvoiceType);
-                    invModel.Version = InvoiceModel.ebIVersion.V4P2;
-                    return invModel;
-                // break;
-                case Schema.InvoiceModel.ebIVersion.V4P3:
-                    invModel = MappingService4p3ToVm.MapV4P3ToVm(inv as Schema.ebInterface4p3.InvoiceType);
-                    invModel.Version = InvoiceModel.ebIVersion.V4P3;
-                    return invModel;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            // return (InvoiceType)inv;
+            var inv = Deserialize(xmlInvoice, version.VersionType);
+            return (IInvoiceModel)inv;
         }
 
         /// <summary>
         /// Validiert den Xml String gemäß ebInterface Standard und lädt das ebInterface Object aus derm Xml String
         /// </summary>
         /// <param name="xmlInvoice">ebInterface Xml String</param>
-        /// <returns>Eine neue <see cref="Schema.InvoiceModel"/> Instanz
+        /// <returns>Eine neue <see cref="Models.InvoiceModel"/> Instanz
         /// </returns>        
-        public static Schema.InvoiceModel LoadXml(string xmlInvoice)
+        public static Models.InvoiceModel LoadXml(string xmlInvoice)
         {
             ebInterfaceVersion version = GetVersion(xmlInvoice);
-            Schema.InvoiceModel inv = Deserialize(xmlInvoice, version.VersionType);
+            Models.InvoiceModel inv = Deserialize(xmlInvoice, version.VersionType);
             return inv;
         }
 
-        private static Schema.InvoiceModel Deserialize(string xmlInvoice, Type currentType)
+        private static Models.InvoiceModel Deserialize(string xmlInvoice, Type currentType)
         {
             StringReader stringReader = new StringReader(xmlInvoice);
             XmlSerializer serializer = new XmlSerializer(currentType);
-            Schema.InvoiceModel inv = (Schema.InvoiceModel)serializer.Deserialize(XmlReader.Create(stringReader));
+            var invLoaded  = (Models.InvoiceModel)serializer.Deserialize(XmlReader.Create(stringReader));
+            Models.InvoiceModel inv = (InvoiceModel) MapInvoice.MapToModel(invLoaded);
             return inv;
         }
 
@@ -223,12 +155,12 @@ namespace ebIModels.Schema
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns>
-        /// Ein neue <see cref="Schema.InvoiceModel" /> Instanz
+        /// Ein neue <see cref="Models.InvoiceModel" /> Instanz
         /// </returns>
-        public static Schema.InvoiceModel Load(string fileName)
+        public static Models.InvoiceModel Load(string fileName)
         {
             string xmlInvoice = File.ReadAllText(fileName);
-            Schema.InvoiceModel inv = LoadXml(xmlInvoice);
+            Models.InvoiceModel inv = LoadXml(xmlInvoice);
             return inv;
         }
 
@@ -236,9 +168,9 @@ namespace ebIModels.Schema
         /// Validiert den Xml String gemäß ebInterface Standard und lädt das ebInterface Object aus derm Xml String
         /// </summary>
         /// <param name="file">Stream der die ebInterface Xml Rechnung enthält</param>
-        /// <returns>Ein neue <see cref="Schema.InvoiceModel"/> Instanz
+        /// <returns>Ein neue <see cref="Models.InvoiceModel"/> Instanz
         /// </returns>        
-        public static Schema.InvoiceModel Load(StreamReader file)
+        public static Models.InvoiceModel Load(StreamReader file)
         {
             string xmlInvoice = file.ReadToEnd();
             return LoadXml(xmlInvoice);
@@ -249,19 +181,21 @@ namespace ebIModels.Schema
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns>
-        /// Ein neue <see cref="Schema.InvoiceModel" /> Instanz
+        /// Ein neue <see cref="Models.InvoiceModel" /> Instanz
         /// </returns>
         public static Models.IInvoiceModel LoadTemplate(string fileName)
         {
             string text = File.ReadAllText(fileName);
-            string xmlInvoice = Schema.InvoiceModel.RemoveVorlageText(text);
-            var xmlClean = RemoveEmptyNodes(xmlInvoice);
+           // string xmlInvoice = Models.InvoiceModel.RemoveVorlageText(text);
+            var xmlClean = RemoveEmptyNodes(text);
             Check4ebInterface(xmlClean);
             Models.IInvoiceModel inv = LoadXmlVm(xmlClean);
             inv.InvoiceSubtype = InvoiceSubtypes.GetVariantFromGeneratingSystem(inv.GeneratingSystem);
             inv.Details.RecalcItemList();
             return inv;
         }
+ 
+
 
         private static void Check4ebInterface(string xmlData)
         {

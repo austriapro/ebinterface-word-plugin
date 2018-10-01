@@ -7,16 +7,16 @@ using VM = ebIModels.Models;
 using ebIModels.Schema;
 using V4P3 = ebIModels.Schema.ebInterface4p3;
 
-namespace ebIModels.Mapping
+namespace ebIModels.Mapping.V4p3
 {
-    public static class MappingServiceVmTo4p3 
+    public static partial class MapInvoice  
     {
         /// <summary>
         /// Mapped InvoiceType Model auf ebInterface4p1
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        public static V4P3.InvoiceType MapModelToV4p3(VM.IInvoiceModel source)
+        internal static V4P3.InvoiceType MapModelToV4p3(VM.IInvoiceModel source)
         {
             V4P3.InvoiceType invoice = new V4P3.InvoiceType();
 
@@ -80,8 +80,8 @@ namespace ebIModels.Mapping
                 if (delType.ToDate != null)
                 {
                     var deliveryType = new PeriodType();
-                    deliveryType.FromDate = delType.FromDate ?? new DateTime();
-                    deliveryType.ToDate = delType.ToDate ?? new DateTime();
+                    deliveryType.FromDate = delType.FromDate;
+                    deliveryType.ToDate = delType.ToDate;
                     invoice.Delivery.Item = deliveryType;
                 }
                 else
@@ -155,12 +155,12 @@ namespace ebIModels.Mapping
                     // Menge
                     lineItem.Quantity = new UnitType();
                     lineItem.Quantity.Unit = srcLineItem.Quantity.Unit;
-                    lineItem.Quantity.Value = srcLineItem.Quantity.Value.GetValueOrDefault();
+                    lineItem.Quantity.Value = srcLineItem.Quantity.Value;
 
                     // Einzelpreis
                     lineItem.UnitPrice = new UnitPriceType()
                     {
-                        Value = srcLineItem.UnitPrice.Value.GetValueOrDefault()
+                        Value = srcLineItem.UnitPrice.Value
                     };
 
                     // Steuer
@@ -186,7 +186,7 @@ namespace ebIModels.Mapping
                         //lineItem.DiscountFlagSpecified = srcLineItem.DiscountFlagSpecified;
                     }
                     lineItem.Description = srcLineItem.Description.ToArray();
-                    lineItem.LineItemAmount = srcLineItem.LineItemAmount.GetValueOrDefault();
+                    lineItem.LineItemAmount = srcLineItem.LineItemAmount;
                     itemListLineItem.Add(lineItem);
                 }
                 itemList.ListLineItem = itemListLineItem.ToArray();
@@ -206,7 +206,7 @@ namespace ebIModels.Mapping
                             belowItems.Add(new BelowTheLineItemType()
                             {
                                 Description = item.Description,
-                                LineItemAmount = item.LineItemAmount ?? 0
+                                LineItemAmount = item.LineItemAmount
                             });
 
                         }
@@ -225,8 +225,8 @@ namespace ebIModels.Mapping
             {
                 VATItemType vatItemNeu = new VATItemType()
                 {
-                    Amount = vatItem.Amount.GetValueOrDefault(),
-                    TaxedAmount = vatItem.TaxedAmount.GetValueOrDefault(),
+                    Amount = vatItem.Amount,
+                    TaxedAmount = vatItem.TaxedAmount,
                 };
 
                 vatItemNeu.Item = MapVatItemType(vatItem.Item);
@@ -246,9 +246,9 @@ namespace ebIModels.Mapping
             #endregion
 
             #region Amount
-            invoice.TotalGrossAmount = source.TotalGrossAmount.GetValueOrDefault();
+            invoice.TotalGrossAmount = source.TotalGrossAmount;
             invoice.PaymentMethod.Comment = source.PaymentMethod.Comment;
-            invoice.PayableAmount = source.PayableAmount.GetValueOrDefault();
+            invoice.PayableAmount = source.PayableAmount;
             #endregion
 
             #region PaymentMethod
@@ -286,12 +286,12 @@ namespace ebIModels.Mapping
                 {
                     DiscountType discount = new DiscountType()
                     {
-                        Amount = srcDiscount.Amount.GetValueOrDefault(),
+                        Amount = srcDiscount.Amount,
                         AmountSpecified = srcDiscount.AmountSpecified,
-                        BaseAmount = srcDiscount.BaseAmount.GetValueOrDefault(),
+                        BaseAmount = srcDiscount.BaseAmount,
                         BaseAmountSpecified = srcDiscount.BaseAmountSpecified,
                         PaymentDate = srcDiscount.PaymentDate,
-                        Percentage = srcDiscount.Percentage.GetValueOrDefault(),
+                        Percentage = srcDiscount.Percentage,
                         PercentageSpecified = srcDiscount.PercentageSpecified
                     };
                     discountList.Add(discount);
@@ -326,11 +326,11 @@ namespace ebIModels.Mapping
                 {
                     VM.ReductionAndSurchargeBaseType item = item1 as VM.ReductionAndSurchargeBaseType;
                     ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType();
-                    redBase.Amount = item.Amount ?? 0;
+                    redBase.Amount = item.Amount;
                     redBase.AmountSpecified = item.AmountSpecified;
-                    redBase.BaseAmount = item.BaseAmount ?? 0;
+                    redBase.BaseAmount = item.BaseAmount;
                     redBase.Comment = item.Comment;
-                    redBase.Percentage = item.Percentage ?? 0;
+                    redBase.Percentage = item.Percentage;
                     redBase.PercentageSpecified = item.PercentageSpecified;
                     lineRed.Items[i] = redBase;
                     i++;
@@ -365,7 +365,7 @@ namespace ebIModels.Mapping
                 var taxexNew = new VATRateType();
                 var taxex = vatItem as VM.VATRateType;
                 taxexNew.TaxCode = taxex.TaxCode;
-                taxexNew.Value = taxex.Value ?? 0;
+                taxexNew.Value = taxex.Value;
                 return taxexNew;
             }
 

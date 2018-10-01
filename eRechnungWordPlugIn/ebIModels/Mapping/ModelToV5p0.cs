@@ -7,17 +7,16 @@ using ebIModels.Schema.ebInterface5p0;
 using Model = ebIModels.Models;
 using V5P0 = ebIModels.Schema.ebInterface5p0;
 
-namespace ebIModels.Mapping
+namespace ebIModels.Mapping.V5p0
 {
-    public static class MappingServiceVmTo5p0 
+    public static partial class MapInvoice 
     {
-        public static List<MappingError> mappingErrors;
         /// <summary>
         /// Maps ebInterface 5p0 InvoiceType to internal InvoiceType Model
         /// </summary>
         /// <param name="source">ebInterface 5p0 InvoiceType</param>
         /// <returns></returns>
-        public static V5P0.InvoiceType MapModelToV5p0(Model.IInvoiceModel source)
+        internal static V5P0.InvoiceType MapModelToV5p0(Model.IInvoiceModel source)
         {
             V5P0.InvoiceType invoice = new V5P0.InvoiceType();
             mappingErrors = new List<MappingError>();
@@ -78,15 +77,15 @@ namespace ebIModels.Mapping
             invoice.Tax = MapTax(source.Tax);
 
             // TotalGrossAmount Decimal2Type
-            invoice.TotalGrossAmount = source.TotalGrossAmount.GetValueOrDefault();
+            invoice.TotalGrossAmount = source.TotalGrossAmount;
 
             // PrepaidAmount [0..1] Decimal2Type
-            invoice.PrepaidAmount = source.PrepaidAmount.GetValueOrDefault();
+            invoice.PrepaidAmount = source.PrepaidAmount;
 
             // RoundingAmount [0..1] Decimal2Type
 
             // PayableAmount Decimal2Type
-            invoice.PayableAmount = source.PayableAmount.GetValueOrDefault();
+            invoice.PayableAmount = source.PayableAmount;
 
             // PaymentMethod [0..1] PaymentMethodType
             invoice.PaymentMethod = MapPaymentMethod(source.PaymentMethod);
@@ -133,12 +132,12 @@ namespace ebIModels.Mapping
                 {
                     DiscountType discount = new DiscountType()
                     {
-                        Amount = srcDiscount.Amount.GetValueOrDefault(),
+                        Amount = srcDiscount.Amount,
                         AmountSpecified = srcDiscount.AmountSpecified,
-                        BaseAmount = srcDiscount.BaseAmount.GetValueOrDefault(),
+                        BaseAmount = srcDiscount.BaseAmount,
                         BaseAmountSpecified = srcDiscount.BaseAmountSpecified,
                         PaymentDate = srcDiscount.PaymentDate,
-                        Percentage = srcDiscount.Percentage.GetValueOrDefault(),
+                        Percentage = srcDiscount.Percentage,
                         PercentageSpecified = srcDiscount.PercentageSpecified
                     };
                     discountList.Add(discount);

@@ -121,12 +121,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\MapInvoice.cs" />
     <Compile Include="Mapping\MappingError.cs" />
     <Compile Include="Mapping\ModelConstants.cs" />
     <Compile Include="Mapping\ModelToV4P1.cs" />
     <Compile Include="Mapping\ModelToV4P3.cs" />
     <Compile Include="Mapping\ModelToV5p0.cs" />
-    <Compile Include="Mapping\V4P0ToModel.cs" />
     <Compile Include="Mapping\V4P2ToModel.cs" />
     <Compile Include="Mapping\V4P1ToModel.cs" />
     <Compile Include="Mapping\ModelToV4P2.cs" />
@@ -138,10 +138,9 @@
     <Compile Include="Models\CountryCodeModel.cs" />
     <Compile Include="Models\IDocumentTypes.cs" />
     <Compile Include="Models\IInvoiceModel.cs" />
-    <Compile Include="Models\IInvoiceType.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
-    <Compile Include="Models\InvoiceExtensions.cs" />
-    <Compile Include="Models\InvoiceHelperMethods.cs" />
+    <Compile Include="Models\InvoiceModelExtensions.cs" />
+    <Compile Include="Models\erbInvoiceValidation.cs" />
     <Compile Include="Models\InvoiceSubtypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -149,19 +148,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Schema\ebInterface.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Schema\ebInterface3p02\invoice.cs">
-      <DependentUpon>Invoice.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Schema\ebInterface3p02\InvoiceHelperMethods.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Schema\ebInterface4p0\invoice.cs">
-      <DependentUpon>Invoice.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Schema\ebInterface4p0\InvoiceHelperMethods.cs">
+    <Compile Include="Schema\IInvoiceBase.cs" />
+    <Compile Include="Schema\InvoiceBase.cs" />
+    <Compile Include="Schema\InvoiceXml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Schema\ebInterface4p1\Invoice.cs">
@@ -179,7 +168,7 @@
     <Compile Include="Schema\ebInterface4p3\invoice.cs">
       <DependentUpon>Invoice.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Schema\ebInterface4p3\InvoiceHelperMethods.cs" />
+    <Compile Include="Schema\ebInterface4p3\InvoiceHelperMethods4p3.cs" />
     <Compile Include="Schema\ebInterface4p3\InvoiceInitializer.cs" />
     <Compile Include="Schema\ebInterface5p0\invoice.cs">
       <DependentUpon>Invoice.xsd</DependentUpon>
@@ -212,27 +201,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schema\ebInterface3p02\Invoice.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <None Include="Schema\ebInterface3p0\Invoice.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Schema\ebInterface3p0\xmldsig-core-schema.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Schema\ebInterface3p0\xmldsig-core-schema.xsx">
-      <DependentUpon>xmldsig-core-schema.xsd</DependentUpon>
-    </None>
-    <EmbeddedResource Include="Schema\ebInterface4p0\ebInterfaceExtension.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schema\ebInterface4p0\ebInterfaceExtension_SV.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schema\ebInterface4p0\Invoice.xsd">
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Schema\ebInterface4p1\ebInterfaceExtension.xsd">
       <SubType>Designer</SubType>

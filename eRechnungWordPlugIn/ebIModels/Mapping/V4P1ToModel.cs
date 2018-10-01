@@ -9,16 +9,16 @@ using ebIModels.Models;
 using V4P1 = ebIModels.Schema.ebInterface4p1;
 using ebIModels.Schema;
 
-namespace ebIModels.Mapping
+namespace ebIModels.Mapping.V4p1
 {
-    public static class MappingService4p1ToVm
+    public static partial class MapInvoice
     {
         /// <summary>
         /// Mapped ebInterface4p1 InvoiceType auf InvoiceType Model
         /// </summary>
         /// <param name="source">ebInterface4p1 InvoiceType</param>
         /// <returns>InvoiceType Model</returns>
-        public static IInvoiceModel MapV4P1ToVm(V4P1.InvoiceType source)
+        internal static IInvoiceModel MapV4P1ToVm(V4P1.InvoiceType source)
         {
             IInvoiceModel Invoice = InvoiceFactory.CreateInvoice(); 
             #region Rechnungskopf
