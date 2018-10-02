@@ -498,7 +498,7 @@ namespace ebIViewModels.ViewModels
         private void UpdateTotals()
         {
             NettoBasisBetrag = Menge*EinzelPreis;
-            RabattBetragZeile = NettoBasisBetrag * ((Rabatt) / 100);
+            RabattBetragZeile = NettoBasisBetrag * ((Rabatt.GetValueOrDefault()) / 100);
             NettoBetragZeile = NettoBasisBetrag - RabattBetragZeile;
             MwStBetragZeile = NettoBetragZeile * (VatSatz / 100);
             BruttoBetragZeile = NettoBetragZeile + MwStBetragZeile;

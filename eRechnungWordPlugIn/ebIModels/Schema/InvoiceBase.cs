@@ -17,7 +17,7 @@ using System.Xml.Serialization;
 
 namespace ebIModels.Schema
 {
-    public abstract class InvoiceBase 
+    public abstract class InvoiceBase : IInvoiceBase
     {
 
         private const string VorlageString =
@@ -25,7 +25,8 @@ namespace ebIModels.Schema
         const string EbInvoiceNumber = "InvoiceNumber";
         internal const string SchemaPath = "ebIModels.Schema.";
 
-
+        public List<EbISchema> CurrentSchemas { get; internal set; }
+        public Models.EbIVersion Version { get; internal set; }
 
         public InvoiceSubtype InvoiceSubtype { get; internal set; }
 

@@ -1,5 +1,6 @@
 ﻿using ebIModels.Models;
 using ebIModels.Schema;
+using SettingsManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,11 @@ namespace ebIModels.Mapping
 {
     public static partial class MapInvoice
     {
+        public static List<MappingError> mappingErrors = new List<MappingError>();
         public static Models.IInvoiceModel MapToModel(object Invoice)
         {
             Models.IInvoiceModel invoiceModel = null;
+            mappingErrors.Clear();
             switch (((IInvoiceBase)Invoice).Version)
             {
                 case Models.EbIVersion.V4P1:
@@ -48,6 +51,16 @@ namespace ebIModels.Mapping
                 default:
                     return null;
             }
+        }
+
+        internal static string GetVP5TaxCategoryCode(decimal percent)
+        {
+            var code = PlugInSettings.Default.VatDefaultValues.First(p => p.MwStSatz == percent);
+            if (code==null)
+            {
+                return "";
+            }
+            return code.Code;
         }
     }
 }

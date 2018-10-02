@@ -6,10 +6,11 @@ using ExtensionMethods;
 using VM = ebIModels.Models;
 using ebIModels.Schema;
 using V4P3 = ebIModels.Schema.ebInterface4p3;
+using SettingsManager;
 
 namespace ebIModels.Mapping.V4p3
 {
-    public static partial class MapInvoice  
+    public static partial class MapInvoice
     {
         /// <summary>
         /// Mapped InvoiceType Model auf ebInterface4p1
@@ -28,15 +29,9 @@ namespace ebIModels.Mapping.V4p3
             invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
             invoice.DocumentTitle = source.DocumentTitle;
             invoice.InvoiceCurrency = source.InvoiceCurrency.ToString(); //.ConvertEnum<CurrencyType>();
-            if (source.LanguageSpecified)
-            {
-                invoice.Language = source.Language.ToString();// .ConvertEnum<LanguageType>();
 
-            }
-            else
-            {
-                invoice.Language = null;
-            }
+            invoice.Language = source.Language.ToString();// .ConvertEnum<LanguageType>();
+
 
             invoice.Comment = source.Comment;
             invoice.CancelledOriginalDocument = null;
@@ -101,7 +96,7 @@ namespace ebIModels.Mapping.V4p3
                 invoice.Biller = new BillerType();
                 invoice.Biller.VATIdentificationNumber = source.Biller.VATIdentificationNumber;
                 invoice.Biller.InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID;
-                invoice.Biller.Address = GetAddress(source.Biller.Address);
+                invoice.Biller.Address = GetAddress(source.Biller.Address, source.Biller.Contact);
                 invoice.Biller.FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification);
             }
             #endregion
@@ -112,7 +107,7 @@ namespace ebIModels.Mapping.V4p3
                 invoice.InvoiceRecipient = new InvoiceRecipientType();
                 invoice.InvoiceRecipient.BillersInvoiceRecipientID = source.InvoiceRecipient.BillersInvoiceRecipientID;
                 invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
-                invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
+                invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address,source.InvoiceRecipient.Contact);
                 invoice.InvoiceRecipient.OrderReference = new OrderReferenceType();
                 invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
                 if (source.InvoiceRecipient.OrderReference.ReferenceDateSpecified)
@@ -165,7 +160,7 @@ namespace ebIModels.Mapping.V4p3
 
                     // Steuer
                     // lineItem.Item = srcLineItem.Item;
-                    lineItem.Item = MapVatItemType(srcLineItem.Item);
+                    lineItem.Item = MapVatItemType(srcLineItem.TaxItem);
                     // Auftragsreferenz
                     if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber) ||
                         source.InvoiceRecipient.BestellPositionErforderlich)   // Orderposition angegeben oder erforderlich
@@ -193,43 +188,43 @@ namespace ebIModels.Mapping.V4p3
                 detailsItemList.Add(itemList);
             }
             invoice.Details.ItemList = detailsItemList.ToArray();
-            if (source.Details.BelowTheLineItem != null)
-            {
-                if (source.Details.BelowTheLineItem.Count > 0)
-                {
-                    List<BelowTheLineItemType> belowItems = new List<BelowTheLineItemType>();
-                    foreach (VM.BelowTheLineItemType item in source.Details.BelowTheLineItem)
-                    {
+            //if (source.Details.BelowTheLineItem != null)
+            //{
+            //    if (source.Details.BelowTheLineItem.Count > 0)
+            //    {
+            //        List<BelowTheLineItemType> belowItems = new List<BelowTheLineItemType>();
+            //        foreach (VM.BelowTheLineItemType item in source.Details.BelowTheLineItem)
+            //        {
 
-                        if (!string.IsNullOrEmpty(item.Description))
-                        {
-                            belowItems.Add(new BelowTheLineItemType()
-                            {
-                                Description = item.Description,
-                                LineItemAmount = item.LineItemAmount
-                            });
+            //            if (!string.IsNullOrEmpty(item.Description))
+            //            {
+            //                belowItems.Add(new BelowTheLineItemType()
+            //                {
+            //                    Description = item.Description,
+            //                    LineItemAmount = item.LineItemAmount
+            //                });
 
-                        }
-                    }
-                    if (belowItems.Any())
-                    {
-                        invoice.Details.BelowTheLineItem = belowItems.ToArray();
-                    }
-                }
-            }
+            //            }
+            //        }
+            //        if (belowItems.Any())
+            //        {
+            //            invoice.Details.BelowTheLineItem = belowItems.ToArray();
+            //        }
+            //    }
+            //}
             #endregion
 
             #region Tax
             var taxVATList = new List<VATItemType>();
-            foreach (var vatItem in source.Tax.VAT)
+            foreach (var vatItem in source.Tax.TaxItem)
             {
                 VATItemType vatItemNeu = new VATItemType()
                 {
-                    Amount = vatItem.Amount,
-                    TaxedAmount = vatItem.TaxedAmount,
+                    Amount = vatItem.TaxAmount,
+                    TaxedAmount = vatItem.TaxableAmount,
                 };
 
-                vatItemNeu.Item = MapVatItemType(vatItem.Item);
+                vatItemNeu.Item = MapVatItemType(vatItem);
                 taxVATList.Add(vatItemNeu);
             }
             invoice.Tax.VAT = taxVATList.ToArray();
@@ -350,28 +345,27 @@ namespace ebIModels.Mapping.V4p3
             return lineRed;
         }
 
-        private static object MapVatItemType(object vatItem)
+        private static object MapVatItemType(VM.TaxItemType vatItem)
         {
-            if (vatItem is VM.TaxExemptionType)
+            
+            if (vatItem.TaxPercent.TaxCategoryCode == PlugInSettings.VStBefreitCode)
             {
-                var taxexNew = new TaxExemptionType();
-                var taxex = vatItem as VM.TaxExemptionType;
-                taxexNew.TaxExemptionCode = taxex.TaxExemptionCode;
-                taxexNew.Value = taxex.Value;
+                var taxexNew = new TaxExemptionType
+                {
+                    Value = vatItem.Comment
+                };
                 return taxexNew;
             }
             else
             {
                 var taxexNew = new VATRateType();
-                var taxex = vatItem as VM.VATRateType;
-                taxexNew.TaxCode = taxex.TaxCode;
-                taxexNew.Value = taxex.Value;
+                taxexNew.Value = vatItem.TaxPercent.Value;
                 return taxexNew;
             }
 
         }
 
-        private static AddressType GetAddress(VM.AddressType address)
+        private static AddressType GetAddress(VM.AddressType address, VM.ContactType contact)
         {
 
             if (address == null)
@@ -380,11 +374,11 @@ namespace ebIModels.Mapping.V4p3
             }
             AddressType addrNew = new AddressType();
             addrNew.Name = address.Name;
-            addrNew.Contact = address.Contact;
-            addrNew.Phone = address.Phone;
+            addrNew.Contact = contact.Name;
+            addrNew.Phone = address.Phone.FirstOrDefault();
             addrNew.POBox = address.POBox;
-            addrNew.Email = address.Email;
-            addrNew.Salutation = address.Salutation;
+            addrNew.Email = address.Email.FirstOrDefault();
+            addrNew.Salutation = contact.Salutation;
             addrNew.Street = address.Street;
             addrNew.Country = GetCountry(address.Country);
             addrNew.ZIP = address.ZIP;

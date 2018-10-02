@@ -213,8 +213,8 @@ namespace ebIModels.Mapping.V4p1
             {
                 V4P1.VATItemType vatItemNeu = new V4P1.VATItemType()
                 {
-                    Amount = vatItem.Amount,
-                    TaxedAmount = vatItem.TaxedAmount,
+                    Amount = vatItem.Amount.GetValueOrDefault(),
+                    TaxedAmount = vatItem.TaxedAmount.GetValueOrDefault(),
                 };
 
                 vatItemNeu.Item = MapVatItemType(vatItem.Item);

@@ -54,7 +54,7 @@ namespace ebIModels.Models
         public EbInterfaceResult IsValidErbInvoice()
         {
             EbInterfaceResult result = new EbInterfaceResult();
-            Schema.ebInterface5p0.InvoiceType invoice = Mapping.MapInvoice.MapModelToV5p0(this);
+            Schema.ebInterface5p0.InvoiceType invoice = Mapping.V5p0.MapInvoice.MapModelToV5p0(this);
             
             if (result.ResultType != ResultType.IsValid)
             {
