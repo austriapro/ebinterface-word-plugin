@@ -21,7 +21,7 @@ namespace ebIViewModelsTests.ViewModels
         const string RelatedSample = @"Daten\RelatedDocSample.xml";
         private XNamespace ns = @"http://www.ebinterface.at/schema/4p2/";
 
-        private XElement getElement(XDocument xdoc, string xName)
+        private XElement GetElement(XDocument xdoc, string xName)
         {
 
             IEnumerable<XElement> xels = xdoc.Descendants();
@@ -33,7 +33,7 @@ namespace ebIViewModelsTests.ViewModels
         {
             InvVm.SaveTemplateCommand.Execute(SaveTempNoCancelledElement);
             XDocument xDoc = XDocument.Load(SaveTempNoCancelledElement);
-            XElement xel = getElement(xDoc, "InvoiceNumber");
+            XElement xel = GetElement(xDoc, "InvoiceNumber");
             Assert.IsNotNull(xel);
             // Assert.AreNotEqual(0, xel.);
         }
@@ -44,7 +44,7 @@ namespace ebIViewModelsTests.ViewModels
         {
             SaveCancelledDoc();
             XDocument xDoc = XDocument.Load(SaveTempCancelled);
-            XElement xel = getElement(xDoc, "CancelledOriginalDocument");
+            XElement xel = GetElement(xDoc, "CancelledOriginalDocument");
             Assert.IsNotNull(xel);
            // Assert.AreNotEqual(0,xel.Count);
         }
@@ -54,7 +54,7 @@ namespace ebIViewModelsTests.ViewModels
         {
             SaveRelatedDoc("REL11111",new DateTime(2013,11,12),"Teilrechnung von damals",DocumentTypeType.InvoiceForPartialDelivery);
             XDocument xDoc = XDocument.Load(SaveTempRelated);
-            XElement xel = getElement(xDoc, "RelatedDocument");
+            XElement xel = GetElement(xDoc, "RelatedDocument");
             Assert.IsNotNull(xel);
             // Assert.AreNotEqual(0,xel.Count);
         }
@@ -104,7 +104,7 @@ namespace ebIViewModelsTests.ViewModels
         {
             SaveRelatedDoc("REL11111", new DateTime(2013, 11, 12), "", DocumentTypeType.InvoiceForPartialDelivery);
             XDocument xDoc = XDocument.Load(SaveTempRelated);
-            XElement xel = getElement(xDoc, "RelatedDocument");
+            XElement xel = GetElement(xDoc, "RelatedDocument");
             Assert.IsNotNull(xel,"Related Doc exists in XML");
             // Assert.AreNotEqual(0,xel.Count);
             InvVm.LoadTemplateCommand.Execute(SaveTempRelated);
@@ -129,7 +129,7 @@ namespace ebIViewModelsTests.ViewModels
             InvVm.RelatedDoc.RefComment = "Diese Schlussrechnung war leider falsch";
         }
 
-        private void SaveRelatedDoc(string invNr, DateTime? date, string comment,DocumentTypeType dType)
+        private void SaveRelatedDoc(string invNr, DateTime date, string comment,DocumentTypeType dType)
         {
             InvVm.RelatedDoc.RefTypeSelected = RelatedDocumentViewModel.RefType.Verweis;
             InvVm.RelatedDoc.RefInvNumber = invNr;

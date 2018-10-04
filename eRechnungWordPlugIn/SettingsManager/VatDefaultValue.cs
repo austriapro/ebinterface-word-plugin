@@ -5,13 +5,20 @@
     /// </summary>
     public class VatDefaultValue
     {
+        public VatDefaultValue() { }
+        public VatDefaultValue(string code, decimal mwstSatz, string beschreibung)
+        {
+            Code = code;
+            MwStSatz = mwstSatz;
+            Beschreibung = beschreibung;
+        }
+        
         /// <summary>
         /// Gets or sets the mw st satz.
         /// </summary>
         /// <value>
-        /// The mw st satz.
+        /// The mwst satz.
         /// </value>
-
         public decimal MwStSatz { get; set; }
         /// <summary>
         /// Gets or sets the beschreibung.

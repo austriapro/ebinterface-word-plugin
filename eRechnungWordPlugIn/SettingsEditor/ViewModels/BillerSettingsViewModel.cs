@@ -573,7 +573,7 @@ namespace SettingsEditor.ViewModels
             _inhaber = PlugInSettings.Default.Kontowortlaut;
             _iban = PlugInSettings.Default.Iban;
             _bic = PlugInSettings.Default.Bic;
-            _SelectedVersion = PlugInSettings.Default.ebInterfaceVersionString;
+            _SelectedVersion = PlugInSettings.Default.EbInterfaceVersionString;
             // _anyTextChanged = false;
         }
 
@@ -617,7 +617,7 @@ namespace SettingsEditor.ViewModels
             PlugInSettings.Default.Kontowortlaut = Inhaber;
             PlugInSettings.Default.Iban = Iban;
             PlugInSettings.Default.Bic = Bic;
-            PlugInSettings.Default.ebInterfaceVersionString = SelectedVersion;
+            PlugInSettings.Default.EbInterfaceVersionString = SelectedVersion;
         }
 
         

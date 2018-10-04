@@ -12,7 +12,7 @@ using SettingsManager;
 
 namespace ebIViewModels.ViewModels
 {
-// ToDo: Taxexemption
+    // ToDo: Taxexemption
     public class DetailsListConverter
     {
         private BindingList<DetailsViewModel> _detailsList = new BindingList<DetailsViewModel>();
@@ -22,83 +22,98 @@ namespace ebIViewModels.ViewModels
         public BindingList<DetailsViewModel> DetailsList
         {
             get { return _detailsList; }
-            set
-            {
+            set {
                 if (_detailsList == value)
                     return;
-                _detailsList = value;                
+                _detailsList = value;
             }
         }
 
+        /// <summary>
+        /// Converts the Viewmodel DetailsViewModelList to Model ItemListType
+        /// </summary>
+        /// <param name="detailsList">The details list.</param>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns>List of ItemListType</returns>
         public static List<ItemListType> ConvertToItemList(BindingList<DetailsViewModel> detailsList, string orderId)
         {
-            ItemListType itemList = new ItemListType();
-            itemList.ListLineItem = new List<ListLineItemType>();
+            ItemListType itemList = new ItemListType
+            {
+                ListLineItem = new List<ListLineItemType>()
+            };
             int posNr = 1;
             foreach (DetailsViewModel details in detailsList)
             {
-                ListLineItemType lineItem = new ListLineItemType();
-                lineItem.ArticleNumber = new List<ArticleNumberType>(){new ArticleNumberType()
+                ListLineItemType lineItem = new ListLineItemType
                 {
-                    Text = new List<string>(){details.ArtikelNr}
-                }};
-                lineItem.Description = new List<string>() { details.Bezeichnung };
-                lineItem.PositionNumber = posNr.ToString();
+                    ArticleNumber = new List<ArticleNumberType>(){new ArticleNumberType()
+                {
+                    Value = details.ArtikelNr
+                }},
+                    Description = new List<string>() { details.Bezeichnung },
+                    PositionNumber = posNr.ToString()
+                };
                 posNr++;
                 lineItem.InvoiceRecipientsOrderReference.OrderID = orderId;
                 lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber = details.BestellBezug;
-                
+
                 lineItem.UnitPrice = new UnitPriceType()
                 {
                     Value = details.EinzelPreis
                 };
-                if (PlugInSettings.Default.VStBerechtigt)
+                TaxItemType taxItem = new TaxItemType()
                 {
-                    VATRateType rate = new VATRateType();
-                    rate.Value = details.VatSatz;
-                    rate.TaxCode = details.VatCode;
-                    lineItem.Item = rate;
-                }
-                else
-                {
-                    TaxExemptionType taxEx = new TaxExemptionType()
+                    TaxableAmount = lineItem.LineItemAmount,
+                    TaxPercent = new TaxPercentType()
                     {
-                        Value = PlugInSettings.Default.VStText
-                    };
-                    lineItem.Item = taxEx;
-                }
+                        TaxCategoryCode = details.VatItem.Code,
+                        Value = details.VatItem.MwStSatz
+                    },
+                    TaxAmount = (lineItem.LineItemAmount * details.VatItem.MwStSatz / 100).FixedFraction(2)
+                };
+                lineItem.TaxItem = taxItem;
                 lineItem.Quantity = new UnitType()
                 {
-                    Unit = details.Einheit, 
+                    Unit = details.Einheit,
                     Value = details.Menge
                 };
-                if (details.Rabatt != null)
+                if (details.Rabatt !=0)
                 {
-                    ReductionAndSurchargeListLineItemDetailsType red = new ReductionAndSurchargeListLineItemDetailsType();
-                    red.ItemsElementName = new List<ItemsChoiceType>()
+                    ReductionAndSurchargeListLineItemDetailsType red = new ReductionAndSurchargeListLineItemDetailsType
+                    {
+                        ItemsElementName = new List<ItemsChoiceType>()
                     {
                         ItemsChoiceType.ReductionListLineItem
+                    },
+                        Items = new List<object>()
                     };
-                    red.Items = new List<object>();
-                    ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType();
-                    redBase.BaseAmount = details.NettoBasisBetrag;
-                    redBase.Percentage = details.Rabatt;
-                    redBase.PercentageSpecified = true;
+                    ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType
+                    {
+                        BaseAmount = details.NettoBasisBetrag,
+                        Percentage = details.Rabatt,
+                        PercentageSpecified = true
+                    };
                     red.Items.Add(redBase);
                     lineItem.ReductionAndSurchargeListLineItemDetails = red;
-                    lineItem.DiscountFlag = true;
-                    lineItem.DiscountFlagSpecified = true;
                 }
                 lineItem.LineItemAmount = details.NettoBetragZeile;
                 itemList.ListLineItem.Add(lineItem);
             }
-            List<ItemListType> item = new List<ItemListType>();
-            item.Add(itemList);
+            List<ItemListType> item = new List<ItemListType>
+            {
+                itemList
+            };
             return item;
         }
 
-
-        public static DetailsListConverter Load(List<ItemListType> itemList,IUnityContainer uc, bool bestPosRequired)
+        /// <summary>
+        /// Loads Model List of ItemListType into ViewModel DetailsViewModelList List
+        /// </summary>
+        /// <param name="itemList">The item list.</param>
+        /// <param name="uc">The uc.</param>
+        /// <param name="bestPosRequired">if set to <c>true</c> [best position required].</param>
+        /// <returns></returns>
+        public static DetailsListConverter Load(List<ItemListType> itemList, IUnityContainer uc, bool bestPosRequired)
         {
             // ItemListType listType = details.ItemList.FirstOrDefault(); // DAs PlugIn hat nur hier nur einen Eintrag
 
@@ -119,36 +134,34 @@ namespace ebIViewModels.ViewModels
             }
             foreach (ListLineItemType listLineItem in listType.ListLineItem)
             {
-                DetailsViewModel det = uc.Resolve<DetailsViewModel>(new ParameterOverride("bestPosRequired", bestPosRequired)); //new DetailsViewModel();
+                DetailsViewModel detailsVM = uc.Resolve<DetailsViewModel>(new ParameterOverride("bestPosRequired", bestPosRequired)); //new DetailsViewModel();
 
-                det.BestellBezug = listLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber;  // .UnescapeXml();
+                detailsVM.BestellBezug = listLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber;  // .UnescapeXml();
                 var articleNumberType = listLineItem.ArticleNumber.FirstOrDefault();
                 if (articleNumberType != null)
-                    det.ArtikelNr = articleNumberType.Text.FirstOrDefault();  // .UnescapeXml();
-                det.Bezeichnung = listLineItem.Description[0];  // .UnescapeXml();
-                det.Einheit = listLineItem.Quantity.Unit;
-                det.EinzelPreis = listLineItem.UnitPrice.Value;
+                    detailsVM.ArtikelNr = articleNumberType.Value;
+                detailsVM.Bezeichnung = listLineItem.Description[0];  // .UnescapeXml();
+                detailsVM.Einheit = listLineItem.Quantity.Unit;
+                detailsVM.EinzelPreis = listLineItem.UnitPrice.Value;
                 // det.GesamtBruttoBetrag = listLineItem.LineItemAmount;
-                det.Menge = listLineItem.Quantity.Value;
-                if (listLineItem.Item is TaxExemptionType || (!PlugInSettings.Default.VStBerechtigt))
+                detailsVM.Menge = listLineItem.Quantity.Value;
+
+                if (!PlugInSettings.Default.VStBerechtigt)
                 {
-                    //det.Taxexemption = true;
-                    det.VatSatz = 0;
+
+                    detailsVM.VatItem = PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
                 }
                 else
                 {
-                    //det.Taxexemption = false;
-                    VATRateType rate = (VATRateType)listLineItem.Item;
-                    if (rate != null)
-                        det.VatSatz = rate.Value;
+                    detailsVM.VatItem = TaxItemType.GetVatValueFromTaxItem(listLineItem.TaxItem);
                 }
-                if (listLineItem.ReductionAndSurchargeListLineItemDetails!=null)
+                if (listLineItem.ReductionAndSurchargeListLineItemDetails != null)
                 {
-                    var red = listLineItem.ReductionAndSurchargeListLineItemDetails.Items.FirstOrDefault() as ReductionAndSurchargeBaseType;
-                    if (red != null) det.Rabatt = red.Percentage;
+                    if (listLineItem.ReductionAndSurchargeListLineItemDetails.Items.FirstOrDefault() is ReductionAndSurchargeBaseType red)
+                        detailsVM.Rabatt = red.Percentage;
                 }
                 // det.UpdateTotals();
-                details.DetailsList.Add(det);
+                details.DetailsList.Add(detailsVM);
             }
             return details;
         }

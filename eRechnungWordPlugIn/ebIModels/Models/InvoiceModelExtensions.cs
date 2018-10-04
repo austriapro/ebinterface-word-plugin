@@ -4,6 +4,7 @@ using ExtensionMethods;
 using System.Linq;
 using ebIModels.Schema;
 using ebIModels.Services;
+using SettingsManager;
 
 namespace ebIModels.Models
 {
@@ -38,7 +39,7 @@ namespace ebIModels.Models
             return ret;
         }
 
-
+        public bool InitFromSettings { get; set; }
         private decimal _netAmount;
         public decimal NetAmount
         {
@@ -199,17 +200,7 @@ namespace ebIModels.Models
 
     public partial class DetailsType
     {
-        //private List<BelowTheLineItemType> belowTheLineItemField;
-        //public List<BelowTheLineItemType> BelowTheLineItem
-        //{
-        //    get {
-        //        return this.belowTheLineItemField;
-        //    }
-        //    set {
-        //        this.belowTheLineItemField = value;
-        //    }
-        //}
-
+  
         public void RecalcItemList()
         {
             foreach (ItemListType item in ItemList)
@@ -234,8 +225,20 @@ namespace ebIModels.Models
         }
 
     }
+
+    public partial class TaxItemType
+    {
+        public static VatDefaultValue GetVatValueFromTaxItem(TaxItemType tax)
+        {
+            VatDefaultValue vatDefault = new VatDefaultValue();
+            vatDefault= PlugInSettings.Default.VatDefaultValues.FirstOrDefault(p=>p.Code == tax.TaxPercent.TaxCategoryCode);
+            return vatDefault;
+        }
+
+    }
     public partial class TaxType
     {
+
         /// <summary>
         /// Berechnet die Steuergesamtsummen der Rechnung
         /// </summary>
@@ -280,252 +283,5 @@ namespace ebIModels.Models
             return tax;
         }
     }
-
-    #region Pre ebInterface 5p0
-    ///// <summary>
-    ///// Stammt von ebInterface vor 5p0: Aus Kompatibilitätsgründen...
-    ///// </summary>
-    //public partial class TaxExemptionType
-    //{
-
-    //    private string taxExemptionCodeField;
-
-    //    private string valueField;
-
-    //    public string TaxExemptionCode
-    //    {
-    //        get {
-    //            return this.taxExemptionCodeField;
-    //        }
-    //        set {
-    //            this.taxExemptionCodeField = value;
-    //        }
-    //    }
-
-    //    public string Value
-    //    {
-    //        get {
-    //            return this.valueField;
-    //        }
-    //        set {
-    //            this.valueField = value;
-    //        }
-    //    }
-    //}
-    //public partial class VATRateType
-    //{
-
-    //    private string taxCodeField;
-
-    //    private decimal valueField;
-
-    //    public string TaxCode
-    //    {
-    //        get {
-    //            return this.taxCodeField;
-    //        }
-    //        set {
-    //            this.taxCodeField = value;
-    //        }
-    //    }
-
-    //    public decimal Value
-    //    {
-    //        get {
-    //            return this.valueField;
-    //        }
-    //        set {
-    //            this.valueField = value;
-    //        }
-    //    }
-    //}
-    //public partial class BelowTheLineItemType
-    //{
-    //    private string descriptionField = "";
-    //    private decimal lineItemAmountField;
-    //    private ReasonType reasonField;
-    //    public BelowTheLineItemType()
-    //    {
-    //        this.reasonField = new ReasonType();
-    //    }
-    //    public string Description
-    //    {
-    //        get {
-    //            return this.descriptionField;
-    //        }
-    //        set {
-    //            if ((this.descriptionField != null))
-    //            {
-    //                if ((descriptionField.Equals(value) != true))
-    //                {
-    //                    this.descriptionField = value;
-
-    //                }
-    //            }
-    //            else
-    //            {
-    //                this.descriptionField = value;
-
-    //            }
-    //        }
-    //    }
-    //    public decimal LineItemAmount
-    //    {
-    //        get {
-    //            return this.lineItemAmountField.FixedFraction(2);
-    //        }
-    //        set {
-    //            if ((this.lineItemAmountField != null))
-    //            {
-    //                if ((lineItemAmountField.Equals(value) != true))
-    //                {
-    //                    this.lineItemAmountField = value.FixedFraction(2);
-
-    //                }
-    //            }
-    //            else
-    //            {
-    //                this.lineItemAmountField = value.FixedFraction(2);
-
-    //            }
-    //        }
-    //    }
-    //    public ReasonType Reason
-    //    {
-    //        get {
-    //            return this.reasonField;
-    //        }
-    //        set {
-    //            if ((this.reasonField != null))
-    //            {
-    //                if ((reasonField.Equals(value) != true))
-    //                {
-    //                    this.reasonField = value;
-
-    //                }
-    //            }
-    //            else
-    //            {
-    //                this.reasonField = value;
-
-    //            }
-    //        }
-    //    }
-
-    //}
-    //public partial class TaxType
-    //{
-    //    private List<VATItemType> vATField;
-    //    public List<VATItemType> VAT
-    //    {
-    //        get {
-    //            return this.vATField;
-    //        }
-    //        internal set {
-    //                this.vATField = value;
-
-    //        }
-    //    }
-    //}
-    //public partial class VATItemType
-    //{
-    //    private decimal? taxedAmountField;
-    //    private object itemField;
-    //    private decimal? amountField;
-    //    public decimal? TaxedAmount
-    //    {
-    //        get {
-    //            return this.taxedAmountField.FixedFraction(2);
-    //        }
-    //        internal set {
-    //                this.taxedAmountField = value.FixedFraction(2);
-
-    //        }
-    //    }
-    //    public object Item
-    //    {
-    //        get {
-    //            return this.itemField;
-    //        }
-    //        internal set {
-
-    //                this.itemField = value;
-
-
-    //        }
-    //    }
-    //    public decimal? Amount
-    //    {
-    //        get {
-    //            return this.amountField.FixedFraction(2);
-    //        }
-    //        internal set {
-
-    //                this.amountField = value.FixedFraction(2);
-
-
-    //        }
-    //    }
-    //}
-    //public partial class ReasonType
-    //{
-    //    private System.DateTime dateField;
-    //    private bool dateFieldSpecified;
-    //    private string valueField = "";
-    //    public System.DateTime Date
-    //    {
-    //        get {
-    //            return this.dateField;
-    //        }
-    //        set {
-    //            if ((dateField.Equals(value) != true))
-    //            {
-    //                this.dateField = value;
-
-    //            }
-    //        }
-    //    }
-
-    //    public bool DateSpecified
-    //    {
-    //        get {
-    //            return this.dateFieldSpecified;
-    //        }
-    //        set {
-    //            if ((dateFieldSpecified.Equals(value) != true))
-    //            {
-    //                this.dateFieldSpecified = value;
-
-    //            }
-    //        }
-    //    }
-
-    //    public string Value
-    //    {
-    //        get {
-    //            return this.valueField;
-    //        }
-    //        set {
-    //            if ((this.valueField != null))
-    //            {
-    //                if ((valueField.Equals(value) != true))
-    //                {
-    //                    this.valueField = value;
-
-    //                }
-    //            }
-    //            else
-    //            {
-    //                this.valueField = value;
-
-    //            }
-    //        }
-
-
-    //    }
-
-    //}
-    #endregion
-
 }
 

@@ -7,6 +7,7 @@ namespace ebIModels.Models
 {
     public interface IInvoiceModel 
     {
+        bool InitFromSettings { get; set; }
         Models.EbIVersion Version { get; set; }
 
         List<AdditionalInformationType> AdditionalInformation { get; set; }

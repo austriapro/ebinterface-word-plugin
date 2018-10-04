@@ -326,9 +326,9 @@ namespace ebIModels.Mapping.V4p1
             {
                 Name = address.Name,
                 //addrNew.Contact = address.Contact;
-                Phone = new List<string>() { address.Phone },
+                Phone = address.Phone ,
                 POBox = address.POBox,
-                Email = new List<string>() { address.Email },
+                Email = address.Email ,
                 //addrNew.Salutation = address.Salutation;
                 Street = address.Street,
                 Country = GetCountry(address.Country),
@@ -453,7 +453,7 @@ namespace ebIModels.Mapping.V4p1
 
                 if (item.AddressIdentifierType1Specified)
                 {
-                    adId.AddressIdentifierType1 = item.AddressIdentifierType1.ToString();
+                    adId.AddressIdentifierType1 = item.AddressIdentifierType1.ConvertEnum<AddressIdentifierTypeType>();
                     adId.Value = item.Value;
 
                 }

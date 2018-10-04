@@ -99,7 +99,7 @@ namespace ebIViewModelsTests.ViewModels
             const string fnBestPos = @"Daten\BestPosTest.xml";
             invoiceView.SaveEbinterfaceCommand.Execute(fnBestPos);
             XDocument xdoc = XDocument.Load(fnBestPos);
-            var res = Cmn.getElement(xdoc, "Details");
+            var res = Cmn.GetElement(xdoc, "Details");
             Assert.IsNotNull(res);
         }
         [TestMethod]

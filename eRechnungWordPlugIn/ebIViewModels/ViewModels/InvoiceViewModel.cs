@@ -76,25 +76,19 @@ namespace ebIViewModels.ViewModels
         public event EventHandler DocumentHomeKeyEvent;
         private void DocumentHomeKeyFire()
         {
-            EventHandler handler = DocumentHomeKeyEvent;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
+            DocumentHomeKeyEvent?.Invoke(this, EventArgs.Empty);
         }
 
         [Publishes(SaveAsPdfEvent)]
         public event EventHandler SaveAsPdfEventHandler;
         internal virtual void SaveAsPdfEventFire(string xmlFileName, string pdfFileName)
         {
-            SaveAsPdfAndSendMailEventArgs arg = new SaveAsPdfAndSendMailEventArgs();
-            arg.XmlFilename = xmlFileName;
-            arg.PdfFilename = pdfFileName;
-            EventHandler handler = SaveAsPdfEventHandler;
-            if (handler != null)
+            SaveAsPdfAndSendMailEventArgs arg = new SaveAsPdfAndSendMailEventArgs
             {
-                handler(this, (EventArgs)arg);
-            }
+                XmlFilename = xmlFileName,
+                PdfFilename = pdfFileName
+            };
+            SaveAsPdfEventHandler?.Invoke(this, (EventArgs)arg);
         }
 
         [Publishes(BestPosRequiredChanged)]
@@ -102,12 +96,11 @@ namespace ebIViewModels.ViewModels
         private void BestPosRequiredChangedFire()
         {
             EventHandler handler = BestPosRequiredChangedEvent;
-            BestPosRequiredChangedEventArgs args = new BestPosRequiredChangedEventArgs();
-            args.IsBestPosRequired = IsBestPosRequired;
-            if (handler != null)
+            BestPosRequiredChangedEventArgs args = new BestPosRequiredChangedEventArgs
             {
-                handler(this, args);
-            }
+                IsBestPosRequired = IsBestPosRequired
+            };
+            handler?.Invoke(this, args);
         }
 
         [Publishes(InvDatesChanged)]
@@ -115,16 +108,15 @@ namespace ebIViewModels.ViewModels
         private void InvDatesChangedFire()
         {
             EventHandler handler = InvDatesChangedEvent;
-            InvoiceDatesChangedEventArgs args = new InvoiceDatesChangedEventArgs();
-            args.InvoiceDate = VmInvDate;
-            args.InvoiceDueDate = VmInvDueDate;
+            InvoiceDatesChangedEventArgs args = new InvoiceDatesChangedEventArgs
+            {
+                InvoiceDate = VmInvDate,
+                InvoiceDueDate = VmInvDueDate
+            };
             _invoice.CalculateTotals();
             args.BaseAmount = VmInvTotalAmountDecimal;
 
-            if (handler != null)
-            {
-                handler(this, (EventArgs)args);
-            }
+            handler?.Invoke(this, (EventArgs)args);
         }
 
         [Publishes(InvoiceValidationOptionChanged)]
@@ -138,18 +130,16 @@ namespace ebIViewModels.ViewModels
                                                    string mailBody,
                                                    string sendTo, List<string> attachments)
         {
-            SaveAsPdfAndSendMailEventArgs arg = new SaveAsPdfAndSendMailEventArgs();
-            arg.XmlFilename = xmlFileName;
-            arg.PdfFilename = pdfFileName;
-            arg.MailBody = mailBody;
-            arg.SendTo = sendTo;
-            arg.Subject = subject;
-
-            EventHandler handler = SendMailEventHandler;
-            if (handler != null)
+            SaveAsPdfAndSendMailEventArgs arg = new SaveAsPdfAndSendMailEventArgs
             {
-                handler(this, (EventArgs)arg);
-            }
+                XmlFilename = xmlFileName,
+                PdfFilename = pdfFileName,
+                MailBody = mailBody,
+                SendTo = sendTo,
+                Subject = subject
+            };
+
+            SendMailEventHandler?.Invoke(this, (EventArgs)arg);
         }
 
         #endregion
@@ -180,7 +170,6 @@ namespace ebIViewModels.ViewModels
             set
             {
                 if (_vmDocType == value) return;
-                DocumentTypeType invType;
 
                 string val = value;
                 if (val == "CancelCreditMemo")
@@ -193,7 +182,7 @@ namespace ebIViewModels.ViewModels
                     val = "CreditMemo";
                     RelatedDoc.RefTypeSelected = RelatedDocumentViewModel.RefType.Storno;
                 }
-                if (Enum.TryParse(val, true, out invType))
+                if (Enum.TryParse(val, true, out DocumentTypeType invType))
                 {
                     _vmDocType = value;
                     _invoice.DocumentType = invType;
@@ -358,11 +347,11 @@ namespace ebIViewModels.ViewModels
 
         public string VmBillerContact
         {
-            get { return _invoice.Biller.Address.Contact; }
+            get { return _invoice.Biller.Contact.Name; }
             set
             {
-                if (_invoice.Biller.Address.Contact == value) return;
-                _invoice.Biller.Address.Contact = value;
+                if (_invoice.Biller.Contact.Name == value) return;
+                _invoice.Biller.Contact.Name = value;
                 OnPropertyChanged();
             }
         }
@@ -408,11 +397,11 @@ namespace ebIViewModels.ViewModels
 
         public string VmRecSalutation
         {
-            get { return _invoice.Biller.Address.Salutation; }
+            get { return _invoice.Biller.Contact.Salutation; }
             set
             {
-                if (_invoice.Biller.Address.Salutation == value) return;
-                _invoice.Biller.Address.Salutation = value;
+                if (_invoice.Biller.Contact.Salutation == value) return;
+                _invoice.Biller.Contact.Salutation = value;
                 OnPropertyChanged();
             }
         }
@@ -454,9 +443,8 @@ namespace ebIViewModels.ViewModels
                 {
                     _invoice.InvoiceRecipient.OrderReference.OrderID =
                         CurrentSelectedValidation == InvoiceSubtypes.ValidationRuleSet.Government ? value.ToUpper() : value;
-                    string msg;
                     bool isReq = IsBestPosRequired;
-                    var x = _invoice.InvoiceRecipient.OrderReference.OrderID.IsValidOrderRefBund(out msg, out isReq);
+                    var x = _invoice.InvoiceRecipient.OrderReference.OrderID.IsValidOrderRefBund(out string msg, out isReq);
                     _invoice.InvoiceRecipient.BestellPositionErforderlich = isReq;
                     OnPropertyChanged(nameof(IsBestPosRequired));
                 }
@@ -495,7 +483,7 @@ namespace ebIViewModels.ViewModels
             {
 
                 if (_invoice.Biller.OrderReference.ReferenceDateSpecified && _invoice.Biller.OrderReference.ReferenceDate == value) return;
-                _invoice.Biller.OrderReference.ReferenceDate = value;
+                _invoice.Biller.OrderReference.ReferenceDate = value.GetValueOrDefault();
                 _invoice.Biller.OrderReference.ReferenceDateSpecified = !(value == null);
                 OnPropertyChanged();
             }
@@ -581,11 +569,11 @@ namespace ebIViewModels.ViewModels
 
         public string VmRecContact
         {
-            get { return _invoice.InvoiceRecipient.Address.Contact; }
+            get { return _invoice.InvoiceRecipient.Contact.Name; }
             set
             {
-                if (_invoice.InvoiceRecipient.Address.Contact == value) return;
-                _invoice.InvoiceRecipient.Address.Contact = value;
+                if (_invoice.InvoiceRecipient.Contact.Name == value) return;
+                _invoice.InvoiceRecipient.Contact.Name = value;
                 OnPropertyChanged();
             }
         }
@@ -691,11 +679,11 @@ namespace ebIViewModels.ViewModels
                 {
                     DateTime? lieferdatum = _invoice.Delivery.Item as DateTime?;
                     if (lieferdatum == value) return;
-                    _invoice.Delivery.Item = new PeriodType() { FromDate = value }; // (DateTime)(value);
+                    _invoice.Delivery.Item = new PeriodType() { FromDate = value.GetValueOrDefault() }; // (DateTime)(value);
                 }
                 else
                 {
-                    ((PeriodType)_invoice.Delivery.Item).FromDate = value;
+                    ((PeriodType)_invoice.Delivery.Item).FromDate = value.GetValueOrDefault();
                 }
                 OnPropertyChanged();
             }
@@ -715,15 +703,14 @@ namespace ebIViewModels.ViewModels
             get { return (_invoice.NetAmount).Decimal2(); }
             set
             {
-                decimal dec;
-                if (decimal.TryParse((string)value, out dec))
+                if (decimal.TryParse((string)value, out decimal dec))
                 {
-                    _invoice.NetAmount = null;
+                    _invoice.NetAmount = 0;
                 }
                 if (_invoice.NetAmount == dec)
                     return;
                 _invoice.NetAmount = dec;
-                OnProtectedPropertyChanged(_invoice.NetAmount.Value.Decimal2());
+                OnProtectedPropertyChanged(_invoice.NetAmount.Decimal2());
             }
         }
 
@@ -752,16 +739,15 @@ namespace ebIViewModels.ViewModels
             get { return (_invoice.TotalGrossAmount).Decimal2(); }
             set
             {
-                decimal dec;
-                if (decimal.TryParse((string)value, out dec))
+                if (decimal.TryParse((string)value, out decimal dec))
                 {
-                    _invoice.TotalGrossAmount = null;
+                    _invoice.TotalGrossAmount = 0;
                 }
                 if (_invoice.TotalGrossAmount == dec)
                     return;
                 _invoice.TotalGrossAmount = dec;
                 _paymentConditions.BaseAmount = dec;
-                OnProtectedPropertyChanged(_invoice.TotalGrossAmount.Value.Decimal2());
+                OnProtectedPropertyChanged(_invoice.TotalGrossAmount.Decimal2());
             }
         }
 
@@ -772,8 +758,7 @@ namespace ebIViewModels.ViewModels
             set
             {
                 if (_vmInvCurrency == value) return;
-                CurrencyType curr;
-                if (!Enum.TryParse(value, out curr))
+                if (!Enum.TryParse(value, out CurrencyType curr))
                 {
                     curr = ModelConstants.CurrencyCodeFixed;
                 }
@@ -1277,10 +1262,10 @@ namespace ebIViewModels.ViewModels
                 return null;
             }
             string fn;
-            EbIVersion preSelectedVersion = InvoiceFactory.LatestVersion;
-            if (!Enum.TryParse(PlugInSettings.Default.ebInterfaceVersionString,out preSelectedVersion))
+            EbIVersion preSelectedVersion = InvoiceModel.LatestVersion;
+            if (!Enum.TryParse(PlugInSettings.Default.EbInterfaceVersionString,out preSelectedVersion))
             {
-               preSelectedVersion = InvoiceFactory.LatestVersion;
+               preSelectedVersion = InvoiceModel.LatestVersion;
             }
             if (o is string)
             {
@@ -1589,7 +1574,7 @@ namespace ebIViewModels.ViewModels
             if (_clearVat)
             {
                 VmBillerVatid = PlugInSettings.VatIdDefaultOhneVstBerechtigung;
-                VatSatzSetzen(0);
+                VatSatzSetzen(null);
             }
             _invoice.CalculateTotals();
             _paymentConditions.LoadFromInvoice(_invoice);
@@ -1670,9 +1655,7 @@ namespace ebIViewModels.ViewModels
         {
             if (subtyp == InvoiceSubtypes.ValidationRuleSet.Government)
             {
-                bool isRequired = false;
-                string msg;
-                if (!_invoice.InvoiceRecipient.OrderReference.OrderID.IsValidOrderRefBund(out msg, out isRequired))
+                if (!_invoice.InvoiceRecipient.OrderReference.OrderID.IsValidOrderRefBund(out string msg, out bool isRequired))
                 {
                     PublishToPanel(null, "Auftragsreferenz", "", msg);
                 }
@@ -1686,16 +1669,16 @@ namespace ebIViewModels.ViewModels
             {
                 BackgroundWorker worker = sender as BackgroundWorker;
 
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
                 string filename = _progressView.PayLoad as string;
 
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
                 _vmDocType = _invoice.DocumentType.ToString();
                 //_invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
                 _bankTx = GetBankTx();
                 // _paymentConditions = _uc.Resolve<SkontoViewModels>(new ParameterOverride("invoice", _invoice));
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
                 UpdateViewWithBackGroundWorker(sender, e);
             }
 
@@ -1792,15 +1775,13 @@ namespace ebIViewModels.ViewModels
             _invoice.PaymentConditions = PaymentConditions.GetPaymentConditions(VmInvDueDate);
             var relDocs = RelatedDoc.GetRelatedDocumentEntry(CurrentSelectedValidation);
             _invoice.CancelledOriginalDocument = null;
-            var type = relDocs as CancelledOriginalDocumentType;
-            if (type != null)
+            if (relDocs is CancelledOriginalDocumentType type)
             {
                 _invoice.CancelledOriginalDocument = type;
                 return;
             }
             _invoice.RelatedDocument.Clear();
-            var docs = relDocs as RelatedDocumentType;
-            if (docs != null)
+            if (relDocs is RelatedDocumentType docs)
             {
                 _invoice.RelatedDocument.Add(docs);
                 return;
@@ -1911,7 +1892,7 @@ namespace ebIViewModels.ViewModels
             }
         }
 
-        private void workerReportProgress(BackgroundWorker worker)
+        private void WorkerReportProgress(BackgroundWorker worker)
         {
             Log.TraceWrite(CallerInfo.Create(), "Update progress");
             if (worker != null) worker.ReportProgress(1);
@@ -1933,32 +1914,32 @@ namespace ebIViewModels.ViewModels
                 OnUpdateSelection(VmRecCountry, "VmRecCountry");
                 OnUpdateSelection(VmInvCurrency, "VmInvCurrency");
 
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
 
                 if (updateTables)
                 {
                     OnUpdateDocTable(DetailsView, "DetailsView");
                 }
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
 
                 if (updateTables)
                 {
                     OnUpdateDocTable(VatView, "VatView");
                 }
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
 
                 if (updateTables)
                 {
                     OnUpdateDocTable(PaymentConditions, "PaymentConditions");
                 }
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
 
                 OnPropertyChanged(nameof(RelatedDoc));
                 OnPropertyChanged(null);
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
 
                 FireProtectedPropertyChanged();
-                workerReportProgress(worker);
+                WorkerReportProgress(worker);
 
             }
             catch (Exception ex)
@@ -1991,12 +1972,11 @@ namespace ebIViewModels.ViewModels
             }
             else
             {
-                adrList.RemoveAll(x => (x.AddressIdentifierType1Specified && string.IsNullOrEmpty(x.Value)));
+                adrList.RemoveAll(x => (string.IsNullOrEmpty(x.Value)));
                 // Alle GLNnummern entfernen
             }
             adrList.Add(new AddressIdentifierType()
-            {
-                AddressIdentifierType1Specified = true,
+            {                
                 Value = glnValue
             });
             return adrList;
@@ -2006,11 +1986,8 @@ namespace ebIViewModels.ViewModels
         {
             if (adrList == null)
                 return "";
-            var glnSpec = adrList.Where(x => x.AddressIdentifierType1Specified == true);
-            if (!glnSpec.Any())
-                return "";
 
-            var gln = glnSpec.First(g => g.AddressIdentifierType1 == AddressIdentifierTypeType.GLN);
+            var gln = adrList.First(g => g.AddressIdentifierType1 == AddressIdentifierTypeType.GLN);
             if (gln == null)
                 return "";
             return gln.Value;
@@ -2028,8 +2005,10 @@ namespace ebIViewModels.ViewModels
             if (handler != null)
             {
                 Log.TraceWrite(CallerInfo.Create(), "Firing Event ");
-                var args = new InvIndustryEventArgs();
-                args.Industry = CurrentSelectedValidation;
+                var args = new InvIndustryEventArgs
+                {
+                    Industry = CurrentSelectedValidation
+                };
                 handler(this, args);
                 Log.TraceWrite(CallerInfo.Create(), "Event finished");
             }
@@ -2045,7 +2024,7 @@ namespace ebIViewModels.ViewModels
             BillerSettings2Vm();
             if (sender != null && ((BillerSettingsViewModel)sender).RecalcMwSt)
             {
-                VatSatzSetzen(PlugInSettings.Default.MwStDefault);
+                VatSatzSetzen(PlugInSettings.Default.MwStDefaultValue);
             }
             UpdateView();
         }
@@ -2055,7 +2034,7 @@ namespace ebIViewModels.ViewModels
             _invoice.Biller.Address.Name = PlugInSettings.Default.Name;
             _invoice.Biller.Address.Country.CountryCodeText = PlugInSettings.Default.Land;
             _invoice.Biller.Address.Street = PlugInSettings.Default.Strasse;
-            _invoice.Biller.Address.Contact = PlugInSettings.Default.Contact;
+            _invoice.Biller.Contact.Name = PlugInSettings.Default.Contact;
             _invoice.Biller.Address.AddressIdentifier = new List<AddressIdentifierType>();
             _invoice.Biller.Address.AddressIdentifier = SetGln(_invoice.Biller.Address.AddressIdentifier, PlugInSettings.Default.BillerGln);
             _invoice.Biller.Address.Email = PlugInSettings.Default.Email;
@@ -2084,12 +2063,12 @@ namespace ebIViewModels.ViewModels
             //}
         }
 
-        private void VatSatzSetzen(decimal vatSatz)
+        private void VatSatzSetzen(VatDefaultValue vatSatz)
         {
             var tempDetails = DetailsView;
             foreach (DetailsViewModel model in tempDetails)
             {
-                model.VatSatz = vatSatz;
+                model.VatItem= vatSatz;
             }
             DetailsView = tempDetails; // Update erfolgt ausserhalb!
         }
@@ -2159,13 +2138,11 @@ namespace ebIViewModels.ViewModels
                 //        results.AddResult(new ValidationResult("RE00092 Rechnungssteller: Die GLN muss leer oder 13 Stellen lang sein", this, "Rechnungssteller", "GLN", null));
                 //    }
                 //}
-                string msg;
-                bool isRequired;
                 if (PaymentConditions.SkontoList.Count > 2)
                 {
                     results.AddResult(new ValidationResult("SK00090 SKonto: Es sind max. zwei Skontozeilen zulässig", this, "SkontoList", "Skonto", null));
                 }
-                if (!VmOrderReference.IsValidOrderRefBund(out msg, out isRequired))
+                if (!VmOrderReference.IsValidOrderRefBund(out string msg, out bool isRequired))
                 {
                     results.AddResult(new ValidationResult("AF00003 Auftragsreferenz: " + msg, this, "VmOrderReference", "Auftragsreferenz", null));
                 }

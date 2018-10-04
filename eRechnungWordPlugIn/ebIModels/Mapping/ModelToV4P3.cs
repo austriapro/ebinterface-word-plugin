@@ -5,7 +5,7 @@ using ebIModels.Schema.ebInterface4p3;
 using ExtensionMethods;
 using VM = ebIModels.Models;
 using ebIModels.Schema;
-using V4P3 = ebIModels.Schema.ebInterface4p3;
+using TARGET = ebIModels.Schema.ebInterface4p3;
 using SettingsManager;
 
 namespace ebIModels.Mapping.V4p3
@@ -17,9 +17,9 @@ namespace ebIModels.Mapping.V4p3
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        internal static V4P3.InvoiceType MapModelToV4p3(VM.IInvoiceModel source)
+        internal static TARGET.InvoiceType MapModelToV4p3(VM.IInvoiceModel source)
         {
-            V4P3.InvoiceType invoice = new V4P3.InvoiceType();
+            TARGET.InvoiceType invoice = new TARGET.InvoiceType();
 
             #region Rechnungskopf
             invoice.InvoiceSubtype = source.InvoiceSubtype;
@@ -37,10 +37,10 @@ namespace ebIModels.Mapping.V4p3
             invoice.CancelledOriginalDocument = null;
             if (source.CancelledOriginalDocument != null)
             {
-                invoice.CancelledOriginalDocument = new CancelledOriginalDocumentType()
+                invoice.CancelledOriginalDocument = new TARGET.CancelledOriginalDocumentType()
                 {
                     Comment = source.CancelledOriginalDocument.Comment,
-                    DocumentType = source.CancelledOriginalDocument.DocumentType.ConvertEnum<DocumentTypeType>(),
+                    DocumentType = source.CancelledOriginalDocument.DocumentType.ConvertEnum<TARGET.DocumentTypeType>(),
                     DocumentTypeSpecified = source.CancelledOriginalDocument.DocumentTypeSpecified,
                     InvoiceDate = source.CancelledOriginalDocument.InvoiceDate,
                     InvoiceNumber = source.CancelledOriginalDocument.InvoiceNumber
@@ -52,12 +52,12 @@ namespace ebIModels.Mapping.V4p3
             #region Related Document
             if (source.RelatedDocument.Any())
             {
-                invoice.RelatedDocument = new RelatedDocumentType[]
+                invoice.RelatedDocument = new TARGET.RelatedDocumentType[]
                 {
-                    new RelatedDocumentType()
+                    new TARGET.RelatedDocumentType()
                     {
                     Comment = source.RelatedDocument[0].Comment,
-                    DocumentType = source.RelatedDocument[0].DocumentType.ConvertEnum<DocumentTypeType>(),
+                    DocumentType = source.RelatedDocument[0].DocumentType.ConvertEnum<TARGET.DocumentTypeType>(),
                     DocumentTypeSpecified = source.RelatedDocument[0].DocumentTypeSpecified,
                     InvoiceDate = source.RelatedDocument[0].InvoiceDate,
                     InvoiceDateSpecified = source.RelatedDocument[0].InvoiceDateSpecified,
@@ -69,14 +69,15 @@ namespace ebIModels.Mapping.V4p3
             #endregion
 
             #region Delivery
-            if (source.Delivery.Item is VM.PeriodType)
+            if (source.Delivery.Item is VM.PeriodType delType)
             {
-                var delType = (VM.PeriodType)source.Delivery.Item;
                 if (delType.ToDate != null)
                 {
-                    var deliveryType = new PeriodType();
-                    deliveryType.FromDate = delType.FromDate;
-                    deliveryType.ToDate = delType.ToDate;
+                    var deliveryType = new PeriodType
+                    {
+                        FromDate = delType.FromDate,
+                        ToDate = delType.ToDate
+                    };
                     invoice.Delivery.Item = deliveryType;
                 }
                 else
@@ -93,22 +94,26 @@ namespace ebIModels.Mapping.V4p3
             #region Biller
             if (source.Biller != null)
             {
-                invoice.Biller = new BillerType();
-                invoice.Biller.VATIdentificationNumber = source.Biller.VATIdentificationNumber;
-                invoice.Biller.InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID;
-                invoice.Biller.Address = GetAddress(source.Biller.Address, source.Biller.Contact);
-                invoice.Biller.FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification);
+                invoice.Biller = new TARGET.BillerType
+                {
+                    VATIdentificationNumber = source.Biller.VATIdentificationNumber,
+                    InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID,
+                    Address = GetAddress(source.Biller.Address, source.Biller.Contact),
+                    FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification)
+                };
             }
             #endregion
 
             #region InvoiceReceipient
             if (source.InvoiceRecipient != null)
             {
-                invoice.InvoiceRecipient = new InvoiceRecipientType();
-                invoice.InvoiceRecipient.BillersInvoiceRecipientID = source.InvoiceRecipient.BillersInvoiceRecipientID;
-                invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
-                invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address,source.InvoiceRecipient.Contact);
-                invoice.InvoiceRecipient.OrderReference = new OrderReferenceType();
+                invoice.InvoiceRecipient = new TARGET.InvoiceRecipientType
+                {
+                    BillersInvoiceRecipientID = source.InvoiceRecipient.BillersInvoiceRecipientID,
+                    VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber,
+                    Address = GetAddress(source.InvoiceRecipient.Address, source.InvoiceRecipient.Contact),
+                    OrderReference = new OrderReferenceType()
+                };
                 invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
                 if (source.InvoiceRecipient.OrderReference.ReferenceDateSpecified)
                 {
@@ -122,9 +127,11 @@ namespace ebIModels.Mapping.V4p3
             #endregion
 
             #region Details
-            invoice.Details = new DetailsType();
-            invoice.Details.HeaderDescription = source.Details.HeaderDescription;
-            invoice.Details.FooterDescription = source.Details.FooterDescription;
+            invoice.Details = new DetailsType
+            {
+                HeaderDescription = source.Details.HeaderDescription,
+                FooterDescription = source.Details.FooterDescription
+            };
 
             // inv4P1.Details.ItemList = new List<InvV4p1.ItemListType>();
             var detailsItemList = new List<ItemListType>();
@@ -139,16 +146,17 @@ namespace ebIModels.Mapping.V4p3
                 var itemListLineItem = new List<ListLineItemType>();
                 foreach (VM.ListLineItemType srcLineItem in srcItemList.ListLineItem)
                 {
-                    ListLineItemType lineItem = new ListLineItemType();
+                    ListLineItemType lineItem = new ListLineItemType
+                    {
+                        PositionNumber = srcLineItem.PositionNumber,
+                        Description = srcLineItem.Description.ToArray(),
+                        AdditionalInformation = null,
 
-                    lineItem.PositionNumber = srcLineItem.PositionNumber;
-                    lineItem.Description = srcLineItem.Description.ToArray();
-                    lineItem.AdditionalInformation = null;
+                        ArticleNumber = GetArtikelList(srcLineItem.ArticleNumber),
 
-                    lineItem.ArticleNumber = GetArtikelList(srcLineItem.ArticleNumber);
-
-                    // Menge
-                    lineItem.Quantity = new UnitType();
+                        // Menge
+                        Quantity = new UnitType()
+                    };
                     lineItem.Quantity.Unit = srcLineItem.Quantity.Unit;
                     lineItem.Quantity.Value = srcLineItem.Quantity.Value;
 
@@ -231,11 +239,13 @@ namespace ebIModels.Mapping.V4p3
             #endregion
 
             #region Global ReductionANdSurcharge
-            invoice.ReductionAndSurchargeDetails = new ReductionAndSurchargeDetailsType();
-            invoice.ReductionAndSurchargeDetails.Items = null;
-            invoice.ReductionAndSurchargeDetails.ItemsElementName = new ItemsChoiceType1[]
+            invoice.ReductionAndSurchargeDetails = new ReductionAndSurchargeDetailsType
+            {
+                Items = null,
+                ItemsElementName = new ItemsChoiceType1[]
             {
                 ItemsChoiceType1.Reduction
+            }
             };
 
             #endregion
@@ -252,8 +262,10 @@ namespace ebIModels.Mapping.V4p3
             {
                 VM.UniversalBankTransactionType txType = source.PaymentMethod.Item as VM.UniversalBankTransactionType;
 
-                invoice.PaymentMethod = new PaymentMethodType();
-                invoice.PaymentMethod.Item = new UniversalBankTransactionType();
+                invoice.PaymentMethod = new PaymentMethodType
+                {
+                    Item = new UniversalBankTransactionType()
+                };
                 ((UniversalBankTransactionType)invoice.PaymentMethod.Item).BeneficiaryAccount = new AccountType[]
                 {
                     new AccountType()
@@ -311,8 +323,10 @@ namespace ebIModels.Mapping.V4p3
         {
             if (srcRed == null)
                 return null;
-            ReductionAndSurchargeListLineItemDetailsType lineRed = new ReductionAndSurchargeListLineItemDetailsType();
-            lineRed.Items = new object[srcRed.Items.Count];
+            ReductionAndSurchargeListLineItemDetailsType lineRed = new ReductionAndSurchargeListLineItemDetailsType
+            {
+                Items = new object[srcRed.Items.Count]
+            };
             int i = 0;
 
             foreach (var item1 in srcRed.Items)
@@ -320,13 +334,15 @@ namespace ebIModels.Mapping.V4p3
                 if (item1 is VM.ReductionAndSurchargeBaseType)
                 {
                     VM.ReductionAndSurchargeBaseType item = item1 as VM.ReductionAndSurchargeBaseType;
-                    ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType();
-                    redBase.Amount = item.Amount;
-                    redBase.AmountSpecified = item.AmountSpecified;
-                    redBase.BaseAmount = item.BaseAmount;
-                    redBase.Comment = item.Comment;
-                    redBase.Percentage = item.Percentage;
-                    redBase.PercentageSpecified = item.PercentageSpecified;
+                    ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType
+                    {
+                        Amount = item.Amount,
+                        AmountSpecified = item.AmountSpecified,
+                        BaseAmount = item.BaseAmount,
+                        Comment = item.Comment,
+                        Percentage = item.Percentage,
+                        PercentageSpecified = item.PercentageSpecified
+                    };
                     lineRed.Items[i] = redBase;
                     i++;
                 }
@@ -347,7 +363,7 @@ namespace ebIModels.Mapping.V4p3
 
         private static object MapVatItemType(VM.TaxItemType vatItem)
         {
-            
+
             if (vatItem.TaxPercent.TaxCategoryCode == PlugInSettings.VStBefreitCode)
             {
                 var taxexNew = new TaxExemptionType
@@ -358,8 +374,10 @@ namespace ebIModels.Mapping.V4p3
             }
             else
             {
-                var taxexNew = new VATRateType();
-                taxexNew.Value = vatItem.TaxPercent.Value;
+                var taxexNew = new VATRateType
+                {
+                    Value = vatItem.TaxPercent.Value
+                };
                 return taxexNew;
             }
 
@@ -372,18 +390,20 @@ namespace ebIModels.Mapping.V4p3
             {
                 return null;
             }
-            AddressType addrNew = new AddressType();
-            addrNew.Name = address.Name;
-            addrNew.Contact = contact.Name;
-            addrNew.Phone = address.Phone.FirstOrDefault();
-            addrNew.POBox = address.POBox;
-            addrNew.Email = address.Email.FirstOrDefault();
-            addrNew.Salutation = contact.Salutation;
-            addrNew.Street = address.Street;
-            addrNew.Country = GetCountry(address.Country);
-            addrNew.ZIP = address.ZIP;
-            addrNew.Town = address.Town;
-            addrNew.AddressIdentifier = GetAddressIdentifier(address.AddressIdentifier);
+            AddressType addrNew = new AddressType
+            {
+                Name = address.Name,
+                Contact = contact.Name,
+                Phone = address.Phone,
+                POBox = address.POBox,
+                Email = address.Email,
+                Salutation = contact.Salutation,
+                Street = address.Street,
+                Country = GetCountry(address.Country),
+                ZIP = address.ZIP,
+                Town = address.Town,
+                AddressIdentifier = GetAddressIdentifier(address.AddressIdentifier)
+            };
             return addrNew;
         }
 
@@ -392,27 +412,15 @@ namespace ebIModels.Mapping.V4p3
             if (countryType == null)
                 return null;
             CountryType cty = new CountryType();
-            if (countryType.Text == null)
+            if (string.IsNullOrEmpty(countryType.Value))
             {
                 cty.CountryCode = VM.CountryCodeType.AT.ToString();
-                //cty.CountryCodeSpecified = true;
-                //cty.Text = new string[] { "Österreich" };
                 cty.Value = "Österreich";
             }
             else
             {
                 cty.CountryCode = countryType.CountryCode.ToString(); //.ConvertEnum<CountryCodeType>();
-                                                                      //cty.CountryCodeSpecified = true; // This is always true!
-                                                                      //cty.Text = countryType.Text.ToArray();
-                if (countryType.Text.Any())
-                {
-                    cty.Value = countryType.Text[0];
-                }
-                else
-                {
-                    cty.Value = VM.CountryCodes.GetFromCode(cty.CountryCode).Country;
-                }
-
+                cty.Value = VM.CountryCodes.GetFromCode(cty.CountryCode).Country;
             }
             return cty;
         }
@@ -430,11 +438,13 @@ namespace ebIModels.Mapping.V4p3
 
             foreach (VM.AddressIdentifierType addrId in adrIn)
             {
-                AddressIdentifierType adId = new AddressIdentifierType();
-                adId.Value = addrId.Value;
-                adId.AddressIdentifierType1 =
-                    addrId.AddressIdentifierType1.ConvertEnum<AddressIdentifierTypeType>();
-                adId.AddressIdentifierType1Specified = addrId.AddressIdentifierType1Specified;
+                AddressIdentifierType adId = new AddressIdentifierType
+                {
+                    Value = addrId.Value,
+                    AddressIdentifierType1 =
+                    addrId.AddressIdentifierType1.ConvertEnum<AddressIdentifierTypeType>(), //.ConvertEnum<AddressIdentifierTypeType>();
+                    AddressIdentifierType1Specified = true
+                };
                 adIdList.Add(adId);
             }
             return adIdList.ToArray();
@@ -443,12 +453,15 @@ namespace ebIModels.Mapping.V4p3
         private static ArticleNumberType[] GetArtikelList(List<VM.ArticleNumberType> srcArticle)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
-            foreach (VM.ArticleNumberType articleNumberType in srcArticle)
+            for (int i = 0; i < srcArticle.Count; i++)
             {
-                ArticleNumberType art = new ArticleNumberType();
-                art.Value = articleNumberType.Text[0];
-                art.ArticleNumberType1Specified = articleNumberType.ArticleNumberType1Specified;
-                art.ArticleNumberType1 = articleNumberType.ArticleNumberType1.ConvertEnum<ArticleNumberTypeType>();
+                VM.ArticleNumberType articleNumberType = srcArticle[i];
+                ArticleNumberType art = new ArticleNumberType
+                {
+                    Value = articleNumberType.Value,
+                    ArticleNumberType1Specified = articleNumberType.ArticleNumberType1Specified,
+                    ArticleNumberType1 = articleNumberType.ArticleNumberType1.ConvertEnum<ArticleNumberTypeType>()
+                };
                 artNrList.Add(art);
 
             }

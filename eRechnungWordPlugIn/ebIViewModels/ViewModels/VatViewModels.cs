@@ -37,12 +37,10 @@ namespace ebIViewModels.ViewModels
             VatViewModels vatView = new VatViewModels();
             if (!PlugInSettings.Default.VStBerechtigt)
             {
-                VatViewModel vatModel = new VatViewModel();
-                vatModel.TaxExemption = true;
-                vatModel.TaxCodeText = PlugInSettings.Default.VStText;
-                vatModel.VatAmount = 0;
-                vatModel.VatPercent = 0;
-                vatModel.TaxCode = null;
+                VatViewModel vatModel = new VatViewModel(PlugInSettings.Default.IstNichtVStBerechtigtVatValue.Code,
+                    PlugInSettings.Default.IstNichtVStBerechtigtVatValue.Beschreibung,
+                    PlugInSettings.Default.IstNichtVStBerechtigtVatValue.MwStSatz,
+                    taxType.TaxItem.FirstOrDefault().TaxableAmount);
                 vatView.VatViewList.Add(vatModel);
                 return vatView;
             }
@@ -50,34 +48,16 @@ namespace ebIViewModels.ViewModels
             {
                 return vatView;
             }
-            if (taxType.VAT == null)
+            if (!taxType.TaxItem.Any())
             {
                 return vatView;
             }
             
-            foreach (VATItemType vatItemType in taxType.VAT)
+            foreach (var taxItem in taxType.TaxItem)
             {
-                VatViewModel vatModel = new VatViewModel();
-                vatModel.VatBaseAmount = vatItemType.TaxedAmount;
-                vatModel.VatAmount = vatItemType.Amount;
-                if (vatItemType.Item is TaxExemptionType) // Steuerbefreit ...
-                {
-                    TaxExemptionType taxExemption = (TaxExemptionType)vatItemType.Item;
-                    vatModel.VatPercent = 0;
-                    vatModel.TaxExemption = true;
-                    vatModel.TaxCode = taxExemption.TaxExemptionCode;
-                    vatModel.TaxCodeText = taxExemption.Value;
-                }
-                else // MwSt Satz
-                {
-                    vatModel.TaxExemption = false;
-                    VATRateType rate = (VATRateType)vatItemType.Item;
-                    vatModel.VatPercent = rate.Value;
-                    vatModel.TaxCode = rate.TaxCode;
-                    
-
-                    
-                }
+                VatViewModel vatModel = new VatViewModel(
+                    taxItem.TaxPercent.TaxCategoryCode, taxItem.Comment,
+                    taxItem.TaxPercent.Value, taxItem.TaxableAmount);
                 vatView.VatViewList.Add(vatModel);
             }
 

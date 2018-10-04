@@ -89,10 +89,10 @@ namespace SettingsManager
             get { return Settings.Default.SetWhrg; }
             set { Settings.Default.SetWhrg = value; }
         }
-        
-        public string ebInterfaceVersionString
+
+        public string EbInterfaceVersionString
         {
-            get{ return Settings.Default.SetEbIVersion; }
+            get { return Settings.Default.SetEbIVersion; }
             set { Settings.Default.SetEbIVersion = value; }
         }
         #endregion
@@ -115,7 +115,8 @@ namespace SettingsManager
         public string VStText
         {
             get { return Settings.Default.SetVStText; }
-            set { Settings.Default.SetVStText = value; }
+            set { Settings.Default.SetVStText = value;
+                _IstNichtVStBerechtigtVatValue.Beschreibung = value; }
         }
         public string MwStTab
         {
@@ -123,6 +124,7 @@ namespace SettingsManager
             set { Settings.Default.SetMwStTab = value; }
         }
         public decimal MwStDefault { get { return Settings.Default.SetMwStDefault; } set { Settings.Default.SetMwStDefault = value; } }
+        public VatDefaultValue MwStDefaultValue { get { return VatDefaultValues.FirstOrDefault(p => p.MwStSatz == MwStDefault); } }
         #endregion
 
         #region Bank-Konto
@@ -211,8 +213,7 @@ namespace SettingsManager
 
         public string PathToUnsignedInvoices
         {
-            get
-            {
+            get {
                 string p = Settings.Default.SetLocalPath;
                 if (string.IsNullOrEmpty(p))
                 {
@@ -225,8 +226,7 @@ namespace SettingsManager
 
         public string PathToInvoiceTemplates
         {
-            get
-            {
+            get {
                 string p = Settings.Default.SetTemplatePath;
                 if (string.IsNullOrEmpty(p))
                 {
@@ -240,8 +240,7 @@ namespace SettingsManager
 
         public string PathToSignedInvoices
         {
-            get
-            {
+            get {
                 string p = Settings.Default.SetLocalPathSigned;
                 if (string.IsNullOrEmpty(p))
                 {
@@ -290,55 +289,75 @@ namespace SettingsManager
 
         #endregion
 
-        public List<VatDefaultValue> VatDefaultValues
+        private List<VatDefaultValue> _VatDefaultValues = GetVatDefaultValues();
+        public List<VatDefaultValue> VatDefaultValues { get { return _VatDefaultValues; } internal set { _VatDefaultValues = value; } }
+        private VatDefaultValue _IstNichtVStBerechtigtVatValue = new VatDefaultValue()
         {
-            get
-            {
+            Code = VStBefreitCode,
+            MwStSatz = 0
+        };
+        public VatDefaultValue GetValueFromPercent(decimal percent)
+        {
 
-                //string xmlVat = Settings.Default.SetMwStTab;
-
-                //if (xmlVat == string.Empty)
-                //{
-
-                string xmlVat = ResourceService.ReadXmlString("MwStDefaults.xml");
-                //}
-                XElement xDoc = XElement.Parse(xmlVat);
-                IEnumerable<XElement> childs = from xel in xDoc.Elements() select xel;
-                List<VatDefaultValue> vatList = (from xElement in childs
-                                                 select new VatDefaultValue()
-                                                 {
-                                                     MwStSatz = decimal.Parse(xElement.Element("MwStSatz").Value),
-                                                     Beschreibung = xElement.Element("Beschreibung").Value,
-                                                     Code = xElement.Element("Code").Value
-                                                 }).ToList<VatDefaultValue>();
-                return new List<VatDefaultValue>(vatList);
-            }
-            private set
-            {
-                var myList = value;
-                if (myList == null) return;
-                StringWriter stringWriter = new StringWriter();
-                XmlDocument xmlDoc = new XmlDocument();
-                XmlTextWriter xmlWriter = new XmlTextWriter(stringWriter);
-                XmlSerializer serializer = new XmlSerializer(typeof(List<VatDefaultValue>));
-                serializer.Serialize(xmlWriter, myList);
-                string xmlResult = stringWriter.ToString();
-                Settings.Default.SetMwStTab = xmlResult;
-            }
+            return VatDefaultValues.FirstOrDefault(p => p.MwStSatz == percent);
         }
+        public VatDefaultValue GetValueFromCode(string code)
+        {
+
+            return VatDefaultValues.FirstOrDefault(p => p.Code == code);
+        }
+
+        public VatDefaultValue IstNichtVStBerechtigtVatValue
+        {
+            get {  _IstNichtVStBerechtigtVatValue.Beschreibung = VStText; return _IstNichtVStBerechtigtVatValue; }
+            private set { _IstNichtVStBerechtigtVatValue = value; }
+        }
+
+        private static List<VatDefaultValue> GetVatDefaultValues()
+        {
+
+            //string xmlVat = Settings.Default.SetMwStTab;
+
+            //if (xmlVat == string.Empty)
+            //{
+
+            string xmlVat = ResourceService.ReadXmlString("MwStDefaults.xml");
+            //}
+            XElement xDoc = XElement.Parse(xmlVat);
+            IEnumerable<XElement> childs = from xel in xDoc.Elements() select xel;
+            List<VatDefaultValue> vatList = (from xElement in childs
+                                             select new VatDefaultValue()
+                                             {
+                                                 MwStSatz = decimal.Parse(xElement.Element("MwStSatz").Value),
+                                                 Beschreibung = xElement.Element("Beschreibung").Value,
+                                                 Code = xElement.Element("Code").Value
+                                             }).ToList<VatDefaultValue>();
+            return new List<VatDefaultValue>(vatList);
+        }
+        //private set
+        //{
+        //    var myList = value;
+        //    if (myList == null) return;
+        //    StringWriter stringWriter = new StringWriter();
+        //    XmlDocument xmlDoc = new XmlDocument();
+        //    XmlTextWriter xmlWriter = new XmlTextWriter(stringWriter);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(List<VatDefaultValue>));
+        //    serializer.Serialize(xmlWriter, myList);
+        //    string xmlResult = stringWriter.ToString();
+        //    Settings.Default.SetMwStTab = xmlResult;
+        //}
+        //}
 
         public string UnitMeasureDefault
         {
             get { return Settings.Default.SetUoMDefault; }
-            set
-            {
+            set {
                 Settings.Default.SetUoMDefault = value;
             }
         }
         public List<UnitOfMeasureEntries> UnitOfMeasures
         {
-            get
-            {
+            get {
                 string xmlUoM = Settings.Default.SetUnitOfMeasure;
                 if (xmlUoM == string.Empty)
                 {
@@ -384,17 +403,19 @@ namespace SettingsManager
                 }
                 return new List<UnitOfMeasureEntries>(unitOfMeasure);
             }
-            set
-            {
+            set {
                 var myList = value;
-                if (myList == null) return;
+                if (myList == null)
+                    return;
                 //var xx = new UnitOfMeasure();
                 //xx.Entries = myList;
                 //string result = xx.Serialize();
                 //Settings.Default.SetUnitOfMeasure = result;
                 StringWriter stringWriter = new StringWriter();
-                var myUom = new UnitOfMeasures();
-                myUom.UnitOfMeasure = value;
+                var myUom = new UnitOfMeasures
+                {
+                    UnitOfMeasure = value
+                };
                 XmlTextWriter xmlWriter = new XmlTextWriter(stringWriter);
                 XmlSerializer serializer = new XmlSerializer(typeof(List<UnitOfMeasureEntries>));
                 serializer.Serialize(xmlWriter, myList);
@@ -407,6 +428,7 @@ namespace SettingsManager
         {
             Settings.Default.Reload();
             // Default = new PlugInSettings();
+
             return new PlugInSettings();
         }
 

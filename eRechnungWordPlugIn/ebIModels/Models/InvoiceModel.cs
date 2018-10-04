@@ -450,8 +450,8 @@ namespace ebIModels.Models
         private string townField;
         private string zIPField;
         private CountryType countryField;
-        private List<string> phoneField;
-        private List<string> emailField;
+        private string phoneField;
+        private string emailField;
         private List<string> addressExtensionField;
         /// <remarks/>
         public List<AddressIdentifierType> AddressIdentifier
@@ -510,14 +510,14 @@ namespace ebIModels.Models
         }
 
         /// <remarks/>
-        public List<string> Phone
+        public string Phone
         {
             get { return this.phoneField; }
             set { this.phoneField = value; }
         }
 
         /// <remarks/>
-        public List<string> Email
+        public string Email
         {
             get { return this.emailField; }
             set { this.emailField = value; }
@@ -531,14 +531,26 @@ namespace ebIModels.Models
         }
     }
 
+    public enum AddressIdentifierTypeType
+    {
+
+        /// <remarks/>
+        GLN,
+
+        /// <remarks/>
+        DUNS,
+
+        /// <remarks/>
+        ProprietaryAddressID,
+    }
     /// <remarks/>
     public partial class AddressIdentifierType
     {
 
-        private string addressIdentifierType1Field;
+        private AddressIdentifierTypeType addressIdentifierType1Field;
         private string valueField;
         /// <remarks/>
-        public string AddressIdentifierType1
+        public AddressIdentifierTypeType AddressIdentifierType1
         {
             get { return this.addressIdentifierType1Field; }
             set { this.addressIdentifierType1Field = value; }

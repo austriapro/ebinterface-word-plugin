@@ -52,21 +52,19 @@ namespace ebICommonTestSetup
                 {
                     if (inv.Delivery.Item != null)
                     {
-                        if (inv.Delivery.Item is DateTime)
+                        if (inv.Delivery.Item is DateTime deliveryDate)
                         {
-                            DateTime deliveryDate = (DateTime)inv.Delivery.Item;
                             inv.Delivery.Item = deliveryDate.AddDays(days);
 
                         }
-                        if (inv.Delivery.Item is PeriodType)
+                        if (inv.Delivery.Item is PeriodType period)
                         {
-                            PeriodType period = (PeriodType)inv.Delivery.Item;
-                            if (period.FromDate.HasValue)
+                            if (period.FromDate != DateTime.MinValue)
                             {
                                 period.FromDate = ((DateTime)period.FromDate).AddDays(days);
 
                             }
-                            if (period.ToDate.HasValue)
+                            if (period.ToDate != DateTime.MinValue)
                             {
                                 period.ToDate = ((DateTime)period.ToDate).AddDays(days);
                             }
@@ -115,7 +113,7 @@ namespace ebICommonTestSetup
             Console.WriteLine("-".PadLeft(15, '-'));
         }
 
-        public XElement getElement(XDocument xdoc, string xName)
+        public XElement GetElement(XDocument xdoc, string xName)
         {
 
             IEnumerable<XElement> xels = xdoc.Descendants();

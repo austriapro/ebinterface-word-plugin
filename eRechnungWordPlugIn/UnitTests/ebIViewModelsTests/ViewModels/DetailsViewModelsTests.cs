@@ -10,6 +10,8 @@ using ebIViewModels.ViewModels;
 using ebIViewModelsTests.ViewModels;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SettingsManager;
+
 namespace ebIViewModels.ViewModels.Tests
 {
     [TestClass()]
@@ -31,7 +33,7 @@ namespace ebIViewModels.ViewModels.Tests
             {
                 EinzelPreis = new decimal(60.0125),
                 Menge = new decimal(10),
-                VatSatz = 20
+                VatItem = new SettingsManager.VatDefaultValue("S",20,"Testbeschreibung")
             };
             // detv.UpdateTotals();
             det.DetailsList.Add(detv);
@@ -78,7 +80,7 @@ namespace ebIViewModels.ViewModels.Tests
             detail.Menge = 10;
             detail.Einheit = "STK";
             detail.EinzelPreis = 2000;
-            detail.VatSatz = 20;
+            detail.VatItem = PlugInSettings.Default.GetValueFromPercent(20);
             detail.BestellBezug = "100";
             detail.SaveCommand.Execute(null);
             Cmn.ListResults(detail.Results);
@@ -93,7 +95,7 @@ namespace ebIViewModels.ViewModels.Tests
             detail.Menge = 10;
             detail.Einheit = "STK";
             detail.EinzelPreis = 2000;
-            detail.VatSatz = 20;
+            detail.VatItem = PlugInSettings.Default.GetValueFromPercent(20);
             detail.BestellBezug = "";
             detail.SaveCommand.Execute(null);
             Cmn.ListResults(detail.Results);
@@ -108,7 +110,7 @@ namespace ebIViewModels.ViewModels.Tests
             detail.Menge = 10;
             detail.Einheit = "STK";
             detail.EinzelPreis = 2000;
-            detail.VatSatz = 20;
+            detail.VatItem = PlugInSettings.Default.GetValueFromPercent(20);
             detail.BestellBezug = " ";
             detail.SaveCommand.Execute(null);
             Cmn.ListResults(detail.Results);
@@ -123,7 +125,7 @@ namespace ebIViewModels.ViewModels.Tests
             detail.Menge = 10;
             detail.Einheit = "STK";
             detail.EinzelPreis = 2000;
-            detail.VatSatz = 20;
+            detail.VatItem = PlugInSettings.Default.GetValueFromPercent(20);
             detail.BestellBezug = "Abcd";
             detail.SaveCommand.Execute(null);
             Cmn.ListResults(detail.Results);
@@ -138,11 +140,12 @@ namespace ebIViewModels.ViewModels.Tests
             detail.Menge = 10;
             detail.Einheit = "STK";
             detail.EinzelPreis = 2000;
-            detail.VatSatz = 20;
+            detail.VatItem = PlugInSettings.Default.GetValueFromPercent(20);
             detail.BestellBezug = "Abcd";
             detail.SaveCommand.Execute(null);
             Cmn.ListResults(detail.Results);
-            Assert.IsTrue(detail.Results.IsValid);
+           Assert.IsTrue(detail.Results.IsValid);
         }
+        
     }
 }
