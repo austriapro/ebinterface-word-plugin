@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using ebIModels.Models;
 using System;
 using System.Collections.Generic;
@@ -11,10 +11,10 @@ using System.Xml.Linq;
 
 namespace ebIModels.Models.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class InvoiceTypeTests
     {
-        [TestMethod()]
+        [Test]
         public void Save4p1Test()
         {
             const string fn = @"Daten\testTemplateInvoiceTest.xml";
@@ -28,7 +28,7 @@ namespace ebIModels.Models.Tests
             const string expectedString = "http://www.ebinterface.at/schema/4p1/";
             Assert.AreEqual(expectedString, attrs.Value);
         }
-        [TestMethod()]
+        [Test]
         public void Save4p2Test()
         {
             const string fn = @"Daten\testTemplateInvoiceTest.xml";
@@ -43,7 +43,7 @@ namespace ebIModels.Models.Tests
             Assert.AreEqual(expectedString, attrs.Value);
         }
 
-        [TestMethod()]
+        [Test]
         public void Save4p3Test()
         {
             const string fn = @"Daten\testTemplateInvoiceTest.xml";

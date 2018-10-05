@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using ebIModels.Models;
 using ebIViewModels.ExtensionMethods;
 using ExtensionMethods;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIViewModels.ExtensionMethods.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class StringExtensionsTests
     {
-        [TestMethod()]
+        [Test]
         public void ConvertEnumTest()
         {
             CountryCodeType ct = CountryCodeType.AT;

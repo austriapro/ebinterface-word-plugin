@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ebIModels.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIModels.Services.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class ProductInfoTests
     {
-        [TestMethod()]
+        [Test]
         public void GetTfsInfoTest()
         {
             //var tfsInfo = ProductInfo.GetTfsInfoString();
             //Assert.IsNotNull(tfsInfo);
         }
-        [TestMethod()]
+        [Test]
         public void GetProductInfoTest()
         {
             //var prod = ProductInfo.GetProductInfo();

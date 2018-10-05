@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using ebIModels.Schema;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ebIModels.Schema.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class InvoiceFactoryTests
     {
-        [TestMethod()]
+        [Test]
         public void GetVersionsWithSaveSupportedTest()
         {
             var supportedLIst = InvoiceFactory.GetVersionsWithSaveSupported();

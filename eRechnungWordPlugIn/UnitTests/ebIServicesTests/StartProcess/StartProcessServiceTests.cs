@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 using ebICommonTestSetup;
 using ebIServices.StartProcess;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SimpleEventBroker;
 
 namespace ebIServices.StartProcess.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class StartProcessServiceTests : Common
     {
         private const string ExeFileName = @"..\..\..\ZustellDienstSample\bin\Debug\ZustellDienstSample.exe";
         private const string WindowExeFileName = @"..\..\..\ZustellDienstWindowSample\bin\Debug\ZustellDienstWindowSample.exe";
         private ManualResetEvent _waitEvent;
         private const string arg = @"""C:\TFS\ebInterface\Codeplex\Dvt4p1\eRechnung\ebIServicesTests\bin\Debug\Daten\Rechng-2014-500.xml"" ";
-        [TestMethod()]
+        [Test]
         public void StartProcessServiceTestOk()
         {
             var sProc = UContainer.Resolve<IStartProcessDienst>();
@@ -30,7 +30,7 @@ namespace ebIServices.StartProcess.Tests
             _waitEvent.WaitOne(2 * 1000); // Nötig, damit der Consolen-Output im Testergebnis erscheint
         }
 
-        [TestMethod]
+        [Test]
         public void StartProcessServiceWindowTestOk()
         {
             var sProc = UContainer.Resolve<IStartProcessDienst>();
@@ -55,7 +55,7 @@ namespace ebIServices.StartProcess.Tests
             }
             _waitEvent.Set();
         }
-        [TestMethod()]
+        [Test]
         public void RunTest()
         {
 

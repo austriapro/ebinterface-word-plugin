@@ -243,7 +243,7 @@ namespace ebIModels.Mapping.V4p3
                         TaxPercent = new TaxPercentType()
                         {
                             Value = vATRate.Value,
-                            TaxCategoryCode = Mapping.MapInvoice.GetVP5TaxCategoryCode(vATRate.Value)
+                            TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
                         },
                         TaxAmount = item.Amount,
                         TaxableAmount = item.TaxedAmount,
@@ -424,7 +424,7 @@ namespace ebIModels.Mapping.V4p3
                 TaxPercent = new TaxPercentType()
                 {
                     Value = vATRate.Value,
-                    TaxCategoryCode = Mapping.MapInvoice.GetVP5TaxCategoryCode(vATRate.Value)
+                    TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
                 },
                 TaxAmount = (taxedAmount * vATRate.Value / 100).FixedFraction(2),
                 TaxableAmount = taxedAmount,

@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using ebIModels.Services;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ebIModels.Services.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class ProductInfoTests
     {
-        [TestMethod()]
+        [Test]
         public void ProductInfoTest()
         {
             var prodInfo = new ProductInfo();

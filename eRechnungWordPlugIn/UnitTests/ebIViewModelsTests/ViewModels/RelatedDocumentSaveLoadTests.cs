@@ -6,11 +6,11 @@ using System.Xml.Linq;
 using ebIModels.Models;
 using ebIViewModels.ViewModels;
 using ebIViewModels.ViewModels.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class RelatedDocumentSaveLoadTests : CommonTestSetup
     {
         const string SaveTempCancelled = @"Daten\RelatedDocCancelled.xml";
@@ -28,7 +28,7 @@ namespace ebIViewModelsTests.ViewModels
             var xel = xels.FirstOrDefault(x =>x.Name.NamespaceName==ns.NamespaceName && x.Name.LocalName == xName);
             return xel;
         }
-        [TestMethod]
+        [Test]
         public void SaveNoCancelledDocTestOk()
         {
             InvVm.SaveTemplateCommand.Execute(SaveTempNoCancelledElement);
@@ -39,7 +39,7 @@ namespace ebIViewModelsTests.ViewModels
         }
 
 
-        [TestMethod]
+        [Test]
         public void SaveCancelledDocTestOk()
         {
             SaveCancelledDoc();
@@ -49,7 +49,7 @@ namespace ebIViewModelsTests.ViewModels
            // Assert.AreNotEqual(0,xel.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void SaveRelatedDocTestOk()
         {
             SaveRelatedDoc("REL11111",new DateTime(2013,11,12),"Teilrechnung von damals",DocumentTypeType.InvoiceForPartialDelivery);
@@ -58,7 +58,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.IsNotNull(xel);
             // Assert.AreNotEqual(0,xel.Count);
         }
-        [TestMethod]
+        [Test]
         public void RelatedDocValidTestOk()
         {
             InvVm.VmDocType = DocumentTypeType.CreditMemo.ToString();
@@ -66,7 +66,7 @@ namespace ebIViewModelsTests.ViewModels
             InvVm.IsInvoiceValid();
             Assert.AreEqual(true,InvVm.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void RelatedDocInvalidInvoiceDocTypeTestOk()
         {
             InvVm.VmDocType = DocumentTypeType.FinalSettlement.ToString();
@@ -75,7 +75,7 @@ namespace ebIViewModelsTests.ViewModels
             Cmn.ListResults(InvVm.Results);
             Assert.AreEqual(false, InvVm.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void RelatedDocInvalidRelDocTypeTestOk()
         {
             InvVm.VmDocType = DocumentTypeType.CreditMemo.ToString();
@@ -85,21 +85,21 @@ namespace ebIViewModelsTests.ViewModels
             Assert.AreEqual(false, InvVm.Results.IsValid);
         }
 
-        [TestMethod]
+        [Test]
         public void LoadCancelledDocTestOk()
         {
             InvVm.LoadTemplateCommand.Execute(SaveTempCancelledSample);
             Assert.AreEqual(DocumentTypeType.FinalSettlement.ToString(),InvVm.RelatedDoc.RefSelectedDocType);
             Assert.AreEqual("STORNO123123",InvVm.RelatedDoc.RefInvNumber);
         }
-        [TestMethod]
+        [Test]
         public void LoadRelatedDocTestOk()
         {
             InvVm.LoadTemplateCommand.Execute(RelatedSample);
             Assert.AreEqual(DocumentTypeType.InvoiceForPartialDelivery.ToString(), InvVm.RelatedDoc.RefSelectedDocType);
             Assert.AreEqual("REL11111", InvVm.RelatedDoc.RefInvNumber);
         }
-        [TestMethod]
+        [Test]
         public void SaveAndLoadEmptyCommentRelatedDocTestOk()
         {
             SaveRelatedDoc("REL11111", new DateTime(2013, 11, 12), "", DocumentTypeType.InvoiceForPartialDelivery);

@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using ebIModels.Version;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ebIModels.Version.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class TfsInfoTests
     {
-        [TestMethod()]
+        [Test]
         public void TfsInfoTest()
         {
             //TfsInfo tfs = new TfsInfo();

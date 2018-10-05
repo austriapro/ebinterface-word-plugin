@@ -1,15 +1,15 @@
 ﻿using System;
 using ebIViewModels.ViewModels;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SettingsManager;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class RabattBerechnungTests : CommonTestSetup
     {
-        [TestMethod]
+        [Test]
         public void RabattBerechnungTestOk()
         {
             DetailsViewModel dView = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverrides() { 
@@ -39,7 +39,7 @@ namespace ebIViewModelsTests.ViewModels
             InvVm.SaveEbinterfaceCommand.Execute(@"Daten\RabattSaved.xml");
         }
 
-        [TestMethod]
+        [Test]
         public void RabattSaveAndReloadTest()
         {
             const string RabattSaveReload = @"Daten\RabattSaveReload.xml";

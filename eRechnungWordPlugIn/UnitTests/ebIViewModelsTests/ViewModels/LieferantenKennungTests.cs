@@ -3,16 +3,16 @@ using ebICommonTestSetup;
 using ebIModels.Models;
 using ebIViewModelsTests.ViewModels;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class LieferantenKennungTests : CommonTestSetup
     {
         private readonly Common _common = new Common(Common.InvTemplate);
 
-        [TestMethod]
+        [Test]
         public void LieferantenKennungLeerTest()
         {
             InvoiceViewModel invoiceView = _common.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", _common.Invoice));
@@ -24,7 +24,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(true, result);
         }
 
-        [TestMethod]
+        [Test]
         public void LieferantenKennungBundLeerTest()
         {
             InvoiceViewModel invoiceView = _common.UContainer.Resolve<InvoiceViewModel>();
@@ -36,7 +36,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(false, result);
         }
 
-        [TestMethod]
+        [Test]
         public void LieferantenKennungBundOkTest()
         {
             InvoiceViewModel invoiceView = _common.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", _common.Invoice));
@@ -48,7 +48,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(true, result);
         }
 
-        [TestMethod]
+        [Test]
         public void LieferantenKennungBundNotOkTest()
         {
             InvoiceViewModel invoiceView = _common.UContainer.Resolve<InvoiceViewModel>();

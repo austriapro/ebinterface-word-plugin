@@ -7,13 +7,13 @@ using ebIViewModels.ErrorView;
 using ebIViewModels.ViewModels;
 using ebIViewModels.ViewModels.Tests;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ebICommonTestSetup;
 using SettingsEditor.ViewModels;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class CommonTestSetup
     {
         internal Common Cmn = new Common(Common.InvTemplate);
@@ -36,7 +36,7 @@ namespace ebIViewModelsTests.ViewModels
             }
         }
 
-        [TestInitialize]
+        [SetUp]
         public void InitGlobals()
         {
             InvVm = Cmn.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", Cmn.Invoice));

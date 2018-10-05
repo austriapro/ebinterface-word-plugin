@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ebIServices.UidAbfrage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIServices.UidAbfrage.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class UidErrorCodesTests
     {
-        //[TestMethod()]
+        //[Test]
         //public void UidErrorCodesTest()
         //{
         //    var errorcodes = new UidErrorCodes();
@@ -18,7 +18,7 @@ namespace ebIServices.UidAbfrage.Tests
         //    Assert.IsTrue(errorcodes.Count>0);
         //}
 
-        [TestMethod()]
+        [Test]
         public void ErrorTextTest()
         {
             

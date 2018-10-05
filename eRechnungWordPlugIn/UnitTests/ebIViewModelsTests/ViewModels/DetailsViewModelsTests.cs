@@ -9,12 +9,12 @@ using ebIModels.Schema;
 using ebIViewModels.ViewModels;
 using ebIViewModelsTests.ViewModels;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SettingsManager;
 
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class DetailsViewModelsTests : CommonTestSetup
     {
         private readonly Common _common;
@@ -25,7 +25,7 @@ namespace ebIViewModels.ViewModels.Tests
         }
 
 
-        [TestMethod()]
+        [Test]
         public void DetailsViewModelsTest()
         {
             DetailsListConverter det = _common.UContainer.Resolve<DetailsListConverter>();
@@ -42,13 +42,13 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual((decimal)120.03,det2.MwStBetragZeile);
         }
 
-        [TestMethod()]
+        [Test]
         public void GetItemListTest()
         {
 
         }
 
-        [TestMethod()]
+        [Test]
         public void LoadTest()
         {
             _common.Invoice = InvoiceFactory.LoadTemplate(Common.InvTest);
@@ -59,7 +59,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual("LS", det.DetailsList[2].Einheit);
         }
 
-        [TestMethod]
+        [Test]
         public void GetItemLoadRabattTestOk()
         {
             _common.Invoice = InvoiceFactory.LoadTemplate(Common.InvTest);
@@ -71,7 +71,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(det[0].Rabatt,det2[0].Rabatt);
         }
 
-        [TestMethod]
+        [Test]
         public void BestPosNotEmptyTestOk()
         {
             var detail = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverride("bestPosRequired",true));
@@ -86,7 +86,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(detail.Results);
             Assert.IsTrue(detail.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void BestPosEmptyTestNotOk()
         {
             var detail = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverride("bestPosRequired", true));
@@ -101,7 +101,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(detail.Results);
             Assert.IsTrue(!detail.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void BestPosSpacesTestNotOk()
         {
             var detail = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverride("bestPosRequired", true));
@@ -116,7 +116,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(detail.Results);
             Assert.IsTrue(!detail.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void BestPosBundAlphaTestNotOk()
         {
             var detail = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverride("bestPosRequired", true));
@@ -131,7 +131,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(detail.Results);
             Assert.IsTrue(!detail.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void BestPosWirtschaftAlphaTestOk()
         {
             var detail = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverride("bestPosRequired", false));

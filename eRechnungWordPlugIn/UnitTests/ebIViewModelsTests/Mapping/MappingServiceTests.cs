@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using ebIModels.Models;
 using ebIModels.Schema;
 using ebIViewModels.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class MappingServiceTests
     {
-        [TestMethod()]
+        [Test]
         public void MapV4P1ToVmTest()
         {
             string fn = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";

@@ -4,7 +4,7 @@ using ebIModels.Models;
 using ebIViewModels.ViewModels;
 using ebIViewModels.ViewModels.Tests;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -12,12 +12,12 @@ using System.Xml.XPath;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class GLNTests : CommonTestSetup
     {
       //  private readonly Common _common = new Common(Common.InvTemplate);
 
-        [TestMethod]
+        [Test]
         public void GLNValidTest()
         {
             // 9099999303132
@@ -29,7 +29,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.AreEqual(true, result);
 
         }
-        [TestMethod]
+        [Test]
         public void GLNBundInvalidTest()
         {
             // 9099999303132
@@ -42,7 +42,7 @@ namespace ebIViewModelsTests.ViewModels
             Cmn.ListResults(invoiceView.Results);
             Assert.IsFalse(invoiceView.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void GlnZuKurzNotOkTest()
         {
             InvoiceViewModel invoiceView = Cmn.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", Cmn.Invoice));
@@ -57,7 +57,7 @@ namespace ebIViewModelsTests.ViewModels
         private const string BillerGlnPath = "/eb:Invoice/eb:Biller/eb:Address/eb:AddressIdentifier";
         const string GlnSaveAndLoadFile = @"Daten\GlnSaveAndLoadFile.xml";
 
-        [TestMethod]
+        [Test]
         public void GlnSaveAndLoadTest()
         {
             InvVm.VmBillerGln = SampleGln;

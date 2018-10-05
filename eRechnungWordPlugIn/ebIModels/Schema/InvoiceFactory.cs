@@ -19,6 +19,14 @@ namespace ebIModels.Schema
 
         private static readonly Dictionary<string, ebInterfaceVersion> InvoiceTypes = new Dictionary<string, ebInterfaceVersion>
         {
+            {"http://www.ebinterface.at/schema/4p0/",
+                new ebInterfaceVersion
+                        {
+                            Version = Models.EbIVersion.V4P0,
+                            VersionType = typeof(Schema.ebInterface4p0.InvoiceType),
+                            IsSaveSupported = false
+                        }
+            },
 
             {"http://www.ebinterface.at/schema/4p1/",
                     new ebInterfaceVersion
@@ -62,7 +70,8 @@ namespace ebIModels.Schema
             var list = from x in InvoiceTypes where x.Value.IsSaveSupported == true select x.Value.Version.ToString();
 
             //   List<string> ebiList = new List<string>() { ebIVersion.V4P2.ToString(), ebIVersion.V4P1.ToString() };
-            return list.ToList(); ;
+            return list.ToList();
+            ;
         }
 
         public const string VatIdDefault = "00000000";
@@ -95,7 +104,7 @@ namespace ebIModels.Schema
         {
             ebInterfaceVersion version = GetVersion(xmlInvoice);
             var inv = Deserialize(xmlInvoice, version.VersionType);
-            return (IInvoiceModel)inv;
+            return inv;
         }
 
         /// <summary>
@@ -104,19 +113,19 @@ namespace ebIModels.Schema
         /// <param name="xmlInvoice">ebInterface Xml String</param>
         /// <returns>Eine neue <see cref="Models.InvoiceModel"/> Instanz
         /// </returns>        
-        public static Models.InvoiceModel LoadXml(string xmlInvoice)
+        public static Models.IInvoiceModel LoadXml(string xmlInvoice)
         {
             ebInterfaceVersion version = GetVersion(xmlInvoice);
-            Models.InvoiceModel inv = Deserialize(xmlInvoice, version.VersionType);
+            var inv = Deserialize(xmlInvoice, version.VersionType);
             return inv;
         }
 
-        private static Models.InvoiceModel Deserialize(string xmlInvoice, Type currentType)
+        private static Models.IInvoiceModel Deserialize(string xmlInvoice, Type currentType)
         {
             StringReader stringReader = new StringReader(xmlInvoice);
             XmlSerializer serializer = new XmlSerializer(currentType);
-            var invLoaded  = (Models.InvoiceModel)serializer.Deserialize(XmlReader.Create(stringReader));
-            Models.InvoiceModel inv = (InvoiceModel) MapInvoice.MapToModel(invLoaded);
+            var invLoaded = serializer.Deserialize(XmlReader.Create(stringReader));
+            var inv = MapInvoice.MapToModel(invLoaded);
             return inv;
         }
 
@@ -157,10 +166,10 @@ namespace ebIModels.Schema
         /// <returns>
         /// Ein neue <see cref="Models.InvoiceModel" /> Instanz
         /// </returns>
-        public static Models.InvoiceModel Load(string fileName)
+        public static IInvoiceModel Load(string fileName)
         {
             string xmlInvoice = File.ReadAllText(fileName);
-            Models.InvoiceModel inv = LoadXml(xmlInvoice);
+            IInvoiceModel inv = LoadXml(xmlInvoice);
             return inv;
         }
 
@@ -170,7 +179,7 @@ namespace ebIModels.Schema
         /// <param name="file">Stream der die ebInterface Xml Rechnung enthält</param>
         /// <returns>Ein neue <see cref="Models.InvoiceModel"/> Instanz
         /// </returns>        
-        public static Models.InvoiceModel Load(StreamReader file)
+        public static IInvoiceModel Load(StreamReader file)
         {
             string xmlInvoice = file.ReadToEnd();
             return LoadXml(xmlInvoice);
@@ -186,7 +195,7 @@ namespace ebIModels.Schema
         public static Models.IInvoiceModel LoadTemplate(string fileName)
         {
             string text = File.ReadAllText(fileName);
-           // string xmlInvoice = Models.InvoiceModel.RemoveVorlageText(text);
+            // string xmlInvoice = Models.InvoiceModel.RemoveVorlageText(text);
             var xmlClean = RemoveEmptyNodes(text);
             Check4ebInterface(xmlClean);
             Models.IInvoiceModel inv = LoadXmlVm(xmlClean);
@@ -194,7 +203,7 @@ namespace ebIModels.Schema
             inv.Details.RecalcItemList();
             return inv;
         }
- 
+
 
 
         private static void Check4ebInterface(string xmlData)

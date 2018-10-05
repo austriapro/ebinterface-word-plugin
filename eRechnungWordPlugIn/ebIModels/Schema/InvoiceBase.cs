@@ -24,12 +24,13 @@ namespace ebIModels.Schema
                     "Das ist eine Vorlage für das ebinterface Word PlugIn und kann nicht als eRechnung eingebracht werden.";
         const string EbInvoiceNumber = "InvoiceNumber";
         internal const string SchemaPath = "ebIModels.Schema.";
-
+        [XmlIgnore]
         public List<EbISchema> CurrentSchemas { get; internal set; }
+        [XmlIgnore]
         public Models.EbIVersion Version { get; internal set; }
-
+        [XmlIgnore]
         public InvoiceSubtype InvoiceSubtype { get; internal set; }
-
+        
         public void SetSubtype(InvoiceSubtype invoiceSubtype)
         {
             InvoiceSubtype = invoiceSubtype;

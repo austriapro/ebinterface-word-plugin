@@ -11,15 +11,15 @@ using System.Xml.Linq;
 using ebIViewModels.ViewModels;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class RelatedDocumentViewModelTests : Common
     {
         internal RelatedDocumentViewModel _rel;
 
-        [TestMethod()]
+        [Test]
         public void RelatedDocumentViewModelKeinSelectedTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -27,7 +27,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(true,res);
         }
 
-        [TestMethod()]
+        [Test]
         public void RelatedDocumentViewModelStornoOkTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -38,7 +38,7 @@ namespace ebIViewModels.ViewModels.Tests
             ListResults(_rel.Results);            
             Assert.AreEqual(true, res);
         }
-        [TestMethod()]
+        [Test]
         public void RelatedDocumentViewModelStornNotoOkTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -60,7 +60,7 @@ namespace ebIViewModels.ViewModels.Tests
             ListResults(_rel.Results);
             Assert.AreEqual(false, res);
         }
-        [TestMethod()]
+        [Test]
         public void RelatedDocumentViewModelVerweisOkTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -70,7 +70,7 @@ namespace ebIViewModels.ViewModels.Tests
             bool res = _rel.IsValid();
             Assert.AreEqual(true, res);
         }
-        [TestMethod]
+        [Test]
         public void RelatedDocumentViewModelVerweisNoDateOkTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -80,7 +80,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(true, res);
         }
 
-        [TestMethod]
+        [Test]
         public void RelatedDocumentViewModelVerweisCommentNotOkTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -92,7 +92,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(false, res);
         }
         
-        [TestMethod()]
+        [Test]
         public void GetRelatedDocumentEntryCancelDocOkTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -104,10 +104,10 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(true, res);
             var result = _rel.GetRelatedDocumentEntry(InvoiceSubtypes.ValidationRuleSet.Government);
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result,typeof(CancelledOriginalDocumentType));
+            Assert.IsInstanceOf<CancelledOriginalDocumentType>(result);
 
         }
-        [TestMethod()]
+        [Test]
         public void GetRelatedDocumentEntryRelDocOkTest()
         {
             _rel = UContainer.Resolve<RelatedDocumentViewModel>();
@@ -119,7 +119,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(true, res);
             var result = _rel.GetRelatedDocumentEntry(InvoiceSubtypes.ValidationRuleSet.Government);
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(RelatedDocumentType));
+            Assert.IsInstanceOf<RelatedDocumentType>(result);
 
         }
 

@@ -18,6 +18,9 @@ namespace ebIModels.Mapping
             mappingErrors.Clear();
             switch (((IInvoiceBase)Invoice).Version)
             {
+                case Models.EbIVersion.V4P0:
+                    invoiceModel = V4p0.MapInvoice.MapV4P0ToVm((Schema.ebInterface4p0.InvoiceType)Invoice);                    
+                    break;
                 case Models.EbIVersion.V4P1:
                     invoiceModel = V4p1.MapInvoice.MapV4P1ToVm((Schema.ebInterface4p1.InvoiceType) Invoice);
                     break;
@@ -33,6 +36,7 @@ namespace ebIModels.Mapping
                 default:
                     break;
             }
+            invoiceModel.Version = ((IInvoiceBase)Invoice).Version;
             return invoiceModel;
         }
 
@@ -51,16 +55,6 @@ namespace ebIModels.Mapping
                 default:
                     return null;
             }
-        }
-
-        internal static string GetVP5TaxCategoryCode(decimal percent)
-        {
-            var code = PlugInSettings.Default.VatDefaultValues.First(p => p.MwStSatz == percent);
-            if (code==null)
-            {
-                return "";
-            }
-            return code.Code;
         }
     }
 }

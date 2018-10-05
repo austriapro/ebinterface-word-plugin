@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using ebIViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,10 +9,10 @@ using ebIModels.Models;
 
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class VatViewModelsTests
     {
-        [TestMethod()]
+        [Test]
         public void GetTaxTypeTest()
         {
             VatViewModels vat = new VatViewModels();

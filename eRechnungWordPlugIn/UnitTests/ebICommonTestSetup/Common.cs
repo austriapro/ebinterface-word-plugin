@@ -11,12 +11,25 @@ using System.Collections.Generic;
 using ExtensionMethods;
 using System.Reflection;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 
 namespace ebICommonTestSetup
 {
-    [TestClass]
+    [SetUpFixture]
+    public class CommonSetUpClass
+    {
+        [OneTimeSetUp]
+       public void RunBeforeAnyTests()
+        {
+            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+            Environment.CurrentDirectory = dir;
+
+            // or
+            Directory.SetCurrentDirectory(dir);
+        }
+    }
+    [TestFixture]
     public class Common
     {
         public const string InvTest = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";

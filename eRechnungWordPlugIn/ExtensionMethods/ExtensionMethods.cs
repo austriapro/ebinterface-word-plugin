@@ -7,7 +7,8 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Windows.Forms;
 using LogService;
-
+using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace ExtensionMethods
 {
@@ -27,12 +28,19 @@ namespace ExtensionMethods
         {
             if (!(inp is Enum))
             {
-                throw new ArgumentException("Input not Enum");
+                return default(T2);
             }
             string val = inp.ToString();
-            Type x = inp.GetType();
-            T2 erg = (T2)Enum.Parse(typeof(T2), val);
-            return erg;
+            T2[] values =  (T2[])Enum.GetValues(typeof(T2));
+            List<T2> list = new List<T2>(values);
+            var found = list.FindIndex(p => p.ToString() == val);
+            if (found<0)
+            {
+                return default(T2);
+            }
+            
+            return values[found];
+           
         }
         /// <summary>
         /// Konvertiert Sonderzeichen in XML verträgliche Tags

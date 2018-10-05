@@ -10,6 +10,7 @@ namespace ebIModels.Models
 {
     public enum EbIVersion
     {
+        V4P0,
         V4P1,
         V4P2,
         V4P3,
@@ -274,7 +275,14 @@ namespace ebIModels.Models
             // this\.descriptionField.=.new.List<string>();
         }
     }
-
+    public partial class ReductionAndSurchargeListLineItemDetailsType
+    {
+        public ReductionAndSurchargeListLineItemDetailsType() 
+        {
+            ItemsElementName = new List<ItemsChoiceType>();
+            Items = new List<object>();
+        }
+    }
     public partial class DeliveryType
     {
 
@@ -301,7 +309,13 @@ namespace ebIModels.Models
             this.orderReferenceField = new OrderReferenceType();
         }
     }
-
+    public partial class PaymentConditionsType
+    {
+        public PaymentConditionsType()
+        {
+            Discount = new List<DiscountType>();
+        }
+    }
     public partial class FurtherIdentificationType
     {
         public enum SupportedIds
@@ -325,7 +339,10 @@ namespace ebIModels.Models
     }
     public partial class TaxType
     {
-
+        public TaxType()
+        {
+            TaxItem = new List<TaxItemType>();
+        }
         /// <summary>
         /// Berechnet die Steuergesamtsummen der Rechnung
         /// </summary>
@@ -368,6 +385,16 @@ namespace ebIModels.Models
                 tax.TaxItem.Add(item);
             }
             return tax;
+        }
+    }
+    public partial class ReductionAndSurchargeDetailsType
+    {
+
+
+        public ReductionAndSurchargeDetailsType()
+        {
+            Items = new List<object>();
+            ItemsElementName = new List<ItemsChoiceType1>();
         }
     }
 }

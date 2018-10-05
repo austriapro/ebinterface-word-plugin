@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExtensionMethods;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ExtensionMethods.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class StringExtensionsTests
     {
-        [TestMethod()]
+        [Test]
         public void ToDecimalTest()
         {
             string num = "100";
@@ -18,7 +18,7 @@ namespace ExtensionMethods.Tests
             Assert.AreEqual((decimal)100, dec);
         }
 
-        [TestMethod()]
+        [Test]
         public void EscapeXmlTest()
         {
             string input = "yxcyxc&/<>";
@@ -27,7 +27,7 @@ namespace ExtensionMethods.Tests
             Assert.AreEqual(expected,output);
         }
 
-        [TestMethod()]
+        [Test]
         public void UnescapeXmlTest()
         {
             string input = "yxcyxc&/<>";

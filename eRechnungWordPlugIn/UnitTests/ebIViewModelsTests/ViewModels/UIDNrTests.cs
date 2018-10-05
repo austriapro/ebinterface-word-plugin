@@ -6,17 +6,17 @@ using ebIModels.Models;
 using ebIViewModels.ViewModels;
 using ebIViewModels.ViewModels.Tests;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SettingsManager;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class UIDNrTests : CommonTestSetup
     {
        // private readonly Common Cmn = new Common();
         const string UidFile = @"Daten\UidTest.xml";
-        [TestMethod]
+        [Test]
         public void UIDNrValidSimpleTests()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen
@@ -38,7 +38,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.IsFalse(result, "UStId falsch");
         }
 
-        [TestMethod]
+        [Test]
         public void UIDNrMissingBelow10000OkTest()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen
@@ -50,7 +50,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.IsFalse(result, "IsInvoiceValid vor Save ebInterface");
         }
 
-        [TestMethod]
+        [Test]
         public void UIDNrMissingAbove10000NotOkTest()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen

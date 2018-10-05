@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SettingsManager;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ebICommonTestSetup;
 using System.Xml.Linq;
 using System.IO;
 namespace SettingsManager.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class PlugInSettingsTests
     {
         private XElement GetElement(XDocument xdoc, string xName)
@@ -21,7 +21,7 @@ namespace SettingsManager.Tests
             var xel = xels.FirstOrDefault(x=>x.Name.LocalName == xName);
             return xel;
             }
-        [TestMethod()]
+        [Test]
         public void GetVatTest()
         {
             
@@ -30,14 +30,14 @@ namespace SettingsManager.Tests
         }
 
 
-        [TestMethod()]
+        [Test]
         public void LoadUnitOfMeasureTest()
         {
             var uomLIst = PlugInSettings.Default.UnitOfMeasures;
             Assert.IsNotNull(uomLIst);
         }
 
-        [TestMethod()]
+        [Test]
         public void SaveUnitOfMeasureTest()
         {
             var uomLIst = PlugInSettings.Default.UnitOfMeasures;
@@ -47,7 +47,7 @@ namespace SettingsManager.Tests
             
         }
 
-        [TestMethod()]
+        [Test]
         public void LoadSaveReloadUnitOfMeasureTest()
         {
             var uomLIst = PlugInSettings.Default.UnitOfMeasures;
@@ -59,7 +59,7 @@ namespace SettingsManager.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void ResetOkTest()
         {
             PlugInSettings.Reset();

@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ebICommonTestSetup;
 using ebIModels.Models;
 using ebIViewModels.ViewModels;
@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class KontoTests : CommonTestSetup
     {
         private void InitializeKontoTests()
@@ -25,7 +25,7 @@ namespace ebIViewModelsTests.ViewModels
                 InvVm.VmKtoReference = "";
 
         }
-        [TestMethod]
+        [Test]
         public void KontoLeerGutschriftOkTests()
         {
             InitializeKontoTests();
@@ -36,7 +36,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.IsTrue(InvVm.Results.IsValid);
         }
 
-        [TestMethod]
+        [Test]
         public void KontoLeerStornoNotOkTests()
         {
             InitializeKontoTests(); 
@@ -52,7 +52,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.IsFalse(InvVm.Results.IsValid);
         }
 
-        [TestMethod]
+        [Test]
         public void KontoLeerStornoOkTests()
         {
             InitializeKontoTests();
@@ -67,7 +67,7 @@ namespace ebIViewModelsTests.ViewModels
             Cmn.ListResults(InvVm.Results);
             Assert.IsTrue(InvVm.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void KontoLeerNotOkTests()
         {
             InitializeKontoTests();
