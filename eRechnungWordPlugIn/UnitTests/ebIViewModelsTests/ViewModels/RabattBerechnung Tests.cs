@@ -2,6 +2,7 @@
 using ebIViewModels.ViewModels;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SettingsManager;
 
 namespace ebIViewModelsTests.ViewModels
 {
@@ -19,7 +20,7 @@ namespace ebIViewModelsTests.ViewModels
             dView.Bezeichnung = "Mister Blister";
             dView.Menge = new decimal(10.0005);
             dView.EinzelPreis = new decimal(5.00);
-            dView.VatSatz = 20;
+            dView.VatItem= PlugInSettings.Default.MwStDefaultValue;
             dView.Einheit = "STK";
             dView.Rabatt = 10;
             dView.BestellBezug = "22";

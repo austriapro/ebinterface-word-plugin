@@ -18,19 +18,19 @@ namespace ebIViewModels.ViewModels.Tests
             VatViewModels vat = new VatViewModels();
             TaxType tax = new TaxType()
             {
-                VAT = new List<VATItemType>()
-                {
-                    new VATItemType()
-                    {
-                        TaxedAmount = new decimal(32.89),
-                        Item = new VATRateType()
-                        {
-                             Value=20
-                        },
-                        Amount = new decimal(6.578)
-
-                    }
-                }
+                 TaxItem = new List<TaxItemType>()
+                 {
+                     new TaxItemType()
+                     {
+                          TaxableAmount = 100,
+                          TaxPercent = new TaxPercentType()
+                          {
+                               TaxCategoryCode = "S", Value=20
+                          },
+                          TaxAmount = 20,
+                          TaxAmountSpecified = true
+                     }
+                 }
             };
             vat = VatViewModels.Load(tax);
             VatViewModel vatItem = vat.VatViewList.FirstOrDefault();

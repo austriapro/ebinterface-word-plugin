@@ -24,6 +24,37 @@ namespace ebIModels.Models
     /// <seealso cref="ebIModels.Models.IInvoiceModel" />
     public partial class InvoiceModel : IInvoiceModel
     {
+        public InvoiceModel()
+        {
+            this.paymentConditionsField = new PaymentConditionsType();
+            this.paymentMethodField = new PaymentMethodType();
+            this.taxField = new TaxType();
+            this.reductionAndSurchargeDetailsField = new ReductionAndSurchargeDetailsType();
+            this.detailsField = new DetailsType();
+            this.orderingPartyField = new OrderingPartyType();
+            this.invoiceRecipientField = new InvoiceRecipientType();
+            this.billerField = new BillerType();
+            this.deliveryField = new DeliveryType();
+            this.InvoiceCurrency = ebIModels.Mapping.ModelConstants.CurrencyCodeFixed;
+            this.cancelledOriginalDocumentField = new CancelledOriginalDocumentType();
+            this.relatedDocumentField = new List<RelatedDocumentType>();
+            this.additionalInformationField = new List<AdditionalInformationType>();
+            this.deliveryField = new DeliveryType();
+            this.billerField = new BillerType();
+            this.invoiceRecipientField = new InvoiceRecipientType();
+            this.orderingPartyField = new OrderingPartyType();
+            this.detailsField = new DetailsType();
+            this.reductionAndSurchargeDetailsField = new ReductionAndSurchargeDetailsType();
+            this.taxField = new TaxType();
+            this.paymentMethodField = new PaymentMethodType();
+            this.paymentConditionsField = new PaymentConditionsType();
+            this.documentTypeField = new DocumentTypeType();
+            //this.SetInvoiceVersion();
+            //this.CurrentSchemas = _schemaInfo;
+            this.Version = Models.EbIVersion.V5P0;
+
+        }
+
         public InvoiceSubtype InvoiceSubtype { get; set; }
 
         public EbIVersion Version { get; set; }
@@ -107,7 +138,22 @@ namespace ebIModels.Models
         //    return text.Replace(VorlageString, EbInvoiceNumber);
         //}
     }
+    public partial class AccountType
+    {
+        public AccountType()
+        {
+            this.bankCodeField = new BankCodeType();
+        }
+    }
 
+    public partial class UniversalBankTransactionType
+    {
+
+        public UniversalBankTransactionType()
+        {
+            this.paymentReferenceField = new PaymentReferenceType();
+        }
+    }
     public partial class InvoiceRecipientType
     {
 
@@ -213,7 +259,48 @@ namespace ebIModels.Models
         }
     }
 
+    public partial class ListLineItemType
+    {
+        public ListLineItemType()
+        {
+            this.additionalInformationField = new List<AdditionalInformationType>();
+            this.invoiceRecipientsOrderReferenceField = new OrderReferenceDetailType();
+            this.billersOrderReferenceField = new OrderReferenceDetailType();
+            this.deliveryField = new DeliveryType();
+            this.reductionAndSurchargeListLineItemDetailsField = new ReductionAndSurchargeListLineItemDetailsType();
+            this.unitPriceField = new UnitPriceType();
+            this.quantityField = new UnitType();
+            // this\.articleNumberField.=.new.List<ArticleNumberType>();
+            // this\.descriptionField.=.new.List<string>();
+        }
+    }
 
+    public partial class DeliveryType
+    {
+
+        public DeliveryType()
+        {
+            this.addressField = new AddressType();
+        }
+    }
+
+    public partial class AddressType
+    {
+        public AddressType()
+        {
+            this.countryField = new CountryType(CountryCodeType.AT);
+        }
+    }
+
+    public partial class AbstractPartyType
+    {
+
+        public AbstractPartyType()
+        {
+            this.addressField = new AddressType();
+            this.orderReferenceField = new OrderReferenceType();
+        }
+    }
 
     public partial class FurtherIdentificationType
     {

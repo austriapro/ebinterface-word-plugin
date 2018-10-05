@@ -14,7 +14,7 @@ namespace SettingsManager.Tests
     [TestClass()]
     public class PlugInSettingsTests
     {
-        private XElement getElement(XDocument xdoc, string xName)
+        private XElement GetElement(XDocument xdoc, string xName)
             {
 
             IEnumerable<XElement> xels = xdoc.Descendants();

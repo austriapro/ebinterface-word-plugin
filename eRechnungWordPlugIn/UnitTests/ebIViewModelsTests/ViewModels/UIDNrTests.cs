@@ -62,7 +62,7 @@ namespace ebIViewModelsTests.ViewModels
             dModel.Menge = 10;
             dModel.Einheit = "STK";
             dModel.EinzelPreis = 2000;
-            dModel.VatSatz = 20;
+            dModel.VatItem = PlugInSettings.Default.MwStDefaultValue;
             dModel.Bezeichnung = "Musterartikel";
             detailsView.Add(dModel);
             invoiceView.DetailsView = new BindingList<DetailsViewModel>(detailsView);

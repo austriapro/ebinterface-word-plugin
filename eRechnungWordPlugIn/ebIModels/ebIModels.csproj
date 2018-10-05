@@ -127,6 +127,7 @@
     <Compile Include="Mapping\ModelToV4P1.cs" />
     <Compile Include="Mapping\ModelToV4P3.cs" />
     <Compile Include="Mapping\ModelToV5p0.cs" />
+    <Compile Include="Mapping\V4P0ToModel.cs" />
     <Compile Include="Mapping\V4P2ToModel.cs" />
     <Compile Include="Mapping\V4P1ToModel.cs" />
     <Compile Include="Mapping\ModelToV4P2.cs" />
@@ -148,6 +149,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Schema\ebInterface4p0\invoice.cs">
+      <DependentUpon>Invoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Schema\ebInterface4p0\InvoiceHelperMethods.cs" />
     <Compile Include="Schema\IInvoiceBase.cs" />
     <Compile Include="Schema\InvoiceBase.cs" />
     <Compile Include="Schema\InvoiceXml.cs">
@@ -233,6 +238,15 @@
     <EmbeddedResource Include="Schema\ebInterface4p3\Invoice.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Schema\ebInterface4p0\ebInterfaceExtension.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schema\ebInterface4p0\ebInterfaceExtension_SV.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schema\ebInterface4p0\Invoice.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Schema\ebInterface5p0\Invoice.xsd">
       <SubType>Designer</SubType>
     </None>

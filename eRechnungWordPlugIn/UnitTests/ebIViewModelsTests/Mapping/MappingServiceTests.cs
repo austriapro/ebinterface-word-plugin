@@ -21,7 +21,7 @@ namespace ebIViewModels.ViewModels.Tests
             // var inv4p1 = MappingService.MapVMToV4p1(invVm);
             //Assert.AreEqual(new DateTime(2014, 04, 19), invoice.PaymentConditions.DueDate);
             Assert.AreEqual(CountryCodeType.AT, invoice.Biller.Address.Country.CountryCode);
-            Assert.AreEqual("Österreich", invoice.Biller.Address.Country.Text[0]);
+            Assert.AreEqual("Österreich", invoice.Biller.Address.Country.Value);
             invoice.SaveTemplate(@"Daten\ConvertedInvoice.xml");
             Assert.IsNotNull(invoice);
         }
