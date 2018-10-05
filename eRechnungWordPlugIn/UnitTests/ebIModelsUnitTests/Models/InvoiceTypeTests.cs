@@ -8,9 +8,23 @@ using System.Threading.Tasks;
 using ebIModels.Schema;
 using System.Xml;
 using System.Xml.Linq;
+using System.IO;
 
 namespace ebIModels.Models.Tests
 {
+    [SetUpFixture]
+    public class CommonSetUpClass
+    {
+        [OneTimeSetUp]
+        public void RunBeforeAnyTests()
+        {
+            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+            Environment.CurrentDirectory = dir;
+
+            // or
+            Directory.SetCurrentDirectory(dir);
+        }
+    }
     [TestFixture]
     public class InvoiceTypeTests
     {

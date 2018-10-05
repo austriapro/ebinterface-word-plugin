@@ -154,8 +154,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Daten\Rechng-1-V4p2-20160129V2.xml" />
-    <Content Include="Daten\Rechng-V4p3-2017-001-neu.xml" />
+    <Content Include="Daten\Rechng-1-V4p2-20160129V2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\Rechng-V4p3-2017-001-neu.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Daten\testTemplateInvoiceTest.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
