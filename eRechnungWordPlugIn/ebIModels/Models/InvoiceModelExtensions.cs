@@ -131,7 +131,8 @@ namespace ebIModels.Models
 
         public void SaveTemplate(string filename)
         {
-            throw new NotImplementedException();
+            Schema.ebInterface5p0.InvoiceType invoice = (Schema.ebInterface5p0.InvoiceType)Mapping.MapInvoice.MapToEbInterface(this, Models.EbIVersion.V5P0);
+            invoice.SaveTemplate(filename);
         }
 
         //public static string RemoveVorlageText(string text)
@@ -210,7 +211,7 @@ namespace ebIModels.Models
         public string CountryCodeText
         {
             get {
-                return CountryCode.ToString();
+                return CountryCode?.ToString();
             }
             set {
                 if (CountryCode.ToString().Equals(value) == true)

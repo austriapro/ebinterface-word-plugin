@@ -36,6 +36,7 @@ namespace ebIModels.Schema.ebInterface5p0
 
         public override XmlDocument ToXmlDocument()
         {
+            
             return base.ToXmlDocument(this);
         }
         public override EbInterfaceResult Save(string file)
@@ -53,6 +54,7 @@ namespace ebIModels.Schema.ebInterface5p0
 
         public override void SaveTemplate(string file)
         {
+
             base.SaveTemplate(file, this);
         }
         public override EbInterfaceResult IsValidInvoice(XmlDocument xDoc)

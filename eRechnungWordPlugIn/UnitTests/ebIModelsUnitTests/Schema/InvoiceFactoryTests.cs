@@ -8,6 +8,10 @@ using System.Xml;
 using ebIModels.Models;
 using ebIModels.Schema;
 using NUnit.Framework;
+using ServiceStack.Text;
+using NUnit.DeepObjectCompare;
+using KellermanSoftware.CompareNetObjects;
+using Microsoft.XmlDiffPatch;
 
 namespace ebIModels.Schema.Tests
 {
@@ -27,7 +31,7 @@ namespace ebIModels.Schema.Tests
     [TestFixture]
     public class InvoiceFactoryTests
     {
- 
+
         [TestCase(@"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml")]
         [TestCase(@"Daten\DotNetApiCreatedInvoice.xml")]
         [TestCase(@"Daten\Rechng-1-V4p2-20160129V2.xml")]
@@ -37,11 +41,9 @@ namespace ebIModels.Schema.Tests
         {
             string fn = rechnungFn;// @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn);
-            Console.WriteLine($"{invoice.Version.ToString()}:\t{rechnungFn}");
-            // invoice.Save(@"Daten\testInvoice.xml");
+            TestContext.WriteLine($"{invoice.Version.ToString()}:\t{rechnungFn}");
             Assert.IsNotNull(invoice);
-           // Assert.AreEqual(invoice.InvoiceSubtype.VariantOption,InvoiceSubtypes.ValidationRuleSet.Government);            
-           // Assert.IsInstanceOf<PeriodType>(invoice.Delivery.Item);
+            invoice.PrintDump();
         }
 
         [Test]
@@ -51,7 +53,7 @@ namespace ebIModels.Schema.Tests
             var invoice = InvoiceFactory.LoadTemplate(fn);
 
             // invoice.Save(@"Daten\testInvoice.xml");
-            Assert.AreEqual(invoice.InvoiceSubtype.VariantOption,InvoiceSubtypes.ValidationRuleSet.Invalid);
+            Assert.AreEqual(invoice.InvoiceSubtype.VariantOption, InvoiceSubtypes.ValidationRuleSet.Invalid);
 
         }
 
@@ -60,9 +62,30 @@ namespace ebIModels.Schema.Tests
         {
             string fn = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn);
-
-            invoice.SaveTemplate(@"Daten\testTemplateInvoice.xml");
             Assert.IsNotNull(invoice);
+            //Console.WriteLine(invoice.Dump());
+            string saveFn = @"Daten\testTemplateInvoice.xml";
+            invoice.SaveTemplate(saveFn);
+            XmlDocument orgInvoice = new XmlDocument();
+            orgInvoice.Load(fn);
+            XmlDocument newInvoice = new XmlDocument();
+            newInvoice.Load(saveFn);
+            StringBuilder strb = new StringBuilder();
+            var xwsetting = new XmlWriterSettings
+            {
+                Indent = true,
+                NewLineChars = Environment.NewLine,
+                Encoding = Encoding.UTF8
+            };
+            XmlWriter xmlWriter = XmlWriter.Create(strb,xwsetting);
+            XmlDiff xmlDiff = new XmlDiff(XmlDiffOptions.IgnoreChildOrder |
+                                          XmlDiffOptions.IgnoreNamespaces |
+                                          XmlDiffOptions.IgnorePrefixes |
+                                          XmlDiffOptions.IgnoreComments);
+            bool identical = xmlDiff.Compare(fn, saveFn,false,xmlWriter);
+            xmlWriter.Close();
+            string str = strb.ToString();
+            Console.WriteLine(str);
         }
 
         [Test]
@@ -90,7 +113,7 @@ namespace ebIModels.Schema.Tests
             string fn = @"Daten\testTemplateInvoiceIndustrySample.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn);
             Assert.IsNotNull(invoice);
-            Assert.AreEqual(InvoiceSubtypes.ValidationRuleSet.Industries,invoice.InvoiceSubtype.VariantOption);
+            Assert.AreEqual(InvoiceSubtypes.ValidationRuleSet.Industries, invoice.InvoiceSubtype.VariantOption);
         }
 
         [Test]
@@ -107,6 +130,7 @@ namespace ebIModels.Schema.Tests
             string fn = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";
             var invoice = InvoiceFactory.LoadTemplate(fn) as InvoiceModel;
             invoice.Save(@"Daten\testSaveInvoice.xml");
+            invoice.PrintDump();
             Assert.IsNotNull(invoice);
         }
 

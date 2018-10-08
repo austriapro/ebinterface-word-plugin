@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ebIModels.Schema.ebInterface4p3;
 using ExtensionMethods;
-using VM = ebIModels.Models;
+using Model = ebIModels.Models;
 using ebIModels.Schema;
 using TARGET = ebIModels.Schema.ebInterface4p3;
 using SettingsManager;
@@ -17,7 +17,7 @@ namespace ebIModels.Mapping.V4p3
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        internal static TARGET.InvoiceType MapModelToV4p3(VM.IInvoiceModel source)
+        internal static TARGET.InvoiceType MapModelToV4p3(Model.IInvoiceModel source)
         {
             TARGET.InvoiceType invoice = new TARGET.InvoiceType();
 
@@ -34,6 +34,8 @@ namespace ebIModels.Mapping.V4p3
 
 
             invoice.Comment = source.Comment;
+            #endregion
+            #region Cancelled Original Document
             invoice.CancelledOriginalDocument = null;
             if (source.CancelledOriginalDocument != null)
             {
@@ -69,7 +71,7 @@ namespace ebIModels.Mapping.V4p3
             #endregion
 
             #region Delivery
-            if (source.Delivery.Item is VM.PeriodType delType)
+            if (source.Delivery.Item is Model.PeriodType delType)
             {
                 if (delType.ToDate != null)
                 {
@@ -139,12 +141,12 @@ namespace ebIModels.Mapping.V4p3
 
             // InvV4p1.ItemListType item = new InvV4p1.ItemListType();
 
-            foreach (VM.ItemListType srcItemList in source.Details.ItemList)
+            foreach (Model.ItemListType srcItemList in source.Details.ItemList)
             {
                 ItemListType itemList = new ItemListType();
 
                 var itemListLineItem = new List<ListLineItemType>();
-                foreach (VM.ListLineItemType srcLineItem in srcItemList.ListLineItem)
+                foreach (Model.ListLineItemType srcLineItem in srcItemList.ListLineItem)
                 {
                     ListLineItemType lineItem = new ListLineItemType
                     {
@@ -221,6 +223,18 @@ namespace ebIModels.Mapping.V4p3
             //    }
             //}
             #endregion
+   
+            #region Global ReductionANdSurcharge
+            invoice.ReductionAndSurchargeDetails = new ReductionAndSurchargeDetailsType
+            {
+                Items = null,
+                ItemsElementName = new ItemsChoiceType1[]
+                {
+                    ItemsChoiceType1.Reduction
+                }
+            };
+
+            #endregion
 
             #region Tax
             var taxVATList = new List<VATItemType>();
@@ -238,18 +252,6 @@ namespace ebIModels.Mapping.V4p3
             invoice.Tax.VAT = taxVATList.ToArray();
             #endregion
 
-            #region Global ReductionANdSurcharge
-            invoice.ReductionAndSurchargeDetails = new ReductionAndSurchargeDetailsType
-            {
-                Items = null,
-                ItemsElementName = new ItemsChoiceType1[]
-            {
-                ItemsChoiceType1.Reduction
-            }
-            };
-
-            #endregion
-
             #region Amount
             invoice.TotalGrossAmount = source.TotalGrossAmount;
             invoice.PaymentMethod.Comment = source.PaymentMethod.Comment;
@@ -258,9 +260,9 @@ namespace ebIModels.Mapping.V4p3
 
             #region PaymentMethod
             invoice.PaymentMethod.Comment = source.PaymentMethod.Comment;
-            if (source.PaymentMethod.Item.GetType() == typeof(VM.UniversalBankTransactionType))
+            if (source.PaymentMethod.Item.GetType() == typeof(Model.UniversalBankTransactionType))
             {
-                VM.UniversalBankTransactionType txType = source.PaymentMethod.Item as VM.UniversalBankTransactionType;
+                Model.UniversalBankTransactionType txType = source.PaymentMethod.Item as Model.UniversalBankTransactionType;
 
                 invoice.PaymentMethod = new PaymentMethodType
                 {
@@ -289,7 +291,7 @@ namespace ebIModels.Mapping.V4p3
             {
                 // inv4P1.PaymentConditions.Discount.Clear();
                 var discountList = new List<DiscountType>();
-                foreach (VM.DiscountType srcDiscount in source.PaymentConditions.Discount)
+                foreach (Model.DiscountType srcDiscount in source.PaymentConditions.Discount)
                 {
                     DiscountType discount = new DiscountType()
                     {
@@ -319,7 +321,7 @@ namespace ebIModels.Mapping.V4p3
             return invoice;
         }
 
-        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(VM.ReductionAndSurchargeListLineItemDetailsType srcRed)
+        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(Model.ReductionAndSurchargeListLineItemDetailsType srcRed)
         {
             if (srcRed == null)
                 return null;
@@ -331,9 +333,9 @@ namespace ebIModels.Mapping.V4p3
 
             foreach (var item1 in srcRed.Items)
             {
-                if (item1 is VM.ReductionAndSurchargeBaseType)
+                if (item1 is Model.ReductionAndSurchargeBaseType)
                 {
-                    VM.ReductionAndSurchargeBaseType item = item1 as VM.ReductionAndSurchargeBaseType;
+                    Model.ReductionAndSurchargeBaseType item = item1 as Model.ReductionAndSurchargeBaseType;
                     ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType
                     {
                         Amount = item.Amount,
@@ -351,7 +353,7 @@ namespace ebIModels.Mapping.V4p3
             lineRed.ItemsElementName = new ItemsChoiceType[srcRed.ItemsElementName.Count()];
             i = 0;
             foreach (
-                VM.ItemsChoiceType choiceType in
+                Model.ItemsChoiceType choiceType in
                     srcRed.ItemsElementName)
             {
                 lineRed.ItemsElementName[i] =
@@ -361,7 +363,7 @@ namespace ebIModels.Mapping.V4p3
             return lineRed;
         }
 
-        private static object MapVatItemType(VM.TaxItemType vatItem)
+        private static object MapVatItemType(Model.TaxItemType vatItem)
         {
 
             if (vatItem.TaxPercent.TaxCategoryCode == PlugInSettings.VStBefreitCode)
@@ -383,7 +385,7 @@ namespace ebIModels.Mapping.V4p3
 
         }
 
-        private static AddressType GetAddress(VM.AddressType address, VM.ContactType contact)
+        private static AddressType GetAddress(Model.AddressType address, Model.ContactType contact)
         {
 
             if (address == null)
@@ -407,25 +409,25 @@ namespace ebIModels.Mapping.V4p3
             return addrNew;
         }
 
-        private static CountryType GetCountry(VM.CountryType countryType)
+        private static CountryType GetCountry(Model.CountryType countryType)
         {
             if (countryType == null)
                 return null;
             CountryType cty = new CountryType();
             if (string.IsNullOrEmpty(countryType.Value))
             {
-                cty.CountryCode = VM.CountryCodeType.AT.ToString();
+                cty.CountryCode = Model.CountryCodeType.AT.ToString();
                 cty.Value = "Österreich";
             }
             else
             {
                 cty.CountryCode = countryType.CountryCode.ToString(); //.ConvertEnum<CountryCodeType>();
-                cty.Value = VM.CountryCodes.GetFromCode(cty.CountryCode).Country;
+                cty.Value = Model.CountryCodes.GetFromCode(cty.CountryCode).Country;
             }
             return cty;
         }
 
-        private static AddressIdentifierType[] GetAddressIdentifier(List<VM.AddressIdentifierType> adrIn)
+        private static AddressIdentifierType[] GetAddressIdentifier(List<Model.AddressIdentifierType> adrIn)
         {
             if (adrIn == null)
             {
@@ -436,7 +438,7 @@ namespace ebIModels.Mapping.V4p3
 
             List<AddressIdentifierType> adIdList = new List<AddressIdentifierType>();
 
-            foreach (VM.AddressIdentifierType addrId in adrIn)
+            foreach (Model.AddressIdentifierType addrId in adrIn)
             {
                 AddressIdentifierType adId = new AddressIdentifierType
                 {
@@ -450,12 +452,12 @@ namespace ebIModels.Mapping.V4p3
             return adIdList.ToArray();
         }
 
-        private static ArticleNumberType[] GetArtikelList(List<VM.ArticleNumberType> srcArticle)
+        private static ArticleNumberType[] GetArtikelList(List<Model.ArticleNumberType> srcArticle)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
             for (int i = 0; i < srcArticle.Count; i++)
             {
-                VM.ArticleNumberType articleNumberType = srcArticle[i];
+                Model.ArticleNumberType articleNumberType = srcArticle[i];
                 ArticleNumberType art = new ArticleNumberType
                 {
                     Value = articleNumberType.Value,
@@ -468,7 +470,7 @@ namespace ebIModels.Mapping.V4p3
             return artNrList.ToArray();
         }
 
-        private static FurtherIdentificationType[] GetFurtherIdentification(List<VM.FurtherIdentificationType> furtherID)
+        private static FurtherIdentificationType[] GetFurtherIdentification(List<Model.FurtherIdentificationType> furtherID)
         {
             List<FurtherIdentificationType> fIdList = new List<FurtherIdentificationType>();
             if (furtherID == null)
@@ -476,8 +478,8 @@ namespace ebIModels.Mapping.V4p3
                 return fIdList.ToArray();
             }
 
-            List<string> supportedIds = Enum.GetNames(typeof(VM.FurtherIdentificationType.SupportedIds)).ToList();
-            foreach (VM.FurtherIdentificationType item in furtherID)
+            List<string> supportedIds = Enum.GetNames(typeof(Model.FurtherIdentificationType.SupportedIds)).ToList();
+            foreach (Model.FurtherIdentificationType item in furtherID)
             {
                 if (supportedIds.Contains(item.IdentificationType))
                 {

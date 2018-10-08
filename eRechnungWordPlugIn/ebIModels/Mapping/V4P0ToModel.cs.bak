@@ -216,24 +216,6 @@ namespace ebIModels.Mapping.V4p0
 
             #region PaymentMethod
             invoice.PaymentMethod.Comment = source.PaymentMethod.Comment;
-            {
-                SRC.UniversalBankTransactionType txType = source.PaymentMethod as SRC.UniversalBankTransactionType;
-                invoice.PaymentMethod = new PaymentMethodType
-                {
-                    Item = new UniversalBankTransactionType()
-                };
-                ((UniversalBankTransactionType)invoice.PaymentMethod.Item).BeneficiaryAccount = new List<AccountType>()
-                {
-                    new AccountType()
-                    {
-                        BIC = txType.BeneficiaryAccount.First().BIC,
-                        BankName = txType.BeneficiaryAccount.First().BankName,
-                        IBAN = txType.BeneficiaryAccount.First().IBAN,
-                        BankAccountOwner = txType.BeneficiaryAccount.First().BankAccountOwner
-                        
-                    },
-                };
-            }
 
             #endregion
 

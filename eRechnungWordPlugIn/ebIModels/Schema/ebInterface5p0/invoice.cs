@@ -11,7 +11,7 @@
 // 
 // Dieser Quellcode wurde automatisch generiert von xsd, Version=4.6.1055.0.
 // 
-namespace ebIModels.Schema.ebInterface5p0 { 
+namespace ebIModels.Schema.ebInterface5p0 {
     using System.Xml.Serialization;
     
     
@@ -300,7 +300,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string GeneratingSystem {
             get {
                 return this.generatingSystemField;
@@ -311,7 +311,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public DocumentTypeType DocumentType {
             get {
                 return this.documentTypeField;
@@ -322,7 +322,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, DataType="token")]
         public string InvoiceCurrency {
             get {
                 return this.invoiceCurrencyField;
@@ -333,7 +333,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public bool ManualProcessing {
             get {
                 return this.manualProcessingField;
@@ -355,7 +355,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string DocumentTitle {
             get {
                 return this.documentTitleField;
@@ -366,7 +366,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, DataType="token")]
         public string Language {
             get {
                 return this.languageField;
@@ -377,7 +377,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public bool IsDuplicate {
             get {
                 return this.isDuplicateField;
@@ -590,7 +590,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string IdentificationType {
             get {
                 return this.identificationTypeField;
@@ -833,7 +833,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("AddressIdentifierType")]
+        [System.Xml.Serialization.XmlAttributeAttribute("AddressIdentifierType", Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string AddressIdentifierType1 {
             get {
                 return this.addressIdentifierType1Field;
@@ -869,7 +869,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, DataType="token")]
         public string CountryCode {
             get {
                 return this.countryCodeField;
@@ -1050,7 +1050,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string Key {
             get {
                 return this.keyField;
@@ -1551,7 +1551,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("ArticleNumberType")]
+        [System.Xml.Serialization.XmlAttributeAttribute("ArticleNumberType", Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public ArticleNumberTypeType ArticleNumberType1 {
             get {
                 return this.articleNumberType1Field;
@@ -1617,7 +1617,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private decimal valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string Unit {
             get {
                 return this.unitField;
@@ -1655,7 +1655,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private decimal valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public decimal BaseQuantity {
             get {
                 return this.baseQuantityField;
@@ -1848,7 +1848,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private decimal valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, DataType="token")]
         public string TaxCategoryCode {
             get {
                 return this.taxCategoryCodeField;
@@ -1884,7 +1884,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private decimal valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, DataType="token")]
         public string Currency {
             get {
                 return this.currencyField;
@@ -2017,7 +2017,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string ClassificationSchema {
             get {
                 return this.classificationSchemaField;
@@ -2492,7 +2492,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public bool ConsolidatorPayable {
             get {
                 return this.consolidatorPayableField;
@@ -2610,7 +2610,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("BankCodeType", DataType="token")]
+        [System.Xml.Serialization.XmlAttributeAttribute("BankCodeType", Form=System.Xml.Schema.XmlSchemaForm.Qualified, DataType="token")]
         public string BankCodeType1 {
             get {
                 return this.bankCodeType1Field;
@@ -2646,7 +2646,7 @@ namespace ebIModels.Schema.ebInterface5p0 {
         private string valueField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
         public string CheckSum {
             get {
                 return this.checkSumField;

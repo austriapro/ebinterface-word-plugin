@@ -61,7 +61,7 @@ namespace ebIModels.Mapping.V5p0
             invoice.Delivery = MapDelivery(source.Delivery);
 
             // Biller BillerType
-            invoice.Biller = MapBiller(source.Biller);
+            // invoice.Biller = MapBiller(source.Biller);
 
             // InvoiceRecipient InvoiceRecipientType
             invoice.InvoiceRecipient = MapInvoiceRecipient(source.InvoiceRecipient);
@@ -135,10 +135,7 @@ namespace ebIModels.Mapping.V5p0
             throw new NotImplementedException();
         }
 
-        private static BillerType MapBiller(V5P0.BillerType biller)
-        {
-            throw new NotImplementedException();
-        }
+
 
         private static DeliveryType MapDelivery(V5P0.DeliveryType delivery)
         {

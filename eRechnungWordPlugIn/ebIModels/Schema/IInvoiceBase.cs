@@ -14,7 +14,7 @@ namespace ebIModels.Schema
         EbInterfaceResult IsValidInvoice(XmlDocument xDoc);
         EbInterfaceResult Save(string file);
         void SaveTemplate(string file);
-        void SetSubtype(InvoiceSubtype invoiceSubtype);
+        //void SetSubtype(InvoiceSubtype invoiceSubtype);
         XmlDocument ToXmlDocument();
     }
 }

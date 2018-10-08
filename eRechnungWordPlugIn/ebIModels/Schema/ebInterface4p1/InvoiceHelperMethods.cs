@@ -17,7 +17,7 @@ namespace ebIModels.Schema.ebInterface4p1
         public void SetInvoiceVersion()
         {
             base.CurrentSchemas = _schemaInfo;
-            base.Version = Models.EbIVersion.V4P1;
+            base.Version = Models.EbIVersion.V4P1;            
         }
 
 

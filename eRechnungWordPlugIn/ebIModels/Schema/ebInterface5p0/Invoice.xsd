@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.ebinterface.at/schema/5p0/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ebinterface.at/schema/5p0/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns="http://www.ebinterface.at/schema/5p0/" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://www.ebinterface.at/schema/5p0/" 
+           elementFormDefault="qualified" 
+           attributeFormDefault="qualified">
+  
   <xs:annotation>
     <xs:documentation>
+      ***** attributeFormDefault auf qualified geändert *****
       Schema version: 5.0 Last update: 2018-03-22 Documentation: http://www.ebinterface.at/download/documentation/ebInvoice_5p0.pdf
     </xs:documentation>
   </xs:annotation>

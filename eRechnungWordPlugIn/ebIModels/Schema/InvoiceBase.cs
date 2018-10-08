@@ -27,14 +27,14 @@ namespace ebIModels.Schema
         [XmlIgnore]
         public List<EbISchema> CurrentSchemas { get; internal set; }
         [XmlIgnore]
-        public Models.EbIVersion Version { get; internal set; }
+        public Models.EbIVersion Version { get;  internal set; }
         [XmlIgnore]
-        public InvoiceSubtype InvoiceSubtype { get; internal set; }
+        public InvoiceSubtype InvoiceSubtype { get;  internal set; }
         
-        public void SetSubtype(InvoiceSubtype invoiceSubtype)
-        {
-            InvoiceSubtype = invoiceSubtype;
-        }
+        //public void SetSubtype(InvoiceSubtype invoiceSubtype)
+        //{
+        //    InvoiceSubtype = invoiceSubtype;
+        //}
 
         public abstract EbInterfaceResult IsValidInvoice();
 
@@ -224,8 +224,6 @@ namespace ebIModels.Schema
                     xDoc.LoadXml(xmlString);
                 }
             }
-            //XmlAttribute attr = xDoc.CreateAttribute("xsi", "schemaLocation", "");
-            //attr.Value = "http://www.ebinterface.at/schema/4p0/ http://www.ebinterface.at/schema/4p0/Invoice.xsd";
 
             XmlAttributeCollection attrColl = xDoc.DocumentElement.Attributes;
             attrColl.Remove(attrColl["eb:GeneratingSystem"]);
