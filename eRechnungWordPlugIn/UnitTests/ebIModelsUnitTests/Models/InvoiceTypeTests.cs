@@ -46,34 +46,6 @@ namespace ebIModels.Models.Tests
             Assert.IsNotNull(attrs);            
             Assert.AreEqual(expectedAttr, attrs.Value);
         }
-        [Test]
-        public void Save4p2Test()
-        {
-            const string fn = @"Daten\testTemplateInvoiceTest.xml";
-            const string save4p1Fn = @"Daten\Save4p2.xml";
-            var invoice = InvoiceFactory.LoadTemplate(fn);
-            invoice.Save(save4p1Fn, Models.EbIVersion.V4P2);
-
-            XDocument xInv = XDocument.Load(save4p1Fn);
-            var attrs = xInv.Root.Attributes().Where(p => p.IsNamespaceDeclaration == true).FirstOrDefault(x => x.Name.LocalName == "eb");
-            Assert.IsNotNull(attrs);
-            const string expectedString = "http://www.ebinterface.at/schema/4p2/";
-            Assert.AreEqual(expectedString, attrs.Value);
-        }
-
-        [Test]
-        public void Save4p3Test()
-        {
-            const string fn = @"Daten\testTemplateInvoiceTest.xml";
-            const string save4p1Fn = @"Daten\Save4p3.xml";
-            var invoice = InvoiceFactory.LoadTemplate(fn);
-            invoice.Save(save4p1Fn, Models.EbIVersion.V4P3);
-
-            XDocument xInv = XDocument.Load(save4p1Fn);
-            var attrs = xInv.Root.Attributes().Where(p => p.IsNamespaceDeclaration == true).FirstOrDefault(x => x.Name.LocalName == "eb");
-            Assert.IsNotNull(attrs);
-            const string expectedString = "http://www.ebinterface.at/schema/4p3/";
-            Assert.AreEqual(expectedString, attrs.Value);
-        }
+ 
     }
 }
