@@ -21,14 +21,13 @@ namespace ebIViewModels.ViewModels.Tests
                  TaxItem = new List<TaxItemType>()
                  {
                      new TaxItemType()
-                     {
-                          TaxableAmount = 100,
+                     { 
                           TaxPercent = new TaxPercentType()
                           {
                                TaxCategoryCode = "S", Value=20
                           },
                           TaxAmount = 20,
-                          TaxAmountSpecified = true
+                          TaxAmountSpecified = false
                      }
                  }
             };

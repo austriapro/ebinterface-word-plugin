@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using ebIModels.Schema.ebInterface4p3;
+using ebIModels.Schema;
+using TARGET = ebIModels.Schema.ebInterface4p2;
 using ExtensionMethods;
 using Model = ebIModels.Models;
-using ebIModels.Schema;
-using TARGET = ebIModels.Schema.ebInterface4p3;
+using ebIModels.Schema.ebInterface4p2;
 using SettingsManager;
 
-namespace ebIModels.Mapping.V4p3
+namespace ebIModels.Mapping.V4p2
 {
     public static partial class MapInvoice
     {
@@ -17,9 +18,9 @@ namespace ebIModels.Mapping.V4p3
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        internal static TARGET.InvoiceType MapModelToV4p3(Model.IInvoiceModel source)
+        internal static TARGET.InvoiceType MapModelToV4p2(Model.IInvoiceModel source)
         {
-            TARGET.InvoiceType invoice = new TARGET.InvoiceType();
+            TARGET.InvoiceType invoice = new TARGET.InvoiceType(); // new V4P1.InvoiceType();
 
             #region Rechnungskopf
             invoice.InvoiceSubtype = source.InvoiceSubtype;
@@ -29,9 +30,11 @@ namespace ebIModels.Mapping.V4p3
             invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
             invoice.DocumentTitle = source.DocumentTitle;
             invoice.InvoiceCurrency = source.InvoiceCurrency.ToString(); //.ConvertEnum<CurrencyType>();
-            invoice.Language = source.Language.ToString();// .ConvertEnum<LanguageType>();
-            invoice.Comment = source.Comment;
 
+            invoice.Language = source.Language.ToString();// .ConvertEnum<LanguageType>();
+
+
+            invoice.Comment = source.Comment;
             #endregion
             #region Cancelled Original Document
             invoice.CancelledOriginalDocument = null;
@@ -73,7 +76,7 @@ namespace ebIModels.Mapping.V4p3
             {
                 if ((delType.ToDate != null) && (delType.ToDate != DateTime.MinValue))
                 {
-                    var deliveryType = new PeriodType
+                    var deliveryType = new TARGET.PeriodType
                     {
                         FromDate = delType.FromDate,
                         ToDate = delType.ToDate
@@ -176,10 +179,7 @@ namespace ebIModels.Mapping.V4p3
                     }
 
                     // Rabatte / Zuschläge
-                    lineItem.DiscountFlagSpecified = true;
-                    lineItem.DiscountFlag = false;
-                    lineItem.ReductionAndSurchargeListLineItemDetails = null;
-
+                    lineItem.DiscountFlagSpecified = false;
                     if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
                     {
                         lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails);
@@ -224,7 +224,7 @@ namespace ebIModels.Mapping.V4p3
             //    }
             //}
             #endregion
-   
+
             #region Global ReductionANdSurcharge
             invoice.ReductionAndSurchargeDetails = new ReductionAndSurchargeDetailsType
             {
@@ -396,11 +396,11 @@ namespace ebIModels.Mapping.V4p3
             AddressType addrNew = new AddressType
             {
                 Name = address.Name,
-                Contact = contact?.Name,
+                Contact = contact.Name,
                 Phone = address.Phone,
                 POBox = address.POBox,
                 Email = address.Email,
-                Salutation = contact?.Salutation,
+                Salutation = contact.Salutation,
                 Street = address.Street,
                 Country = GetCountry(address.Country),
                 ZIP = address.ZIP,
@@ -497,6 +497,4 @@ namespace ebIModels.Mapping.V4p3
         }
 
     }
-
-
 }

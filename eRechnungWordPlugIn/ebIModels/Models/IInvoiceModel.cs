@@ -49,7 +49,7 @@ namespace ebIModels.Models
         void SaveTemplate(string filename);
         EbInterfaceResult IsValidInvoice(); 
         EbInterfaceResult IsValidErbInvoice();
-        EbInterfaceResult Save(string filename);
+        //EbInterfaceResult Save(string filename);
         EbInterfaceResult Save(string filename, EbIVersion version);
 
     }

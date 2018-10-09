@@ -119,14 +119,16 @@ namespace ebIModels.Models
             throw new NotImplementedException();
         }
 
-        public EbInterfaceResult Save(string filename)
-        {
-            throw new NotImplementedException();
-        }
+        //public EbInterfaceResult Save(string filename)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public EbInterfaceResult Save(string filename, EbIVersion version)
         {
-            throw new NotImplementedException();
+            var invoice = (IInvoiceBase)Mapping.MapInvoice.MapToEbInterface(this, version);
+            var result = invoice.Save(filename);
+            return result;
         }
 
         public void SaveTemplate(string filename)
@@ -222,29 +224,7 @@ namespace ebIModels.Models
         }
 
     }
-    //public partial class ListLineItemType
-    //{
-    //    public object Item
-    //    {
-    //        get {
-    //            if (this.TaxItem.TaxPercent.TaxCategoryCode == SettingsManager.PlugInSettings.VStBefreitCode)
-    //            {
-    //                return new TaxExemptionType()
-    //                {
-    //                    TaxExemptionCode = "",
-    //                    Value = this.TaxItem.Comment
-    //                };
-    //            }
-    //            return new VATRateType()
-    //            {
-    //                // ToDo richtigen TaxCode Setzen
-    //                TaxCode = "ATXXX",
-    //                Value = this.TaxItem.TaxAmount
-    //            };
 
-    //        }
-    //    }
-    //}
 
     public partial class DetailsType
     {
@@ -255,7 +235,7 @@ namespace ebIModels.Models
             {
                 foreach (ListLineItemType lineItem in item.ListLineItem)
                 {
-                    lineItem.LineItemAmount = lineItem.UnitPrice.Value * lineItem.Quantity.Value;  //.RecalcLineItem();
+                    lineItem.ReCalcLineItemAmount();
                 }
             }
         }
@@ -274,6 +254,18 @@ namespace ebIModels.Models
             this.quantityField = new UnitType();
             // this\.articleNumberField.=.new.List<ArticleNumberType>();
             // this\.descriptionField.=.new.List<string>();
+        }
+        public void ReCalcLineItemAmount()
+        {
+            decimal baseAmount = UnitPrice.Value * Quantity.Value;
+            decimal netAmount = baseAmount;
+            if ((ReductionAndSurchargeListLineItemDetails!=null) && (ReductionAndSurchargeListLineItemDetails.Items.Any()))
+            {
+                decimal rabattProzent = ((ReductionAndSurchargeBaseType)ReductionAndSurchargeListLineItemDetails.Items[0]).Percentage;
+                decimal rabatt = (baseAmount * rabattProzent / 100);
+                netAmount = baseAmount - rabatt;
+            }
+            LineItemAmount = netAmount.FixedFraction(2);
         }
     }
     public partial class ReductionAndSurchargeListLineItemDetailsType

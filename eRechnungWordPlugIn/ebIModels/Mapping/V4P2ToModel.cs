@@ -169,8 +169,6 @@ namespace ebIModels.Mapping.V4p2
                             Value = srcLineItem.UnitPrice.Value
                         };
 
-                        // Steuer
-                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.Item, lineItem.LineItemAmount);
                         // Auftragsreferenz
                         lineItem.InvoiceRecipientsOrderReference.OrderID =
                             srcLineItem.InvoiceRecipientsOrderReference.OrderID;
@@ -189,7 +187,10 @@ namespace ebIModels.Mapping.V4p2
                             lineItem.Description = srcLineItem.Description.ToList();
                         }
 
-                        lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        //lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        lineItem.ReCalcLineItemAmount();
+                        // Steuer
+                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.Item, lineItem.LineItemAmount);
                         item.ListLineItem.Add(lineItem);
                     }
                     invoice.Details.ItemList.Add(item);
@@ -313,10 +314,14 @@ namespace ebIModels.Mapping.V4p2
 
         private static ContactType GetContact(SRC.AddressType address)
         {
+            if (string.IsNullOrEmpty(address.Contact))
+            {
+                return null;
+            }
             ContactType contact = new ContactType()
             {
                 Email = new List<string>() { address.Email },
-                Name = address.Name,
+                Name = address.Contact,
                 Phone = new List<string>() { address.Phone },
                 Salutation = address.Salutation
             };
@@ -351,7 +356,7 @@ namespace ebIModels.Mapping.V4p2
             if (countryType == null)
                 return null;
             CountryType cty = new CountryType(CountryCodeType.AT);
-            if (countryType.Value != null)
+            if (!string.IsNullOrEmpty(countryType.Value))
             {
                 cty.CountryCode = countryType.CountryCode.ToEnum(CountryCodeType.AT).ToString(); //.ConvertEnum<V4P3.CountryCodeType>();
                 //cty.CountryCodeSpecified = true; // This is always true!
@@ -402,7 +407,7 @@ namespace ebIModels.Mapping.V4p2
             return lineRed;
         }
 
-        private static TaxItemType MapVatItemType2Vm(object vatItem, decimal taxedAmount)
+        private static TaxItemType MapVatItemType2Vm(object vatItem, decimal taxableAmount)
         {
             if (vatItem == null)
                 return null;
@@ -416,7 +421,7 @@ namespace ebIModels.Mapping.V4p2
                         TaxCategoryCode = PlugInSettings.VStBefreitCode,
                         Value = 0
                     },
-                    TaxableAmount = taxedAmount,
+                    TaxableAmount = taxableAmount,
                     Comment = taxExemption.Value
                 };
                 return taxItem;
@@ -429,8 +434,7 @@ namespace ebIModels.Mapping.V4p2
                     Value = vATRate.Value,
                     TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
                 },
-                TaxAmount = (taxedAmount * vATRate.Value / 100).FixedFraction(2),
-                TaxableAmount = taxedAmount,
+                TaxableAmount = taxableAmount,
             };
             return taxItemVat;
 

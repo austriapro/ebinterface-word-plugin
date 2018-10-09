@@ -142,7 +142,7 @@ namespace ebIModels.Models
         {
             get { return this.prepaidAmountField; }
             set { this.prepaidAmountField = value;
-                // ToDo BelowTheLineItem setzen
+                
             }
         }
 

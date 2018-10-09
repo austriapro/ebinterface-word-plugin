@@ -54,6 +54,7 @@ namespace ebIModels.Mapping.V5p0
             #region Cancelled Original Document
             // CancelledOriginalDocument [0..1] CancelledOriginalDocumentType
 
+            invoice.CancelledOriginalDocument = null;
             if (source.CancelledOriginalDocument != null)
             {
                 invoice.CancelledOriginalDocument = new TARGET.CancelledOriginalDocumentType()
@@ -116,7 +117,7 @@ namespace ebIModels.Mapping.V5p0
             {
                 if (source.Delivery.Item is Model.PeriodType delType)
                 {
-                    if (delType.ToDate != null)
+                    if ((delType.ToDate != null) && (delType.ToDate != DateTime.MinValue))
                     {
                         var deliveryType = new PeriodType
                         {
@@ -149,8 +150,9 @@ namespace ebIModels.Mapping.V5p0
                     InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID,
                     Address = GetAddress(source.Biller.Address, source.Biller.Contact),
                     FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification)
-                    // ToDO Contact missing
+
                 };
+                invoice.Biller.Contact = GetContact(source.Biller.Contact);
             }
             #endregion
             #region Invoice Recipient
@@ -163,8 +165,9 @@ namespace ebIModels.Mapping.V5p0
                     VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber,
                     Address = GetAddress(source.InvoiceRecipient.Address, source.InvoiceRecipient.Contact),
                     OrderReference = new OrderReferenceType()
-                    // ToDO Contact missing
+
                 };
+                invoice.InvoiceRecipient.Contact = GetContact(source.InvoiceRecipient.Contact);
                 invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
                 if (source.InvoiceRecipient.OrderReference.ReferenceDateSpecified)
                 {
@@ -220,9 +223,7 @@ namespace ebIModels.Mapping.V5p0
                         Value = srcLineItem.UnitPrice.Value
                     };
 
-                    // Steuer
 
-                    lineItem.TaxItem = MapTaxItemType(srcLineItem.TaxItem);
                     // Auftragsreferenz
                     if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber) ||
                         source.InvoiceRecipient.BestellPositionErforderlich)   // Orderposition angegeben oder erforderlich
@@ -243,6 +244,10 @@ namespace ebIModels.Mapping.V5p0
                     }
                     lineItem.Description = srcLineItem.Description.ToArray();
                     lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                    //lineItem.ReCalcLineItemAmount();
+                    // Steuer
+                    lineItem.TaxItem = MapTaxItemType(srcLineItem.TaxItem);
+
                     itemListLineItem.Add(lineItem);
                 }
                 itemList.ListLineItem = itemListLineItem.ToArray();
@@ -273,7 +278,7 @@ namespace ebIModels.Mapping.V5p0
             // RoundingAmount [0..1] Decimal2Type
 
             // PayableAmount Decimal2Type
-            invoice.PayableAmount = source.PayableAmount; 
+            invoice.PayableAmount = source.PayableAmount;
             #endregion
 
             // PaymentMethod [0..1] PaymentMethodType
@@ -285,6 +290,22 @@ namespace ebIModels.Mapping.V5p0
             // Comment [0..1] xs:string
             invoice.Comment = source.Comment;
             return invoice;
+        }
+
+        private static ContactType GetContact(Model.ContactType contactSource)
+        {
+            if (contactSource == null)
+            {
+                return null;
+            }
+            ContactType contact = new ContactType
+            {
+                Email = contactSource.Email?.ToArray(),
+                Name = contactSource.Name,
+                Phone = contactSource.Phone?.ToArray(),
+                Salutation = contactSource.Salutation
+            };
+            return contact;
         }
 
         private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(Model.ReductionAndSurchargeListLineItemDetailsType srcRed)
@@ -334,10 +355,10 @@ namespace ebIModels.Mapping.V5p0
         {
             TaxItemType tax = new TaxItemType()
             {
+                TaxableAmount = taxItem.TaxableAmount.FixedFraction(2),
                 Comment = taxItem.Comment,
-                TaxableAmount = taxItem.TaxableAmount,
-                TaxAmount = taxItem.TaxAmount,
-                TaxAmountSpecified = taxItem.TaxAmountSpecified,
+                TaxAmountSpecified = true,
+                TaxAmount = (taxItem.TaxableAmount * taxItem.TaxPercent.Value / 100).FixedFraction(2),
                 TaxPercent = new TaxPercentType()
                 {
                     TaxCategoryCode = taxItem.TaxPercent.TaxCategoryCode,
@@ -403,7 +424,9 @@ namespace ebIModels.Mapping.V5p0
                 Country = GetCountry(address.Country),
                 ZIP = address.ZIP,
                 Town = address.Town,
-                AddressIdentifier = GetAddressIdentifier(address.AddressIdentifier)
+                AddressIdentifier = GetAddressIdentifier(address.AddressIdentifier),
+                Email = new string[] { address.Email },
+                Phone = new string[] { address.Phone },
             };
             return addrNew;
         }
@@ -547,15 +570,15 @@ namespace ebIModels.Mapping.V5p0
             {
                 TaxItemType taxItem = new TaxItemType()
                 {
-                    Comment = taxItemModel.Comment,
                     TaxableAmount = taxItemModel.TaxableAmount,
-                    TaxAmount = taxItemModel.TaxAmount,
-                    TaxAmountSpecified = taxItemModel.TaxAmountSpecified,
+                    TaxAmount = (taxItemModel.TaxableAmount * taxItemModel.TaxPercent.Value / 100).FixedFraction(2),
+                    TaxAmountSpecified = true,
                     TaxPercent = new TaxPercentType()
                     {
                         TaxCategoryCode = taxItemModel.TaxPercent.TaxCategoryCode,
                         Value = taxItemModel.TaxPercent.Value
-                    }
+                    },
+
                 };
                 taxItems.Add(taxItem);
             }

@@ -84,7 +84,7 @@ namespace ebIModels.Mapping.V4p0
             invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
             invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
             invoice.InvoiceRecipient.Contact = GetContact(source.InvoiceRecipient.Address);
-            if (source.InvoiceRecipient.OrderReference!=null)
+            if (source.InvoiceRecipient.OrderReference != null)
             {
                 invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
                 invoice.InvoiceRecipient.OrderReference.ReferenceDateSpecified = source.InvoiceRecipient.OrderReference.ReferenceDateSpecified;
@@ -136,14 +136,11 @@ namespace ebIModels.Mapping.V4p0
                             Value = srcLineItem.UnitPrice
                         };
 
-                        // Steuer
-                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.TaxRate, lineItem.LineItemAmount);
                         // Auftragsreferenz
                         lineItem.InvoiceRecipientsOrderReference.OrderID =
                             srcLineItem?.InvoiceRecipientsOrderReference?.OrderID;
                         lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber =
                             srcLineItem?.InvoiceRecipientsOrderReference?.OrderPositionNumber;
-
 
                         // Rabatte / Zuschläge
                         if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
@@ -156,7 +153,10 @@ namespace ebIModels.Mapping.V4p0
                             lineItem.Description = srcLineItem.Description.ToList();
                         }
 
-                        lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        // lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        lineItem.ReCalcLineItemAmount();
+                        // Steuer
+                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.TaxRate, lineItem.LineItemAmount);
                         item.ListLineItem.Add(lineItem);
                     }
                     invoice.Details.ItemList.Add(item);
@@ -182,7 +182,7 @@ namespace ebIModels.Mapping.V4p0
                                 TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vatItem.TaxRate.Value).Code,
                                 Value = vatItem.TaxRate.Value
                             },
-                            TaxableAmount = vatItem.TaxedAmount,
+                            TaxAmountSpecified = false
                         };
                         invoice.Tax.TaxItem.Add(taxItem);
                         break;
@@ -230,7 +230,7 @@ namespace ebIModels.Mapping.V4p0
                         BankName = txType.BeneficiaryAccount.First().BankName,
                         IBAN = txType.BeneficiaryAccount.First().IBAN,
                         BankAccountOwner = txType.BeneficiaryAccount.First().BankAccountOwner
-                        
+
                     },
                 };
             }
@@ -265,7 +265,7 @@ namespace ebIModels.Mapping.V4p0
             ContactType contact = new ContactType()
             {
                 Email = new List<string>() { address.Email },
-                Name = address.Name,
+                Name = address.Contact,
                 Phone = new List<string>() { address.Phone },
                 Salutation = address.Salutation
             };
@@ -340,7 +340,7 @@ namespace ebIModels.Mapping.V4p0
             return lineRed;
         }
 
-        private static TaxItemType MapVatItemType2Vm(object vatItem, decimal taxedAmount)
+        private static TaxItemType MapVatItemType2Vm(object vatItem, decimal taxableAmount)
         {
             if (vatItem == null)
                 return null;
@@ -349,12 +349,12 @@ namespace ebIModels.Mapping.V4p0
                 string taxExemption = (string)vatItem;
                 TaxItemType taxItem = new TaxItemType()
                 {
+                    TaxableAmount = taxableAmount,
                     TaxPercent = new TaxPercentType()
                     {
                         TaxCategoryCode = PlugInSettings.VStBefreitCode,
                         Value = 0
                     },
-                    TaxableAmount = taxedAmount,
                     Comment = taxExemption
                 };
                 return taxItem;
@@ -362,16 +362,14 @@ namespace ebIModels.Mapping.V4p0
             SRC.TaxRateType vATRate = (SRC.TaxRateType)vatItem;
             TaxItemType taxItemVat = new TaxItemType()
             {
+                TaxableAmount = taxableAmount,
                 TaxPercent = new TaxPercentType()
                 {
                     Value = vATRate.Value,
                     TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
                 },
-                TaxAmount = (taxedAmount * vATRate.Value / 100).FixedFraction(2),
-                TaxableAmount = taxedAmount,
             };
             return taxItemVat;
-
         }
 
         private static List<ArticleNumberType> GetArtikelList(SRC.ArticleNumberType[] srcArticle)

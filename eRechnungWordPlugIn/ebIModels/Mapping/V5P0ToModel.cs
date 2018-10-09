@@ -62,6 +62,7 @@ namespace ebIModels.Mapping.V5p0
 
             // Biller BillerType
             // invoice.Biller = MapBiller(source.Biller);
+            // ToDo Map Biller
 
             // InvoiceRecipient InvoiceRecipientType
             invoice.InvoiceRecipient = MapInvoiceRecipient(source.InvoiceRecipient);

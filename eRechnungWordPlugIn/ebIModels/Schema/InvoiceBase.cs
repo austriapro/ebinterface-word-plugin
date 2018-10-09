@@ -31,12 +31,7 @@ namespace ebIModels.Schema
         [XmlIgnore]
         public InvoiceSubtype InvoiceSubtype { get;  internal set; }
         
-        //public void SetSubtype(InvoiceSubtype invoiceSubtype)
-        //{
-        //    InvoiceSubtype = invoiceSubtype;
-        //}
-
-        public abstract EbInterfaceResult IsValidInvoice();
+         public abstract EbInterfaceResult IsValidInvoice();
 
         public abstract EbInterfaceResult IsValidInvoice(XmlDocument xDoc);
 
@@ -194,7 +189,7 @@ namespace ebIModels.Schema
             string fversion = fvi.FileVersion;
             IInvoiceBase invBase = (IInvoiceBase)invoice;
             string genSystem = invBase.InvoiceSubtype.DocTypeNew + GetTfsString();// String.Format("DotNetApi für ebInterface V{0}", fversion);
-
+            
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             // ns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
@@ -226,10 +221,19 @@ namespace ebIModels.Schema
             }
 
             XmlAttributeCollection attrColl = xDoc.DocumentElement.Attributes;
-            attrColl.Remove(attrColl["eb:GeneratingSystem"]);
+            string prefix = "eb";
+            if (attrColl.GetNamedItem("GeneratingSystem") != null)
+            {
+                attrColl.Remove(attrColl["GeneratingSystem"]);
+                prefix = "";
+            }
+            else
+            {
+                attrColl.Remove(attrColl["eb:GeneratingSystem"]);
+            }
             var nspUriSel = from si in invBase.CurrentSchemas where si.Prefix == "eb" select si;
             string NspUri = nspUriSel.FirstOrDefault().Url;
-            XmlAttribute genSys = xDoc.CreateAttribute("eb", "GeneratingSystem", NspUri);
+            XmlAttribute genSys = xDoc.CreateAttribute(prefix, "GeneratingSystem", NspUri);
             genSys.Value = genSystem;
             xDoc.DocumentElement.Attributes.Append(genSys);
 

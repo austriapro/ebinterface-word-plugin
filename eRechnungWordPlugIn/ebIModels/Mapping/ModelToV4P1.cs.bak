@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using ebIModels.Schema.ebInterface4p3;
+using ebIModels.Schema;
+using TARGET = ebIModels.Schema.ebInterface4p1;
 using ExtensionMethods;
 using Model = ebIModels.Models;
-using ebIModels.Schema;
-using TARGET = ebIModels.Schema.ebInterface4p3;
+using ebIModels.Schema.ebInterface4p1;
 using SettingsManager;
 
-namespace ebIModels.Mapping.V4p3
+namespace ebIModels.Mapping.V4p1
 {
     public static partial class MapInvoice
     {
@@ -17,9 +18,9 @@ namespace ebIModels.Mapping.V4p3
         /// </summary>
         /// <param name="source">Invoice Model</param>
         /// <returns>ebInterface 4p1 InvoiceType</returns>
-        internal static TARGET.InvoiceType MapModelToV4p3(Model.IInvoiceModel source)
+        internal static TARGET.InvoiceType MapModelToV4p1(Model.IInvoiceModel source)
         {
-            TARGET.InvoiceType invoice = new TARGET.InvoiceType();
+            TARGET.InvoiceType invoice = new TARGET.InvoiceType(); // new V4P1.InvoiceType();
 
             #region Rechnungskopf
             invoice.InvoiceSubtype = source.InvoiceSubtype;
@@ -28,12 +29,10 @@ namespace ebIModels.Mapping.V4p3
             invoice.GeneratingSystem = source.GeneratingSystem;
             invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
             invoice.DocumentTitle = source.DocumentTitle;
-            invoice.InvoiceCurrency = source.InvoiceCurrency.ToString(); //.ConvertEnum<CurrencyType>();
-            invoice.Language = source.Language.ToString();// .ConvertEnum<LanguageType>();
-            invoice.Comment = source.Comment;
+            invoice.InvoiceCurrency = source.InvoiceCurrency.ConvertEnum<CurrencyType>();
 
-            #endregion
-            #region Cancelled Original Document
+            invoice.Language = source.Language.ConvertEnum<LanguageType>();
+            invoice.Comment = source.Comment;
             invoice.CancelledOriginalDocument = null;
             if (source.CancelledOriginalDocument != null)
             {
@@ -73,7 +72,7 @@ namespace ebIModels.Mapping.V4p3
             {
                 if ((delType.ToDate != null) && (delType.ToDate != DateTime.MinValue))
                 {
-                    var deliveryType = new PeriodType
+                    var deliveryType = new TARGET.PeriodType
                     {
                         FromDate = delType.FromDate,
                         ToDate = delType.ToDate
@@ -166,6 +165,9 @@ namespace ebIModels.Mapping.V4p3
                         Value = srcLineItem.UnitPrice.Value
                     };
 
+                    // Steuer
+                    // lineItem.Item = srcLineItem.Item;
+                    lineItem.Item = MapVatItemType(srcLineItem.TaxItem);
                     // Auftragsreferenz
                     if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber) ||
                         source.InvoiceRecipient.BestellPositionErforderlich)   // Orderposition angegeben oder erforderlich
@@ -176,23 +178,16 @@ namespace ebIModels.Mapping.V4p3
                     }
 
                     // Rabatte / Zuschläge
-                    lineItem.DiscountFlagSpecified = true;
-                    lineItem.DiscountFlag = false;
-                    lineItem.ReductionAndSurchargeListLineItemDetails = null;
-
+                    lineItem.DiscountFlagSpecified = false;
                     if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
                     {
                         lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails);
 
-                        // Kein DIscount Flag, da das im Word PlugIn sowieso nicht unterstützt ist.
                         //lineItem.DiscountFlag = srcLineItem.DiscountFlag;
                         //lineItem.DiscountFlagSpecified = srcLineItem.DiscountFlagSpecified;
                     }
                     lineItem.Description = srcLineItem.Description.ToArray();
-                    lineItem.ReCalcLineItemAmount();
-                    // Steuer
-                    lineItem.Item = MapVatItemType(srcLineItem.TaxItem);
-
+                    lineItem.LineItemAmount = srcLineItem.LineItemAmount;
                     itemListLineItem.Add(lineItem);
                 }
                 itemList.ListLineItem = itemListLineItem.ToArray();
@@ -224,18 +219,6 @@ namespace ebIModels.Mapping.V4p3
             //    }
             //}
             #endregion
-   
-            #region Global ReductionANdSurcharge
-            invoice.ReductionAndSurchargeDetails = new ReductionAndSurchargeDetailsType
-            {
-                Items = null,
-                ItemsElementName = new ItemsChoiceType1[]
-                {
-                    ItemsChoiceType1.Reduction
-                }
-            };
-
-            #endregion
 
             #region Tax
             var taxVATList = new List<VATItemType>();
@@ -251,6 +234,18 @@ namespace ebIModels.Mapping.V4p3
                 taxVATList.Add(vatItemNeu);
             }
             invoice.Tax.VAT = taxVATList.ToArray();
+            #endregion
+
+            #region Global ReductionANdSurcharge
+            invoice.ReductionAndSurchargeDetails = new ReductionAndSurchargeDetailsType
+            {
+                Items = null,
+                ItemsElementName = new ItemsChoiceType1[]
+            {
+                ItemsChoiceType1.Reduction
+            }
+            };
+
             #endregion
 
             #region Amount
@@ -286,7 +281,6 @@ namespace ebIModels.Mapping.V4p3
             if (source.PaymentConditions.DueDate > DateTime.MinValue)
             {
                 invoice.PaymentConditions.DueDate = source.PaymentConditions.DueDate;
-                invoice.PaymentConditions.DueDateSpecified = true;
             }
             if (source.PaymentConditions.Discount != null)
             {
@@ -322,16 +316,24 @@ namespace ebIModels.Mapping.V4p3
             return invoice;
         }
 
-        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(Model.ReductionAndSurchargeListLineItemDetailsType srcRed)
+        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(Model.ReductionAndSurchargeListLineItemDetailsType srcRed, out bool discountFlag)
         {
+            discountFlag = false;
             if (srcRed == null)
+            {
+                
                 return null;
+            }
+            
             ReductionAndSurchargeListLineItemDetailsType lineRed = new ReductionAndSurchargeListLineItemDetailsType
             {
                 Items = new object[srcRed.Items.Count]
             };
             int i = 0;
-
+            if (lineRed.Items.Count()>0)
+            {
+                discountFlag = true;
+            }
             foreach (var item1 in srcRed.Items)
             {
                 if (item1 is Model.ReductionAndSurchargeBaseType)
@@ -346,7 +348,7 @@ namespace ebIModels.Mapping.V4p3
                         Percentage = item.Percentage,
                         PercentageSpecified = item.PercentageSpecified
                     };
-                    lineRed.Items[i] = redBase;
+                    lineRed.Items[i] = redBase;                    
                     i++;
                 }
             }
@@ -396,11 +398,11 @@ namespace ebIModels.Mapping.V4p3
             AddressType addrNew = new AddressType
             {
                 Name = address.Name,
-                Contact = contact?.Name,
+                Contact = contact.Name,
                 Phone = address.Phone,
                 POBox = address.POBox,
                 Email = address.Email,
-                Salutation = contact?.Salutation,
+                Salutation = contact.Salutation,
                 Street = address.Street,
                 Country = GetCountry(address.Country),
                 ZIP = address.ZIP,
@@ -417,15 +419,16 @@ namespace ebIModels.Mapping.V4p3
             CountryType cty = new CountryType();
             if (string.IsNullOrEmpty(countryType.Value))
             {
-                cty.CountryCode = Model.CountryCodeType.AT.ToString();
-                cty.Value = "Österreich";
-                
+                cty.CountryCode = TARGET.CountryCodeType.AT;
+                cty.Text = new string[] { "Österreich" };
+                cty.CountryCodeSpecified = true;
             }
             else
             {
-                cty.CountryCode = countryType.CountryCode.ToString(); //.ConvertEnum<CountryCodeType>();
-                cty.Value = Model.CountryCodes.GetFromCode(cty.CountryCode).Country;
-                
+                cty.CountryCode = countryType.CountryCode.ToEnum(TARGET.CountryCodeType.AT); //.ConvertEnum<CountryCodeType>();
+                cty.Text = new string[1];
+                cty.Text[0] = Model.CountryCodes.GetFromCode(cty.CountryCode.ToString()).Country;
+                cty.CountryCodeSpecified = true;
             }
             return cty;
         }
@@ -462,10 +465,11 @@ namespace ebIModels.Mapping.V4p3
             {
                 ArticleNumberType art = new ArticleNumberType
                 {
-                    Value = articleNumberType.Value,
-                    ArticleNumberType1Specified = articleNumberType.ArticleNumberType1Specified,
-                    ArticleNumberType1 = articleNumberType.ArticleNumberType1.ConvertEnum<ArticleNumberTypeType>()
+                    Text = new string[1]
                 };
+                art.Text[0] = articleNumberType.Value;
+                art.ArticleNumberType1Specified = articleNumberType.ArticleNumberType1Specified;
+                art.ArticleNumberType1 = articleNumberType.ArticleNumberType1.ConvertEnum<ArticleNumberTypeType>();
                 artNrList.Add(art);
 
             }
@@ -497,6 +501,4 @@ namespace ebIModels.Mapping.V4p3
         }
 
     }
-
-
 }

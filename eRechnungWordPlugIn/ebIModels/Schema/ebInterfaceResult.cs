@@ -41,11 +41,11 @@ namespace ebIModels.Schema
         /// <summary>
         /// Gibt an, welcher Vorgang den Fehler gemeldet hat
         /// </summary>
-        public ResultType ResultType;
+        public ResultType ResultType { get; set; }
 
         /// <summary>
         /// Liste der zurückgegebenen Fehler oder Warnungen
         /// </summary>
-        public readonly List<ResultMessage> ResultMessages;
+        public List<ResultMessage> ResultMessages { get; set; }
     }
 }

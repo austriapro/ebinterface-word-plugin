@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtensionMethods;
 using ebIModels.Models;
-using V4P3 = ebIModels.Schema.ebInterface4p3;
+using SRC = ebIModels.Schema.ebInterface4p3;
 using ebIModels.Schema;
 using SettingsManager;
 
@@ -16,7 +16,7 @@ namespace ebIModels.Mapping.V4p3
         /// </summary>
         /// <param name="source">ebInterface4p3 InvoiceType</param>
         /// <returns>InvoiceType Model</returns>
-        internal static IInvoiceModel MapV4P3ToVm(V4P3.InvoiceType source)
+        internal static IInvoiceModel MapV4P3ToVm(SRC.InvoiceType source)
         {
             IInvoiceModel invoice = InvoiceFactory.CreateInvoice();
             #region Rechnungskopf
@@ -57,7 +57,7 @@ namespace ebIModels.Mapping.V4p3
             if (source.RelatedDocument != null && source.RelatedDocument.Any())
             {
                 invoice.RelatedDocument = new List<RelatedDocumentType>();
-                foreach (V4P3.RelatedDocumentType relDoc in source.RelatedDocument)
+                foreach (SRC.RelatedDocumentType relDoc in source.RelatedDocument)
                 {
                     var newRel = new RelatedDocumentType()
                     {
@@ -83,12 +83,12 @@ namespace ebIModels.Mapping.V4p3
             #region Delivery
             if (source.Delivery != null)
             {
-                if (source.Delivery.Item is V4P3.PeriodType)
+                if (source.Delivery.Item is SRC.PeriodType)
                 {
                     var deliveryType = new PeriodType
                     {
-                        FromDate = ((V4P3.PeriodType)source.Delivery.Item).FromDate,
-                        ToDate = ((V4P3.PeriodType)source.Delivery.Item).ToDate
+                        FromDate = ((SRC.PeriodType)source.Delivery.Item).FromDate,
+                        ToDate = ((SRC.PeriodType)source.Delivery.Item).ToDate
                     };
                     invoice.Delivery.Item = deliveryType;
                 }
@@ -132,13 +132,13 @@ namespace ebIModels.Mapping.V4p3
             invoice.Details.ItemList = new List<ItemListType>();
 
             if (source.Details.ItemList != null)
-                foreach (V4P3.ItemListType srcItemList in source.Details.ItemList)
+                foreach (SRC.ItemListType srcItemList in source.Details.ItemList)
                 {
                     ItemListType item = new ItemListType
                     {
                         ListLineItem = new List<ListLineItemType>()
                     };
-                    foreach (V4P3.ListLineItemType srcLineItem in srcItemList.ListLineItem)
+                    foreach (SRC.ListLineItemType srcLineItem in srcItemList.ListLineItem)
                     {
                         ListLineItemType lineItem = new ListLineItemType
                         {
@@ -166,8 +166,6 @@ namespace ebIModels.Mapping.V4p3
                             Value = srcLineItem.UnitPrice.Value
                         };
 
-                        // Steuer
-                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.Item, lineItem.LineItemAmount);
                         // Auftragsreferenz
                         lineItem.InvoiceRecipientsOrderReference.OrderID =
                             srcLineItem.InvoiceRecipientsOrderReference.OrderID;
@@ -186,7 +184,10 @@ namespace ebIModels.Mapping.V4p3
                             lineItem.Description = srcLineItem.Description.ToList();
                         }
 
-                        lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        //lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        lineItem.ReCalcLineItemAmount();
+                        // Steuer
+                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.Item, lineItem.LineItemAmount);
                         item.ListLineItem.Add(lineItem);
                     }
                     invoice.Details.ItemList.Add(item);
@@ -217,9 +218,9 @@ namespace ebIModels.Mapping.V4p3
             {
                 foreach (var item in source.Tax.VAT)
                 {
-                    if (item.Item.GetType() == typeof(V4P3.TaxExemptionType))
+                    if (item.Item.GetType() == typeof(SRC.TaxExemptionType))
                     {
-                        V4P3.TaxExemptionType taxExemption = (V4P3.TaxExemptionType)item.Item;
+                        SRC.TaxExemptionType taxExemption = (SRC.TaxExemptionType)item.Item;
                         TaxItemType taxItem = new TaxItemType()
                         {
                             TaxPercent = new TaxPercentType()
@@ -237,7 +238,7 @@ namespace ebIModels.Mapping.V4p3
                         }
                         break;
                     }
-                    V4P3.VATRateType vATRate = (V4P3.VATRateType)item.Item;
+                    SRC.VATRateType vATRate = (SRC.VATRateType)item.Item;
                     TaxItemType taxItemVat = new TaxItemType()
                     {
                         TaxPercent = new TaxPercentType()
@@ -262,9 +263,9 @@ namespace ebIModels.Mapping.V4p3
             #region PaymentMethod
             invoice.PaymentMethod.Comment = source.PaymentMethod.Comment;
 
-            if (source.PaymentMethod.Item != null && source.PaymentMethod.Item.GetType() == typeof(V4P3.UniversalBankTransactionType))
+            if (source.PaymentMethod.Item != null && source.PaymentMethod.Item.GetType() == typeof(SRC.UniversalBankTransactionType))
             {
-                V4P3.UniversalBankTransactionType txType = source.PaymentMethod.Item as V4P3.UniversalBankTransactionType;
+                SRC.UniversalBankTransactionType txType = source.PaymentMethod.Item as SRC.UniversalBankTransactionType;
                 invoice.PaymentMethod = new PaymentMethodType
                 {
                     Item = new UniversalBankTransactionType()
@@ -288,7 +289,7 @@ namespace ebIModels.Mapping.V4p3
             if (source.PaymentConditions.Discount != null)
             {
                 invoice.PaymentConditions.Discount.Clear();
-                foreach (V4P3.DiscountType srcDiscount in source.PaymentConditions.Discount)
+                foreach (SRC.DiscountType srcDiscount in source.PaymentConditions.Discount)
                 {
                     DiscountType discount = new DiscountType()
                     {
@@ -308,19 +309,23 @@ namespace ebIModels.Mapping.V4p3
             return invoice;
         }
 
-        private static ContactType GetContact(V4P3.AddressType address)
+        private static ContactType GetContact(SRC.AddressType address)
         {
+            if (string.IsNullOrEmpty(address.Contact))
+            {
+                return null;
+            }
             ContactType contact = new ContactType()
             {
                 Email = new List<string>() { address.Email },
-                Name = address.Name,
+                Name = address.Contact,
                 Phone = new List<string>() { address.Phone },
                 Salutation = address.Salutation
             };
             return contact;
         }
 
-        private static AddressType GetAddress(V4P3.AddressType address)
+        private static AddressType GetAddress(SRC.AddressType address)
         {
 
             if (address == null)
@@ -343,7 +348,7 @@ namespace ebIModels.Mapping.V4p3
             };
             return addrNew;
         }
-        private static CountryType GetCountry(V4P3.CountryType countryType)
+        private static CountryType GetCountry(SRC.CountryType countryType)
         {
             if (countryType == null)
                 return null;
@@ -365,7 +370,7 @@ namespace ebIModels.Mapping.V4p3
             }
             return cty;
         }
-        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(V4P3.ReductionAndSurchargeListLineItemDetailsType srcRed)
+        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(SRC.ReductionAndSurchargeListLineItemDetailsType srcRed)
         {
             if (srcRed.Items == null)
                 return null;
@@ -374,9 +379,9 @@ namespace ebIModels.Mapping.V4p3
 
             foreach (var item1 in srcRed.Items)
             {
-                if (item1 is V4P3.ReductionAndSurchargeBaseType)
+                if (item1 is SRC.ReductionAndSurchargeBaseType)
                 {
-                    V4P3.ReductionAndSurchargeBaseType item = item1 as V4P3.ReductionAndSurchargeBaseType;
+                    SRC.ReductionAndSurchargeBaseType item = item1 as SRC.ReductionAndSurchargeBaseType;
                     ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType
                     {
                         Amount = item.Amount,
@@ -391,7 +396,7 @@ namespace ebIModels.Mapping.V4p3
             }
             lineRed.ItemsElementName = new List<ItemsChoiceType>();
             foreach (
-                V4P3.ItemsChoiceType choiceType in
+                SRC.ItemsChoiceType choiceType in
                     srcRed.ItemsElementName)
             {
                 lineRed.ItemsElementName.Add(choiceType.ConvertEnum<ItemsChoiceType>());
@@ -399,13 +404,13 @@ namespace ebIModels.Mapping.V4p3
             return lineRed;
         }
 
-        private static TaxItemType MapVatItemType2Vm(object vatItem, decimal taxedAmount)
+        private static TaxItemType MapVatItemType2Vm(object vatItem, decimal taxableAmount)
         {
             if (vatItem == null)
                 return null;
-            if (vatItem.GetType() == typeof(V4P3.TaxExemptionType))
+            if (vatItem.GetType() == typeof(SRC.TaxExemptionType))
             {
-                V4P3.TaxExemptionType taxExemption = (V4P3.TaxExemptionType)vatItem;
+                SRC.TaxExemptionType taxExemption = (SRC.TaxExemptionType)vatItem;
                 TaxItemType taxItem = new TaxItemType()
                 {
                     TaxPercent = new TaxPercentType()
@@ -413,12 +418,12 @@ namespace ebIModels.Mapping.V4p3
                         TaxCategoryCode = PlugInSettings.VStBefreitCode,
                         Value = 0
                     },
-                    TaxableAmount = taxedAmount,
+                    TaxableAmount = taxableAmount,
                     Comment = taxExemption.Value
                 };
                 return taxItem;
             }
-            V4P3.VATRateType vATRate = (V4P3.VATRateType)vatItem;
+            SRC.VATRateType vATRate = (SRC.VATRateType)vatItem;
             TaxItemType taxItemVat = new TaxItemType()
             {
                 TaxPercent = new TaxPercentType()
@@ -426,21 +431,20 @@ namespace ebIModels.Mapping.V4p3
                     Value = vATRate.Value,
                     TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
                 },
-                TaxAmount = (taxedAmount * vATRate.Value / 100).FixedFraction(2),
-                TaxableAmount = taxedAmount,
+                TaxableAmount = taxableAmount,
             };
             return taxItemVat;
 
         }
 
-        private static List<ArticleNumberType> GetArtikelList(V4P3.ArticleNumberType[] srcArticle)
+        private static List<ArticleNumberType> GetArtikelList(SRC.ArticleNumberType[] srcArticle)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
             if (srcArticle == null)
             {
                 return artNrList;
             }
-            foreach (V4P3.ArticleNumberType articleNumberType in srcArticle)
+            foreach (SRC.ArticleNumberType articleNumberType in srcArticle)
             {
                 ArticleNumberType art = new ArticleNumberType
                 {
@@ -453,7 +457,7 @@ namespace ebIModels.Mapping.V4p3
             }
             return artNrList;
         }
-        private static List<AddressIdentifierType> GetAddressIdentifier(V4P3.AddressIdentifierType[] adrIn)
+        private static List<AddressIdentifierType> GetAddressIdentifier(SRC.AddressIdentifierType[] adrIn)
         {
             if (adrIn == null)
             {
@@ -462,7 +466,7 @@ namespace ebIModels.Mapping.V4p3
             }
 
             List<AddressIdentifierType> adrOutList = new List<AddressIdentifierType>();
-            foreach (V4P3.AddressIdentifierType item in adrIn)
+            foreach (SRC.AddressIdentifierType item in adrIn)
             {
                 AddressIdentifierType adId = new AddressIdentifierType();
 
@@ -476,7 +480,7 @@ namespace ebIModels.Mapping.V4p3
             }
             return adrOutList;
         }
-        private static List<FurtherIdentificationType> GetFurtherIdentification(V4P3.FurtherIdentificationType[] furtherID)
+        private static List<FurtherIdentificationType> GetFurtherIdentification(SRC.FurtherIdentificationType[] furtherID)
         {
             List<FurtherIdentificationType> fIdList = new List<FurtherIdentificationType>();
             if (furtherID == null)
@@ -485,7 +489,7 @@ namespace ebIModels.Mapping.V4p3
             }
 
             List<string> supportedIds = Enum.GetNames(typeof(FurtherIdentificationType.SupportedIds)).ToList();
-            foreach (V4P3.FurtherIdentificationType item in furtherID)
+            foreach (SRC.FurtherIdentificationType item in furtherID)
             {
                 if (supportedIds.Contains(item.IdentificationType))
                 {

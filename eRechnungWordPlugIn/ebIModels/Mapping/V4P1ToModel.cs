@@ -112,9 +112,13 @@ namespace ebIModels.Mapping.V4p1
             invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
             invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
             invoice.InvoiceRecipient.Contact = GetContact(source.InvoiceRecipient.Address);
+            if (source.InvoiceRecipient.OrderReference != null)
+            {
             invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
             invoice.InvoiceRecipient.OrderReference.ReferenceDateSpecified = source.InvoiceRecipient.OrderReference.ReferenceDateSpecified;
             invoice.InvoiceRecipient.OrderReference.ReferenceDate = source.InvoiceRecipient.OrderReference.ReferenceDate;
+
+            }
             invoice.InvoiceRecipient.FurtherIdentification = GetFurtherIdentification(source.InvoiceRecipient.FurtherIdentification);
             invoice.InvoiceRecipient.SubOrganizationID = source.InvoiceRecipient.SubOrganizationID;
             invoice.InvoiceRecipient.AccountingArea = source.InvoiceRecipient.AccountingArea;
@@ -161,13 +165,11 @@ namespace ebIModels.Mapping.V4p1
                             Value = srcLineItem.UnitPrice.Value
                         };
 
-                        // Steuer
-                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.Item, lineItem.LineItemAmount);
                         // Auftragsreferenz
                         lineItem.InvoiceRecipientsOrderReference.OrderID =
                             srcLineItem.InvoiceRecipientsOrderReference.OrderID;
                         lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber =
-                            srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber;
+                            srcLineItem.InvoiceRecipientsOrderReference?.OrderPositionNumber;
 
 
                         // Rabatte / Zuschläge
@@ -181,7 +183,10 @@ namespace ebIModels.Mapping.V4p1
                             lineItem.Description = srcLineItem.Description.ToList();
                         }
 
-                        lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        // lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        lineItem.ReCalcLineItemAmount();
+                        // Steuer
+                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.Item, lineItem.LineItemAmount);
                         item.ListLineItem.Add(lineItem);
                     }
                     invoice.Details.ItemList.Add(item);
@@ -307,7 +312,7 @@ namespace ebIModels.Mapping.V4p1
             ContactType contact = new ContactType()
             {
                 Email = new List<string>() { address.Email },
-                Name = address.Name,
+                Name = address.Contact,
                 Phone = new List<string>() { address.Phone },
                 Salutation = address.Salutation
             };
