@@ -11,11 +11,11 @@ namespace ebIModels.Mapping
 {
     public static partial class MapInvoice
     {
-        public static List<MappingError> mappingErrors = new List<MappingError>();
+        public static List<MappingError> MappingErrors = new List<MappingError>();
         public static Models.IInvoiceModel MapToModel(object Invoice)
         {
             Models.IInvoiceModel invoiceModel = null;
-            mappingErrors.Clear();
+            MappingErrors.Clear();
             switch (((IInvoiceBase)Invoice).Version)
             {
                 case Models.EbIVersion.V4P0:

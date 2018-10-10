@@ -211,8 +211,14 @@ namespace ebIViewModels.ViewModels
                 if (_vatItem == value)
                     return;
                 if (_vatItem == null)
-                    return;
-                _vatItem = value;
+                {
+                    _vatItem = PlugInSettings.Default.MwStDefaultValue;
+
+                }
+                else
+                {
+                    _vatItem = value;
+                }
                 OnPropertyChanged();
                 UpdateTotals();
             }

@@ -23,8 +23,8 @@ namespace ebIModels.Schema.ebInterface5p0
             this.billerField = new BillerType();
             this.deliveryField = new DeliveryType();
             this.InvoiceCurrency = ebIModels.Mapping.ModelConstants.CurrencyCodeFixed.ToString();
-            this.cancelledOriginalDocumentField = new CancelledOriginalDocumentType();     
-            this.relatedDocumentField = new RelatedDocumentType[] { };
+            this.cancelledOriginalDocumentField = null;
+            this.relatedDocumentField = null;
             this.additionalInformationField = new AdditionalInformationType[] { };
             this.deliveryField = new DeliveryType();
             this.billerField = new BillerType();

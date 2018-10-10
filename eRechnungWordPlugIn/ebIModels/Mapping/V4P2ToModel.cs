@@ -21,7 +21,7 @@ namespace ebIModels.Mapping.V4p2
         /// <returns>InvoiceType Model</returns>
         internal static IInvoiceModel MapV4P2ToVm(SRC.InvoiceType source)
         {
-            IInvoiceModel invoice = InvoiceFactory.CreateInvoice(); 
+            IInvoiceModel invoice = InvoiceFactory.CreateInvoice();
             #region Rechnungskopf
             invoice.InvoiceNumber = source.InvoiceNumber;
             invoice.InvoiceDate = source.InvoiceDate;
@@ -198,27 +198,27 @@ namespace ebIModels.Mapping.V4p2
 
             if (source.Details.BelowTheLineItem != null)
             {
-            //    if (source.Details.BelowTheLineItem.Length > 0)
-            //    {
-            //        List<BelowTheLineItemType> belowItems = new List<BelowTheLineItemType>();
-            //        foreach (SRC.BelowTheLineItemType item in source.Details.BelowTheLineItem)
-            //        {
-            //            belowItems.Add(new BelowTheLineItemType()
-            //            {
-            //                Description = item.Description,
-            //                LineItemAmount = item.LineItemAmount
-            //            });
-            //        }
-            //        Invoice.Details.BelowTheLineItem.AddRange(belowItems);
-            //    }
-                Mapping.MapInvoice.mappingErrors.Add(new MappingError(source.Details.BelowTheLineItem.GetType(), "BelowTheLineItem nicht konvertiert."));
+                //    if (source.Details.BelowTheLineItem.Length > 0)
+                //    {
+                //        List<BelowTheLineItemType> belowItems = new List<BelowTheLineItemType>();
+                //        foreach (SRC.BelowTheLineItemType item in source.Details.BelowTheLineItem)
+                //        {
+                //            belowItems.Add(new BelowTheLineItemType()
+                //            {
+                //                Description = item.Description,
+                //                LineItemAmount = item.LineItemAmount
+                //            });
+                //        }
+                //        Invoice.Details.BelowTheLineItem.AddRange(belowItems);
+                //    }
+                Mapping.MapInvoice.MappingErrors.Add(new MappingError(source.Details.BelowTheLineItem.GetType(), "BelowTheLineItem nicht konvertiert."));
             }
             #endregion
 
             #region Tax
             invoice.Tax.TaxItem.Clear();
-            if (source.Tax.VAT.Any())
-                {
+            if (source.Tax.VAT != null)
+            {
                 foreach (var item in source.Tax.VAT)
                 {
                     if (item.Item.GetType() == typeof(SRC.TaxExemptionType))
@@ -227,19 +227,14 @@ namespace ebIModels.Mapping.V4p2
                         TaxItemType taxItem = new TaxItemType()
                         {
                             TaxPercent = new TaxPercentType()
-                    {
+                            {
                                 TaxCategoryCode = PlugInSettings.VStBefreitCode,
                                 Value = 0
                             },
                             TaxableAmount = item.TaxedAmount,
                             Comment = taxExemption.Value
-                    };
+                        };
                         invoice.Tax.TaxItem.Add(taxItem);
-                        if (source.Tax.VAT.Count() > 1)
-                        {
-                            Mapping.MapInvoice.mappingErrors.Add(new MappingError(source.Tax.VAT.GetType(), "Tax.Vat kann neben TaxExemption kein weiteres Element enthalten"));
-                }
-                        break;
                     }
                     SRC.VATRateType vATRate = (SRC.VATRateType)item.Item;
                     TaxItemType taxItemVat = new TaxItemType()
@@ -339,9 +334,9 @@ namespace ebIModels.Mapping.V4p2
             {
                 Name = address.Name,
                 //addrNew.Contact = address.Contact;
-                Phone = address.Phone ,
+                Phone = address.Phone,
                 POBox = address.POBox,
-                Email = address.Email ,
+                Email = address.Email,
                 //addrNew.Salutation = address.Salutation;
                 Street = address.Street,
                 Country = GetCountry(address.Country),
@@ -417,7 +412,7 @@ namespace ebIModels.Mapping.V4p2
                 TaxItemType taxItem = new TaxItemType()
                 {
                     TaxPercent = new TaxPercentType()
-            {
+                    {
                         TaxCategoryCode = PlugInSettings.VStBefreitCode,
                         Value = 0
                     },
@@ -443,7 +438,7 @@ namespace ebIModels.Mapping.V4p2
         private static List<ArticleNumberType> GetArtikelList(SRC.ArticleNumberType[] srcArticle)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
-            if (srcArticle==null)
+            if (srcArticle == null)
             {
                 return artNrList;
             }

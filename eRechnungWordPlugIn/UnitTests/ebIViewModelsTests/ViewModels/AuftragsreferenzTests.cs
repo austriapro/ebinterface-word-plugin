@@ -10,9 +10,22 @@ using ebIViewModels.ViewModels.Tests;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
 using System.Xml.Linq;
+using System.IO;
 
 namespace ebIViewModelsTests.ViewModels
 {
+    [SetUpFixture]
+    public class CommonSetUpClass
+    {
+        [OneTimeSetUp]
+        public void RunBeforeAnyTests()
+        {
+            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+            Environment.CurrentDirectory = dir;
+            Directory.SetCurrentDirectory(dir);
+            Console.WriteLine($"Directory:{dir}");
+        }
+    }
     [TestFixture]
     public class AuftragsreferenzTests : CommonTestSetup
     {

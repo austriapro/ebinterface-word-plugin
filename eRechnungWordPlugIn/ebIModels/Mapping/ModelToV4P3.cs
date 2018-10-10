@@ -176,17 +176,17 @@ namespace ebIModels.Mapping.V4p3
                     }
 
                     // Rabatte / Zuschläge
-                    lineItem.DiscountFlagSpecified = true;
+                    lineItem.DiscountFlagSpecified = false;
                     lineItem.DiscountFlag = false;
                     lineItem.ReductionAndSurchargeListLineItemDetails = null;
 
                     if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
                     {
-                        lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails);
+                        lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails, out bool discountFlag);
 
                         // Kein DIscount Flag, da das im Word PlugIn sowieso nicht unterstützt ist.
-                        //lineItem.DiscountFlag = srcLineItem.DiscountFlag;
-                        //lineItem.DiscountFlagSpecified = srcLineItem.DiscountFlagSpecified;
+                        lineItem.DiscountFlag = discountFlag;
+                        lineItem.DiscountFlagSpecified = discountFlag==true;
                     }
                     lineItem.Description = srcLineItem.Description.ToArray();
                     lineItem.ReCalcLineItemAmount();
@@ -322,16 +322,22 @@ namespace ebIModels.Mapping.V4p3
             return invoice;
         }
 
-        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(Model.ReductionAndSurchargeListLineItemDetailsType srcRed)
+        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(Model.ReductionAndSurchargeListLineItemDetailsType srcRed, out bool discoutFlag)
         {
+            discoutFlag = false;
             if (srcRed == null)
                 return null;
             ReductionAndSurchargeListLineItemDetailsType lineRed = new ReductionAndSurchargeListLineItemDetailsType
             {
                 Items = new object[srcRed.Items.Count]
             };
+            if (lineRed.Items.Count()==0)
+            {
+                return null;
+            }
+            discoutFlag = true;
             int i = 0;
-
+            
             foreach (var item1 in srcRed.Items)
             {
                 if (item1 is Model.ReductionAndSurchargeBaseType)

@@ -569,10 +569,13 @@ namespace ebIViewModels.ViewModels
 
         public string VmRecContact
         {
-            get { return _invoice.InvoiceRecipient.Contact.Name; }
+            get { return _invoice.InvoiceRecipient.Contact?.Name; }
             set
             {
-                if (_invoice.InvoiceRecipient.Contact.Name == value) return;
+                if (_invoice.InvoiceRecipient.Contact==null)
+                {
+                    _invoice.InvoiceRecipient.Contact = new ContactType();
+                }                
                 _invoice.InvoiceRecipient.Contact.Name = value;
                 OnPropertyChanged();
             }
@@ -2032,9 +2035,9 @@ namespace ebIViewModels.ViewModels
         internal virtual void BillerSettings2Vm()
         {
             _invoice.Biller.Address.Name = PlugInSettings.Default.Name;
-            _invoice.Biller.Address.Country.CountryCodeText = PlugInSettings.Default.Land;
+            _invoice.Biller.Address.Country = new CountryType(PlugInSettings.Default.Land.ToEnum(CountryCodeType.AT));
             _invoice.Biller.Address.Street = PlugInSettings.Default.Strasse;
-            _invoice.Biller.Contact.Name = PlugInSettings.Default.Contact;
+            _invoice.Biller.Contact = new ContactType() {Name= PlugInSettings.Default.Contact };
             _invoice.Biller.Address.AddressIdentifier = new List<AddressIdentifierType>();
             _invoice.Biller.Address.AddressIdentifier = SetGln(_invoice.Biller.Address.AddressIdentifier, PlugInSettings.Default.BillerGln);
             _invoice.Biller.Address.Email = PlugInSettings.Default.Email;

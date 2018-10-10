@@ -207,7 +207,7 @@ namespace ebIModels.Mapping.V4p1
                 //    }
                 //    invoice.Details.BelowTheLineItem.AddRange(belowItems);
                 //}
-                Mapping.MapInvoice.mappingErrors.Add(new MappingError(source.Details.BelowTheLineItem.GetType(), "BelowTheLineItem nicht konvertiert."));
+                Mapping.MapInvoice.MappingErrors.Add(new MappingError(source.Details.BelowTheLineItem.GetType(), "BelowTheLineItem nicht konvertiert."));
             }
             #endregion
 
@@ -231,24 +231,25 @@ namespace ebIModels.Mapping.V4p1
                             Comment = taxExemption.Value
                         };
                         invoice.Tax.TaxItem.Add(taxItem);
-                        if (source.Tax.VAT.Count() > 1)
-                        {
-                            Mapping.MapInvoice.mappingErrors.Add(new MappingError(source.Tax.VAT.GetType(), "Tax.Vat kann neben TaxExemption kein weiteres Element enthalten"));
-                        }
-                        break;
+
                     }
-                    SRC.VATRateType vATRate = (SRC.VATRateType)item.Item;
-                    TaxItemType taxItemVat = new TaxItemType()
+                    else
                     {
-                        TaxPercent = new TaxPercentType()
+                        SRC.VATRateType vATRate = (SRC.VATRateType)item.Item;
+                        TaxItemType taxItemVat = new TaxItemType()
                         {
-                            Value = vATRate.Value,
-                            TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
-                        },
-                        TaxAmount = item.Amount,
-                        TaxableAmount = item.TaxedAmount,
-                    };
-                    invoice.Tax.TaxItem.Add(taxItemVat);
+                            TaxPercent = new TaxPercentType()
+                            {
+                                Value = vATRate.Value,
+                                TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
+                            },
+                            TaxAmount = item.Amount,
+                            TaxableAmount = item.TaxedAmount,
+                            TaxAmountSpecified = true
+                        };
+                        invoice.Tax.TaxItem.Add(taxItemVat);
+                    }
+                    
                 }
             }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using ebIModels.Schema;
 using ebIModels.Services;
 using SettingsManager;
+using System.Diagnostics;
 
 namespace ebIModels.Models
 {
@@ -228,9 +229,13 @@ namespace ebIModels.Models
 
     public partial class DetailsType
     {
-  
+
         public void RecalcItemList()
         {
+            if (ItemList == null)
+            {
+                return;
+            }
             foreach (ItemListType item in ItemList)
             {
                 foreach (ListLineItemType lineItem in item.ListLineItem)
@@ -259,7 +264,7 @@ namespace ebIModels.Models
         {
             decimal baseAmount = UnitPrice.Value * Quantity.Value;
             decimal netAmount = baseAmount;
-            if ((ReductionAndSurchargeListLineItemDetails!=null) && (ReductionAndSurchargeListLineItemDetails.Items.Any()))
+            if ((ReductionAndSurchargeListLineItemDetails != null) && (ReductionAndSurchargeListLineItemDetails.Items.Any()))
             {
                 decimal rabattProzent = ((ReductionAndSurchargeBaseType)ReductionAndSurchargeListLineItemDetails.Items[0]).Percentage;
                 decimal rabatt = (baseAmount * rabattProzent / 100);
@@ -270,7 +275,7 @@ namespace ebIModels.Models
     }
     public partial class ReductionAndSurchargeListLineItemDetailsType
     {
-        public ReductionAndSurchargeListLineItemDetailsType() 
+        public ReductionAndSurchargeListLineItemDetailsType()
         {
             ItemsElementName = new List<ItemsChoiceType>();
             Items = new List<object>();
@@ -322,10 +327,13 @@ namespace ebIModels.Models
 
     public partial class TaxItemType
     {
-        public static VatDefaultValue GetVatValueFromTaxItem(TaxItemType tax)
+        public static VatDefaultValue GetVatValueFromTaxItem(TaxItemType tax, bool VatBerechtigt)
         {
-            VatDefaultValue vatDefault = new VatDefaultValue();
-            vatDefault= PlugInSettings.Default.VatDefaultValues.FirstOrDefault(p=>p.Code == tax.TaxPercent.TaxCategoryCode);
+            if (!VatBerechtigt)
+            {
+                return PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
+            }
+            VatDefaultValue vatDefault = PlugInSettings.Default.VatDefaultValues.FirstOrDefault(p => p.Code == tax.TaxPercent.TaxCategoryCode);
             return vatDefault;
         }
 
@@ -358,15 +366,12 @@ namespace ebIModels.Models
 
                         var taxValue = lineItem.TaxItem.TaxPercent;
                         decimal taxVal = taxValue.Value;
-                        if (taxItems.ContainsKey(taxVal))
-                        {
-                            taxItems[taxVal].TaxableAmount += lineItem.LineItemAmount;
-                            //taxItems[taxVal].Amount += (lineItem.LineItemAmount * taxValue.Value / 100); // Bad Idea produces to differences
-                        }
-                        else
+                        Debug.WriteLine($"Amount:{lineItem.LineItemAmount} - {lineItem.TaxItem.TaxPercent.Value}");
+                        if (!taxItems.ContainsKey(taxVal))
                         {
                             taxItems.Add(taxVal, lineItem.TaxItem);
                         }
+                        taxItems[taxVal].TaxableAmount += lineItem.LineItemAmount;
                     }
 
                 }
@@ -374,7 +379,8 @@ namespace ebIModels.Models
             foreach (var taxItem in taxItems)
             {
                 var item = taxItem.Value;
-                item.TaxPercent.Value = (item.TaxableAmount * item.TaxPercent.Value / 100).FixedFraction(2);
+                item.TaxPercent.Value = taxItem.Key;
+                item.TaxAmount = item.TaxableAmount * item.TaxPercent.Value / 100;
                 tax.TaxItem.Add(item);
             }
             return tax;

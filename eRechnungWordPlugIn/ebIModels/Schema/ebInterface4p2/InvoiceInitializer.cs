@@ -260,7 +260,7 @@ namespace ebIModels.Schema.ebInterface4p2
                 decimal rabatt = (baseAmount * rabattProzent / 100).FixedFraction(2);
                 netAmount = baseAmount - rabatt;
             }
-            LineItemAmount = netAmount;
+            LineItemAmount = netAmount.FixedFraction(2);
         }
     }
 

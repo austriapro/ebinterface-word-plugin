@@ -182,10 +182,13 @@ namespace ebIModels.Mapping.V4p0
                                 TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vatItem.TaxRate.Value).Code,
                                 Value = vatItem.TaxRate.Value
                             },
-                            TaxAmountSpecified = false
+                            TaxAmountSpecified = true,
+                            TaxableAmount = vatItem.TaxedAmount,
+                            TaxAmount = vatItem.Amount
+
                         };
                         invoice.Tax.TaxItem.Add(taxItem);
-                        break;
+
                     }
                     else
                     {

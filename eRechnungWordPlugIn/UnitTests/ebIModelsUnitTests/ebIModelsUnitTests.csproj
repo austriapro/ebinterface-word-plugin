@@ -61,7 +61,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
   <ItemGroup>
     <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=4.0.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CompareNETObjects.4.00.0.0\lib\net45\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
@@ -164,6 +163,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Daten\Rechng-V4p3-2017-001-neu.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\Test-5p0.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Daten\testTemplateInvoiceTest.xml">

@@ -77,7 +77,7 @@ namespace ebIViewModels.ViewModels
                     Unit = details.Einheit,
                     Value = details.Menge
                 };
-                if (details.Rabatt !=0)
+                if (details.Rabatt != 0)
                 {
                     ReductionAndSurchargeListLineItemDetailsType red = new ReductionAndSurchargeListLineItemDetailsType
                     {
@@ -118,7 +118,8 @@ namespace ebIViewModels.ViewModels
             // ItemListType listType = details.ItemList.FirstOrDefault(); // DAs PlugIn hat nur hier nur einen Eintrag
 
             DetailsListConverter details = uc.Resolve<DetailsListConverter>(); // new DetailsListViewModel();
-            if (!itemList.Any())
+
+            if (itemList==null)
             {
                 return details;
             }
@@ -141,20 +142,16 @@ namespace ebIViewModels.ViewModels
                 if (articleNumberType != null)
                     detailsVM.ArtikelNr = articleNumberType.Value;
                 detailsVM.Bezeichnung = listLineItem.Description[0];  // .UnescapeXml();
+
+                // Muss vor Zuweisung des Einzelpreis stehen damit UpdateTotal nicht stirbt
+
+                detailsVM.VatItem = TaxItemType.GetVatValueFromTaxItem(listLineItem.TaxItem, PlugInSettings.Default.VStBerechtigt);
+
                 detailsVM.Einheit = listLineItem.Quantity.Unit;
                 detailsVM.EinzelPreis = listLineItem.UnitPrice.Value;
                 // det.GesamtBruttoBetrag = listLineItem.LineItemAmount;
                 detailsVM.Menge = listLineItem.Quantity.Value;
 
-                if (!PlugInSettings.Default.VStBerechtigt)
-                {
-
-                    detailsVM.VatItem = PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
-                }
-                else
-                {
-                    detailsVM.VatItem = TaxItemType.GetVatValueFromTaxItem(listLineItem.TaxItem);
-                }
                 if (listLineItem.ReductionAndSurchargeListLineItemDetails != null)
                 {
                     if (listLineItem.ReductionAndSurchargeListLineItemDetails.Items.FirstOrDefault() is ReductionAndSurchargeBaseType red)

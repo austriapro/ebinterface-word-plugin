@@ -23,6 +23,7 @@ namespace ebIViewModelsTests.ViewModels
         internal BillerSettingsViewModel BillerSettings; // 
         internal XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
 
+
         public CommonTestSetup()
         {
             InitGlobals();
@@ -42,7 +43,8 @@ namespace ebIViewModelsTests.ViewModels
             InvVm = Cmn.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", Cmn.Invoice));
             InvVm.NoUpdatePrompt = true;
             ErrorActionPane = Cmn.UContainer.Resolve<ErrorActionPaneViewModel>();
-            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
+            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/5p0/");
+            Console.WriteLine("Init Globals done");
         }
 
         internal void SetupSettings()
@@ -73,6 +75,7 @@ namespace ebIViewModelsTests.ViewModels
             var currency = xEl.Element("Currency").Value;
             BillerSettings.CurrSelected = BillerSettings.CurrencyList.FirstOrDefault(p => p.Code == currency);
             BillerSettings.IsVatBerechtigt = bool.Parse(xEl.Element("IsVatBerechtigt").Value);
+            Console.WriteLine("SetupSettings done");
         }
 
         public void ListErrorPanel()

@@ -16,19 +16,6 @@ using NUnit.Framework;
 
 namespace ebICommonTestSetup
 {
-    [SetUpFixture]
-    public class CommonSetUpClass
-    {
-        [OneTimeSetUp]
-       public void RunBeforeAnyTests()
-        {
-            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
-            Environment.CurrentDirectory = dir;
-
-            // or
-            Directory.SetCurrentDirectory(dir);
-        }
-    }
     [TestFixture]
     public class Common
     {

@@ -182,10 +182,12 @@ namespace ebIModels.Mapping.V4p1
                     {
                         lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails, out bool discountFlag);
 
-                        // Kein DIscount Flag, da das im Word PlugIn sowieso nicht unterstützt ist.
-                        lineItem.DiscountFlag = discountFlag;
-                        lineItem.DiscountFlagSpecified = true;
-                    } 
+                        if (lineItem.ReductionAndSurchargeListLineItemDetails!=null)
+                        {
+                            lineItem.DiscountFlag = discountFlag;
+                            lineItem.DiscountFlagSpecified = true;
+
+                        }                    } 
                     lineItem.Description = srcLineItem.Description.ToArray();
                     lineItem.ReCalcLineItemAmount();
                     // Steuer
@@ -328,16 +330,17 @@ namespace ebIModels.Mapping.V4p1
                 
                 return null;
             }
-            
+
             ReductionAndSurchargeListLineItemDetailsType lineRed = new ReductionAndSurchargeListLineItemDetailsType
             {
                 Items = new object[srcRed.Items.Count]
             };
-            int i = 0;
-            if (lineRed.Items.Count()>0)
+            if (lineRed.Items.Count() == 0)
             {
-                discountFlag = true;
+                return null;
             }
+            discountFlag = true;
+            int i = 0;
             foreach (var item1 in srcRed.Items)
             {
                 if (item1 is Model.ReductionAndSurchargeBaseType)

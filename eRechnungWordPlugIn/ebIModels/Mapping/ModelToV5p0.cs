@@ -20,7 +20,7 @@ namespace ebIModels.Mapping.V5p0
         internal static TARGET.InvoiceType MapModelToV5p0(Model.IInvoiceModel source)
         {
             TARGET.InvoiceType invoice = new TARGET.InvoiceType();
-            mappingErrors = new List<MappingError>();
+
 
             #region Rechnungskopf
 
@@ -71,7 +71,7 @@ namespace ebIModels.Mapping.V5p0
             #region Related Document
             // RelatedDocument [0..*] RelatedDocumentType
 
-            if (!invoice.RelatedDocument.Any())
+            if (invoice.RelatedDocument != null)
             {
                 List<RelatedDocumentType> relDocs = new List<RelatedDocumentType>();
                 foreach (var rDoc in invoice.RelatedDocument)
@@ -196,62 +196,66 @@ namespace ebIModels.Mapping.V5p0
 
             var detailsItemList = new List<ItemListType>();
 
-            foreach (Model.ItemListType srcItemList in source.Details.ItemList)
+            if (source.Details.ItemList != null)
             {
-                ItemListType itemList = new ItemListType();
-
-                var itemListLineItem = new List<ListLineItemType>();
-                foreach (Model.ListLineItemType srcLineItem in srcItemList.ListLineItem)
+                foreach (Model.ItemListType srcItemList in source.Details.ItemList)
                 {
-                    ListLineItemType lineItem = new ListLineItemType
+                    ItemListType itemList = new ItemListType();
+
+                    var itemListLineItem = new List<ListLineItemType>();
+                    foreach (Model.ListLineItemType srcLineItem in srcItemList.ListLineItem)
                     {
-                        PositionNumber = srcLineItem.PositionNumber,
-                        Description = srcLineItem.Description.ToArray(),
-                        AdditionalInformation = null,
+                        ListLineItemType lineItem = new ListLineItemType
+                        {
+                            PositionNumber = srcLineItem.PositionNumber,
+                            Description = srcLineItem.Description?.ToArray(),
+                            AdditionalInformation = null,
 
-                        ArticleNumber = GetArtikelList(srcLineItem.ArticleNumber),
+                            ArticleNumber = GetArtikelList(srcLineItem.ArticleNumber),
 
-                        // Menge
-                        Quantity = new UnitType()
-                    };
-                    lineItem.Quantity.Unit = srcLineItem.Quantity.Unit;
-                    lineItem.Quantity.Value = srcLineItem.Quantity.Value;
+                            // Menge
+                            Quantity = new UnitType()
+                        };
+                        lineItem.Quantity.Unit = srcLineItem.Quantity.Unit;
+                        lineItem.Quantity.Value = srcLineItem.Quantity.Value;
 
-                    // Einzelpreis
-                    lineItem.UnitPrice = new UnitPriceType()
-                    {
-                        Value = srcLineItem.UnitPrice.Value
-                    };
+                        // Einzelpreis
+                        lineItem.UnitPrice = new UnitPriceType()
+                        {
+                            Value = srcLineItem.UnitPrice.Value
+                        };
 
 
-                    // Auftragsreferenz
-                    if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber) ||
-                        source.InvoiceRecipient.BestellPositionErforderlich)   // Orderposition angegeben oder erforderlich
-                    {
-                        lineItem.InvoiceRecipientsOrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
-                        lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber =
-                            srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber;
+                        // Auftragsreferenz
+                        if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber) ||
+                            source.InvoiceRecipient.BestellPositionErforderlich)   // Orderposition angegeben oder erforderlich
+                        {
+                            lineItem.InvoiceRecipientsOrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
+                            lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber =
+                                srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber;
+                        }
+
+                        // Rabatte / Zuschläge                    
+                        if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
+                        {
+                            lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails);
+
+                            // Kein DIscount Flag, da das im Word PlugIn sowieso nicht unterstützt ist.
+                            //lineItem.DiscountFlag = srcLineItem.DiscountFlag;
+                            //lineItem.DiscountFlagSpecified = srcLineItem.DiscountFlagSpecified;
+                        }
+                        lineItem.Description = srcLineItem.Description?.ToArray();
+                        lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        //lineItem.ReCalcLineItemAmount();
+                        // Steuer
+                        lineItem.TaxItem = MapTaxItemType(srcLineItem.TaxItem);
+
+                        itemListLineItem.Add(lineItem);
                     }
-
-                    // Rabatte / Zuschläge                    
-                    if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
-                    {
-                        lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails);
-
-                        // Kein DIscount Flag, da das im Word PlugIn sowieso nicht unterstützt ist.
-                        //lineItem.DiscountFlag = srcLineItem.DiscountFlag;
-                        //lineItem.DiscountFlagSpecified = srcLineItem.DiscountFlagSpecified;
-                    }
-                    lineItem.Description = srcLineItem.Description.ToArray();
-                    lineItem.LineItemAmount = srcLineItem.LineItemAmount;
-                    //lineItem.ReCalcLineItemAmount();
-                    // Steuer
-                    lineItem.TaxItem = MapTaxItemType(srcLineItem.TaxItem);
-
-                    itemListLineItem.Add(lineItem);
+                    itemList.ListLineItem = itemListLineItem.ToArray();
+                    detailsItemList.Add(itemList);
                 }
-                itemList.ListLineItem = itemListLineItem.ToArray();
-                detailsItemList.Add(itemList);
+
             }
             invoice.Details.ItemList = detailsItemList.ToArray();
             #endregion
@@ -563,6 +567,10 @@ namespace ebIModels.Mapping.V5p0
         /// <returns></returns>
         private static TaxType MapTax(Model.TaxType SourceTax)
         {
+            if (SourceTax==null || SourceTax.TaxItem==null)
+            {
+                return null;
+            }
             TaxType tax = new TaxType();
 
             List<TaxItemType> taxItems = new List<TaxItemType>();

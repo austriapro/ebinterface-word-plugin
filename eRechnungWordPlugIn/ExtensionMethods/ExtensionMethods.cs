@@ -248,6 +248,24 @@ namespace ExtensionMethods
             }
             return dec;
         }
+
+        /// <summary>
+        /// Gets the XPath of the given XElement
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <returns></returns>
+        public static string GetPath(this XElement node)
+        {
+            string path = node.Name.LocalName;
+            XElement currentNode = node;
+            while (currentNode.Parent != null)
+            {
+                currentNode = currentNode.Parent;
+                path = currentNode.Name.LocalName + "/" + path;
+            }
+            return path;
+        }
+
         /// <summary>
         /// To the x document.
         /// </summary>
