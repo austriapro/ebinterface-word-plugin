@@ -32,6 +32,7 @@
             this.lblHeadline = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.aboutViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,16 +42,16 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.productDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.authorsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LicenseColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmdBtnDownload = new WinFormsMvvm.Controls.CommandButton();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.aboutViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.productDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.authorsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LicenseColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -60,7 +61,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // lblHeadline
@@ -71,7 +71,7 @@
             this.lblHeadline.Name = "lblHeadline";
             this.lblHeadline.Size = new System.Drawing.Size(448, 24);
             this.lblHeadline.TabIndex = 4;
-            this.lblHeadline.Text = "AUSTRIAPRO - Word PlugIn für ebInterface 4.3";
+            this.lblHeadline.Text = "AUSTRIAPRO - Word PlugIn für ebInterface 5.0";
             // 
             // label2
             // 
@@ -92,6 +92,10 @@
             this.lblVersion.Size = new System.Drawing.Size(45, 13);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "4.2.x.y";
+            // 
+            // aboutViewModelBindingSource
+            // 
+            this.aboutViewModelBindingSource.DataSource = typeof(ebIViewModels.RibbonViewModels.AboutViewModel);
             // 
             // linkLabel1
             // 
@@ -192,6 +196,30 @@
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
+            // productDataGridViewTextBoxColumn
+            // 
+            this.productDataGridViewTextBoxColumn.DataPropertyName = "Product";
+            this.productDataGridViewTextBoxColumn.HeaderText = "Package";
+            this.productDataGridViewTextBoxColumn.Name = "productDataGridViewTextBoxColumn";
+            this.productDataGridViewTextBoxColumn.ReadOnly = true;
+            this.productDataGridViewTextBoxColumn.Width = 200;
+            // 
+            // authorsDataGridViewTextBoxColumn
+            // 
+            this.authorsDataGridViewTextBoxColumn.DataPropertyName = "Authors";
+            this.authorsDataGridViewTextBoxColumn.HeaderText = "Author(en)";
+            this.authorsDataGridViewTextBoxColumn.Name = "authorsDataGridViewTextBoxColumn";
+            this.authorsDataGridViewTextBoxColumn.ReadOnly = true;
+            this.authorsDataGridViewTextBoxColumn.Width = 200;
+            // 
+            // LicenseColumn
+            // 
+            this.LicenseColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.LicenseColumn.DataPropertyName = "LicenseUrl";
+            this.LicenseColumn.HeaderText = "Lizenz";
+            this.LicenseColumn.Name = "LicenseColumn";
+            this.LicenseColumn.ReadOnly = true;
+            // 
             // bindingSource1
             // 
             this.bindingSource1.DataMember = "NugetPackages";
@@ -262,34 +290,6 @@
             this.splitContainer1.SplitterDistance = 457;
             this.splitContainer1.TabIndex = 18;
             // 
-            // aboutViewModelBindingSource
-            // 
-            this.aboutViewModelBindingSource.DataSource = typeof(ebIViewModels.RibbonViewModels.AboutViewModel);
-            // 
-            // productDataGridViewTextBoxColumn
-            // 
-            this.productDataGridViewTextBoxColumn.DataPropertyName = "Product";
-            this.productDataGridViewTextBoxColumn.HeaderText = "Package";
-            this.productDataGridViewTextBoxColumn.Name = "productDataGridViewTextBoxColumn";
-            this.productDataGridViewTextBoxColumn.ReadOnly = true;
-            this.productDataGridViewTextBoxColumn.Width = 200;
-            // 
-            // authorsDataGridViewTextBoxColumn
-            // 
-            this.authorsDataGridViewTextBoxColumn.DataPropertyName = "Authors";
-            this.authorsDataGridViewTextBoxColumn.HeaderText = "Author(en)";
-            this.authorsDataGridViewTextBoxColumn.Name = "authorsDataGridViewTextBoxColumn";
-            this.authorsDataGridViewTextBoxColumn.ReadOnly = true;
-            this.authorsDataGridViewTextBoxColumn.Width = 200;
-            // 
-            // LicenseColumn
-            // 
-            this.LicenseColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.LicenseColumn.DataPropertyName = "LicenseUrl";
-            this.LicenseColumn.HeaderText = "Lizenz";
-            this.LicenseColumn.Name = "LicenseColumn";
-            this.LicenseColumn.ReadOnly = true;
-            // 
             // FrmAboutView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,6 +305,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "FrmAboutView";
             this.Text = "Über AUSTRIAPRO ebInterface Word Vorlage";
+            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -316,7 +317,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.aboutViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

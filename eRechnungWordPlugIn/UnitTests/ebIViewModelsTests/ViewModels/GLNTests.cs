@@ -64,7 +64,7 @@ namespace ebIViewModelsTests.ViewModels
             InvVm.SaveTemplateCommand.Execute(GlnSaveAndLoadFile);
             XDocument xdoc = XDocument.Load(GlnSaveAndLoadFile);
             var nspm = new XmlNamespaceManager(new NameTable());
-            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
+            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/5p0/");
             var gln = xdoc.XPathSelectElement(BillerGlnPath, nspm).Value;
             Assert.AreEqual(SampleGln, gln,"GLN aus XML File");
 

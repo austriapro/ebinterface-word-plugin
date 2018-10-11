@@ -36,8 +36,11 @@ namespace ebIModels.Services
         public ProductInfo()
         {
             VersionInfo = new ProductVersionInfo(Properties.Resources.ProductInfo);
+#if DEBUG
+            latestRelease = null;
+#else
             GetLatestReleaseFromGitHub();
-
+#endif
         }
 
         private void GetLatestReleaseFromGitHub()

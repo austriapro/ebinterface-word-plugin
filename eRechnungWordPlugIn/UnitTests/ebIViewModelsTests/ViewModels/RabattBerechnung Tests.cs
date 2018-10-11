@@ -45,6 +45,7 @@ namespace ebIViewModelsTests.ViewModels
             const string RabattSaveReload = @"Daten\RabattSaveReload.xml";
             InvVm.SaveEbinterfaceCommand.Execute(RabattSaveReload);
             var inv2 = Cmn.UContainer.Resolve<InvoiceViewModel>();
+            inv2.NoUpdatePrompt = true;
             inv2.LoadTemplateCommand.Execute(RabattSaveReload);
             Assert.AreEqual(InvVm.DetailsView[0].Rabatt, inv2.DetailsView[0].Rabatt);
         }

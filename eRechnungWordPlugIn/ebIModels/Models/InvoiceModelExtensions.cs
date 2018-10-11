@@ -28,29 +28,20 @@ namespace ebIModels.Models
     {
         public InvoiceModel()
         {
-            this.paymentConditionsField = new PaymentConditionsType();
-            this.paymentMethodField = new PaymentMethodType();
-            this.taxField = new TaxType();
-            this.reductionAndSurchargeDetailsField = new ReductionAndSurchargeDetailsType();
-            this.detailsField = new DetailsType();
-            this.orderingPartyField = new OrderingPartyType();
-            this.invoiceRecipientField = new InvoiceRecipientType();
-            this.billerField = new BillerType();
-            this.deliveryField = new DeliveryType();
             this.InvoiceCurrency = ebIModels.Mapping.ModelConstants.CurrencyCodeFixed;
-            this.cancelledOriginalDocumentField = new CancelledOriginalDocumentType();
-            this.relatedDocumentField = new List<RelatedDocumentType>();
             this.additionalInformationField = new List<AdditionalInformationType>();
-            this.deliveryField = new DeliveryType();
             this.billerField = new BillerType();
+            this.cancelledOriginalDocumentField = new CancelledOriginalDocumentType();
+            this.deliveryField = new DeliveryType();
+            this.detailsField = new DetailsType();
+            this.documentTypeField = new DocumentTypeType();
             this.invoiceRecipientField = new InvoiceRecipientType();
             this.orderingPartyField = new OrderingPartyType();
-            this.detailsField = new DetailsType();
-            this.reductionAndSurchargeDetailsField = new ReductionAndSurchargeDetailsType();
-            this.taxField = new TaxType();
-            this.paymentMethodField = new PaymentMethodType();
             this.paymentConditionsField = new PaymentConditionsType();
-            this.documentTypeField = new DocumentTypeType();
+            this.paymentMethodField = new PaymentMethodType();
+            this.reductionAndSurchargeDetailsField = new ReductionAndSurchargeDetailsType();
+            this.relatedDocumentField = new List<RelatedDocumentType>();
+            this.taxField = new TaxType();
             //this.SetInvoiceVersion();
             //this.CurrentSchemas = _schemaInfo;
             this.Version = Models.EbIVersion.V5P0;
@@ -98,6 +89,7 @@ namespace ebIModels.Models
             decimal taxAmount = 0;
             if (Tax != null)
             {
+                
                 foreach (var vatItem in this.Tax.TaxItem)
                 {
 
@@ -176,6 +168,7 @@ namespace ebIModels.Models
     }
     public partial class AbstractPartyType
     {
+
         public void SetFurtherIdenfication(FurtherIdentificationType.SupportedIds id, string value)
         {
             if (FurtherIdentification == null)
@@ -305,6 +298,12 @@ namespace ebIModels.Models
         {
             this.addressField = new AddressType();
             this.orderReferenceField = new OrderReferenceType();
+            this.contactField = new ContactType()
+            {
+                Email = new List<string>(),
+                Phone = new List<string>()
+            };
+
         }
     }
     public partial class PaymentConditionsType
@@ -327,6 +326,14 @@ namespace ebIModels.Models
 
     public partial class TaxItemType
     {
+        public TaxItemType()
+        {
+            TaxPercent = new TaxPercentType()
+            {
+                TaxCategoryCode = PlugInSettings.Default.MwStDefaultValue.Code,
+                Value = PlugInSettings.Default.MwStDefaultValue.MwStSatz
+            };
+        }
         public static VatDefaultValue GetVatValueFromTaxItem(TaxItemType tax, bool VatBerechtigt)
         {
             if (!VatBerechtigt)
@@ -353,7 +360,7 @@ namespace ebIModels.Models
         {
             TaxType tax = new TaxType();
 
-            if (itemList.Count == 0)
+            if (itemList == null || itemList.Count == 0)
                 return tax;
             // Dictionary für alle USt Angaben
             Dictionary<decimal, TaxItemType> taxItems = new Dictionary<decimal, TaxItemType>();
@@ -371,7 +378,10 @@ namespace ebIModels.Models
                         {
                             taxItems.Add(taxVal, lineItem.TaxItem);
                         }
-                        taxItems[taxVal].TaxableAmount += lineItem.LineItemAmount;
+                        else
+                        {
+                            taxItems[taxVal].TaxableAmount += lineItem.LineItemAmount;
+                        }
                     }
 
                 }

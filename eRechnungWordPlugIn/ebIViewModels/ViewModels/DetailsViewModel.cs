@@ -224,10 +224,10 @@ namespace ebIViewModels.ViewModels
             }
         }
 
-        //public bool IsVatBerechtigt
-        //{
-        //    get { return PlugInSettings.Default.VStBerechtigt; }
-        //}
+        public bool IsVatBerechtigt
+        {
+            get { return PlugInSettings.Default.VStBerechtigt; }
+        }
 
         //private decimal _vatSatz;
         ///// <summary>

@@ -19,7 +19,7 @@ namespace ebIViewModelsTests.ViewModels
         const string SaveTempRelated = @"Daten\RelatedDoc.xml";
         const string SaveEmptyCommentRelated = @"Daten\RelatedDocSaveEmptyComment.xml";
         const string RelatedSample = @"Daten\RelatedDocSample.xml";
-        private XNamespace ns = @"http://www.ebinterface.at/schema/4p2/";
+        private XNamespace ns = @"http://www.ebinterface.at/schema/5p0/";
 
         private XElement GetElement(XDocument xdoc, string xName)
         {

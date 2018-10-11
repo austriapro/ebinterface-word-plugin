@@ -120,7 +120,8 @@ namespace eRechnung
             {
                 Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, ex.ToString());
                 throw;
-            }            // System.Windows.Forms.Application.Idle += OnIdle;
+            }            
+            // System.Windows.Forms.Application.Idle += OnIdle;
 
 
         }
@@ -144,7 +145,7 @@ namespace eRechnung
         /// </summary>
         private void InternalStartup()
         {
-            this.b28.SelectionChange += new Microsoft.Office.Tools.Word.SelectionEventHandler(this.B28_SelectionChange);
+            
             this.CC_InvoiceDocType.Validating += new System.ComponentModel.CancelEventHandler(this.CC_InvoiceDocType_Validating);
             this.CC_InvoiceDocType.Validated += new System.EventHandler(this.CC_InvoiceDocType_Validated);
             this.CC_BillerCountry.Validating += new System.ComponentModel.CancelEventHandler(this.BillerCountry_CC_Validating);
@@ -153,7 +154,7 @@ namespace eRechnung
             this.CC_RecCountry.Validated += new System.EventHandler(this.ReceipientCountry_CC_Validated);
             this.CC_InvCurrency.Validating += new System.ComponentModel.CancelEventHandler(this.CC_InvCurrency_Validating);
             this.CC_InvCurrency.Validated += new System.EventHandler(this.CC_InvCurrency_Validated);
-            this.b98.SelectionChange += new Microsoft.Office.Tools.Word.SelectionEventHandler(this.B98_SelectionChange);
+            
             this.CC_RefType.Validating += new System.ComponentModel.CancelEventHandler(this.CC_RefType_Validating);
             this.CC_RefType.Validated += new System.EventHandler(this.CC_RefType_Validated);
             this.CC_RefDocType.Validating += new System.ComponentModel.CancelEventHandler(this.CC_RefDocType_Validating);
@@ -1299,16 +1300,6 @@ namespace eRechnung
             //     MessageBox.Show("Old");
             this.Application.ActiveWindow.View.ReadingLayout = false;
             //  CachedString = "Old";
-        }
-
-        private void B28_SelectionChange(object sender, SelectionEventArgs e)
-        {
-
-        }
-
-        private void B98_SelectionChange(object sender, SelectionEventArgs e)
-        {
-
         }
 
     }

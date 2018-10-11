@@ -63,13 +63,13 @@ namespace ebIViewModels.ViewModels
                 };
                 TaxItemType taxItem = new TaxItemType()
                 {
-                    TaxableAmount = lineItem.LineItemAmount,
+                    TaxableAmount = details.NettoBetragZeile,
                     TaxPercent = new TaxPercentType()
                     {
                         TaxCategoryCode = details.VatItem.Code,
                         Value = details.VatItem.MwStSatz
                     },
-                    TaxAmount = (lineItem.LineItemAmount * details.VatItem.MwStSatz / 100).FixedFraction(2)
+                    TaxAmount = (details.NettoBetragZeile * details.VatItem.MwStSatz / 100).FixedFraction(2)
                 };
                 lineItem.TaxItem = taxItem;
                 lineItem.Quantity = new UnitType()
