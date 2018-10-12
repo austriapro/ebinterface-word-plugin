@@ -366,7 +366,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>eRechnung_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint Condition="'$(Configuration)'=='Debug'">5F02904310B5B1E9DA5304D776A26D821173903C</ManifestCertificateThumbprint>
