@@ -79,18 +79,17 @@ namespace ebIModels.Schema
         {
             IInvoiceModel invoice = new Models.InvoiceModel();
             // invoice.Biller.Address.Country.CountryCodeText = CountryCodeType.AT.ToString();
-            invoice.Biller.Address.Country = new CountryType(CountryCodeType.AT);
-            invoice.InvoiceRecipient.Address.Country = new CountryType(CountryCodeType.AT);
+            invoice.Biller = new BillerType();
+            invoice.InvoiceRecipient = new InvoiceRecipientType();
             invoice.DocumentTitle = "Demo Rechnung";
             invoice.InvoiceDate = DateTime.Today;
             invoice.InvoiceCurrency = ModelConstants.CurrencyCodeFixed;
-            invoice.Delivery.Item = null;
-            invoice.PaymentConditions.DueDate = DateTime.Today;
-            invoice.Biller.OrderReference.ReferenceDateSpecified = false;
-            invoice.Biller.VATIdentificationNumber = VatIdDefault;
-            invoice.InvoiceRecipient.VATIdentificationNumber = VatIdDefault;
             invoice.DocumentType = DocumentTypeType.Invoice;
             invoice.InvoiceSubtype = InvoiceSubtypes.GetSubtype(InvoiceSubtypes.ValidationRuleSet.Government);
+            invoice.Biller.OrderReference.ReferenceDateSpecified = false;
+            invoice.Biller.VATIdentificationNumber = VatIdDefault;
+            invoice.InvoiceRecipient.Address.Country = new CountryType(CountryCodeType.AT);
+            invoice.InvoiceRecipient.VATIdentificationNumber = VatIdDefault;
             return invoice;
         }
 

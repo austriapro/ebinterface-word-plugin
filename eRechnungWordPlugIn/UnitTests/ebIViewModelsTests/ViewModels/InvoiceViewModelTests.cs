@@ -92,6 +92,60 @@ namespace ebIViewModels.ViewModels.Tests
 
         }
         [Test]
+        public void CalculateTotalsTest()
+        {
+            string testInv = @"C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\UnitTests\ebIViewModelsTests\Daten\Test Vorlage 2014-500-2014-03-19.XML";
+            InvVm.LoadTemplateCommand.Execute(testInv);
+            var controllInvoice = InvoiceFactory.LoadTemplate(testInv);
+            Assert.AreEqual(1, controllInvoice.Details.ItemList.Count, "Count Details.ItemList");
+            Assert.AreEqual(controllInvoice.Details.ItemList[0].ListLineItem.Count, InvVm.DetailsView.Count, "Details Count");
+            Assert.Multiple(() =>
+            {
+                for (int i = 0; i < InvVm.DetailsView.Count; i++)
+                {
+                    var vmDetail = InvVm.DetailsView[i];
+                    vmDetail.UomEntries = new List<UnitOfMeasureEntries>(); // um den Object Dump klein zu halten
+                    vmDetail.UoMList = new System.ComponentModel.BindingList<UnitOfMeasureViewModel>(); // um den Object Dump klein zu halten
+                    vmDetail.VatList = new System.ComponentModel.BindingList<VatDefaultValue>();
+
+                    var cDetail = controllInvoice.Details.ItemList[0].ListLineItem[i];
+                    Console.WriteLine($"in Template Pos {cDetail.PositionNumber} ****************************************");
+                    cDetail.PrintDump();
+
+                    Console.WriteLine($"Zeile {i} in ViewModel, Pos {cDetail.PositionNumber} ****************************************");
+                    vmDetail.PrintDump();
+
+                    Assert.AreEqual(cDetail.ArticleNumber[0].Value, vmDetail.ArtikelNr, $"Pos {cDetail.PositionNumber}Artikelnr");
+                    Assert.AreEqual(cDetail.LineItemAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, LineItemAmount");
+                    Assert.AreEqual(cDetail.TaxItem.TaxAmount, vmDetail.MwStBetragZeile, $"Pos {cDetail.PositionNumber}, TaxAmount");
+                    Assert.AreEqual(cDetail.TaxItem.TaxableAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, TaxableAmount");
+                    Assert.AreEqual(cDetail.TaxItem.TaxPercent.Value, vmDetail.VatItem.MwStSatz, $"Pos {cDetail.PositionNumber}, TaxPercent.Value");
+                }
+            });
+            Assert.AreEqual(controllInvoice.Tax.TaxItem.Count, InvVm.VatView.VatViewList.Count, "Tax.TaxItem.Count");
+            Assert.Multiple(() =>
+            {
+                for (int i = 0; i < InvVm.VatView.VatViewList.Count; i++)
+                {
+                    var vmVat = InvVm.VatView.VatViewList[i];
+                    var cTaxItem = controllInvoice.Tax.TaxItem[i];
+                    Assert.AreEqual(cTaxItem.TaxPercent.TaxCategoryCode, vmVat.TaxCode, "TaxPercent.TaxCategoryCode");
+                    Assert.AreEqual(cTaxItem.TaxPercent.Value, vmVat.VatPercent, "TaxPercent.Value");
+                    Assert.AreEqual(cTaxItem.TaxableAmount, vmVat.VatBaseAmount, "TaxableAmount");
+                    Assert.AreEqual(cTaxItem.TaxAmount, vmVat.VatAmount, "TaxAmount");
+                }
+            });
+            //Console.WriteLine("VAT ***********************************");
+            //InvVm.VatView.VatViewList.PrintDump();
+            //controllInvoice.Tax.TaxItem.PrintDump();
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(controllInvoice.TotalGrossAmount, InvVm.VmInvTotalAmountDecimal, nameof(controllInvoice.TotalGrossAmount));
+                Assert.AreEqual(controllInvoice.NetAmount, InvVm.VmInvTotalNetAmount.ToDecimal(), nameof(controllInvoice.NetAmount));
+                Assert.AreEqual(controllInvoice.TaxAmountTotal, InvVm.VmInvTaxAmount.ToDecimal(), nameof(controllInvoice.TaxAmountTotal));
+            });
+        }
+        [Test]
         public void LoadTemplateTest()
         {
             InvVm.LoadTemplateCommand.Execute(ebICommonTestSetup.Common.InvTemplate);
@@ -372,5 +426,5 @@ namespace ebIViewModels.ViewModels.Tests
         //    privateInv.Invoke("CheckKontoVerbindung", InvVm.Results);
         //    Assert.IsTrue(InvVm.Results.IsValid);
         //}
-    }   
+    }
 }

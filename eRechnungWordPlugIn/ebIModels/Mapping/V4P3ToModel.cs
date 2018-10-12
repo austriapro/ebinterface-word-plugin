@@ -313,10 +313,10 @@ namespace ebIModels.Mapping.V4p3
 
         private static ContactType GetContact(SRC.AddressType address)
         {
-            if (string.IsNullOrEmpty(address.Contact))
-            {
-                return null;
-            }
+            //if (string.IsNullOrEmpty(address.Contact))
+            //{
+            //    return new ContactType();
+            //}
             ContactType contact = new ContactType()
             {
                 Email = new List<string>() { address.Email },

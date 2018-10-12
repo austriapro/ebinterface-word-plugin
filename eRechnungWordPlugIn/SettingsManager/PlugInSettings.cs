@@ -301,11 +301,13 @@ namespace SettingsManager
 
             return VatDefaultValues.FirstOrDefault(p => p.MwStSatz == percent);
         }
-        public VatDefaultValue GetValueFromCode(string code)
-        {
 
-            return VatDefaultValues.FirstOrDefault(p => p.Code == code);
-        }
+        // Schlechte Idee -> die Codes sind nicht eindeutig, MwSt% schon
+        //public VatDefaultValue GetValueFromCode(string code)
+        //{
+
+        //    return VatDefaultValues.FirstOrDefault(p => p.Code == code);
+        //}
 
         public VatDefaultValue IstNichtVStBerechtigtVatValue
         {

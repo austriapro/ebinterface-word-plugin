@@ -9,6 +9,7 @@ using ebIModels.Models;
 using SRC = ebIModels.Schema.ebInterface4p0;
 using ebIModels.Schema;
 using SettingsManager;
+using LogService;
 
 namespace ebIModels.Mapping.V4p0
 {
@@ -153,10 +154,11 @@ namespace ebIModels.Mapping.V4p0
                             lineItem.Description = srcLineItem.Description.ToList();
                         }
 
-                        // lineItem.LineItemAmount = srcLineItem.LineItemAmount;
-                        lineItem.ReCalcLineItemAmount();
+                        lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        
                         // Steuer
                         lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.TaxRate, lineItem.LineItemAmount);
+                        lineItem.ReCalcLineItemAmount();
                         item.ListLineItem.Add(lineItem);
                     }
                     invoice.Details.ItemList.Add(item);
@@ -165,50 +167,51 @@ namespace ebIModels.Mapping.V4p0
             #endregion
 
             #region Tax
-            invoice.Tax.TaxItem.Clear();
-            if (source.Tax.VAT.Items.Any())
-            {
-                foreach (var item in source.Tax.VAT.Items)
-                {
-                    if (item is SRC.ItemType)
-                    {
+            invoice.CalculateTotals();
+            //invoice.Tax.TaxItem.Clear();
+            //if (source.Tax.VAT.Items.Any())
+            //{
+            //    foreach (var item in source.Tax.VAT.Items)
+            //    {
+            //        if (item is SRC.ItemType)
+            //        {
 
-                        SRC.ItemType vatItem = item as SRC.ItemType;
+            //            SRC.ItemType vatItem = item as SRC.ItemType;
 
-                        TaxItemType taxItem = new TaxItemType()
-                        {
-                            TaxPercent = new TaxPercentType()
-                            {
-                                TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vatItem.TaxRate.Value).Code,
-                                Value = vatItem.TaxRate.Value
-                            },
-                            TaxAmountSpecified = true,
-                            TaxableAmount = vatItem.TaxedAmount,
-                            TaxAmount = vatItem.Amount
+            //            TaxItemType taxItem = new TaxItemType()
+            //            {
+            //                TaxPercent = new TaxPercentType()
+            //                {
+            //                    TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vatItem.TaxRate.Value).Code,
+            //                    Value = vatItem.TaxRate.Value
+            //                },
+            //                TaxAmountSpecified = true,
+            //                TaxableAmount = vatItem.TaxedAmount,
+            //                TaxAmount = vatItem.Amount
 
-                        };
-                        invoice.Tax.TaxItem.Add(taxItem);
+            //            };
+            //            invoice.Tax.TaxItem.Add(taxItem);
 
-                    }
-                    else
-                    {
+            //        }
+            //        else
+            //        {
 
-                        TaxItemType taxItemVat = new TaxItemType()
-                        {
-                            TaxPercent = new TaxPercentType()
-                            {
-                                Value = 0,
-                                TaxCategoryCode = PlugInSettings.VStBefreitCode
-                            },
-                            TaxAmount = 0,
-                            TaxableAmount = 0,
-                            TaxAmountSpecified = false,
-                            Comment = (string)item
-                        };
-                        invoice.Tax.TaxItem.Add(taxItemVat);
-                    }
-                }
-            }
+            //            TaxItemType taxItemVat = new TaxItemType()
+            //            {
+            //                TaxPercent = new TaxPercentType()
+            //                {
+            //                    Value = 0,
+            //                    TaxCategoryCode = PlugInSettings.VStBefreitCode
+            //                },
+            //                TaxAmount = 0,
+            //                TaxableAmount = 0,
+            //                TaxAmountSpecified = false,
+            //                Comment = (string)item
+            //            };
+            //            invoice.Tax.TaxItem.Add(taxItemVat);
+            //        }
+            //    }
+            //}
 
             #endregion
 
@@ -371,7 +374,10 @@ namespace ebIModels.Mapping.V4p0
                     Value = vATRate.Value,
                     TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
                 },
+                TaxAmount = (taxableAmount * vATRate.Value / 100).FixedFraction(2)
             };
+            Log.DumpToLog(CallerInfo.Create(), vATRate);
+            Log.DumpToLog(CallerInfo.Create(), taxItemVat);
             return taxItemVat;
         }
 

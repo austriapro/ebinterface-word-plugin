@@ -9,6 +9,7 @@ using ExtensionMethods;
 using Microsoft.Practices.Unity;
 using WinFormsMvvm;
 using SettingsManager;
+using LogService;
 
 namespace ebIViewModels.ViewModels
 {
@@ -19,7 +20,7 @@ namespace ebIViewModels.ViewModels
         /// <summary>
         /// Comment
         /// </summary>
-        public BindingList<DetailsViewModel> DetailsList
+        private BindingList<DetailsViewModel> DetailsList
         {
             get { return _detailsList; }
             set {
@@ -28,7 +29,17 @@ namespace ebIViewModels.ViewModels
                 _detailsList = value;
             }
         }
+        public void Add(DetailsViewModel detailsView)
+        {
+            DetailsList.Add(detailsView);
+        }
+        
+        public int Count { get { return DetailsList.Count; } }
 
+        public DetailsViewModel GetByIndex(int index)
+        {
+            return DetailsList[index];
+        }
         /// <summary>
         /// Converts the Viewmodel DetailsViewModelList to Model ItemListType
         /// </summary>
@@ -113,25 +124,25 @@ namespace ebIViewModels.ViewModels
         /// <param name="uc">The uc.</param>
         /// <param name="bestPosRequired">if set to <c>true</c> [best position required].</param>
         /// <returns></returns>
-        public static DetailsListConverter Load(List<ItemListType> itemList, IUnityContainer uc, bool bestPosRequired)
+        public static BindingList<DetailsViewModel> Load(List<ItemListType> itemList, IUnityContainer uc, bool bestPosRequired)
         {
             // ItemListType listType = details.ItemList.FirstOrDefault(); // DAs PlugIn hat nur hier nur einen Eintrag
 
             DetailsListConverter details = uc.Resolve<DetailsListConverter>(); // new DetailsListViewModel();
-
+           
             if (itemList==null)
             {
-                return details;
+                return details.DetailsList;
             }
             ItemListType listType = itemList.FirstOrDefault(); // DAs PlugIn hat nur hier nur einen Eintrag
 
             if (listType == null)
             {
-                return details;
+                return details.DetailsList;
             }
             if (!listType.ListLineItem.Any())
             {
-                return details;
+                return details.DetailsList;
             }
             foreach (ListLineItemType listLineItem in listType.ListLineItem)
             {
@@ -145,8 +156,8 @@ namespace ebIViewModels.ViewModels
 
                 // Muss vor Zuweisung des Einzelpreis stehen damit UpdateTotal nicht stirbt
 
-                detailsVM.VatItem = TaxItemType.GetVatValueFromTaxItem(listLineItem.TaxItem, PlugInSettings.Default.VStBerechtigt);
-
+                detailsVM.VatItem = GetVatValueFromTaxItem(listLineItem.TaxItem, PlugInSettings.Default.VStBerechtigt);
+                
                 detailsVM.Einheit = listLineItem.Quantity.Unit;
                 detailsVM.EinzelPreis = listLineItem.UnitPrice.Value;
                 // det.GesamtBruttoBetrag = listLineItem.LineItemAmount;
@@ -160,8 +171,16 @@ namespace ebIViewModels.ViewModels
                 // det.UpdateTotals();
                 details.DetailsList.Add(detailsVM);
             }
-            return details;
+            return details.DetailsList;
         }
-
+        private static VatDefaultValue GetVatValueFromTaxItem(TaxItemType tax, bool VatBerechtigt)
+        {
+            if (!VatBerechtigt)
+            {
+                return PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
+            }
+            VatDefaultValue vatDefault = PlugInSettings.Default.GetValueFromPercent(tax.TaxPercent.Value);
+            return vatDefault;
+        }
     }
 }

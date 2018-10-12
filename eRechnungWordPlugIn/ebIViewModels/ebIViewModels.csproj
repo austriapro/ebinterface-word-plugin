@@ -202,6 +202,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ebIViewModels.RibbonViewModels.AboutViewModel.datasource" />
     <None Include="Properties\DataSources\ebIViewModels.RibbonViewModels.DownloadViewModel.datasource" />

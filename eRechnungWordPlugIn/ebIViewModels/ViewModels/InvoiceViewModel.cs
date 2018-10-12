@@ -337,7 +337,7 @@ namespace ebIViewModels.ViewModels
 
         public string VmBillerContact
         {
-            get { return _invoice.Biller.Contact?.Name; }
+            get { return _invoice.Biller.Contact.Name; }
             set {
                 if (_invoice.Biller.Contact == null)
                 {
@@ -390,6 +390,7 @@ namespace ebIViewModels.ViewModels
 
         public string VmRecSalutation
         {
+            
             get { return _invoice.Biller.Contact.Salutation; }
             set {
                 if (_invoice.Biller.Contact.Salutation == value)
@@ -984,8 +985,8 @@ namespace ebIViewModels.ViewModels
         public VatViewModels VatView
         {
             get {
-                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
-                _invoice.CalculateTotals();
+               // _invoice.Tax.UpdateTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
+               // _invoice.CalculateTotals();
                 return VatViewModels.Load(_invoice.Tax);
             }
         }
@@ -1031,24 +1032,22 @@ namespace ebIViewModels.ViewModels
             }
         }
 
+        private BindingList<DetailsViewModel> _detailsView;
         /// <summary>
         /// Liste der Detailzeilen der Rechnung
         /// </summary>
         public BindingList<DetailsViewModel> DetailsView
         {
             get {
-                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
-                return DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired).DetailsList;
+                //  return _detailsView;
+                // _invoice.Tax.UpdateTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
+                return DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired);
             }
             set {
-                //if (_detailsView == value)
-                //    return;
                 //_detailsView = value;
                 _invoice.Details.ItemList = DetailsListConverter.ConvertToItemList(value, VmOrderReference);
-                _invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
+                //_invoice.Tax.UpdateTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
-                //OnUpdateDocTable(value);
-                //OnUpdateDocTable(VatView, "VatView");
                 // FireProtectedPropertyChanged();
             }
         }
@@ -1202,7 +1201,8 @@ namespace ebIViewModels.ViewModels
 
             }
             // FireProtectedPropertyChanged();
-            DetailsView = DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired).DetailsList;
+            // ToDo _detailsView zuweisen
+            _detailsView = DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired);            
             _paymentConditions = _uc.Resolve<SkontoViewModels>(new ParameterOverride("invVm", this)); // nötig, damit ein WErt vorhanden ...
             _paymentConditions.LoadFromInvoice(_invoice);
             _process.ProcessFinishedEvent += OnStartProcessDienstProcessFinished;
@@ -1271,7 +1271,7 @@ namespace ebIViewModels.ViewModels
             {
                 PaymentConditions = skontoView;
                 VmInvDate = skontoView.InvoiceDate;
-                VmInvDueDate = skontoView.InvoiceDueDate;
+                VmInvDueDate = skontoView.InvoiceDueDate;                
             }
         }
 
@@ -1297,7 +1297,7 @@ namespace ebIViewModels.ViewModels
             detailsViewModel.DetailsViewList = DetailsView;
             var rc = _dlg.ShowDialog<FrmDetailsList>(detailsViewModel);
             if (rc == DialogResult.OK)
-            {
+           {
                 DetailsView = detailsViewModel.DetailsViewList;
                 UpdateView();
             }
@@ -1538,6 +1538,7 @@ namespace ebIViewModels.ViewModels
                 VmBillerVatid = PlugInSettings.VatIdDefaultOhneVstBerechtigung;
                 VatSatzSetzen(null);
             }
+            // ToDo UpdateInvoiceParts
             _invoice.CalculateTotals();
             _paymentConditions.LoadFromInvoice(_invoice);
             if (!NoUpdatePrompt)
@@ -1734,6 +1735,9 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         internal virtual void UpdateInvoiceParts()
         {
+            // ToDo Update Details
+            // ToDo Update Tax
+            // ToDo Update Totals
             _invoice.PaymentConditions = PaymentConditions.GetPaymentConditions(VmInvDueDate);
             var relDocs = RelatedDoc.GetRelatedDocumentEntry(CurrentSelectedValidation);
             _invoice.CancelledOriginalDocument = null;
@@ -2032,6 +2036,7 @@ namespace ebIViewModels.ViewModels
 
         private void VatSatzSetzen(VatDefaultValue vatSatz)
         {
+            // ToDo prüfen wo zu das gut ist
             var tempDetails = DetailsView;
             foreach (DetailsViewModel model in tempDetails)
             {

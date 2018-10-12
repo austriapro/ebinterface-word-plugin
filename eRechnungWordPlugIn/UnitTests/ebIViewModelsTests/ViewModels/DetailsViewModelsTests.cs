@@ -36,8 +36,8 @@ namespace ebIViewModels.ViewModels.Tests
                 VatItem = new SettingsManager.VatDefaultValue("S",20,"Testbeschreibung")
             };
             // detv.UpdateTotals();
-            det.DetailsList.Add(detv);
-            var det2 = det.DetailsList[0];
+            det.Add(detv);
+            var det2 = det.GetByIndex(0);
             Assert.AreEqual((decimal)600.13,det2.NettoBetragZeile);
             Assert.AreEqual((decimal)120.03,det2.MwStBetragZeile);
         }
@@ -54,9 +54,9 @@ namespace ebIViewModels.ViewModels.Tests
             _common.Invoice = InvoiceFactory.LoadTemplate(Common.InvTest);
             var det = DetailsListConverter.Load(_common.Invoice.Details.ItemList, _common.UContainer, false);
             Assert.IsNotNull(det);
-            Assert.AreEqual((int)4, det.DetailsList.Count);
-            Assert.AreEqual("DAY", det.DetailsList[0].Einheit);
-            Assert.AreEqual("LS", det.DetailsList[2].Einheit);
+            Assert.AreEqual((int)4, det.Count);
+            Assert.AreEqual("DAY", det[0].Einheit);
+            Assert.AreEqual("LS", det[2].Einheit);
         }
 
         [Test]
@@ -64,9 +64,9 @@ namespace ebIViewModels.ViewModels.Tests
         {
             _common.Invoice = InvoiceFactory.LoadTemplate(Common.InvTest);
 
-            var det = DetailsListConverter.Load(_common.Invoice.Details.ItemList, _common.UContainer, false).DetailsList;
+            var det = DetailsListConverter.Load(_common.Invoice.Details.ItemList, _common.UContainer, false);
             var detList = DetailsListConverter.ConvertToItemList(det, "Z01");
-            var det2 = DetailsListConverter.Load(detList, _common.UContainer, false).DetailsList;
+            var det2 = DetailsListConverter.Load(detList, _common.UContainer, false);
             
             Assert.AreEqual(det[0].Rabatt,det2[0].Rabatt);
         }

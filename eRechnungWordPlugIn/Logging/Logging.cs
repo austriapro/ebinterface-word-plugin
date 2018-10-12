@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
-
+using ServiceStack.Text;
 
 namespace LogService
 {
@@ -69,6 +69,20 @@ namespace LogService
                 return;
             WriteToLog(level.ToString(), string.Format(format, parms), cInfo);
 
+        }
+        public static void LogStack(CallerInfo caller)
+        {
+            if (!_traceEnabled)
+                return;
+            StackTrace stackTrace = new StackTrace();
+            WriteToLog("Stack", "Current Stack:\n" + Environment.StackTrace, caller);
+        }
+        public static void DumpToLog(CallerInfo callerInfo, object parm)
+        {
+            if (!_traceEnabled)
+                return;
+            string objDump = parm.Dump();
+            WriteToLog($"Dump", $"{parm.GetType().FullName}\n{objDump}",callerInfo);
         }
         private static Mutex _semaphore = new Mutex();
         public static void TraceWrite(CallerInfo cInfo, string format, params object[] parms)

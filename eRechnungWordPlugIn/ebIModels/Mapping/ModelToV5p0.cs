@@ -579,7 +579,7 @@ namespace ebIModels.Mapping.V5p0
                 TaxItemType taxItem = new TaxItemType()
                 {
                     TaxableAmount = taxItemModel.TaxableAmount,
-                    TaxAmount = (taxItemModel.TaxableAmount * taxItemModel.TaxPercent.Value / 100).FixedFraction(2),
+                    TaxAmount = taxItemModel.TaxAmount, // (taxItemModel.TaxableAmount * taxItemModel.TaxPercent.Value / 100).FixedFraction(2),
                     TaxAmountSpecified = true,
                     TaxPercent = new TaxPercentType()
                     {

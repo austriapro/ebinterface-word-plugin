@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using ebIModels.Mapping;
 using ebIModels.Schema;
 using ExtensionMethods;
+using LogService;
 
 namespace ebIModels.Models
 {
@@ -14,7 +15,7 @@ namespace ebIModels.Models
     /// </summary>
     /// <seealso cref="ebIModels.Models.InvoiceModel" />
     /// <seealso cref="ebIModels.Models.IInvoiceModel" />
-    public partial class InvoiceModel :  IInvoiceModel
+    public partial class InvoiceModel : IInvoiceModel
     {
         private string invoiceNumberField;
         private System.DateTime invoiceDateField;
@@ -141,8 +142,9 @@ namespace ebIModels.Models
         public decimal PrepaidAmount
         {
             get { return this.prepaidAmountField; }
-            set { this.prepaidAmountField = value;
-                
+            set {
+                this.prepaidAmountField = value;
+
             }
         }
 
@@ -258,7 +260,7 @@ namespace ebIModels.Models
             set { this.isDuplicateFieldSpecified = value; }
         }
 
- 
+
     }
 
     /// <remarks/>
@@ -1141,7 +1143,16 @@ namespace ebIModels.Models
         public decimal TaxableAmount
         {
             get { return this.taxableAmountField; }
-            set { this.taxableAmountField = value; }
+            set {
+                this.taxableAmountField = value;
+#if DEBUG 
+                Log.LogWrite(CallerInfo.Create(), Log.LogPriority.Medium, $"{nameof(TaxableAmount)}={taxableAmountField}");
+                if (value==1105)
+                {
+                    Log.LogStack(CallerInfo.Create());
+                }
+#endif
+            }
         }
 
         /// <remarks/>
