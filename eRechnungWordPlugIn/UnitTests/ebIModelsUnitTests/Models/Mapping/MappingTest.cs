@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using ebIModels.Models;
 using ebIModels.Schema;
 using ExtensionMethods;
@@ -34,8 +35,13 @@ namespace ebIModelsUnitTests.Models.Mapping
         [Test]
         public void TotalsAndTaxTest(string inputFn)
         {
-            var invoice = InvoiceFactory.LoadTemplate(inputFn);
+            XDocument xInv = XDocument.Load(inputFn);
+            var attrs = xInv.Root.Attributes().
+                        Where(p => p.IsNamespaceDeclaration == true).
+                        FirstOrDefault(x => x.Name.LocalName == "eb");
 
+            var invoice = InvoiceFactory.LoadTemplate(inputFn);
+            Console.WriteLine($"{attrs.Value}: {inputFn}");
             var totals = from a in invoice.Details.ItemList[0].ListLineItem
                          group a by 1 into g
                          select new
@@ -44,32 +50,36 @@ namespace ebIModelsUnitTests.Models.Mapping
                              ustGesamt = g.Sum(x => x.TaxItem.TaxPercent.Value * x.LineItemAmount / 100).FixedFraction(2)
                          };
             totals.PrintDump();
-            // ToDo V5p0 Rechnung richtig stellen
-            var tax = invoice.Details.ItemList[0].ListLineItem.GroupBy(s => new { Prozent = s.TaxItem.TaxPercent.Value, Code = s.TaxItem.TaxPercent.TaxCategoryCode })
+            var tax = invoice.Details.ItemList[0].ListLineItem
+                      .GroupBy(s => new
+                      {
+                          Prozent = s.TaxItem.TaxPercent.Value,
+                          Code = s.TaxItem.TaxPercent.TaxCategoryCode
+                      })
                       .Select(p => new TaxItemType
                       {
                           TaxPercent = new TaxPercentType()
                           {
                               TaxCategoryCode = p.Key.Code,
                               Value = p.Key.Prozent
-                          },                                                    
+                          },
                           TaxableAmount = p.Sum(x => x.LineItemAmount),
-                          TaxAmount = (p.Sum(x => x.LineItemAmount) * p.Key.Prozent / 100),                          
+                          TaxAmount = (p.Sum(x => x.LineItemAmount) * p.Key.Prozent / 100),
                       });
             tax.PrintDump();
             var totale = totals.FirstOrDefault();
             Assert.AreEqual(totale.ustGesamt, invoice.TaxAmountTotal, "USt Gesamt");
             Assert.AreEqual(totale.ustGesamt + totale.netto, invoice.TotalGrossAmount, "Gesamt Betrag");
-            Assert.AreEqual(tax.Count(), invoice.Tax.TaxItem.Count,"TaxItem Count");
+            Assert.AreEqual(tax.Count(), invoice.Tax.TaxItem.Count, "TaxItem Count");
             Assert.Multiple(() =>
             {
                 var taxLIst = tax.ToList();
                 for (int i = 0; i < taxLIst.Count; i++)
                 {
-                    Assert.AreEqual(taxLIst[i].TaxableAmount, invoice.Tax.TaxItem[i].TaxableAmount,"TaxableAmount");
-                    Assert.AreEqual(taxLIst[i].TaxAmount, invoice.Tax.TaxItem[i].TaxAmount,"Amount");
-                    Assert.AreEqual(taxLIst[i].TaxPercent.TaxCategoryCode, invoice.Tax.TaxItem[i].TaxPercent.TaxCategoryCode,"Percent");
-                    Assert.AreEqual(taxLIst[i].TaxPercent.Value, invoice.Tax.TaxItem[i].TaxPercent.Value,"Value");
+                    Assert.AreEqual(taxLIst[i].TaxableAmount, invoice.Tax.TaxItem[i].TaxableAmount, "TaxableAmount");
+                    Assert.AreEqual(taxLIst[i].TaxAmount, invoice.Tax.TaxItem[i].TaxAmount, "Amount");
+                    Assert.AreEqual(taxLIst[i].TaxPercent.TaxCategoryCode, invoice.Tax.TaxItem[i].TaxPercent.TaxCategoryCode, "Percent");
+                    Assert.AreEqual(taxLIst[i].TaxPercent.Value, invoice.Tax.TaxItem[i].TaxPercent.Value, "Value");
                 }
             });
         }
