@@ -76,7 +76,9 @@ namespace ebIModels.Models.Tests
             Assert.That(result.ResultType == ResultType.IsValid);
             var inputXml = XDocument.Load(inputFile);
             var savedXml = XDocument.Load(outputFile);
-            var inResult = inputXml.Descendants().Where(p1 => p1.Descendants().Count() == 0).Select(p => new NodeList
+            var inResult = inputXml.Descendants()
+                           .Where(p1 => p1.Descendants().Count() == 0)
+                           .Select(p => new NodeList
             {
                 NodePath = p.GetPath(),
                 Value = p.Value

@@ -78,14 +78,10 @@ namespace ebIModels.Models
             get { return _taxAmountTotal.FixedFraction(2); }
             set { _taxAmountTotal = value.FixedFraction(2); }
         }
-        private Dictionary<decimal, TaxItemType> TaxItemDictionary { get; set; }
 
         internal void UpdateTaxTypeList(List<ItemListType> itemList) //, bool isTaxExemption, string vatText)
         {
-#if DEBUGx
-            Log.LogStack(CallerInfo.Create());
-#endif
-            TaxItemDictionary = new Dictionary<decimal, TaxItemType>();
+        
             if (itemList == null || itemList.Count == 0)
             {
                 this.taxField = new TaxType();
@@ -93,78 +89,53 @@ namespace ebIModels.Models
             }
 
             // Dictionary für alle USt Angaben
+            var tax = itemList[0].ListLineItem.GroupBy(s => new { Prozent = s.TaxItem.TaxPercent.Value, Code=s.TaxItem.TaxPercent.TaxCategoryCode })
+                      .Select(p => new TaxItemType
+                      {
+                       TaxPercent =  new TaxPercentType()
+                          {
+                              Value = p.Key.Prozent,
+                              TaxCategoryCode = p.Key.Code
+                          },
+                          TaxableAmount = p.Sum(x => x.LineItemAmount),
+                          TaxAmount = p.Sum(x => x.LineItemAmount) * p.Key.Prozent/ 100,
 
-            foreach (ItemListType itemListType in itemList)
-            {
-                foreach (ListLineItemType lineItem in itemListType.ListLineItem)
-                {
-                    //lineItem.ReCalcLineItemAmount();
-                    Log.DumpToLog(CallerInfo.Create(), lineItem);
-                    if (lineItem.TaxItem != null)
-                    {
+                      });
 
-                        //Log.DumpToLog(CallerInfo.Create(), lineItem.TaxItem);
-                        var taxValue = lineItem.TaxItem.TaxPercent;
-                        decimal taxVal = taxValue.Value;
-                        decimal taxableAmount = lineItem.LineItemAmount;
-                        // Log.TraceWrite(CallerInfo.Create(), $"Amount:{lineItem.LineItemAmount} - {lineItem.TaxItem.TaxPercent.Value}");
-                        if (!TaxItemDictionary.ContainsKey(taxVal))
-                        {
-                            TaxItemDictionary.Add(taxVal, new TaxItemType()
-                            {
-                                TaxableAmount = lineItem.TaxItem.TaxableAmount,
-                                TaxAmount = lineItem.TaxItem.TaxAmount,
-                                TaxPercent = lineItem.TaxItem.TaxPercent
-                            });
-                           
-                        }
-                        else
-                        {
-                            TaxItemDictionary[taxVal].TaxableAmount = TaxItemDictionary[taxVal].TaxableAmount + taxableAmount;
-                        }
-                        Log.DumpToLog(CallerInfo.Create(), TaxItemDictionary);
-                    }
-
-                }
-            }
-
-            TaxType tax = new TaxType();
-            foreach (var taxItem in TaxItemDictionary)
-            {
-                var item = taxItem.Value;
-                item.TaxPercent.Value = taxItem.Key;
-                item.TaxPercent.TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(item.TaxPercent.Value).Code;
-                item.TaxAmount = item.TaxableAmount * item.TaxPercent.Value / 100;
-                tax.TaxItem.Add(item);
-            }
-            Log.DumpToLog(CallerInfo.Create(), tax);
-            this.taxField = tax;
+             
+            //Log.DumpToLog(CallerInfo.Create(), tax);
+            this.taxField = new TaxType() { TaxItem = tax.ToList()};
         }
         /// <summary>
         /// Berechnet die Gesamtsummen der aktuellen eRechnung
         /// </summary>
         public void CalculateTotals()
         {
-
+            TotalGrossAmount = 0;
+            PayableAmount = 0;
+            NetAmount = 0;
+            TaxAmountTotal = 0;
+            if (this.detailsField==null || this.detailsField.ItemList== null)
+            {
+                return;
+            }
             UpdateTaxTypeList(this.detailsField.ItemList);
 
-            decimal gesamtBetrag = 0;
-            decimal nettoBetrag = 0;
-            decimal taxAmount = 0;
-            if (Tax != null)
-            {
 
-                foreach (var vatItem in this.Tax.TaxItem)
-                {
+            // Es gibt nur ein Element in der Itemlist
+            var totals = from a in this.Details.ItemList[0].ListLineItem
+                         group a by 1 into g
+                         select new
+                         {
+                             netto = g.Sum(x => x.LineItemAmount),
+                             ustGesamt = g.Sum(x => x.TaxItem.TaxPercent.Value * x.LineItemAmount / 100)
+                         };
 
-                    gesamtBetrag += vatItem.TaxableAmount + vatItem.TaxAmount;
-                    nettoBetrag += vatItem.TaxableAmount;
-                    taxAmount += vatItem.TaxAmount;
-                }
-
-            }
-            TotalGrossAmount = gesamtBetrag;
-            PayableAmount = gesamtBetrag + PrepaidAmount;
+            decimal nettoBetrag = totals.FirstOrDefault().netto.FixedFraction(2);
+            decimal taxAmount = totals.FirstOrDefault().ustGesamt.FixedFraction(2);
+            
+            TotalGrossAmount = nettoBetrag+taxAmount;
+            PayableAmount = TotalGrossAmount+ PrepaidAmount;
             NetAmount = nettoBetrag;
             TaxAmountTotal = taxAmount;
         }
@@ -345,7 +316,7 @@ namespace ebIModels.Models
                 netAmount = baseAmount - rabatt;
             }
             this.lineItemAmountField = netAmount.FixedFraction(2);
-            Log.DumpToLog(CallerInfo.Create(), this);
+            //Log.DumpToLog(CallerInfo.Create(), this);
         }
     }
     public partial class ReductionAndSurchargeListLineItemDetailsType

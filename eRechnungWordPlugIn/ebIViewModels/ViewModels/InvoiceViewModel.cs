@@ -1201,8 +1201,8 @@ namespace ebIViewModels.ViewModels
 
             }
             // FireProtectedPropertyChanged();
-            // ToDo _detailsView zuweisen
-            _detailsView = DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired);            
+            
+            DetailsView = DetailsListConverter.Load(_invoice.Details.ItemList, _uc, IsBestPosRequired);            
             _paymentConditions = _uc.Resolve<SkontoViewModels>(new ParameterOverride("invVm", this)); // nötig, damit ein WErt vorhanden ...
             _paymentConditions.LoadFromInvoice(_invoice);
             _process.ProcessFinishedEvent += OnStartProcessDienstProcessFinished;
@@ -1538,7 +1538,7 @@ namespace ebIViewModels.ViewModels
                 VmBillerVatid = PlugInSettings.VatIdDefaultOhneVstBerechtigung;
                 VatSatzSetzen(null);
             }
-            // ToDo UpdateInvoiceParts
+            
             _invoice.CalculateTotals();
             _paymentConditions.LoadFromInvoice(_invoice);
             if (!NoUpdatePrompt)
@@ -1735,9 +1735,6 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         internal virtual void UpdateInvoiceParts()
         {
-            // ToDo Update Details
-            // ToDo Update Tax
-            // ToDo Update Totals
             _invoice.PaymentConditions = PaymentConditions.GetPaymentConditions(VmInvDueDate);
             var relDocs = RelatedDoc.GetRelatedDocumentEntry(CurrentSelectedValidation);
             _invoice.CancelledOriginalDocument = null;

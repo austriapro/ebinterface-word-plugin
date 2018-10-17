@@ -215,45 +215,7 @@ namespace ebIModels.Mapping.V4p3
             #endregion
 
             #region Tax
-            invoice.Tax.TaxItem.Clear();
-            if (source.Tax.VAT.Any())
-            {
-                foreach (var item in source.Tax.VAT)
-                {
-                    if (item.Item.GetType() == typeof(SRC.TaxExemptionType))
-                    {
-                        SRC.TaxExemptionType taxExemption = (SRC.TaxExemptionType)item.Item;
-                        TaxItemType taxItem = new TaxItemType()
-                        {
-                            TaxPercent = new TaxPercentType()
-                            {
-                                TaxCategoryCode = PlugInSettings.VStBefreitCode,
-                                Value = 0
-                            },
-                            TaxableAmount = item.TaxedAmount,
-                            Comment = taxExemption.Value
-                        };
-                        invoice.Tax.TaxItem.Add(taxItem);
-
-                    }
-                    else
-                    {
-                        SRC.VATRateType vATRate = (SRC.VATRateType)item.Item;
-                        TaxItemType taxItemVat = new TaxItemType()
-                        {
-                            TaxPercent = new TaxPercentType()
-                            {
-                                Value = vATRate.Value,
-                                TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
-                            },
-                            TaxAmount = item.Amount,
-                            TaxableAmount = item.TaxedAmount,
-                            TaxAmountSpecified = true
-                        };
-                        invoice.Tax.TaxItem.Add(taxItemVat);
-                    }
-                }
-            }
+            invoice.CalculateTotals();
 
             #endregion
 

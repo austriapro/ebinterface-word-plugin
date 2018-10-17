@@ -133,6 +133,7 @@
     <Compile Include="Models\InvoiceTypeTests.cs" />
     <Compile Include="Models\CountryCodeModelsTests.cs" />
     <Compile Include="Models\DocumentTypeModelsTests.cs" />
+    <Compile Include="Models\Mapping\MappingTest.cs" />
     <Compile Include="Schema\InvoiceFactoryTests.cs" />
     <Compile Include="Services\InvoiceSubtypesTests.cs" />
     <Compile Include="Services\ProductInfoTests.cs" />
@@ -182,9 +183,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Mapping\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

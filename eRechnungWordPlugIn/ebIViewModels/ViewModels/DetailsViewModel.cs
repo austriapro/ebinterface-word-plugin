@@ -77,7 +77,7 @@ namespace ebIViewModels.ViewModels
                     return;
                 _menge = value.FixedFraction(4);
                 OnPropertyChanged();
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
@@ -130,7 +130,7 @@ namespace ebIViewModels.ViewModels
                     return;
                 _rabatt = value;
                 OnPropertyChanged();
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
@@ -147,7 +147,7 @@ namespace ebIViewModels.ViewModels
                     return;
                 _einzelPreis = value.FixedFraction(4);
                 OnPropertyChanged();
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
@@ -220,7 +220,7 @@ namespace ebIViewModels.ViewModels
                     _vatItem = value;
                 }
                 OnPropertyChanged();
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
@@ -496,7 +496,7 @@ namespace ebIViewModels.ViewModels
             IsValidForm = Results.IsValid;
         }
 
-        private void UpdateTotals()
+        private void UpdateLineItemTotals()
         {
             NettoBasisBetrag = Menge*EinzelPreis;
             RabattBetragZeile = NettoBasisBetrag * Rabatt / 100;

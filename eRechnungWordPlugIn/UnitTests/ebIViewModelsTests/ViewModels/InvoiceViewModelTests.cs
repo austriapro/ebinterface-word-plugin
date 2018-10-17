@@ -91,7 +91,6 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(2, Cmn.Invoice.PaymentConditions.Discount.Count);
 
         }
-        [Test]
         public void CalculateTotalsTest()
         {
             string testInv = @"C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\UnitTests\ebIViewModelsTests\Daten\Test Vorlage 2014-500-2014-03-19.XML";
@@ -99,29 +98,48 @@ namespace ebIViewModels.ViewModels.Tests
             var controllInvoice = InvoiceFactory.LoadTemplate(testInv);
             Assert.AreEqual(1, controllInvoice.Details.ItemList.Count, "Count Details.ItemList");
             Assert.AreEqual(controllInvoice.Details.ItemList[0].ListLineItem.Count, InvVm.DetailsView.Count, "Details Count");
+            var totals = from a in controllInvoice.Details.ItemList[0].ListLineItem
+                         group a by 1 into g
+                         select new
+                         {
+                             netto = g.Sum(x => x.LineItemAmount),
+                             ustGesamt = g.Sum(x => x.TaxItem.TaxPercent.Value * x.LineItemAmount / 100)
+                         };
+            totals.PrintDump();
+            var tax = controllInvoice.Details.ItemList[0].ListLineItem.GroupBy(s => new { s.TaxItem.TaxPercent.Value, s.TaxItem.TaxPercent.TaxCategoryCode })
+                      .Select(p => new
+                      {
+                          Percent = p.Key.Value,
+                          Code = p.Key.TaxCategoryCode,
+                          taxableAmount = p.Sum(x => x.LineItemAmount),
+                          taxAmount = p.Sum(x => x.LineItemAmount) * p.Key.Value / 100,
+
+                      });
+            tax.PrintDump();
             Assert.Multiple(() =>
-            {
-                for (int i = 0; i < InvVm.DetailsView.Count; i++)
-                {
-                    var vmDetail = InvVm.DetailsView[i];
-                    vmDetail.UomEntries = new List<UnitOfMeasureEntries>(); // um den Object Dump klein zu halten
+                        {
+                            for (int i = 0; i < InvVm.DetailsView.Count; i++)
+                            {
+                                var vmDetail = InvVm.DetailsView[i];
+                                vmDetail.UomEntries = new List<UnitOfMeasureEntries>(); // um den Object Dump klein zu halten
                     vmDetail.UoMList = new System.ComponentModel.BindingList<UnitOfMeasureViewModel>(); // um den Object Dump klein zu halten
                     vmDetail.VatList = new System.ComponentModel.BindingList<VatDefaultValue>();
 
-                    var cDetail = controllInvoice.Details.ItemList[0].ListLineItem[i];
-                    Console.WriteLine($"in Template Pos {cDetail.PositionNumber} ****************************************");
-                    cDetail.PrintDump();
+                                var cDetail = controllInvoice.Details.ItemList[0].ListLineItem[i];
+                                Console.WriteLine($"in Template Pos {cDetail.PositionNumber} ****************************************");
+            
+                                // cDetail.PrintDump();
 
-                    Console.WriteLine($"Zeile {i} in ViewModel, Pos {cDetail.PositionNumber} ****************************************");
-                    vmDetail.PrintDump();
+                                Console.WriteLine($"Zeile {i} in ViewModel, Pos {cDetail.PositionNumber} ****************************************");
+                                // vmDetail.PrintDump();
 
                     Assert.AreEqual(cDetail.ArticleNumber[0].Value, vmDetail.ArtikelNr, $"Pos {cDetail.PositionNumber}Artikelnr");
-                    Assert.AreEqual(cDetail.LineItemAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, LineItemAmount");
-                    Assert.AreEqual(cDetail.TaxItem.TaxAmount, vmDetail.MwStBetragZeile, $"Pos {cDetail.PositionNumber}, TaxAmount");
-                    Assert.AreEqual(cDetail.TaxItem.TaxableAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, TaxableAmount");
-                    Assert.AreEqual(cDetail.TaxItem.TaxPercent.Value, vmDetail.VatItem.MwStSatz, $"Pos {cDetail.PositionNumber}, TaxPercent.Value");
-                }
-            });
+                                Assert.AreEqual(cDetail.LineItemAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, LineItemAmount");
+                                Assert.AreEqual(cDetail.TaxItem.TaxAmount, vmDetail.MwStBetragZeile, $"Pos {cDetail.PositionNumber}, TaxAmount");
+                                Assert.AreEqual(cDetail.TaxItem.TaxableAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, TaxableAmount");
+                                Assert.AreEqual(cDetail.TaxItem.TaxPercent.Value, vmDetail.VatItem.MwStSatz, $"Pos {cDetail.PositionNumber}, TaxPercent.Value");
+                            }
+                        });
             Assert.AreEqual(controllInvoice.Tax.TaxItem.Count, InvVm.VatView.VatViewList.Count, "Tax.TaxItem.Count");
             Assert.Multiple(() =>
             {

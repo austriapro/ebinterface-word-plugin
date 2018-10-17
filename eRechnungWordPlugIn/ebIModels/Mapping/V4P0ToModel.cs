@@ -168,50 +168,6 @@ namespace ebIModels.Mapping.V4p0
 
             #region Tax
             invoice.CalculateTotals();
-            //invoice.Tax.TaxItem.Clear();
-            //if (source.Tax.VAT.Items.Any())
-            //{
-            //    foreach (var item in source.Tax.VAT.Items)
-            //    {
-            //        if (item is SRC.ItemType)
-            //        {
-
-            //            SRC.ItemType vatItem = item as SRC.ItemType;
-
-            //            TaxItemType taxItem = new TaxItemType()
-            //            {
-            //                TaxPercent = new TaxPercentType()
-            //                {
-            //                    TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vatItem.TaxRate.Value).Code,
-            //                    Value = vatItem.TaxRate.Value
-            //                },
-            //                TaxAmountSpecified = true,
-            //                TaxableAmount = vatItem.TaxedAmount,
-            //                TaxAmount = vatItem.Amount
-
-            //            };
-            //            invoice.Tax.TaxItem.Add(taxItem);
-
-            //        }
-            //        else
-            //        {
-
-            //            TaxItemType taxItemVat = new TaxItemType()
-            //            {
-            //                TaxPercent = new TaxPercentType()
-            //                {
-            //                    Value = 0,
-            //                    TaxCategoryCode = PlugInSettings.VStBefreitCode
-            //                },
-            //                TaxAmount = 0,
-            //                TaxableAmount = 0,
-            //                TaxAmountSpecified = false,
-            //                Comment = (string)item
-            //            };
-            //            invoice.Tax.TaxItem.Add(taxItemVat);
-            //        }
-            //    }
-            //}
 
             #endregion
 
@@ -376,8 +332,8 @@ namespace ebIModels.Mapping.V4p0
                 },
                 TaxAmount = (taxableAmount * vATRate.Value / 100).FixedFraction(2)
             };
-            Log.DumpToLog(CallerInfo.Create(), vATRate);
-            Log.DumpToLog(CallerInfo.Create(), taxItemVat);
+            //Log.DumpToLog(CallerInfo.Create(), vATRate);
+            //Log.DumpToLog(CallerInfo.Create(), taxItemVat);
             return taxItemVat;
         }
 

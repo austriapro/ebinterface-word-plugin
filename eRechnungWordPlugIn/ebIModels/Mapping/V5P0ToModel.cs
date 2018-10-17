@@ -226,7 +226,8 @@ namespace ebIModels.Mapping.V5p0
 
 
                         // Auftragsreferenz
-                        if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber)) // ToDo Orderposition angegeben oder erforderlich 
+                        
+                        if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber)) 
                         {
                             lineItem.InvoiceRecipientsOrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
                             lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber =
@@ -265,8 +266,8 @@ namespace ebIModels.Mapping.V5p0
             #endregion
 
             #region Tax
-            // Tax TaxType
-            invoice.Tax = MapTax(source.Tax);
+            // Erzeuge Tax TaxType
+            invoice.CalculateTotals();
             #endregion
 
             #region Amount
