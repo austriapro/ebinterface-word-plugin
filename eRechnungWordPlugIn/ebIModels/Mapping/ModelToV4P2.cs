@@ -201,30 +201,6 @@ namespace ebIModels.Mapping.V4p2
                 detailsItemList.Add(itemList);
             }
             invoice.Details.ItemList = detailsItemList.ToArray();
-            //if (source.Details.BelowTheLineItem != null)
-            //{
-            //    if (source.Details.BelowTheLineItem.Count > 0)
-            //    {
-            //        List<BelowTheLineItemType> belowItems = new List<BelowTheLineItemType>();
-            //        foreach (VM.BelowTheLineItemType item in source.Details.BelowTheLineItem)
-            //        {
-
-            //            if (!string.IsNullOrEmpty(item.Description))
-            //            {
-            //                belowItems.Add(new BelowTheLineItemType()
-            //                {
-            //                    Description = item.Description,
-            //                    LineItemAmount = item.LineItemAmount
-            //                });
-
-            //            }
-            //        }
-            //        if (belowItems.Any())
-            //        {
-            //            invoice.Details.BelowTheLineItem = belowItems.ToArray();
-            //        }
-            //    }
-            //}
             #endregion
 
             #region Global ReductionANdSurcharge
@@ -245,8 +221,8 @@ namespace ebIModels.Mapping.V4p2
             {
                 VATItemType vatItemNeu = new VATItemType()
                 {
-                    Amount = vatItem.TaxAmount,
-                    TaxedAmount = vatItem.TaxableAmount,
+                    Amount = vatItem.TaxAmount.FixedFraction(2),
+                    TaxedAmount = vatItem.TaxableAmount.FixedFraction(2),
                 };
 
                 vatItemNeu.Item = MapVatItemType(vatItem);

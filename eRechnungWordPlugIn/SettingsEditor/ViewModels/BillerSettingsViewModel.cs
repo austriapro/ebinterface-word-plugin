@@ -377,6 +377,7 @@ namespace SettingsEditor.ViewModels
             }
         }
 
+        // ToDo VatList im GUI erweitern
         private VatDefaultValue _vatSelected;
         public VatDefaultValue VatSelected
         {

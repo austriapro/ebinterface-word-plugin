@@ -37,15 +37,15 @@ namespace ebIModels.Models.Tests
         [TestCase(@"Daten\Rechng-V4p3-2017-001-neu.xml", @"Daten\Save4p3.xml", Models.EbIVersion.V4P3, "http://www.ebinterface.at/schema/4p3/")]
         [TestCase(@"Daten\Rechng-V4p3-2017-001-neu.xml", @"Daten\Save5p0von4p3.xml", Models.EbIVersion.V5P0, "http://www.ebinterface.at/schema/5p0/")]
         [TestCase(@"Daten\Test-5p0.xml", @"Daten\Save5p0von5p0.xml", Models.EbIVersion.V5P0, "http://www.ebinterface.at/schema/5p0/")]
-        [TestCase(@"Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save4p1von4p1.xml", Models.EbIVersion.V4P1, "http://www.ebinterface.at/schema/4p1/")]
-        [TestCase(@"Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save4p2von4p1.xml", Models.EbIVersion.V4P2, "http://www.ebinterface.at/schema/4p2/")]
-        [TestCase(@"Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save4p3von4p1.xml", Models.EbIVersion.V4P3, "http://www.ebinterface.at/schema/4p3/")]
-        [TestCase(@"Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save5p0von4p1.xml", Models.EbIVersion.V5P0, "http://www.ebinterface.at/schema/5p0/")]
+        [TestCase(@"Daten\Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save4p1von4p1.xml", Models.EbIVersion.V4P1, "http://www.ebinterface.at/schema/4p1/")]
+        [TestCase(@"Daten\Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save4p2von4p1.xml", Models.EbIVersion.V4P2, "http://www.ebinterface.at/schema/4p2/")]
+        [TestCase(@"Daten\Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save4p3von4p1.xml", Models.EbIVersion.V4P3, "http://www.ebinterface.at/schema/4p3/")]
+        [TestCase(@"Daten\Test Vorlage 2014-500-2014-03-19.XML", @"Daten\Save5p0von4p1.xml", Models.EbIVersion.V5P0, "http://www.ebinterface.at/schema/5p0/")]
         [Test]
         public void SaveInvoiceTest(string inputFile, string outputFile, Models.EbIVersion ebIVersion, string expectedAttr)
         {
             var invoice = InvoiceFactory.LoadTemplate(inputFile);
-            invoice.PrintDump();
+            //invoice.PrintDump();
             EbInterfaceResult result = invoice.Save(outputFile, ebIVersion);
             result.PrintDump();
             Assert.That(result.ResultType == ResultType.IsValid, $"Validation Error: {outputFile} ");

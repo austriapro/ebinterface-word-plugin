@@ -115,8 +115,10 @@ namespace SettingsManager
         public string VStText
         {
             get { return Settings.Default.SetVStText; }
-            set { Settings.Default.SetVStText = value;
-                _IstNichtVStBerechtigtVatValue.Beschreibung = value; }
+            set {
+                Settings.Default.SetVStText = value;
+                _IstNichtVStBerechtigtVatValue.Beschreibung = value;
+            }
         }
         public string MwStTab
         {
@@ -124,7 +126,14 @@ namespace SettingsManager
             set { Settings.Default.SetMwStTab = value; }
         }
         public decimal MwStDefault { get { return Settings.Default.SetMwStDefault; } set { Settings.Default.SetMwStDefault = value; } }
-        public VatDefaultValue MwStDefaultValue { get { return VatDefaultValues.FirstOrDefault(p => p.MwStSatz == MwStDefault); } }
+        public VatDefaultValue MwStDefaultValue
+        {
+            get {
+                if (VStBerechtigt == false)
+                { return IstNichtVStBerechtigtVatValue; }
+                return VatDefaultValues.FirstOrDefault(p => p.MwStSatz == MwStDefault);
+            }
+        }
         #endregion
 
         #region Bank-Konto
@@ -311,7 +320,7 @@ namespace SettingsManager
 
         public VatDefaultValue IstNichtVStBerechtigtVatValue
         {
-            get {  _IstNichtVStBerechtigtVatValue.Beschreibung = VStText; return _IstNichtVStBerechtigtVatValue; }
+            get { _IstNichtVStBerechtigtVatValue.Beschreibung = VStText; return _IstNichtVStBerechtigtVatValue; }
             private set { _IstNichtVStBerechtigtVatValue = value; }
         }
 

@@ -113,6 +113,10 @@ namespace ebIViewModels.ErrorView
                 {
                     Message = e.Message;
                 }
+#if DEBUG
+                Console.WriteLine(Message);
+#endif
+
                 ErrorList.Add(new ErrorViewModel()
                 {
                     Description = e.Description,
@@ -123,6 +127,9 @@ namespace ebIViewModels.ErrorView
             catch (Exception ex)
             {
                 LogService.Log.LogWrite(LogService.CallerInfo.Create(), LogService.Log.LogPriority.High, $"{ex.Message}\n{ex.StackTrace}");
+#if DEBUG
+                throw;
+#endif
             }
             finally
             {

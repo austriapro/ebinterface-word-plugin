@@ -128,7 +128,7 @@ namespace ebIModels.Models
                          select new
                          {
                              netto = g.Sum(x => x.LineItemAmount),
-                             ustGesamt = g.Sum(x => x.TaxItem.TaxPercent.Value * x.LineItemAmount / 100)
+                             ustGesamt = g.Sum(x => x.TaxItem.TaxPercent.Value * x.LineItemAmount / 100).FixedFraction(2)
                          };
 
             decimal nettoBetrag = totals.FirstOrDefault().netto.FixedFraction(2);
@@ -152,8 +152,33 @@ namespace ebIModels.Models
 
         public EbInterfaceResult Save(string filename, EbIVersion version)
         {
+            Log.LogWrite(CallerInfo.Create(), Log.LogPriority.Medium, $"Save Invoice Version {version.ToString()}");
             var invoice = (IInvoiceBase)Mapping.MapInvoice.MapToEbInterface(this, version);
-            var result = invoice.Save(filename);
+            // var result = invoice.Save(filename);
+            EbInterfaceResult result = null;
+            switch (version)
+            {
+                case EbIVersion.V4P0:
+                   result = ((ebIModels.Schema.ebInterface4p0.InvoiceType)invoice).Save(filename);
+                    break;
+                case EbIVersion.V4P1:
+                    result = ((ebIModels.Schema.ebInterface4p1.InvoiceType)invoice).Save(filename);
+                    break;
+                case EbIVersion.V4P2:
+                    result = ((ebIModels.Schema.ebInterface4p2.InvoiceType)invoice).Save(filename);
+
+                    break;
+                case EbIVersion.V4P3:
+                    result = ((ebIModels.Schema.ebInterface4p3.InvoiceType)invoice).Save(filename);
+
+                    break;
+                case EbIVersion.V5P0:
+                    result = ((ebIModels.Schema.ebInterface5p0.InvoiceType)invoice).Save(filename);
+
+                    break;
+                default:
+                    break;
+            }
             return result;
         }
 

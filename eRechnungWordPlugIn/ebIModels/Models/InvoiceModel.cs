@@ -1147,10 +1147,7 @@ namespace ebIModels.Models
                 this.taxableAmountField = value;
 #if DEBUG 
                 Log.LogWrite(CallerInfo.Create(), Log.LogPriority.Medium, $"{nameof(TaxableAmount)}={taxableAmountField}");
-                if (value==1105)
-                {
-                    Log.LogStack(CallerInfo.Create());
-                }
+
 #endif
             }
         }

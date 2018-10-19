@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eb:Invoice xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sv="http://www.ebinterface.at/schema/4p3/extensions/sv" xmlns:ext="http://www.ebinterface.at/schema/4p3/extensions/ext" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:DocumentTitle="Der Titel der Rechnung" xmlns:eb="http://www.ebinterface.at/schema/4p3/" eb:GeneratingSystem="ebInterface Word PlugIn an die Wirtschaft V4p3 V0701ed7 (Debug, 03.02.2017 15:17:38)">
+  <eb:InvoiceNumber>2017-001</eb:InvoiceNumber>
+  <eb:InvoiceDate>2017-01-05</eb:InvoiceDate>
+  <eb:Delivery>
+    <eb:Period>
+      <eb:FromDate>2016-02-02</eb:FromDate>
+      <eb:ToDate>2016-03-31</eb:ToDate>
+    </eb:Period>
+  </eb:Delivery>
+  <eb:Biller>
+    <eb:VATIdentificationNumber>ATU00000000</eb:VATIdentificationNumber>
+    <eb:FurtherIdentification eb:IdentificationType="FN">279548a</eb:FurtherIdentification>
+    <eb:FurtherIdentification eb:IdentificationType="FBG">St. Pölten</eb:FurtherIdentification>
+    <eb:FurtherIdentification eb:IdentificationType="FS">Mauerbach</eb:FurtherIdentification>
+    <eb:Address>
+      <eb:AddressIdentifier eb:AddressIdentifierType="GLN">9099999303132</eb:AddressIdentifier>
+      <eb:Name>Bogad &amp; Partner Consulting OG</eb:Name>
+      <eb:Street>Steinbachstr. 17</eb:Street>
+      <eb:Town>Mauerbach</eb:Town>
+      <eb:ZIP>3001</eb:ZIP>
+      <eb:Country eb:CountryCode="AT">Österreich</eb:Country>
+      <eb:Phone>06991</eb:Phone>
+      <eb:Email>jbogad@hotmail.com</eb:Email>
+      <eb:Contact>Für 4.1</eb:Contact>
+    </eb:Address>
+    <eb:InvoiceRecipientsBillerID>L0901</eb:InvoiceRecipientsBillerID>
+  </eb:Biller>
+  <eb:InvoiceRecipient>
+    <eb:VATIdentificationNumber>ATU12345678</eb:VATIdentificationNumber>
+    <eb:OrderReference>
+      <eb:OrderID>REF01</eb:OrderID>
+    </eb:OrderReference>
+    <eb:Address>
+      <eb:AddressIdentifier eb:AddressIdentifierType="GLN">9099999303132</eb:AddressIdentifier>
+      <eb:Salutation>Herr</eb:Salutation>
+      <eb:Name>Josef BOgad</eb:Name>
+      <eb:Street>Gerlachstr 1</eb:Street>
+      <eb:Town>Mauerbach1</eb:Town>
+      <eb:ZIP>3001</eb:ZIP>
+      <eb:Country eb:CountryCode="AT">Österreich</eb:Country>
+      <eb:Phone>06992</eb:Phone>
+      <eb:Email>josef@bogad.at</eb:Email>
+      <eb:Contact>Kontakt Empfänger</eb:Contact>
+    </eb:Address>
+    <eb:BillersInvoiceRecipientID>K9090</eb:BillersInvoiceRecipientID>
+  </eb:InvoiceRecipient>
+  <eb:Details>
+    <eb:HeaderDescription>Kopftext zur Beschreibung</eb:HeaderDescription>
+    <eb:ItemList>
+      <eb:ListLineItem>
+        <eb:PositionNumber>1</eb:PositionNumber>
+        <eb:Description>BEZ01</eb:Description>
+        <eb:ArticleNumber>ART01</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="STK">1</eb:Quantity>
+        <eb:UnitPrice>25</eb:UnitPrice>
+        <eb:VATRate>20</eb:VATRate>
+        <eb:ReductionAndSurchargeListLineItemDetails>
+          <eb:ReductionListLineItem>
+            <eb:BaseAmount>25</eb:BaseAmount>
+            <eb:Percentage>10</eb:Percentage>
+          </eb:ReductionListLineItem>
+        </eb:ReductionAndSurchargeListLineItemDetails>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>REF01</eb:OrderID>
+          <eb:OrderPositionNumber>BEST01</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>22.5</eb:LineItemAmount>
+      </eb:ListLineItem>
+      <eb:ListLineItem>
+        <eb:PositionNumber>2</eb:PositionNumber>
+        <eb:Description>Produktbezeichnung</eb:Description>
+        <eb:ArticleNumber>ART02</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="STK">5</eb:Quantity>
+        <eb:UnitPrice>25</eb:UnitPrice>
+        <eb:VATRate>10</eb:VATRate>
+        <eb:ReductionAndSurchargeListLineItemDetails>
+          <eb:ReductionListLineItem>
+            <eb:BaseAmount>125</eb:BaseAmount>
+            <eb:Percentage>15</eb:Percentage>
+          </eb:ReductionListLineItem>
+        </eb:ReductionAndSurchargeListLineItemDetails>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>REF01</eb:OrderID>
+          <eb:OrderPositionNumber>BSTPOS02</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>106.25</eb:LineItemAmount>
+      </eb:ListLineItem>
+    </eb:ItemList>
+    <eb:FooterDescription>Fußtext zur Beschreibung</eb:FooterDescription>
+    <eb:BelowTheLineItem>
+      <eb:Description>Hinzurechnung</eb:Description>
+      <eb:LineItemAmount>25.00</eb:LineItemAmount>
+    </eb:BelowTheLineItem>
+  </eb:Details>
+  <eb:Tax>
+    <eb:VAT>
+      <eb:VATItem>
+        <eb:TaxedAmount>22.5</eb:TaxedAmount>
+        <eb:VATRate>20</eb:VATRate>
+        <eb:Amount>4.5</eb:Amount>
+      </eb:VATItem>
+      <eb:VATItem>
+        <eb:TaxedAmount>106.25</eb:TaxedAmount>
+        <eb:VATRate>10</eb:VATRate>
+        <eb:Amount>10.63</eb:Amount>
+      </eb:VATItem>
+    </eb:VAT>
+  </eb:Tax>
+  <eb:TotalGrossAmount>143.88</eb:TotalGrossAmount>
+  <eb:PayableAmount>168.88</eb:PayableAmount>
+  <eb:PaymentMethod>
+    <eb:UniversalBankTransaction>
+      <eb:BeneficiaryAccount>
+        <eb:BankName>Musterbank</eb:BankName>
+        <eb:BIC>NABAATWW</eb:BIC>
+        <eb:IBAN>AT611904300234573201</eb:IBAN>
+        <eb:BankAccountOwner>Musterfirma GmbH</eb:BankAccountOwner>
+      </eb:BeneficiaryAccount>
+    </eb:UniversalBankTransaction>
+  </eb:PaymentMethod>
+  <eb:PaymentConditions>
+    <eb:DueDate>2017-02-04</eb:DueDate>
+    <eb:Discount>
+      <eb:PaymentDate>2017-01-15</eb:PaymentDate>
+      <eb:Percentage>3</eb:Percentage>
+    </eb:Discount>
+  </eb:PaymentConditions>
+  <eb:PresentationDetails>
+    <eb:URL>http://www.austriapro.at</eb:URL>
+    <eb:SuppressZero>true</eb:SuppressZero>
+  </eb:PresentationDetails>
+  <eb:Comment>Hinweise: Das ist eine voll ausgefüllte Rechnung, ohne Anhänge und Verweise</eb:Comment>
+</eb:Invoice>

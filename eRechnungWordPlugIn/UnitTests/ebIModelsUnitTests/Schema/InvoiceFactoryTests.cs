@@ -72,7 +72,7 @@ namespace ebIModels.Schema.Tests
             invoice.PrintDump();
             Assert.IsNotNull(invoice);
             //Console.WriteLine(invoice.Dump());
-            invoice.SaveTemplate(saveFn);            
+            invoice.SaveTemplate(saveFn);          
         }
 
         [Test]

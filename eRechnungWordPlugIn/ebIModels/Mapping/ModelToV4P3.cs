@@ -199,30 +199,6 @@ namespace ebIModels.Mapping.V4p3
                 detailsItemList.Add(itemList);
             }
             invoice.Details.ItemList = detailsItemList.ToArray();
-            //if (source.Details.BelowTheLineItem != null)
-            //{
-            //    if (source.Details.BelowTheLineItem.Count > 0)
-            //    {
-            //        List<BelowTheLineItemType> belowItems = new List<BelowTheLineItemType>();
-            //        foreach (VM.BelowTheLineItemType item in source.Details.BelowTheLineItem)
-            //        {
-
-            //            if (!string.IsNullOrEmpty(item.Description))
-            //            {
-            //                belowItems.Add(new BelowTheLineItemType()
-            //                {
-            //                    Description = item.Description,
-            //                    LineItemAmount = item.LineItemAmount
-            //                });
-
-            //            }
-            //        }
-            //        if (belowItems.Any())
-            //        {
-            //            invoice.Details.BelowTheLineItem = belowItems.ToArray();
-            //        }
-            //    }
-            //}
             #endregion
    
             #region Global ReductionANdSurcharge
@@ -243,8 +219,8 @@ namespace ebIModels.Mapping.V4p3
             {
                 VATItemType vatItemNeu = new VATItemType()
                 {
-                    Amount = vatItem.TaxAmount,
-                    TaxedAmount = vatItem.TaxableAmount,
+                    Amount = vatItem.TaxAmount.FixedFraction(2),
+                    TaxedAmount = vatItem.TaxableAmount.FixedFraction(2),
                 };
 
                 vatItemNeu.Item = MapVatItemType(vatItem);
@@ -402,11 +378,11 @@ namespace ebIModels.Mapping.V4p3
             AddressType addrNew = new AddressType
             {
                 Name = address.Name,
-                Contact = contact.Name,
+                Contact = contact?.Name,
                 Phone = address.Phone,
                 POBox = address.POBox,
                 Email = address.Email,
-                Salutation = contact.Salutation,
+                Salutation = contact?.Salutation,
                 Street = address.Street,
                 Country = GetCountry(address.Country),
                 ZIP = address.ZIP,

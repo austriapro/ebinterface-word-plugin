@@ -567,30 +567,43 @@ namespace ebIModels.Mapping.V5p0
         /// <returns></returns>
         private static TaxType MapTax(Model.TaxType SourceTax)
         {
-            if (SourceTax==null || SourceTax.TaxItem==null)
+            if (SourceTax == null || SourceTax.TaxItem == null)
             {
                 return null;
             }
             TaxType tax = new TaxType();
-
-            List<TaxItemType> taxItems = new List<TaxItemType>();
-            foreach (var taxItemModel in SourceTax.TaxItem)
+            var tItems = SourceTax.TaxItem.Select(t => new TaxItemType()
             {
-                TaxItemType taxItem = new TaxItemType()
+                TaxableAmount = t.TaxableAmount.FixedFraction(2),
+                TaxAmount = t.TaxAmount.FixedFraction(2),
+                TaxAmountSpecified = true,
+                Comment = t.Comment,
+                TaxPercent = new TaxPercentType()
                 {
-                    TaxableAmount = taxItemModel.TaxableAmount,
-                    TaxAmount = taxItemModel.TaxAmount, // (taxItemModel.TaxableAmount * taxItemModel.TaxPercent.Value / 100).FixedFraction(2),
-                    TaxAmountSpecified = true,
-                    TaxPercent = new TaxPercentType()
-                    {
-                        TaxCategoryCode = taxItemModel.TaxPercent.TaxCategoryCode,
-                        Value = taxItemModel.TaxPercent.Value
-                    },
+                    TaxCategoryCode = t.TaxPercent.TaxCategoryCode,
+                    Value = t.TaxPercent.Value
+                }
+            });
+            //List<TaxItemType> taxItems = new List<TaxItemType>();
+            //foreach (var taxItemModel in SourceTax.TaxItem)
+            //{
+            //    TaxItemType taxItem = new TaxItemType()
+            //    {
+            //        TaxableAmount = taxItemModel.TaxableAmount.FixedFraction(2),
+            //        TaxAmount = taxItemModel.TaxAmount, // (taxItemModel.TaxableAmount * taxItemModel.TaxPercent.Value / 100).FixedFraction(2),
+            //        TaxAmountSpecified = true,
+            //        TaxPercent = new TaxPercentType()
+            //        {
+            //            TaxCategoryCode = taxItemModel.TaxPercent.TaxCategoryCode,
+            //            Value = taxItemModel.TaxPercent.Value
+            //        },
 
-                };
-                taxItems.Add(taxItem);
-            }
-            tax.TaxItem = taxItems.ToArray();
+            //    };
+            //    taxItems.Add(taxItem);
+            //}
+            //tax.TaxItem = taxItems.ToArray();
+
+            tax.TaxItem = tItems.ToArray();
             return tax;
         }
 

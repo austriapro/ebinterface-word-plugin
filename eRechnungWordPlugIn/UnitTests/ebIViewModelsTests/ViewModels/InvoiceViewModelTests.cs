@@ -37,6 +37,8 @@ using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
 using ebISaveFileDialog;
 using System.IO;
 using ServiceStack.Text;
+using Moq;
+using System.Windows.Forms;
 
 namespace ebIViewModels.ViewModels.Tests
 {
@@ -122,18 +124,18 @@ namespace ebIViewModels.ViewModels.Tests
                             {
                                 var vmDetail = InvVm.DetailsView[i];
                                 vmDetail.UomEntries = new List<UnitOfMeasureEntries>(); // um den Object Dump klein zu halten
-                    vmDetail.UoMList = new System.ComponentModel.BindingList<UnitOfMeasureViewModel>(); // um den Object Dump klein zu halten
-                    vmDetail.VatList = new System.ComponentModel.BindingList<VatDefaultValue>();
+                                vmDetail.UoMList = new System.ComponentModel.BindingList<UnitOfMeasureViewModel>(); // um den Object Dump klein zu halten
+                                vmDetail.VatList = new System.ComponentModel.BindingList<VatDefaultValue>();
 
                                 var cDetail = controllInvoice.Details.ItemList[0].ListLineItem[i];
                                 Console.WriteLine($"in Template Pos {cDetail.PositionNumber} ****************************************");
-            
+
                                 // cDetail.PrintDump();
 
                                 Console.WriteLine($"Zeile {i} in ViewModel, Pos {cDetail.PositionNumber} ****************************************");
                                 // vmDetail.PrintDump();
 
-                    Assert.AreEqual(cDetail.ArticleNumber[0].Value, vmDetail.ArtikelNr, $"Pos {cDetail.PositionNumber}Artikelnr");
+                                Assert.AreEqual(cDetail.ArticleNumber[0].Value, vmDetail.ArtikelNr, $"Pos {cDetail.PositionNumber}Artikelnr");
                                 Assert.AreEqual(cDetail.LineItemAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, LineItemAmount");
                                 Assert.AreEqual(cDetail.TaxItem.TaxAmount, vmDetail.MwStBetragZeile, $"Pos {cDetail.PositionNumber}, TaxAmount");
                                 Assert.AreEqual(cDetail.TaxItem.TaxableAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, TaxableAmount");
@@ -315,6 +317,55 @@ namespace ebIViewModels.ViewModels.Tests
                     "/eb:Invoice/eb:PaymentMethod/eb:UniversalBankTransaction/eb:BeneficiaryAccount/eb:BankAccountOwner",
                     nspm);
             Assert.AreEqual("Testinhaber", xOwner.Value);
+        }
+
+        [Test]
+        public void NotVatBerechtigtTest()
+        {
+            var dlgMoq = new Mock<IDialogService>();
+            dlgMoq.Setup(dlg => dlg.ShowMessageBox(It.IsAny<string>(),
+                                                  It.IsAny<string>(),
+                                                  It.Is<MessageBoxButtons>(mb => mb == MessageBoxButtons.YesNo),
+                                                  It.IsAny<MessageBoxIcon>())).Returns(DialogResult.OK);
+
+            string invoiceFn = @"Daten\testTemplateInvoiceIndustry.xml";
+            string outFn = @"Daten\testInvoiceNotVatBerechtigt.xml";
+            PlugInSettings.Default.VStBerechtigt = false;
+            PlugInSettings.Default.VStText = "Ich bin nicht berechtigt";
+            var invVM = Cmn.UContainer.Resolve<InvoiceViewModel>(new ResolverOverride[] {
+                new ParameterOverride("invoice", Cmn.Invoice),
+                new ParameterOverride("dialog", dlgMoq.Object)
+            });
+            invVM.LoadTemplateCommand.Execute(invoiceFn);
+            //Assert.Multiple(() =>
+            //{
+            foreach (var item in invVM.DetailsView)
+            {
+                Assert.That(item.IsVatBerechtigt == false, "Vat berechtigt false");
+                item.VatItem.PrintDump();
+                Assert.AreEqual(item.VatItem, PlugInSettings.Default.MwStDefaultValue, "MwStDefaultValue");
+            }
+            //});
+            Assert.IsTrue(invVM.IsInvoiceValid(), "Invoice IsValid() == false");
+            invVM.SaveEbinterfaceCommand.Execute(outFn);
+            if (!invVM.Results.IsValid)
+            {
+                foreach (var item in invVM.Results)
+                {
+                    Console.WriteLine(item.Message);
+                }
+            }
+            Assert.IsTrue(invVM.Results.IsValid, "Invoice not valid");
+            Assert.IsTrue(File.Exists(outFn), "Output file not found");
+
+            var nspm = new XmlNamespaceManager(new NameTable());
+            XDocument vatDoc = XDocument.Load(outFn);
+            var attrs = vatDoc.Root.Attributes()
+                        .Where(p => p.IsNamespaceDeclaration == true)
+                        .FirstOrDefault(x => x.Name.LocalName == "eb");
+
+            nspm.AddNamespace("eb", attrs.Value);
+            var taxElement = vatDoc.XPathSelectElement("/eb:Invoice/eb:Tax");
         }
 
         [Test]

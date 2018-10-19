@@ -1536,7 +1536,7 @@ namespace ebIViewModels.ViewModels
             if (_clearVat)
             {
                 VmBillerVatid = PlugInSettings.VatIdDefaultOhneVstBerechtigung;
-                VatSatzSetzen(null);
+                VatSatzSetzen(PlugInSettings.Default.IstNichtVStBerechtigtVatValue);
             }
             
             _invoice.CalculateTotals();
