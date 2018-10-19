@@ -2033,7 +2033,7 @@ namespace ebIViewModels.ViewModels
 
         private void VatSatzSetzen(VatDefaultValue vatSatz)
         {
-            // ToDo prüfen wo zu das gut ist
+            // DetailsView in temp Feld kopieren und nachher zurücksetzen, damit Update erfolgt
             var tempDetails = DetailsView;
             foreach (DetailsViewModel model in tempDetails)
             {

@@ -82,6 +82,15 @@ namespace ebIViewModels.ViewModels
                     },
                     TaxAmount = (details.NettoBetragZeile * details.VatItem.MwStSatz / 100).FixedFraction(2)
                 };
+                if (PlugInSettings.Default.VStBerechtigt)
+                {
+                    taxItem.Comment = PlugInSettings.Default.VatDefaultValues
+                                      .Where(p => p.Code == taxItem.TaxPercent.TaxCategoryCode && p.MwStSatz==taxItem.TaxPercent.Value)
+                                      .FirstOrDefault().Beschreibung;
+                } else
+                {
+                    taxItem.Comment = PlugInSettings.Default.VStText;
+                }
                 lineItem.TaxItem = taxItem;
                 lineItem.Quantity = new UnitType()
                 {

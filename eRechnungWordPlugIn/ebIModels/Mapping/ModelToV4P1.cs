@@ -405,11 +405,11 @@ namespace ebIModels.Mapping.V4p1
             AddressType addrNew = new AddressType
             {
                 Name = address.Name,
-                Contact = contact.Name,
+                Contact = contact?.Name,
                 Phone = address.Phone,
                 POBox = address.POBox,
                 Email = address.Email,
-                Salutation = contact.Salutation,
+                Salutation = contact?.Salutation,
                 Street = address.Street,
                 Country = GetCountry(address.Country),
                 ZIP = address.ZIP,

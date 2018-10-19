@@ -319,8 +319,9 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual("Testinhaber", xOwner.Value);
         }
 
+        [TestCaseSource(nameof(FileNameTestCases), new object[] { "NoVAT", -1, null })]
         [Test]
-        public void NotVatBerechtigtTest()
+        public void NotVatBerechtigtTest(FileNameTestCase fileNameTestCase)
         {
             var dlgMoq = new Mock<IDialogService>();
             dlgMoq.Setup(dlg => dlg.ShowMessageBox(It.IsAny<string>(),
@@ -328,8 +329,9 @@ namespace ebIViewModels.ViewModels.Tests
                                                   It.Is<MessageBoxButtons>(mb => mb == MessageBoxButtons.YesNo),
                                                   It.IsAny<MessageBoxIcon>())).Returns(DialogResult.OK);
 
-            string invoiceFn = @"Daten\testTemplateInvoiceIndustry.xml";
-            string outFn = @"Daten\testInvoiceNotVatBerechtigt.xml";
+            string invoiceFn = fileNameTestCase.InputFile; //@"Daten\testTemplateInvoiceIndustry.xml";
+            string outFn = fileNameTestCase.OutputFile;    //@"Daten\testInvoiceNotVatBerechtigt.xml";
+
             PlugInSettings.Default.VStBerechtigt = false;
             PlugInSettings.Default.VStText = "Ich bin nicht berechtigt";
             var invVM = Cmn.UContainer.Resolve<InvoiceViewModel>(new ResolverOverride[] {
@@ -347,6 +349,7 @@ namespace ebIViewModels.ViewModels.Tests
             }
             //});
             Assert.IsTrue(invVM.IsInvoiceValid(), "Invoice IsValid() == false");
+            PlugInSettings.Default.EbInterfaceVersionString = fileNameTestCase.Version; //EbIVersion.V4P3.ToString();
             invVM.SaveEbinterfaceCommand.Execute(outFn);
             if (!invVM.Results.IsValid)
             {
@@ -357,15 +360,6 @@ namespace ebIViewModels.ViewModels.Tests
             }
             Assert.IsTrue(invVM.Results.IsValid, "Invoice not valid");
             Assert.IsTrue(File.Exists(outFn), "Output file not found");
-
-            var nspm = new XmlNamespaceManager(new NameTable());
-            XDocument vatDoc = XDocument.Load(outFn);
-            var attrs = vatDoc.Root.Attributes()
-                        .Where(p => p.IsNamespaceDeclaration == true)
-                        .FirstOrDefault(x => x.Name.LocalName == "eb");
-
-            nspm.AddNamespace("eb", attrs.Value);
-            var taxElement = vatDoc.XPathSelectElement("/eb:Invoice/eb:Tax");
         }
 
         [Test]
@@ -487,13 +481,88 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(null, InvVm.VmComment, "Comment has been reloaded.");
         }
 
-        //[Test]
-        //public void CheckKontoVerbindungTest()
-        //{
-        //    InvVm.Results = new ValidationResults();
-        //    PrivateObject privateInv = new PrivateObject(InvVm);
-        //    privateInv.Invoke("CheckKontoVerbindung", InvVm.Results);
-        //    Assert.IsTrue(InvVm.Results.IsValid);
-        //}
+
+        [TestCaseSource(nameof(FileNameTestCases), new object[] {"LoadSave",2  ,EbIVersion.V5P0})]
+        [Test]
+        public void LoadSaveInvoiceTest(FileNameTestCase testCase)
+        {
+            Console.WriteLine($"{testCase.Version}->{testCase.InputFile}");
+            var ebiList = InvoiceFactory.GetVersionsWithSaveSupported();
+            var dlgMoq = new Mock<IDialogService>();
+            dlgMoq.Setup(dlg => dlg.ShowMessageBox(It.IsAny<string>(),
+                                      It.IsAny<string>(),
+                                      It.Is<MessageBoxButtons>(mb => mb == MessageBoxButtons.YesNo),
+                                      It.IsAny<MessageBoxIcon>())).Returns(DialogResult.OK);
+
+            string iFn = testCase.InputFile;
+            string oFn = testCase.OutputFile;
+            var invVM = Cmn.UContainer.Resolve<InvoiceViewModel>(new ResolverOverride[] {
+                new ParameterOverride("invoice", Cmn.Invoice),
+                new ParameterOverride("dialog", dlgMoq.Object)
+            });
+            invVM.LoadTemplateCommand.Execute(iFn);
+            PlugInSettings.Default.EbInterfaceVersionString = testCase.Version;
+            string oFnTagged = Path.GetFileNameWithoutExtension(oFn);
+            invVM.SaveEbinterfaceCommand.Execute(oFn);
+            if (!invVM.Results.IsValid)
+            {
+                foreach (var item in invVM.Results)
+                {
+                    Console.WriteLine(item.Message);
+                }
+            }
+            Assert.IsTrue(File.Exists(oFn), "Outputfile missing - " + testCase.Version);
+        }
+
+
+        public static IEnumerable<FileNameTestCase> FileNameTestCases(string appendix, int testCaseNr, string version2Select)
+        {
+            List<string> allFiles = new List<string>()
+            {
+                "V4p0-Testrechnung",
+                "V4p1-Testrechnung",
+                "V4p2-Testrechnung",
+                "V4p3-Testrechnung",
+                "V5p0-Testrechnung"
+            };
+            List<string> files = allFiles;
+            if (testCaseNr!=-1)
+            {
+                files = new List<string>() { allFiles[testCaseNr] };
+            }
+            string selectedVersion = version2Select;
+            foreach (string version in InvoiceFactory.GetVersionsWithSaveSupported())
+            {
+
+                if (string.IsNullOrEmpty(selectedVersion) || version == selectedVersion)
+                {
+                    foreach (string file in files)
+                    {
+                        var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+
+                        var outputFile = Path.Combine(dir,"Daten", "Output", file + $"-savedAs-{version}-{appendix}.xml");
+                        if (!Directory.Exists(Path.GetDirectoryName(outputFile)))
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(outputFile));
+                        }
+                        yield return new FileNameTestCase()
+                        {
+                            InputFile = Path.Combine("Daten", file + ".xml"),
+                            OutputFile = outputFile,
+                            Version = version
+                        };
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    public class FileNameTestCase
+    {
+        public string InputFile { get; set; }
+        public string OutputFile { get; set; }
+        public string Version { get; set; }
     }
 }

@@ -176,17 +176,16 @@ namespace ebIModels.Mapping.V4p3
                     }
 
                     // Rabatte / Zuschläge
-                    lineItem.DiscountFlagSpecified = false;
+                    lineItem.DiscountFlagSpecified = true;
                     lineItem.DiscountFlag = false;
                     lineItem.ReductionAndSurchargeListLineItemDetails = null;
 
                     if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
                     {
-                        lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails, out bool discountFlag);
+                        lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails, out bool discoutFlag);
 
-                        // Kein DIscount Flag, da das im Word PlugIn sowieso nicht unterstützt ist.
-                        lineItem.DiscountFlag = discountFlag;
-                        lineItem.DiscountFlagSpecified = discountFlag==true;
+                        lineItem.DiscountFlag = discoutFlag;
+                        lineItem.DiscountFlagSpecified = true;
                     }
                     lineItem.Description = srcLineItem.Description.ToArray();
                     lineItem.ReCalcLineItemAmount();

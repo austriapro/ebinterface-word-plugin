@@ -81,7 +81,7 @@ namespace ebIModels.Models
 
         internal void UpdateTaxTypeList(List<ItemListType> itemList) //, bool isTaxExemption, string vatText)
         {
-        
+
             if (itemList == null || itemList.Count == 0)
             {
                 this.taxField = new TaxType();
@@ -89,22 +89,22 @@ namespace ebIModels.Models
             }
 
             // Dictionary für alle USt Angaben
-            var tax = itemList[0].ListLineItem.GroupBy(s => new { Prozent = s.TaxItem.TaxPercent.Value, Code=s.TaxItem.TaxPercent.TaxCategoryCode })
+            var tax = itemList[0].ListLineItem.GroupBy(s => new { Prozent = s.TaxItem.TaxPercent.Value, Code = s.TaxItem.TaxPercent.TaxCategoryCode })
                       .Select(p => new TaxItemType
                       {
-                       TaxPercent =  new TaxPercentType()
+                          TaxPercent = new TaxPercentType()
                           {
                               Value = p.Key.Prozent,
                               TaxCategoryCode = p.Key.Code
                           },
                           TaxableAmount = p.Sum(x => x.LineItemAmount),
-                          TaxAmount = p.Sum(x => x.LineItemAmount) * p.Key.Prozent/ 100,
-
+                          TaxAmount = p.Sum(x => x.LineItemAmount) * p.Key.Prozent / 100,
+                          Comment = p.FirstOrDefault().TaxItem.Comment
                       });
 
-             
+
             //Log.DumpToLog(CallerInfo.Create(), tax);
-            this.taxField = new TaxType() { TaxItem = tax.ToList()};
+            this.taxField = new TaxType() { TaxItem = tax.ToList() };
         }
         /// <summary>
         /// Berechnet die Gesamtsummen der aktuellen eRechnung
@@ -115,7 +115,7 @@ namespace ebIModels.Models
             PayableAmount = 0;
             NetAmount = 0;
             TaxAmountTotal = 0;
-            if (this.detailsField==null || this.detailsField.ItemList== null)
+            if (this.detailsField == null || this.detailsField.ItemList == null)
             {
                 return;
             }
@@ -133,9 +133,9 @@ namespace ebIModels.Models
 
             decimal nettoBetrag = totals.FirstOrDefault().netto.FixedFraction(2);
             decimal taxAmount = totals.FirstOrDefault().ustGesamt.FixedFraction(2);
-            
-            TotalGrossAmount = nettoBetrag+taxAmount;
-            PayableAmount = TotalGrossAmount+ PrepaidAmount;
+
+            TotalGrossAmount = nettoBetrag + taxAmount;
+            PayableAmount = TotalGrossAmount + PrepaidAmount;
             NetAmount = nettoBetrag;
             TaxAmountTotal = taxAmount;
         }
@@ -159,7 +159,7 @@ namespace ebIModels.Models
             switch (version)
             {
                 case EbIVersion.V4P0:
-                   result = ((ebIModels.Schema.ebInterface4p0.InvoiceType)invoice).Save(filename);
+                    result = ((ebIModels.Schema.ebInterface4p0.InvoiceType)invoice).Save(filename);
                     break;
                 case EbIVersion.V4P1:
                     result = ((ebIModels.Schema.ebInterface4p1.InvoiceType)invoice).Save(filename);

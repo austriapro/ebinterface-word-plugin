@@ -13,19 +13,22 @@ using SettingsEditor.ViewModels;
 
 namespace ebIViewModelsTests.ViewModels
 {
+
     [TestFixture]
     public class CommonTestSetup
     {
         internal Common Cmn = new Common(Common.InvTemplate);
         internal InvoiceViewModel InvVm;
         internal ErrorActionPaneViewModel ErrorActionPane;
-        private string _testData = @"C:\TFS\eRechnung-Business\Testdaten\Billersettings.xml";
+        private string _testData = @"TestDaten\Billersettings.xml";
         internal BillerSettingsViewModel BillerSettings; // 
         internal XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
 
 
+
         public CommonTestSetup()
         {
+            
             InitGlobals();
         }
 
@@ -40,6 +43,7 @@ namespace ebIViewModelsTests.ViewModels
         [SetUp]
         public void InitGlobals()
         {
+            //RunBeforeAnyTests();
             InvVm = Cmn.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", Cmn.Invoice));
             InvVm.NoUpdatePrompt = true;
             ErrorActionPane = Cmn.UContainer.Resolve<ErrorActionPaneViewModel>();
@@ -49,8 +53,9 @@ namespace ebIViewModelsTests.ViewModels
 
         internal void SetupSettings()
         {
+            string fullTest = Path.Combine(Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location), _testData);
             BillerSettings = Cmn.UContainer.Resolve<BillerSettingsViewModel>();
-            string xmlData = File.ReadAllText(_testData);
+            string xmlData = File.ReadAllText(fullTest);
             XElement xEl = XElement.Parse(xmlData);
             var o1 = xEl.Element("Name").Value;
             BillerSettings.Name = xEl.Element("Name").Value;

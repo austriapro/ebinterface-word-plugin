@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BillSettingsValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Name>Musterfirma GmbH</Name>
+    <Strasse>Verkäuferstrasse 7</Strasse>
+    <Plz>4711</Plz>
+    <Ort>Sellerain</Ort>
+    <Phone>+43(699)123456789</Phone>
+    <Kontakt>Hans Mustermann</Kontakt>
+    <Email>office@musterfirma.at</Email>
+    <VatId>ATU12345678</VatId>
+    <Gln>9099999303132</Gln>
+    <VatText>Ist bin befreit</VatText>
+    <Bank>Musterbank</Bank>
+    <Inhaber>Musterfirma GmbH</Inhaber>
+    <Iban>AT611904300234573201</Iban>
+    <Bic>NABAATWW</Bic>
+    <CountryCode>AT</CountryCode>
+    <VatSelected>20</VatSelected>
+    <Currency>EUR</Currency>
+    <IsVatBerechtigt>true</IsVatBerechtigt>
+</BillSettingsValues>

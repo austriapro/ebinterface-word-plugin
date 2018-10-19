@@ -302,6 +302,10 @@ namespace ebIModels.Mapping.V5p0
             {
                 return null;
             }
+            if (string.IsNullOrEmpty(contactSource.Name))
+            {
+                return null;
+            }
             ContactType contact = new ContactType
             {
                 Email = contactSource.Email?.ToArray(),

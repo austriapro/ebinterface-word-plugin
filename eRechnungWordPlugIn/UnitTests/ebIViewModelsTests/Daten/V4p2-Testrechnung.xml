@@ -5,7 +5,7 @@
   <eb:CancelledOriginalDocument>
     <eb:InvoiceNumber>123</eb:InvoiceNumber>
     <eb:InvoiceDate>2014-06-01</eb:InvoiceDate>
-    <eb:DocumentType>CreditMemo</eb:DocumentType>
+    <eb:DocumentType>Invoice</eb:DocumentType>
   </eb:CancelledOriginalDocument>
   <eb:Delivery>
     <eb:Date>2014-06-03</eb:Date>
