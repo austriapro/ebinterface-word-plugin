@@ -32,8 +32,8 @@ using System.Security.Permissions;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.5.0.0")]
-[assembly: AssemblyFileVersion("1.5.0.0")]
+[assembly: AssemblyVersion("5.0.2.1")]
+[assembly: AssemblyFileVersion("5.0.2.1")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "FileDialogExtenders")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Scope = "member", Target = "FileDialogExtenders.FileDialogControlBase+DialogWrapper`1..ctor(FileDialogExtenders.FileDialogControlBase,System.Windows.Forms.IWin32Window)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Scope = "member", Target = "FileDialogExtenders.FileDialogControlBase+DialogWrapper`1.AssignDummyWindow(System.Windows.Forms.IWin32Window):System.Void")]
