@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ebIModels.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIModels.Models.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class InvoiceSubtypesTests
     {
-        [TestMethod()]
+        [Test]
         public void GetSubtypeTestIndustryOk()
         {
             var erg1 = InvoiceSubtypes.GetVariant("Wirtschaft");
@@ -19,7 +19,7 @@ namespace ebIModels.Models.Tests
             Assert.AreEqual(InvoiceSubtypes.ValidationRuleSet.Industries,erg.VariantOption);
         }
 
-        [TestMethod()]
+        [Test]
         public void GetListTestOk()
         {
             var erg = InvoiceSubtypes.GetList();

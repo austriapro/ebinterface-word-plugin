@@ -46,7 +46,7 @@ namespace ebIViewModels.ViewModels
                 _invoiceDate = value;
                 OnPropertyChanged();
                 _skontoFaelligDate = _invoiceDate.AddDays(_skontoTage);
-                OnPropertyChanged("SkontoFaelligDate");
+                OnPropertyChanged(nameof(SkontoFaelligDate));
             }
         }
 
@@ -152,7 +152,7 @@ namespace ebIViewModels.ViewModels
                 _skontoFaelligDate = value;
                 OnPropertyChanged();
                 _skontoTage = _skontoFaelligDate.Days(_invoiceDate);
-                OnPropertyChanged("SkontoTage");
+                OnPropertyChanged(nameof(SkontoTage));
             }
         }
 
@@ -197,7 +197,7 @@ namespace ebIViewModels.ViewModels
                         _skontoTage = value;
                 OnPropertyChanged();
                 _skontoFaelligDate = _invoiceDate.AddDays(value);
-                OnPropertyChanged("SkontoFaelligDate");
+                OnPropertyChanged(nameof(SkontoFaelligDate));
             }
         }
         public const string RuleSetBund = "Bund";
@@ -237,7 +237,7 @@ namespace ebIViewModels.ViewModels
                 _skontoFaelligDate = _invoiceDate;
                 _skontoTage = 0;
             }
-            _skontoProzent = discount.PercentageSpecified ? (discount.Percentage ?? 0) : 0;
+            _skontoProzent = discount.PercentageSpecified ? (discount.Percentage) : 0;
 
            
         }
@@ -252,7 +252,7 @@ namespace ebIViewModels.ViewModels
         //    _invoiceDueDate = invoice.PaymentConditions.InvoiceDueDate;
         //    _dueDays = _invoiceDueDate.Days(_invoiceDate);
         //    CurrentRuleSet = invoice.InvoiceSubtype.VariantOption;
-        //    _skontoBasisBetrag = invoice.TotalGrossAmount ?? 0;
+        //    _skontoBasisBetrag = invoice.TotalGrossAmount;
         //}
 
         public ValidationResults Results { get; private set; }

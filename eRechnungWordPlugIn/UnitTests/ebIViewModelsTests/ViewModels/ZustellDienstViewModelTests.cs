@@ -1,17 +1,17 @@
 ﻿using System;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SettingsManager;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class ZustellDienstViewModelTests : CommonTestSetup
     {
         private const string ZustellSaveFile = @"Daten\ZustellSaveInvoice.xml";
         private const string ExeFileName = @"..\..\..\..\ZustellDienstSample\bin\Debug\ZustellDienstSample.exe";
 
-        [TestMethod]
+        [Test]
         public void RunZustellDienstTestOk()
         {
             PlugInSettings.Default.DeliveryExePath = ExeFileName;

@@ -5,23 +5,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SettingsManager;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ebICommonTestSetup;
 using System.Xml.Linq;
 using System.IO;
 namespace SettingsManager.Tests
 {
-    [TestClass()]
+    [SetUpFixture]
+    public class CommonSetUpClass
+    {
+        [OneTimeSetUp]
+        public void RunBeforeAnyTests()
+        {
+            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+            Environment.CurrentDirectory = dir;
+            Directory.SetCurrentDirectory(dir);
+            Console.WriteLine($"Directory:{dir}");
+        }
+    }
+    [TestFixture]
     public class PlugInSettingsTests
     {
-        private XElement getElement(XDocument xdoc, string xName)
+        private XElement GetElement(XDocument xdoc, string xName)
             {
 
             IEnumerable<XElement> xels = xdoc.Descendants();
             var xel = xels.FirstOrDefault(x=>x.Name.LocalName == xName);
             return xel;
             }
-        [TestMethod()]
+        [Test]
         public void GetVatTest()
         {
             
@@ -30,14 +42,14 @@ namespace SettingsManager.Tests
         }
 
 
-        [TestMethod()]
+        [Test]
         public void LoadUnitOfMeasureTest()
         {
             var uomLIst = PlugInSettings.Default.UnitOfMeasures;
             Assert.IsNotNull(uomLIst);
         }
 
-        [TestMethod()]
+        [Test]
         public void SaveUnitOfMeasureTest()
         {
             var uomLIst = PlugInSettings.Default.UnitOfMeasures;
@@ -47,7 +59,7 @@ namespace SettingsManager.Tests
             
         }
 
-        [TestMethod()]
+        [Test]
         public void LoadSaveReloadUnitOfMeasureTest()
         {
             var uomLIst = PlugInSettings.Default.UnitOfMeasures;
@@ -59,11 +71,18 @@ namespace SettingsManager.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void ResetOkTest()
         {
             PlugInSettings.Reset();
             Assert.AreEqual("EUR",PlugInSettings.Default.Currency);
+        }
+
+        [Test]
+        public void UpgradeSettingsTest()
+        {
+            var upgrade = PlugInSettings.Load();
+            Assert.IsNotNull(upgrade);
         }
     }
 }

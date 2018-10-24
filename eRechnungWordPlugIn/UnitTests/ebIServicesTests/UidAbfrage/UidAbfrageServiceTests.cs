@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using ebICommonTestSetup;
 using ebIServices.UidAbfrage;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Rhino.Mocks;
 
 namespace ebIServices.UidAbfrage.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class UidAbfrageServiceTests : Common
     {
 #if DEBUG
@@ -25,7 +25,7 @@ namespace ebIServices.UidAbfrage.Tests
         private string _billerUid;
         private string _okUid = "LU21025032";
         private string _notOkUid = "Lx21025032";
-        [TestInitialize]
+        [SetUp]
         public void UidAbfrageServiceTestsInit()
         {
             
@@ -46,14 +46,14 @@ namespace ebIServices.UidAbfrage.Tests
             _abfr.Stub(x => x.UidAbfrage(_notOkUid, _billerUid)).Return(false);
 
         }
-        [TestMethod()]
+        [Test]
         public void LoginTest()
         {
             var res = _abfr.Login(_pin, _tln, _uid);
             Assert.IsTrue(res);
         }
 
-        [TestMethod()]
+        [Test]
         public void LogoutTest()
         {
             var res = _abfr.Login(_pin, _tln, _uid);
@@ -61,7 +61,7 @@ namespace ebIServices.UidAbfrage.Tests
             _abfr.Logout();
         }
 
-        [TestMethod()]
+        [Test]
         public void UidAbfrageTestOk()
         {
             var res = _abfr.Login(_pin, _tln, _uid);
@@ -74,7 +74,7 @@ namespace ebIServices.UidAbfrage.Tests
 
         }
 
-        [TestMethod()]
+        [Test]
         public void UidAbfrageTestNotOk()
         {
             var res = _abfr.Login(_pin, _tln, _uid);

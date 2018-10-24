@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ebIModels.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIModels.Models.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class CountryCodeModelsTests
     {
-        [TestMethod()]
+        [Test]
         public void GetCountryCodeListTest()
         {
             // var cc = new CountryCodesModels();

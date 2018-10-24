@@ -11,12 +11,12 @@ using System.Collections.Generic;
 using ExtensionMethods;
 using System.Reflection;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 
 namespace ebICommonTestSetup
 {
-    [TestClass]
+    [TestFixture]
     public class Common
     {
         public const string InvTest = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";
@@ -24,7 +24,7 @@ namespace ebICommonTestSetup
         private const string DataFolder = "Daten";
 
         public IUnityContainer UContainer;
-        public IInvoiceType Invoice;
+        public IInvoiceModel Invoice;
 
         public Common()
         {
@@ -44,7 +44,7 @@ namespace ebICommonTestSetup
             var dirList = Directory.GetFiles(DataFolder, "*.xml");
             foreach (string templFileName in dirList)
             {
-                IInvoiceType inv = InvoiceFactory.LoadTemplate(templFileName);
+                IInvoiceModel inv = InvoiceFactory.LoadTemplate(templFileName);
                 DateTime oldInvDate = inv.InvoiceDate;   // Save Invoicedate
                 inv.InvoiceDate = DateTime.Today;
                 int days = inv.InvoiceDate.Days(oldInvDate);
@@ -52,21 +52,19 @@ namespace ebICommonTestSetup
                 {
                     if (inv.Delivery.Item != null)
                     {
-                        if (inv.Delivery.Item is DateTime)
+                        if (inv.Delivery.Item is DateTime deliveryDate)
                         {
-                            DateTime deliveryDate = (DateTime)inv.Delivery.Item;
                             inv.Delivery.Item = deliveryDate.AddDays(days);
 
                         }
-                        if (inv.Delivery.Item is PeriodType)
+                        if (inv.Delivery.Item is PeriodType period)
                         {
-                            PeriodType period = (PeriodType)inv.Delivery.Item;
-                            if (period.FromDate.HasValue)
+                            if (period.FromDate != DateTime.MinValue)
                             {
                                 period.FromDate = ((DateTime)period.FromDate).AddDays(days);
 
                             }
-                            if (period.ToDate.HasValue)
+                            if (period.ToDate != DateTime.MinValue)
                             {
                                 period.ToDate = ((DateTime)period.ToDate).AddDays(days);
                             }
@@ -115,7 +113,7 @@ namespace ebICommonTestSetup
             Console.WriteLine("-".PadLeft(15, '-'));
         }
 
-        public XElement getElement(XDocument xdoc, string xName)
+        public XElement GetElement(XDocument xdoc, string xName)
         {
 
             IEnumerable<XElement> xels = xdoc.Descendants();

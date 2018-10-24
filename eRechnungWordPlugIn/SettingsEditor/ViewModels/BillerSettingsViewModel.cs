@@ -18,8 +18,9 @@ using WinFormsMvvm;
 using WinFormsMvvm.Controls;
 using WinFormsMvvm.DialogService;
 using LogService;
-using static ebIModels.Schema.InvoiceType;
+using static ebIModels.Models.InvoiceModel;
 using ebIModels.Schema;
+using ebIModels.Mapping;
 
 namespace SettingsEditor.ViewModels
 {
@@ -32,11 +33,7 @@ namespace SettingsEditor.ViewModels
         public event EventHandler UpdateFromBillerSettingsEvent;
         private void UpdateFromBillerSettingsFire()
         {
-            EventHandler handler = UpdateFromBillerSettingsEvent;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
+            UpdateFromBillerSettingsEvent?.Invoke(this, EventArgs.Empty);
         }
         #region Properties
 
@@ -265,12 +262,12 @@ namespace SettingsEditor.ViewModels
                 if (!newValue)
                 {
                     VatId = PlugInSettings.VatIdDefaultOhneVstBerechtigung;
-                    VatSelected = VatDefaultList.Find(p => p.MwStSatz == 0);
+                    VatSelected = PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
                 }
                 else
                 {
                     VatId = PlugInSettings.VatIdDefaultMitVstBerechtigung;
-                    VatSelected = VatDefaultList.Find(p => p.MwStSatz == 20);
+                    VatSelected = PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
                 }
                 _isVatBerechtigt = value;
                 OnPropertyChanged();
@@ -376,6 +373,7 @@ namespace SettingsEditor.ViewModels
             }
         }
 
+        // ToDo VatList im GUI erweitern
         private VatDefaultValue _vatSelected;
         public VatDefaultValue VatSelected
         {
@@ -389,8 +387,8 @@ namespace SettingsEditor.ViewModels
             }
         }
 
-        private List<VatDefaultValue> _vatDefaultList;
-        public List<VatDefaultValue> VatDefaultList
+        private BindingList<VatDefaultValue> _vatDefaultList;
+        public BindingList<VatDefaultValue> VatDefaultList
         {
             get { return _vatDefaultList; }
             set
@@ -539,7 +537,7 @@ namespace SettingsEditor.ViewModels
             Results = new ValidationResults();
            var  cList = _uc.Resolve<CurrencyListViewModels>();
             //cList.GetList(Enum.GetNames(typeof(CurrencyType)).ToList());
-            cList.GetList(new List<string>() { CurrencyType.EUR.ToString() });
+            cList.GetList(new List<string>() { ModelConstants.CurrencyCodeFixed.ToString() });
             _currencyList = new BindingList<CurrencyListViewModel>(cList.DropDownList);            
             string defCurr = PlugInSettings.Default.Currency;
             _currSelected = _currencyList.FirstOrDefault(p => p.Code == defCurr);
@@ -561,8 +559,8 @@ namespace SettingsEditor.ViewModels
             _gln = PlugInSettings.Default.BillerGln;
             _save2Form = false;
             _countryCodeSelected = _countryCodes.Find(p => p.Code == PlugInSettings.Default.Land);
-            _vatDefaultList = PlugInSettings.Default.VatDefaultValues;
-            _vatSelected = _vatDefaultList.Find(p => p.MwStSatz == PlugInSettings.Default.MwStDefault);
+            _vatDefaultList = new BindingList<VatDefaultValue> (PlugInSettings.Default.VatDefaultValues);
+            _vatSelected = PlugInSettings.Default.MwStDefaultValue;
             _vatText = PlugInSettings.Default.VStText;
             _isVatBerechtigt = PlugInSettings.Default.VStBerechtigt;
             _currSelected = new CurrencyListViewModel();
@@ -572,7 +570,7 @@ namespace SettingsEditor.ViewModels
             _inhaber = PlugInSettings.Default.Kontowortlaut;
             _iban = PlugInSettings.Default.Iban;
             _bic = PlugInSettings.Default.Bic;
-            _SelectedVersion = PlugInSettings.Default.ebInterfaceVersionString;
+            _SelectedVersion = PlugInSettings.Default.EbInterfaceVersionString;
             // _anyTextChanged = false;
         }
 
@@ -616,7 +614,7 @@ namespace SettingsEditor.ViewModels
             PlugInSettings.Default.Kontowortlaut = Inhaber;
             PlugInSettings.Default.Iban = Iban;
             PlugInSettings.Default.Bic = Bic;
-            PlugInSettings.Default.ebInterfaceVersionString = SelectedVersion;
+            PlugInSettings.Default.EbInterfaceVersionString = SelectedVersion;
         }
 
         

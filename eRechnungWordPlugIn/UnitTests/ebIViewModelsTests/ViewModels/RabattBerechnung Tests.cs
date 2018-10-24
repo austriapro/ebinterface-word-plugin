@@ -1,14 +1,15 @@
 ﻿using System;
 using ebIViewModels.ViewModels;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using SettingsManager;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class RabattBerechnungTests : CommonTestSetup
     {
-        [TestMethod]
+        [Test]
         public void RabattBerechnungTestOk()
         {
             DetailsViewModel dView = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverrides() { 
@@ -19,7 +20,7 @@ namespace ebIViewModelsTests.ViewModels
             dView.Bezeichnung = "Mister Blister";
             dView.Menge = new decimal(10.0005);
             dView.EinzelPreis = new decimal(5.00);
-            dView.VatSatz = 20;
+            dView.VatItem= PlugInSettings.Default.MwStDefaultValue;
             dView.Einheit = "STK";
             dView.Rabatt = 10;
             dView.BestellBezug = "22";
@@ -38,12 +39,13 @@ namespace ebIViewModelsTests.ViewModels
             InvVm.SaveEbinterfaceCommand.Execute(@"Daten\RabattSaved.xml");
         }
 
-        [TestMethod]
+        [Test]
         public void RabattSaveAndReloadTest()
         {
             const string RabattSaveReload = @"Daten\RabattSaveReload.xml";
             InvVm.SaveEbinterfaceCommand.Execute(RabattSaveReload);
             var inv2 = Cmn.UContainer.Resolve<InvoiceViewModel>();
+            inv2.NoUpdatePrompt = true;
             inv2.LoadTemplateCommand.Execute(RabattSaveReload);
             Assert.AreEqual(InvVm.DetailsView[0].Rabatt, inv2.DetailsView[0].Rabatt);
         }

@@ -36,8 +36,11 @@ namespace ebIModels.Services
         public ProductInfo()
         {
             VersionInfo = new ProductVersionInfo(Properties.Resources.ProductInfo);
+#if DEBUG
+            latestRelease = null;
+#else
             GetLatestReleaseFromGitHub();
-
+#endif
         }
 
         private void GetLatestReleaseFromGitHub()
@@ -48,7 +51,9 @@ namespace ebIModels.Services
             {
                 releases.Wait();
             }
+#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (System.Exception ex)
+#pragma warning restore CS0168 // The variable 'ex' is declared but never used
             {
                 latestRelease = new Release();
                 _isNewReleaseAvailable = false;

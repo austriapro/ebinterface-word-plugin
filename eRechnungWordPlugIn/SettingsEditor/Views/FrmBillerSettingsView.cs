@@ -15,12 +15,9 @@ namespace SettingsEditor.Views
             InitializeComponent();
             ViewModel = (BillerSettingsViewModel)viewModel;
             bindingSourceReStellerSetting.DataSource = (BillerSettingsViewModel)ViewModel;
-
-            // currListBindingSource.DataSource = ((BillerSettingsViewModel) ViewModel).CurrencyList;
-
+            Bindings.Add(bindingSourceReStellerSetting);
             ((BillerSettingsViewModel)ViewModel).PropertyChanged += OnPropertyChanged;
-            // ((BillerSettingsViewModel)ViewModel).AnyTextChanged = false;
-           // SetTextChangedEvent();
+
             foreach (GroupBox box in Controls.OfType<GroupBox>())
             {
                 SetTextChangedEvent(box);
@@ -30,8 +27,11 @@ namespace SettingsEditor.Views
             cBtnReset.Visible = false;
 #endif
         }
-
-        private void SetTextChangedEvent(GroupBox grp)
+        public override void SetBindingSource(object bindSrc)
+        {
+            multiColumnComboBox1.DataSource = ((BillerSettingsViewModel)ViewModel).VatDefaultList;
+        }
+            private void SetTextChangedEvent(GroupBox grp)
         {
             foreach (TextBox control in grp.Controls.OfType<TextBox>())
             {

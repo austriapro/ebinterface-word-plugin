@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<eb:Invoice xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sv="http://www.ebinterface.at/schema/4p1/extensions/sv" xmlns:ext="http://www.ebinterface.at/schema/4p1/extensions/ext" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" xmlns:eb="http://www.ebinterface.at/schema/4p1/" eb:GeneratingSystem="ebInterface Word PlugIn an die Wirtschaft V4p1">
+<eb:Invoice xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sv="http://www.ebinterface.at/schema/4p1/extensions/sv" xmlns:ext="http://www.ebinterface.at/schema/4p1/extensions/ext" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" xmlns:eb="http://www.ebinterface.at/schema/4p1/" eb:GeneratingSystem="ebInterface Word PlugIn an die Wirtschaft V4p1">
   <Vorlage>Das ist eine Vorlage für das ebinterface Word PlugIn und kann nicht als eRechnung eingebracht werden.</Vorlage>
   <eb:InvoiceNumber>2014-500</eb:InvoiceNumber>
   <eb:InvoiceDate>2014-03-19</eb:InvoiceDate>

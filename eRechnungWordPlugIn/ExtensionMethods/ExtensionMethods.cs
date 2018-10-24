@@ -7,7 +7,8 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Windows.Forms;
 using LogService;
-
+using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace ExtensionMethods
 {
@@ -27,12 +28,19 @@ namespace ExtensionMethods
         {
             if (!(inp is Enum))
             {
-                throw new ArgumentException("Input not Enum");
+                return default(T2);
             }
             string val = inp.ToString();
-            Type x = inp.GetType();
-            T2 erg = (T2)Enum.Parse(typeof(T2), val);
-            return erg;
+            T2[] values =  (T2[])Enum.GetValues(typeof(T2));
+            List<T2> list = new List<T2>(values);
+            var found = list.FindIndex(p => p.ToString() == val);
+            if (found<0)
+            {
+                return default(T2);
+            }
+            
+            return values[found];
+           
         }
         /// <summary>
         /// Konvertiert Sonderzeichen in XML verträgliche Tags
@@ -217,6 +225,11 @@ namespace ExtensionMethods
             return false;
         }
 
+        /// <summary>
+        /// To the XML document.
+        /// </summary>
+        /// <param name="xDocument">The x document.</param>
+        /// <returns></returns>
         public static XmlDocument ToXmlDocument(this XDocument xDocument)
         {
             var xmlDocument = new XmlDocument();
@@ -235,6 +248,29 @@ namespace ExtensionMethods
             }
             return dec;
         }
+
+        /// <summary>
+        /// Gets the XPath of the given XElement
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <returns></returns>
+        public static string GetPath(this XElement node)
+        {
+            string path = node.Name.LocalName;
+            XElement currentNode = node;
+            while (currentNode.Parent != null)
+            {
+                currentNode = currentNode.Parent;
+                path = currentNode.Name.LocalName + "/" + path;
+            }
+            return path;
+        }
+
+        /// <summary>
+        /// To the x document.
+        /// </summary>
+        /// <param name="xmlDocument">The XML document.</param>
+        /// <returns></returns>
         public static XDocument ToXDocument(this XmlDocument xmlDocument)
         {
             using (var nodeReader = new XmlNodeReader(xmlDocument))
@@ -243,6 +279,11 @@ namespace ExtensionMethods
                 return XDocument.Load(nodeReader);
             }
         }
+        /// <summary>
+        /// Suspends the two way binding.
+        /// </summary>
+        /// <param name="bindingManager">The binding manager.</param>
+        /// <exception cref="ArgumentNullException">bindingManager</exception>
         public static void SuspendTwoWayBinding(this BindingManagerBase bindingManager)
         {
             if (bindingManager == null)
@@ -255,6 +296,11 @@ namespace ExtensionMethods
                 b.DataSourceUpdateMode = DataSourceUpdateMode.Never;
             }
         }
+        /// <summary>
+        /// Resumes the two way binding.
+        /// </summary>
+        /// <param name="bindingManager">The binding manager.</param>
+        /// <exception cref="ArgumentNullException">bindingManager</exception>
         public static void ResumeTwoWayBinding(this BindingManagerBase bindingManager)
         {
             if (bindingManager == null)
@@ -267,6 +313,11 @@ namespace ExtensionMethods
                 b.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             }
         }
+        /// <summary>
+        /// Updates the data bound object.
+        /// </summary>
+        /// <param name="bindingManager">The binding manager.</param>
+        /// <exception cref="ArgumentNullException">bindingManager</exception>
         public static void UpdateDataBoundObject(this BindingManagerBase bindingManager)
         {
             if (bindingManager == null)
@@ -296,11 +347,14 @@ namespace ExtensionMethods
 
             return ret;
         }
+
+
     }
 
     /// <summary>
     /// UTF Stringwriter
     /// </summary>
+    /// <seealso cref="System.IO.StringWriter" />
     public class StringWriterUtf8 : System.IO.StringWriter
     {
         public override Encoding Encoding

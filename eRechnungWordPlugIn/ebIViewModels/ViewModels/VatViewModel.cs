@@ -13,7 +13,15 @@ namespace ebIViewModels.ViewModels
     /// </summary>
     public class VatViewModel : ViewModelBase
     {
-        public const string FmtDecimal2 = "";
+        public VatViewModel() { }
+        public VatViewModel(string taxCode, string taxCodeText, decimal vatPercent, decimal taxedAmount)
+        {
+            _vatBaseAmount = taxedAmount;
+            _vatPercent = vatPercent;
+            _vatAmount = ((taxedAmount * vatPercent) / 100).FixedFraction(2);
+            _taxCode = taxCode;
+            _taxCodeText = taxCodeText;
+        }
         private decimal _vatBaseAmount;
         /// <summary>
         /// Basisbetrag für die MwSt Berechnung
@@ -21,13 +29,13 @@ namespace ebIViewModels.ViewModels
         public decimal VatBaseAmount
         {
             get { return _vatBaseAmount.FixedFraction(2); }
-            set
-            {
+            set {
                 if (_vatBaseAmount == value)
                     return;
                 _vatBaseAmount = value.FixedFraction(2);
                 OnPropertyChanged();
-                VatTotalAmount = _vatBaseAmount + VatAmount;
+                //VatTotalAmount = _vatBaseAmount + VatAmount;
+                OnPropertyChanged(nameof(VatTotalAmount));
             }
         }
 
@@ -38,13 +46,13 @@ namespace ebIViewModels.ViewModels
         public decimal VatAmount
         {
             get { return _vatAmount.FixedFraction(2); }
-            set
-            {
+            set {
                 if (_vatAmount == value)
                     return;
                 _vatAmount = value.FixedFraction(2);
                 OnPropertyChanged();
-                VatTotalAmount = _vatAmount + VatBaseAmount;
+                OnPropertyChanged(nameof(VatTotalAmount));
+                //VatTotalAmount = _vatAmount + VatBaseAmount;
             }
         }
 
@@ -54,11 +62,10 @@ namespace ebIViewModels.ViewModels
         /// </summary>
         public decimal VatTotalAmount
         {
-            get { return _vatTotalAmount.FixedFraction(2); }
-            set
-            {
-                if (_vatTotalAmount == value)
-                    return;
+            get {
+                return (_vatAmount + VatBaseAmount).FixedFraction(2);
+            }
+            private set {
                 _vatTotalAmount = value;
                 OnPropertyChanged();
             }
@@ -71,8 +78,7 @@ namespace ebIViewModels.ViewModels
         public decimal VatPercent
         {
             get { return _vatPercent; }
-            set
-            {
+            set {
                 if (_vatPercent == value)
                     return;
                 _vatPercent = value;
@@ -81,32 +87,31 @@ namespace ebIViewModels.ViewModels
             }
         }
 
-        private bool _taxExemption;
-        /// <summary>
-        /// Gibt an ob steuerbefreit (=true)
-        /// </summary>
-        public bool TaxExemption
-        {
-            get { return _taxExemption; }
-            set
-            {
-                if (_taxExemption == value)
-                    return;
-                _taxExemption = value;
-                OnPropertyChanged();
-            }
-        }
+        //private bool _taxExemption;
+        ///// <summary>
+        ///// Gibt an ob steuerbefreit (=true)
+        ///// </summary>
+        //public bool TaxExemption
+        //{
+        //    get { return _taxExemption; }
+        //    set
+        //    {
+        //        if (_taxExemption == value)
+        //            return;
+        //        _taxExemption = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
 
         private string _taxCode;
-       /// <summary>
-       /// Code für die Steuerbefreiung
-       /// </summary>
+        /// <summary>
+        /// Code für die Steuerbefreiung
+        /// </summary>
         public string TaxCode
         {
             get { return _taxCode; }
-            set
-            {
+            set {
                 if (_taxCode == value)
                     return;
                 _taxCode = value;
@@ -122,14 +127,13 @@ namespace ebIViewModels.ViewModels
         public string TaxCodeText
         {
             get { return _taxCodeText; }
-            set
-            {
+            set {
                 if (_taxCodeText == value)
                     return;
                 _taxCodeText = value;
                 OnPropertyChanged();
             }
         }
-        
-    }    
+
+    }
 }

@@ -7,16 +7,16 @@ using ebICommonTestSetup;
 using ebIServices.SendMail;
 using ebIServices.SendMail.Tests;
 using SettingsEditor.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SettingsManager;
 using Microsoft.Practices.Unity;
 
 namespace SettingsEditor.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class MailSettingsViewModelTests : Common
     {
-        [TestMethod()]
+        [Test]
         public void MailSettingsViewModelTestMailOk()
         {
             UContainer.RegisterType<ISendMailService, SendMailTestMock>("SendMailTest");
@@ -29,7 +29,7 @@ namespace SettingsEditor.ViewModels.Tests
             Assert.IsTrue(string.IsNullOrEmpty(sndMail.SendTo));
         }
 
-        [TestMethod()]
+        [Test]
         public void SaveSettingsTtestOk()
         {
             UContainer.RegisterType<ISendMailService, SendMailTestMock>("SendMailTest");

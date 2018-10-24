@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using ebIModels.Schema.ebInterface3p02;
 using Microsoft.Practices.Unity;
 using SettingsManager;
 using WinFormsMvvm;

@@ -66,7 +66,7 @@ namespace eRechnung
         internal RibbonViewModel RibbonViewModel;
         internal InvoiceViewModel InvoiceViewModel;
         internal ErrorActionsPaneControl ErrorActionsPane;
-        internal static IInvoiceType Invoice;
+        internal static IInvoiceModel Invoice;
         internal Dictionary<string, ContentControlContainer> CcContainer = new Dictionary<string, ContentControlContainer>();
 
         internal IDialogService Dialogs;
@@ -120,7 +120,8 @@ namespace eRechnung
             {
                 Log.LogWrite(CallerInfo.Create(),Log.LogPriority.High, ex.ToString());
                 throw;
-            }            // System.Windows.Forms.Application.Idle += OnIdle;
+            }            
+            // System.Windows.Forms.Application.Idle += OnIdle;
 
 
         }
@@ -144,7 +145,7 @@ namespace eRechnung
         /// </summary>
         private void InternalStartup()
         {
-            this.b28.SelectionChange += new Microsoft.Office.Tools.Word.SelectionEventHandler(this.b28_SelectionChange);
+            
             this.CC_InvoiceDocType.Validating += new System.ComponentModel.CancelEventHandler(this.CC_InvoiceDocType_Validating);
             this.CC_InvoiceDocType.Validated += new System.EventHandler(this.CC_InvoiceDocType_Validated);
             this.CC_BillerCountry.Validating += new System.ComponentModel.CancelEventHandler(this.BillerCountry_CC_Validating);
@@ -153,7 +154,7 @@ namespace eRechnung
             this.CC_RecCountry.Validated += new System.EventHandler(this.ReceipientCountry_CC_Validated);
             this.CC_InvCurrency.Validating += new System.ComponentModel.CancelEventHandler(this.CC_InvCurrency_Validating);
             this.CC_InvCurrency.Validated += new System.EventHandler(this.CC_InvCurrency_Validated);
-            this.b98.SelectionChange += new Microsoft.Office.Tools.Word.SelectionEventHandler(this.b98_SelectionChange);
+            
             this.CC_RefType.Validating += new System.ComponentModel.CancelEventHandler(this.CC_RefType_Validating);
             this.CC_RefType.Validated += new System.EventHandler(this.CC_RefType_Validated);
             this.CC_RefDocType.Validating += new System.ComponentModel.CancelEventHandler(this.CC_RefDocType_Validating);
@@ -343,14 +344,14 @@ namespace eRechnung
             Log.TraceWrite(CallerInfo.Create(),"Adding: " + propertyName);
             AddToContainer(ctrl, baseObject, propertyName);
             var binding = new Binding("Text", bSrc, propertyName, true, DataSourceUpdateMode.OnPropertyChanged, parms);
-            binding.Parse += bindingNullableDateParse;
-            binding.Format += bindingNullableString;
-            ctrl.Exiting += ctrl_Exiting;
+            binding.Parse += BindingNullableDateParse;
+            binding.Format += BindingNullableString;
+            ctrl.Exiting += Ctrl_Exiting;
             ctrl.DataBindings.Add(binding);
             Log.TraceWrite(CallerInfo.Create(),"Added: " + propertyName);
         }
 
-        void bindingNullableString(object sender, ConvertEventArgs e)
+        void BindingNullableString(object sender, ConvertEventArgs e)
         {
             if (e.Value != null)
                 return;
@@ -359,7 +360,7 @@ namespace eRechnung
 
         }
 
-        void bindingNullableDateParse(object sender, ConvertEventArgs e)
+        void BindingNullableDateParse(object sender, ConvertEventArgs e)
         {
             if (string.IsNullOrEmpty((string)e.Value))
             {
@@ -368,7 +369,7 @@ namespace eRechnung
             }
 
         }
-        void bindingTimStringParse(object sender, ConvertEventArgs e)
+        void BindingTimStringParse(object sender, ConvertEventArgs e)
         {
             if (!string.IsNullOrEmpty((string)e.Value))
             {
@@ -390,13 +391,13 @@ namespace eRechnung
                  parms);
             if (ctrl is PlainTextContentControl)
             {
-                binding.Format += bindingDecimalFormat2;
-                binding.Parse += bindingDecimalParse;
+                binding.Format += BindingDecimalFormat2;
+                binding.Parse += BindingDecimalParse;
             }
             Log.TraceWrite(CallerInfo.Create(),"Added: " + propertyName);
         }
 
-        private void bindingDecimalParse(object sender, ConvertEventArgs e)
+        private void BindingDecimalParse(object sender, ConvertEventArgs e)
         {
             decimal dec = 0;
             if (e.DesiredType == typeof(decimal))
@@ -413,7 +414,7 @@ namespace eRechnung
             }
         }
 
-        private void bindingDecimalFormat2(object sender, ConvertEventArgs e)
+        private void BindingDecimalFormat2(object sender, ConvertEventArgs e)
         {
             if (e.DesiredType == typeof(string))
             {
@@ -437,8 +438,8 @@ namespace eRechnung
                  parms);
             if (ctrl is PlainTextContentControl)
             {
-                binding.Format += bindingNullableString;
-                binding.Parse += bindingTimStringParse;
+                binding.Format += BindingNullableString;
+                binding.Parse += BindingTimStringParse;
                // ctrl.Exiting += ctrl_Exiting;
             }
                 
@@ -452,7 +453,7 @@ namespace eRechnung
             Log.TraceWrite(CallerInfo.Create(),"Added: " + propertyName);
         }
 
-        void ctrl_Exiting(object sender, ContentControlExitingEventArgs e)
+        void Ctrl_Exiting(object sender, ContentControlExitingEventArgs e)
         {
             Log.TraceWrite(CallerInfo.Create(),"set hidden: ", ((ContentControlBase)sender).ID);
             SetHidden(sender);
@@ -645,17 +646,17 @@ namespace eRechnung
                 switch (arg.Industry)
                 {
                     case InvoiceSubtypes.ValidationRuleSet.Industries:
-                            setBkmkFontSize(bestpos, 1);
-                            setBkmkFontSize(b27, 1);
-                            setBkmkFontSize(bLiefNr, 1);
-                            setBkmkFontSize(bEmpfMail, 1); // MUss beim e-Mail Versand geprüft werden
+                            SetBkmkFontSize(bestpos, 1);
+                            SetBkmkFontSize(b27, 1);
+                            SetBkmkFontSize(bLiefNr, 1);
+                            SetBkmkFontSize(bEmpfMail, 1); // MUss beim e-Mail Versand geprüft werden
                         break;
                     case InvoiceSubtypes.ValidationRuleSet.Government:
-                            setBkmkFontSize(bestpos, redBookmark);
-                            setBkmkFontSize(b27, redBookmark);
-                            setBkmkFontSize(bLiefNr, redBookmark);
-                            setBkmkFontSize(bEmpfMail, redBookmark);
-                            setBkmkFontSize(bEmpfMail, 1);
+                            SetBkmkFontSize(bestpos, redBookmark);
+                            SetBkmkFontSize(b27, redBookmark);
+                            SetBkmkFontSize(bLiefNr, redBookmark);
+                            SetBkmkFontSize(bEmpfMail, redBookmark);
+                            SetBkmkFontSize(bEmpfMail, 1);
                         break;
                     default:
                         // throw new ArgumentOutOfRangeException();
@@ -670,7 +671,7 @@ namespace eRechnung
             } 
             ProtectPlugIn();
         }
-        private void setBkmkFontSize(Tools.Word.Bookmark bkmk, float size)
+        private void SetBkmkFontSize(Tools.Word.Bookmark bkmk, float size)
         {
             Log.TraceWrite(CallerInfo.Create(),"Bookmark={0}, Size={1}", bkmk.Name, size);
             bkmk.Font.Size = size;
@@ -890,8 +891,8 @@ namespace eRechnung
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetMenge), detail.Menge.Decimal4());
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetUnit), detail.EinheitDisplay);
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetUnitPreis), detail.EinzelPreis.Decimal4());
-                FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetRabatt), (detail.Rabatt ?? 0).Percent2());
-                FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetMwSt), detail.VatSatz.Percent2());
+                FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetRabatt), (detail.Rabatt).Percent2());
+                FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetMwSt), detail.VatItem.MwStSatz.Percent2());
                 FillCell(detailsTab.Cell(iRow, (int)DetailPos.DetGesamt), detail.NettoBetragZeile.Decimal2());
                 newRows--;
                 if (newRows < 0)
@@ -1112,8 +1113,10 @@ namespace eRechnung
         public int GetOfficeVersion()
         {
             int sVersion = 0;
-            Microsoft.Office.Interop.Word.Application appVersion = new Microsoft.Office.Interop.Word.Application();
-            appVersion.Visible = false;
+            Microsoft.Office.Interop.Word.Application appVersion = new Microsoft.Office.Interop.Word.Application
+            {
+                Visible = false
+            };
 
             switch (appVersion.Version.ToString())
             {
@@ -1297,16 +1300,6 @@ namespace eRechnung
             //     MessageBox.Show("Old");
             this.Application.ActiveWindow.View.ReadingLayout = false;
             //  CachedString = "Old";
-        }
-
-        private void b28_SelectionChange(object sender, SelectionEventArgs e)
-        {
-
-        }
-
-        private void b98_SelectionChange(object sender, SelectionEventArgs e)
-        {
-
         }
 
     }

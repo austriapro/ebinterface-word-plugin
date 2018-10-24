@@ -10,16 +10,16 @@ using ebIModels.Models;
 using ebIViewModels.ViewModels.Tests;
 using ebIViewModelsTests.ViewModels;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SettingsEditor.ViewModels;
 using SettingsManager;
 
 namespace ebIViewModels.SettingsViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class BillerSettingsViewModelTests : CommonTestSetup
     {
-        [TestMethod()]
+        [Test]
         public void IsValidCurrencyTest()
         {
             PlugInSettings.Reset();
@@ -28,7 +28,7 @@ namespace ebIViewModels.SettingsViewModels.Tests
         }
 
 
-        [TestMethod()]
+        [Test]
         public void VatBerechtigtOkTest()
         {
             SetupSettings();
@@ -36,7 +36,7 @@ namespace ebIViewModels.SettingsViewModels.Tests
             Cmn.ListResults(BillerSettings.Results);
             Assert.AreEqual(true, BillerSettings.Results.IsValid);
         }
-        [TestMethod()]
+        [Test]
         public void VatBerechtigtNotOkTest()
         {
             SetupSettings();
@@ -46,7 +46,7 @@ namespace ebIViewModels.SettingsViewModels.Tests
             Assert.AreEqual(false, BillerSettings.Results.IsValid);
         }
 
-        [TestMethod()]
+        [Test]
         public void VatBerechtigtNotOkTest2()
         {
             SetupSettings();
@@ -56,7 +56,7 @@ namespace ebIViewModels.SettingsViewModels.Tests
             Assert.AreEqual(false, BillerSettings.Results.IsValid);
         }
 
-        [TestMethod()]
+        [Test]
         public void VatNotBerechtigtOkTest()
         {
             SetupSettings();
@@ -67,7 +67,7 @@ namespace ebIViewModels.SettingsViewModels.Tests
             Cmn.ListResults(BillerSettings.Results);
             Assert.AreEqual(true, BillerSettings.Results.IsValid);
         }
-        [TestMethod()]
+        [Test]
         public void VatNotBerechtigtNotOkTest()
         {
             SetupSettings();

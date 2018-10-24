@@ -8,12 +8,25 @@ using ebIModels.Models;
 using ebIViewModels.ViewModels;
 using ebIViewModels.ViewModels.Tests;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Xml.Linq;
+using System.IO;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [SetUpFixture]
+    public class CommonSetUpClass
+    {
+        [OneTimeSetUp]
+        public void RunBeforeAnyTests()
+        {
+            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+            Environment.CurrentDirectory = dir;
+            Directory.SetCurrentDirectory(dir);
+            Console.WriteLine($"Directory:{dir}");
+        }
+    }
+    [TestFixture]
     public class AuftragsreferenzTests : CommonTestSetup
     {
         // private readonly Common Cmn = new Common();
@@ -24,7 +37,7 @@ namespace ebIViewModelsTests.ViewModels
         "Z01:111599-0099-V-3-2099", // ohne Bestellpos
         "L4/interne Referenz"
         };
-        [TestMethod]
+        [Test]
         public void AuftragsReferenzWirtschaftOkTest()
         {
             Cmn.Setup(Common.InvTemplate); // Test mit Template anfangen
@@ -36,7 +49,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.AreEqual(true, result);
         }
 
-        [TestMethod]
+        [Test]
         public void AuftragsReferenzWirtschaftLeerOkTest()
         {
             Cmn.Setup(Common.InvTemplate); // Test mit Template anfangen
@@ -49,7 +62,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.AreEqual(true, result);
 
         }
-        [TestMethod]
+        [Test]
         public void AuftragsReferenzBundOhneBestposOkTest()
         {
             Cmn.Setup(Common.InvTemplate); // Test mit Template anfangen
@@ -69,7 +82,7 @@ namespace ebIViewModelsTests.ViewModels
             Cmn.ListResults(invoiceView.Results);
             Assert.AreEqual(true, result, string.Format("Auftr.Ref={0}", invoiceView.VmOrderReference));
         }
-        [TestMethod]
+        [Test]
         public void AuftragsReferenzBundMitBestposOkTest()
         {
             Cmn.Setup(Common.InvTemplate); // Test mit Template anfangen
@@ -99,10 +112,10 @@ namespace ebIViewModelsTests.ViewModels
             const string fnBestPos = @"Daten\BestPosTest.xml";
             invoiceView.SaveEbinterfaceCommand.Execute(fnBestPos);
             XDocument xdoc = XDocument.Load(fnBestPos);
-            var res = Cmn.getElement(xdoc, "Details");
+            var res = Cmn.GetElement(xdoc, "Details");
             Assert.IsNotNull(res);
         }
-        [TestMethod]
+        [Test]
         public void AuftragsReferenzBundBestposFehltTest()
         {
             Cmn.Setup(Common.InvTemplate); // Test mit Template anfangen
@@ -122,7 +135,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.AreEqual(false, result);
         }
 
-        [TestMethod]
+        [Test]
         public void AuftragsReferenzBundLeerNotOkTest()
         {
             Cmn.Setup(Common.InvTemplate); // Test mit Template anfangen
@@ -134,7 +147,7 @@ namespace ebIViewModelsTests.ViewModels
             Assert.AreEqual(false, result);
         }
 
-        [TestMethod]
+        [Test]
         public void AuftragsReferenzBundLeerRefillOkTest()
         {
             Cmn.Setup(Common.InvTemplate); // Test mit Template anfangen
@@ -148,14 +161,14 @@ namespace ebIViewModelsTests.ViewModels
             Assert.AreEqual("Z01", Cmn.Invoice.InvoiceRecipient.OrderReference.OrderID);
         }
 
-        [TestMethod]
+        [Test]
         public void IsBestPosRequiredLoadTemplateTest()
         {
             const string fn = @"Daten\Bestellposnr.xml";
             InvVm.LoadTemplateCommand.Execute(fn);
             Assert.IsTrue(InvVm.IsBestPosRequired);
         }
-        [TestMethod]
+        [Test]
         public void IsBestPosRequiredOrderRefChangedNotFalseTestOK()
         {
             const string fn = @"Daten\Bestellposnr.xml";

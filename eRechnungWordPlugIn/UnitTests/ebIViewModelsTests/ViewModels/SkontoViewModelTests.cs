@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ebIViewModels.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Microsoft.Practices.Unity;
 using ebIViewModelsTests.ViewModels;
 
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class SkontoViewModelTests : CommonTestSetup
     {
         SkontoViewModel _skonto;
         SkontoViewModels _skontoList;
-        [TestInitialize]
+        [SetUp]
         public void SkontoTestInitialize()
         {
             InvVm.VmInvDate = DateTime.Today;
@@ -27,7 +27,7 @@ namespace ebIViewModels.ViewModels.Tests
             _skonto.SkontoBasisBetrag = 1000;
             _skonto.SkontoFaelligDate = InvVm.VmInvDate.AddDays(10);
         }
-        [TestMethod()]
+        [Test]
         public void SkontoViewModelTest()
         {
             _skonto.IsValidSkonto();
@@ -35,7 +35,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.IsTrue(_skonto.Results.IsValid);
         }
 
-        [TestMethod]
+        [Test]
         public void SkontoProzentBundInvalidTests()
         {
             _skonto.CurrentRuleSet = ebIModels.Models.InvoiceSubtypes.ValidationRuleSet.Government;
@@ -48,7 +48,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(_skonto.Results);
             Assert.IsTrue(!_skonto.Results.IsValid,"2.");
         }
-        [TestMethod]
+        [Test]
         public void SkontoProzentIndustriesValidTests()
         {
             Cmn.Invoice.InvoiceSubtype.VariantOption = ebIModels.Models.InvoiceSubtypes.ValidationRuleSet.Industries;
@@ -77,7 +77,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(_skonto.Results);
             Assert.IsTrue(!_skonto.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void SkontoProzentGovernmentValidTests()
         {
             Cmn.Invoice.InvoiceSubtype.VariantOption = ebIModels.Models.InvoiceSubtypes.ValidationRuleSet.Government;
@@ -108,7 +108,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.IsTrue(!_skonto.Results.IsValid,"3.");
         }
 
-        [TestMethod]
+        [Test]
         public void SkontoTageTest()
         {
             _skonto.SkontoFaelligDate = InvVm.VmInvDate.AddDays(-5);

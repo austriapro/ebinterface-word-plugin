@@ -33,7 +33,6 @@ namespace SettingsEditor.Views
             this.components = new System.ComponentModel.Container();
             this.bindingSourceReStellerSetting = new System.Windows.Forms.BindingSource(this.components);
             this.countryCodesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.vatDefaultListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnCancel = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnSave = new WinFormsMvvm.Controls.CommandButton();
@@ -50,6 +49,8 @@ namespace SettingsEditor.Views
             this.txBxBIC = new System.Windows.Forms.TextBox();
             this.txtIBAN = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.multiColumnComboBox1 = new WinFormsMvvm.MultiColumnComboBox();
+            this.vatDefaultListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label10 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.ebIVersionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -64,7 +65,6 @@ namespace SettingsEditor.Views
             this.txtBxBillerContact = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cBxMwSt = new System.Windows.Forms.ComboBox();
             this.cBxBillerCountry = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -83,9 +83,9 @@ namespace SettingsEditor.Views
             this.cBtnReset = new WinFormsMvvm.Controls.CommandButton();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceReStellerSetting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.countryCodesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vatDefaultListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vatDefaultListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ebIVersionsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currencyListBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -99,11 +99,6 @@ namespace SettingsEditor.Views
             // 
             this.countryCodesBindingSource.DataMember = "CountryCodes";
             this.countryCodesBindingSource.DataSource = this.bindingSourceReStellerSetting;
-            // 
-            // vatDefaultListBindingSource
-            // 
-            this.vatDefaultListBindingSource.DataMember = "VatDefaultList";
-            this.vatDefaultListBindingSource.DataSource = this.bindingSourceReStellerSetting;
             // 
             // btnCancel
             // 
@@ -256,6 +251,7 @@ namespace SettingsEditor.Views
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.multiColumnComboBox1);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.comboBox1);
@@ -272,7 +268,6 @@ namespace SettingsEditor.Views
             this.groupBox1.Controls.Add(this.txtBxStrasse);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.cBxMwSt);
             this.groupBox1.Controls.Add(this.txtBxPLZ);
             this.groupBox1.Controls.Add(this.cBxBillerCountry);
             this.groupBox1.Controls.Add(this.label4);
@@ -292,6 +287,24 @@ namespace SettingsEditor.Views
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rechnungssteller";
             // 
+            // multiColumnComboBox1
+            // 
+            this.multiColumnComboBox1.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "VatSelected", true));
+            this.multiColumnComboBox1.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSourceReStellerSetting, "IsVatBerechtigt", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.multiColumnComboBox1.DataSource = this.vatDefaultListBindingSource;
+            this.multiColumnComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.multiColumnComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.multiColumnComboBox1.FormattingEnabled = true;
+            this.multiColumnComboBox1.Location = new System.Drawing.Point(93, 202);
+            this.multiColumnComboBox1.Name = "multiColumnComboBox1";
+            this.multiColumnComboBox1.Size = new System.Drawing.Size(184, 21);
+            this.multiColumnComboBox1.TabIndex = 58;
+            // 
+            // vatDefaultListBindingSource
+            // 
+            this.vatDefaultListBindingSource.DataMember = "VatDefaultList";
+            this.vatDefaultListBindingSource.DataSource = this.bindingSourceReStellerSetting;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -300,6 +313,7 @@ namespace SettingsEditor.Views
             this.label10.Size = new System.Drawing.Size(99, 13);
             this.label10.TabIndex = 57;
             this.label10.Text = "ebInterface Version";
+            this.label10.Visible = false;
             // 
             // comboBox2
             // 
@@ -311,6 +325,7 @@ namespace SettingsEditor.Views
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(83, 21);
             this.comboBox2.TabIndex = 56;
+            this.comboBox2.Visible = false;
             // 
             // ebIVersionsBindingSource
             // 
@@ -419,19 +434,6 @@ namespace SettingsEditor.Views
             this.label3.Size = new System.Drawing.Size(27, 13);
             this.label3.TabIndex = 35;
             this.label3.Text = "PLZ";
-            // 
-            // cBxMwSt
-            // 
-            this.cBxMwSt.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSourceReStellerSetting, "VatSelected", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.cBxMwSt.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSourceReStellerSetting, "IsVatBerechtigt", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.cBxMwSt.DataSource = this.vatDefaultListBindingSource;
-            this.cBxMwSt.DisplayMember = "MwStSatz";
-            this.cBxMwSt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBxMwSt.FormattingEnabled = true;
-            this.cBxMwSt.Location = new System.Drawing.Point(93, 202);
-            this.cBxMwSt.Name = "cBxMwSt";
-            this.cBxMwSt.Size = new System.Drawing.Size(90, 21);
-            this.cBxMwSt.TabIndex = 43;
             // 
             // cBxBillerCountry
             // 
@@ -603,10 +605,10 @@ namespace SettingsEditor.Views
             this.Text = "Einstellungen - Rechnungssteller";
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceReStellerSetting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.countryCodesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vatDefaultListBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vatDefaultListBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ebIVersionsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currencyListBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -623,7 +625,6 @@ namespace SettingsEditor.Views
         private WinFormsMvvm.Controls.CommandButton btnSave;
         private System.Windows.Forms.BindingSource bindingSourceReStellerSetting;
         private System.Windows.Forms.BindingSource countryCodesBindingSource;
-        private System.Windows.Forms.BindingSource vatDefaultListBindingSource;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.ValidationProvider validationProviderBillerSettings;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -648,7 +649,6 @@ namespace SettingsEditor.Views
         private System.Windows.Forms.TextBox txtBxStrasse;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cBxMwSt;
         private System.Windows.Forms.MaskedTextBox txtBxPLZ;
         private System.Windows.Forms.ComboBox cBxBillerCountry;
         private System.Windows.Forms.Label label4;
@@ -668,5 +668,7 @@ namespace SettingsEditor.Views
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.BindingSource ebIVersionsBindingSource;
         private System.Windows.Forms.ComboBox comboBox2;
+        private WinFormsMvvm.MultiColumnComboBox multiColumnComboBox1;
+        private System.Windows.Forms.BindingSource vatDefaultListBindingSource;
     }
 }

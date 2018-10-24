@@ -32,47 +32,15 @@ namespace ebIViewModels.ViewModels
             _vatViewList = new List<VatViewModel>();
         }
 
-        public TaxType GetTaxType()
-        {
-            if (VatViewList.Count == 0)
-                return null;
-            TaxType tax = new TaxType();            
-            tax.VAT = new List<VATItemType>();
-            foreach (VatViewModel vatView in VatViewList)
-            {
-                VATItemType vatItem = new VATItemType();
-                vatItem.Amount = vatView.VatAmount;
-                vatItem.TaxedAmount = vatView.VatBaseAmount;
-                if (vatView.TaxExemption == true)
-                {
-                    TaxExemptionType taxex = new TaxExemptionType();
-                    taxex.TaxExemptionCode = vatView.TaxCode;
-                    taxex.Value = vatView.TaxCodeText;
-                    vatItem.Item = taxex;
-                }
-                else
-                {
-                    VATRateType vatRate = new VATRateType();
-                    vatRate.TaxCode = vatView.TaxCode;
-                    vatRate.Value = vatView.VatPercent;
-                    vatItem.Item = vatRate;
-                }
-                tax.VAT.Add(vatItem);
-            }
-            return tax;
-        }
-
         public static VatViewModels Load(TaxType taxType)
         {
             VatViewModels vatView = new VatViewModels();
             if (!PlugInSettings.Default.VStBerechtigt)
             {
-                VatViewModel vatModel = new VatViewModel();
-                vatModel.TaxExemption = true;
-                vatModel.TaxCodeText = PlugInSettings.Default.VStText;
-                vatModel.VatAmount = 0;
-                vatModel.VatPercent = 0;
-                vatModel.TaxCode = null;
+                VatViewModel vatModel = new VatViewModel(PlugInSettings.Default.IstNichtVStBerechtigtVatValue.Code,
+                    PlugInSettings.Default.IstNichtVStBerechtigtVatValue.Beschreibung,
+                    PlugInSettings.Default.IstNichtVStBerechtigtVatValue.MwStSatz,
+                    taxType.TaxItem.FirstOrDefault().TaxableAmount);
                 vatView.VatViewList.Add(vatModel);
                 return vatView;
             }
@@ -80,31 +48,16 @@ namespace ebIViewModels.ViewModels
             {
                 return vatView;
             }
-            if (taxType.VAT == null)
+            if (!taxType.TaxItem.Any())
             {
                 return vatView;
             }
             
-            foreach (VATItemType vatItemType in taxType.VAT)
+            foreach (var taxItem in taxType.TaxItem)
             {
-                VatViewModel vatModel = new VatViewModel();
-                vatModel.VatBaseAmount = vatItemType.TaxedAmount ?? 0;
-                vatModel.VatAmount = vatItemType.Amount ?? 0;
-                if (vatItemType.Item is TaxExemptionType) // Steuerbefreit ...
-                {
-                    TaxExemptionType taxExemption = (TaxExemptionType)vatItemType.Item;
-                    vatModel.VatPercent = 0;
-                    vatModel.TaxExemption = true;
-                    vatModel.TaxCode = taxExemption.TaxExemptionCode;
-                    vatModel.TaxCodeText = taxExemption.Value;
-                }
-                else // MwSt Satz
-                {
-                    vatModel.TaxExemption = false;
-                    VATRateType rate = (VATRateType)vatItemType.Item;
-                    vatModel.VatPercent = rate.Value ?? 0;
-                    vatModel.TaxCode = rate.TaxCode;
-                }
+                VatViewModel vatModel = new VatViewModel(
+                    taxItem.TaxPercent.TaxCategoryCode, taxItem.Comment,
+                    taxItem.TaxPercent.Value, taxItem.TaxableAmount);
                 vatView.VatViewList.Add(vatModel);
             }
 

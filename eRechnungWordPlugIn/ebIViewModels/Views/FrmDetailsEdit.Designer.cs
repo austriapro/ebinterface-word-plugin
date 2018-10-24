@@ -54,16 +54,18 @@
             this.label11 = new System.Windows.Forms.Label();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.cmBxMwSt = new System.Windows.Forms.ComboBox();
             this.multiColumnComboBox1 = new WinFormsMvvm.MultiColumnComboBox();
             this.uoMListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.detailsViewValidationProvider = new Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.ValidationProvider();
             this.cmdBtnSave = new System.Windows.Forms.Button();
+            this.multiColumnComboBox2 = new WinFormsMvvm.MultiColumnComboBox();
+            this.vatListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vatDefaultValuesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uoMListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vatListBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // cmdBtnCancel
@@ -83,7 +85,7 @@
             this.textBox1.Location = new System.Drawing.Point(84, 64);
             this.textBox1.Name = "textBox1";
             this.detailsViewValidationProvider.SetPerformValidation(this.textBox1, true);
-            this.textBox1.Size = new System.Drawing.Size(277, 20);
+            this.textBox1.Size = new System.Drawing.Size(360, 20);
             this.detailsViewValidationProvider.SetSourcePropertyName(this.textBox1, "Bezeichnung");
             this.textBox1.TabIndex = 2;
             // 
@@ -105,7 +107,7 @@
             this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "ArtikelNr", true));
             this.textBox2.Location = new System.Drawing.Point(84, 38);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(277, 20);
+            this.textBox2.Size = new System.Drawing.Size(360, 20);
             this.textBox2.TabIndex = 1;
             // 
             // label2
@@ -140,7 +142,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(195, 93);
+            this.label4.Location = new System.Drawing.Point(240, 93);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 9;
@@ -199,7 +201,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(196, 119);
+            this.label8.Location = new System.Drawing.Point(241, 119);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(33, 13);
             this.label8.TabIndex = 18;
@@ -208,7 +210,7 @@
             // textBox4
             // 
             this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "NettoBetragZeile", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N2"));
-            this.textBox4.Location = new System.Drawing.Point(240, 116);
+            this.textBox4.Location = new System.Drawing.Point(285, 116);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(121, 20);
@@ -218,7 +220,7 @@
             // textBox7
             // 
             this.textBox7.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "RabattBetragZeile", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N2"));
-            this.textBox7.Location = new System.Drawing.Point(240, 142);
+            this.textBox7.Location = new System.Drawing.Point(285, 142);
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(121, 20);
@@ -228,7 +230,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(196, 145);
+            this.label9.Location = new System.Drawing.Point(241, 145);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(39, 13);
             this.label9.TabIndex = 20;
@@ -237,7 +239,7 @@
             // textBox8
             // 
             this.textBox8.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "BruttoBetragZeile", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N2"));
-            this.textBox8.Location = new System.Drawing.Point(240, 196);
+            this.textBox8.Location = new System.Drawing.Point(285, 196);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(121, 20);
@@ -247,7 +249,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(195, 200);
+            this.label10.Location = new System.Drawing.Point(240, 200);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 22;
@@ -256,7 +258,7 @@
             // textBox9
             // 
             this.textBox9.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource1, "MwStBetragZeile", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N2"));
-            this.textBox9.Location = new System.Drawing.Point(240, 168);
+            this.textBox9.Location = new System.Drawing.Point(285, 168);
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(121, 20);
@@ -266,7 +268,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(195, 171);
+            this.label11.Location = new System.Drawing.Point(240, 171);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(34, 13);
             this.label11.TabIndex = 24;
@@ -291,20 +293,6 @@
             this.label12.TabIndex = 28;
             this.label12.Text = "Bestell-Pos.";
             // 
-            // cmBxMwSt
-            // 
-            this.cmBxMwSt.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSource1, "VatItem", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.cmBxMwSt.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource1, "IsVatBerechtigt", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.cmBxMwSt.DataSource = this.vatDefaultValuesBindingSource;
-            this.cmBxMwSt.DisplayMember = "MwStSatz";
-            this.cmBxMwSt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmBxMwSt.FormattingEnabled = true;
-            this.cmBxMwSt.Location = new System.Drawing.Point(84, 171);
-            this.cmBxMwSt.Name = "cmBxMwSt";
-            this.cmBxMwSt.Size = new System.Drawing.Size(101, 21);
-            this.cmBxMwSt.TabIndex = 29;
-            this.cmBxMwSt.ValueMember = "MwStSatz";
-            // 
             // multiColumnComboBox1
             // 
             this.multiColumnComboBox1.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSource1, "UomSelected", true));
@@ -312,9 +300,9 @@
             this.multiColumnComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.multiColumnComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.multiColumnComboBox1.FormattingEnabled = true;
-            this.multiColumnComboBox1.Location = new System.Drawing.Point(241, 91);
+            this.multiColumnComboBox1.Location = new System.Drawing.Point(286, 91);
             this.multiColumnComboBox1.Name = "multiColumnComboBox1";
-            this.multiColumnComboBox1.Size = new System.Drawing.Size(121, 21);
+            this.multiColumnComboBox1.Size = new System.Drawing.Size(158, 21);
             this.multiColumnComboBox1.TabIndex = 30;
             // 
             // uoMListBindingSource
@@ -343,16 +331,34 @@
             this.cmdBtnSave.UseVisualStyleBackColor = true;
             this.cmdBtnSave.Click += new System.EventHandler(this.cmdBtnSave_Click);
             // 
+            // multiColumnComboBox2
+            // 
+            this.multiColumnComboBox2.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.bindingSource1, "VatItem", true));
+            this.multiColumnComboBox2.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.bindingSource1, "IsVatBerechtigt", true));
+            this.multiColumnComboBox2.DataSource = this.vatListBindingSource;
+            this.multiColumnComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.multiColumnComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.multiColumnComboBox2.FormattingEnabled = true;
+            this.multiColumnComboBox2.Location = new System.Drawing.Point(84, 168);
+            this.multiColumnComboBox2.Name = "multiColumnComboBox2";
+            this.multiColumnComboBox2.Size = new System.Drawing.Size(139, 21);
+            this.multiColumnComboBox2.TabIndex = 32;
+            // 
+            // vatListBindingSource
+            // 
+            this.vatListBindingSource.DataMember = "VatList";
+            this.vatListBindingSource.DataSource = this.bindingSource1;
+            // 
             // FrmDetailsEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cmdBtnCancel;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(377, 303);
+            this.ClientSize = new System.Drawing.Size(456, 303);
+            this.Controls.Add(this.multiColumnComboBox2);
             this.Controls.Add(this.cmdBtnSave);
             this.Controls.Add(this.multiColumnComboBox1);
-            this.Controls.Add(this.cmBxMwSt);
             this.Controls.Add(this.textBox10);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBox9);
@@ -383,6 +389,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.vatDefaultValuesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uoMListBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vatListBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,11 +422,12 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.BindingSource vatDefaultValuesBindingSource;
-        private System.Windows.Forms.ComboBox cmBxMwSt;
         private WinFormsMvvm.MultiColumnComboBox multiColumnComboBox1;
         private System.Windows.Forms.BindingSource uoMListBindingSource;
         private Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.ValidationProvider detailsViewValidationProvider;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button cmdBtnSave;
+        private WinFormsMvvm.MultiColumnComboBox multiColumnComboBox2;
+        private System.Windows.Forms.BindingSource vatListBindingSource;
     }
 }

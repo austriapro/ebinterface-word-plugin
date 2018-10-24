@@ -7,24 +7,29 @@ using ebIViewModels.ErrorView;
 using ebIViewModels.ViewModels;
 using ebIViewModels.ViewModels.Tests;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ebICommonTestSetup;
 using SettingsEditor.ViewModels;
+using SettingsManager;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+
+    [TestFixture]
     public class CommonTestSetup
     {
         internal Common Cmn = new Common(Common.InvTemplate);
         internal InvoiceViewModel InvVm;
         internal ErrorActionPaneViewModel ErrorActionPane;
-        private string _testData = @"C:\TFS\eRechnung-Business\Testdaten\Billersettings.xml";
+        private readonly string _testData = @"TestDaten\Billersettings.xml";
         internal BillerSettingsViewModel BillerSettings; // 
         internal XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
 
+
+
         public CommonTestSetup()
         {
+            
             InitGlobals();
         }
 
@@ -36,19 +41,22 @@ namespace ebIViewModelsTests.ViewModels
             }
         }
 
-        [TestInitialize]
+        [SetUp]
         public void InitGlobals()
         {
+            //RunBeforeAnyTests();
             InvVm = Cmn.UContainer.Resolve<InvoiceViewModel>(new ParameterOverride("invoice", Cmn.Invoice));
             InvVm.NoUpdatePrompt = true;
             ErrorActionPane = Cmn.UContainer.Resolve<ErrorActionPaneViewModel>();
-            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
+            Nspc.AddNamespace("eb", "http://www.ebinterface.at/schema/5p0/");
+            Console.WriteLine("Init Globals done");
         }
 
         internal void SetupSettings()
         {
+            string fullTest = Path.Combine(Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location), _testData);
             BillerSettings = Cmn.UContainer.Resolve<BillerSettingsViewModel>();
-            string xmlData = File.ReadAllText(_testData);
+            string xmlData = File.ReadAllText(fullTest);
             XElement xEl = XElement.Parse(xmlData);
             var o1 = xEl.Element("Name").Value;
             BillerSettings.Name = xEl.Element("Name").Value;
@@ -69,10 +77,11 @@ namespace ebIViewModelsTests.ViewModels
             BillerSettings.CountryCodeSelected = BillerSettings.CountryCodes.Find(p => p.Code == countryCode);
 
             var vatSelected = decimal.Parse(xEl.Element("VatSelected").Value);
-            BillerSettings.VatSelected = BillerSettings.VatDefaultList.Find(p => p.MwStSatz == vatSelected);
+            BillerSettings.VatSelected = PlugInSettings.Default.GetValueFromPercent(vatSelected);
             var currency = xEl.Element("Currency").Value;
             BillerSettings.CurrSelected = BillerSettings.CurrencyList.FirstOrDefault(p => p.Code == currency);
             BillerSettings.IsVatBerechtigt = bool.Parse(xEl.Element("IsVatBerechtigt").Value);
+            Console.WriteLine("SetupSettings done");
         }
 
         public void ListErrorPanel()

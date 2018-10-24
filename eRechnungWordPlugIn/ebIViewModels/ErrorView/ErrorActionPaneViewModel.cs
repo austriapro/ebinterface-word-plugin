@@ -107,17 +107,34 @@ namespace ebIViewModels.ErrorView
         public void OnErrorPublish(object sender, EventArgs ea)
         {
             ErrorPublishSingleEventArgs e = ea as ErrorPublishSingleEventArgs;
-            if (e.Message!=null)
+            try
             {
-                Message = e.Message;
+                if (e.Message != null)
+                {
+                    Message = e.Message;
+                }
+#if DEBUG
+                Console.WriteLine(Message);
+#endif
+
+                ErrorList.Add(new ErrorViewModel()
+                {
+                    Description = e.Description,
+                    Severity = (e.Severity + " ").Substring(0, 1),
+                    FieldName = e.FieldName
+                });
             }
-            ErrorList.Add(new ErrorViewModel()
+            catch (Exception ex)
             {
-                Description = e.Description,
-                Severity = (e.Severity+" ").Substring(0,1),
-                FieldName = e.FieldName
-            });
-            LogService.Log.LogWrite(LogService.CallerInfo.Create(), LogService.Log.LogPriority.High, $"{e.FieldName}: '{e.Description}'");
+                LogService.Log.LogWrite(LogService.CallerInfo.Create(), LogService.Log.LogPriority.High, $"{ex.Message}\n{ex.StackTrace}");
+#if DEBUG
+                throw;
+#endif
+            }
+            finally
+            {
+                LogService.Log.LogWrite(LogService.CallerInfo.Create(), LogService.Log.LogPriority.High, $"{e.FieldName}: '{e.Description}'");
+            }
         }
 
         [SubscribesTo(ClearPanelEvent)]

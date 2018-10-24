@@ -1,14 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using ebIViewModels.ViewModels;
 using Microsoft.Practices.Unity;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class UpdateInvDateTests : CommonTestSetup
     {
-        [TestMethod]
+        [Test]
         public void UpdateInvDateAndNrTests()
         {
 

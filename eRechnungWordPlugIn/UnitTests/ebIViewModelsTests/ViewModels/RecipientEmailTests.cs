@@ -4,14 +4,14 @@ using ebIModels.Models;
 using ebIViewModels.ViewModels;
 using ebIViewModels.ViewModels.Tests;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace ebIViewModelsTests.ViewModels
 {
-    [TestClass]
+    [TestFixture]
     public class RecipientEmailTests : CommonTestSetup
     {
-        [TestMethod]
+        [Test]
         public void EmailValidBundTest()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen
@@ -21,7 +21,7 @@ namespace ebIViewModelsTests.ViewModels
             bool result = invoiceView.IsInvoiceValid();
             Assert.AreEqual(true,result);
         }
-        [TestMethod]
+        [Test]
         public void EmailEmptyBundTest()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen
@@ -31,7 +31,7 @@ namespace ebIViewModelsTests.ViewModels
             bool result = invoiceView.IsInvoiceValid();
             Assert.AreEqual(false, result);
         }
-        [TestMethod]
+        [Test]
         public void EmailReceipientEmptyBundTest()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen
@@ -50,7 +50,7 @@ namespace ebIViewModelsTests.ViewModels
             Cmn.ListResults(invoiceView.Results,"eMail falsch");
             Assert.IsFalse(result, "eMail falsch");
         }
-        [TestMethod]
+        [Test]
         public void EmailInvalidBundTest()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen
@@ -61,7 +61,7 @@ namespace ebIViewModelsTests.ViewModels
             Cmn.ListResults(invoiceView.Results, "eMail falsch");
             Assert.AreEqual(false, result);
         }
-        [TestMethod]
+        [Test]
         public void EmailInvalidNotBundTest()
         {
             Cmn.Setup(Common.InvTemplate);   // Test mit Template anfangen

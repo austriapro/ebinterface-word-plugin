@@ -27,7 +27,7 @@ using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Validation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SettingsEditor.ViewModels;
 using SettingsManager;
 using WinFormsMvvm.DialogService;
@@ -35,10 +35,26 @@ using WinFormsMvvm.DialogService.FrameworkDialogs.FolderBrowse;
 using WinFormsMvvm.DialogService.FrameworkDialogs.OpenFile;
 using WinFormsMvvm.DialogService.FrameworkDialogs.SaveFile;
 using ebISaveFileDialog;
+using System.IO;
+using ServiceStack.Text;
+using Moq;
+using System.Windows.Forms;
 
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [SetUpFixture]
+    public class CommonSetUpClass
+    {
+        [OneTimeSetUp]
+        public void RunBeforeAnyTests()
+        {
+            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+            Environment.CurrentDirectory = dir;
+            Directory.SetCurrentDirectory(dir);
+            Console.WriteLine($"Directory:{dir}");
+        }
+    }
+    [TestFixture]
     public class InvoiceViewModelTests : CommonTestSetup
     {
         private const string EmptyInvoice = @"Daten\EmptyInvoiceTemplate.xml";
@@ -52,18 +68,18 @@ namespace ebIViewModels.ViewModels.Tests
         private const string DeliveryToDateXPath = "/eb:Invoice/eb:Delivery/eb:Period/eb:ToDate";
         private const string CommentPath = "/eb:Invoice/eb:Comment";
 
-        [TestMethod]
+        [Test]
         public void SaveEmptyInvoiceToTemplateTestOk()
         {
             var invVm = Cmn.UContainer.Resolve<InvoiceViewModel>();
             invVm.SaveTemplateCommand.Execute(EmptyInvoice);
             XDocument xdoc = XDocument.Load(EmptyInvoice);
             var nspm = new XmlNamespaceManager(new NameTable());
-            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
+            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/5p0/");
             var xCode = xdoc.XPathSelectElement(BillerCountry, nspm);
             Assert.IsNotNull(xCode);
         }
-        [TestMethod()]
+        [Test]
         public void FillInvoiceTest()
         {
             // _common.Setup(Common.InvTemplate);   // Test mit Template anfangen           
@@ -77,27 +93,101 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(2, Cmn.Invoice.PaymentConditions.Discount.Count);
 
         }
-        [TestMethod]
+        public void CalculateTotalsTest()
+        {
+            string testInv = @"C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\UnitTests\ebIViewModelsTests\Daten\Test Vorlage 2014-500-2014-03-19.XML";
+            InvVm.LoadTemplateCommand.Execute(testInv);
+            var controllInvoice = InvoiceFactory.LoadTemplate(testInv);
+            Assert.AreEqual(1, controllInvoice.Details.ItemList.Count, "Count Details.ItemList");
+            Assert.AreEqual(controllInvoice.Details.ItemList[0].ListLineItem.Count, InvVm.DetailsView.Count, "Details Count");
+            var totals = from a in controllInvoice.Details.ItemList[0].ListLineItem
+                         group a by 1 into g
+                         select new
+                         {
+                             netto = g.Sum(x => x.LineItemAmount),
+                             ustGesamt = g.Sum(x => x.TaxItem.TaxPercent.Value * x.LineItemAmount / 100)
+                         };
+            totals.PrintDump();
+            var tax = controllInvoice.Details.ItemList[0].ListLineItem.GroupBy(s => new { s.TaxItem.TaxPercent.Value, s.TaxItem.TaxPercent.TaxCategoryCode })
+                      .Select(p => new
+                      {
+                          Percent = p.Key.Value,
+                          Code = p.Key.TaxCategoryCode,
+                          taxableAmount = p.Sum(x => x.LineItemAmount),
+                          taxAmount = p.Sum(x => x.LineItemAmount) * p.Key.Value / 100,
+
+                      });
+            tax.PrintDump();
+            Assert.Multiple(() =>
+                        {
+                            for (int i = 0; i < InvVm.DetailsView.Count; i++)
+                            {
+                                var vmDetail = InvVm.DetailsView[i];
+                                vmDetail.UomEntries = new List<UnitOfMeasureEntries>(); // um den Object Dump klein zu halten
+                                vmDetail.UoMList = new System.ComponentModel.BindingList<UnitOfMeasureViewModel>(); // um den Object Dump klein zu halten
+                                vmDetail.VatList = new System.ComponentModel.BindingList<VatDefaultValue>();
+
+                                var cDetail = controllInvoice.Details.ItemList[0].ListLineItem[i];
+                                Console.WriteLine($"in Template Pos {cDetail.PositionNumber} ****************************************");
+
+                                // cDetail.PrintDump();
+
+                                Console.WriteLine($"Zeile {i} in ViewModel, Pos {cDetail.PositionNumber} ****************************************");
+                                // vmDetail.PrintDump();
+
+                                Assert.AreEqual(cDetail.ArticleNumber[0].Value, vmDetail.ArtikelNr, $"Pos {cDetail.PositionNumber}Artikelnr");
+                                Assert.AreEqual(cDetail.LineItemAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, LineItemAmount");
+                                Assert.AreEqual(cDetail.TaxItem.TaxAmount, vmDetail.MwStBetragZeile, $"Pos {cDetail.PositionNumber}, TaxAmount");
+                                Assert.AreEqual(cDetail.TaxItem.TaxableAmount, vmDetail.NettoBetragZeile, $"Pos {cDetail.PositionNumber}, TaxableAmount");
+                                Assert.AreEqual(cDetail.TaxItem.TaxPercent.Value, vmDetail.VatItem.MwStSatz, $"Pos {cDetail.PositionNumber}, TaxPercent.Value");
+                            }
+                        });
+            Assert.AreEqual(controllInvoice.Tax.TaxItem.Count, InvVm.VatView.VatViewList.Count, "Tax.TaxItem.Count");
+            Assert.Multiple(() =>
+            {
+                for (int i = 0; i < InvVm.VatView.VatViewList.Count; i++)
+                {
+                    var vmVat = InvVm.VatView.VatViewList[i];
+                    var cTaxItem = controllInvoice.Tax.TaxItem[i];
+                    Assert.AreEqual(cTaxItem.TaxPercent.TaxCategoryCode, vmVat.TaxCode, "TaxPercent.TaxCategoryCode");
+                    Assert.AreEqual(cTaxItem.TaxPercent.Value, vmVat.VatPercent, "TaxPercent.Value");
+                    Assert.AreEqual(cTaxItem.TaxableAmount, vmVat.VatBaseAmount, "TaxableAmount");
+                    Assert.AreEqual(cTaxItem.TaxAmount, vmVat.VatAmount, "TaxAmount");
+                }
+            });
+            //Console.WriteLine("VAT ***********************************");
+            //InvVm.VatView.VatViewList.PrintDump();
+            //controllInvoice.Tax.TaxItem.PrintDump();
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(controllInvoice.TotalGrossAmount, InvVm.VmInvTotalAmountDecimal, nameof(controllInvoice.TotalGrossAmount));
+                Assert.AreEqual(controllInvoice.NetAmount, InvVm.VmInvTotalNetAmount.ToDecimal(), nameof(controllInvoice.NetAmount));
+                Assert.AreEqual(controllInvoice.TaxAmountTotal, InvVm.VmInvTaxAmount.ToDecimal(), nameof(controllInvoice.TaxAmountTotal));
+            });
+        }
+        [Test]
         public void LoadTemplateTest()
         {
             InvVm.LoadTemplateCommand.Execute(ebICommonTestSetup.Common.InvTemplate);
+            //InvVm.PrintDump();
             // MInimum checking ...
             Assert.IsNotNull(InvVm.DetailsView, "Details View");
             Assert.AreEqual(4, InvVm.DetailsView.Count);
-
+            InvVm.PaymentConditions.PrintDump();
             Assert.IsNotNull(InvVm.PaymentConditions, "Payment Conditions");
             Assert.AreEqual(2, InvVm.PaymentConditions.SkontoList.Count);
             Assert.AreEqual((decimal)3.00, InvVm.PaymentConditions.SkontoList[0].SkontoProzent);
-            Assert.AreEqual((decimal)42.03, InvVm.PaymentConditions.SkontoList[0].SkontoBetrag);
+            Assert.AreEqual((decimal)35.25, InvVm.PaymentConditions.SkontoList[0].SkontoBetrag);
 
         }
-        [TestMethod]
+        [Test]
         public void LieferDatumTest()
         {
             var FromDateExpected = DateTime.Today.ToString("yyyy-MM-dd");// "2014-03-19";
 
             InvVm.LoadTemplateCommand.Execute(Common.InvTemplate);
-            Assert.IsInstanceOfType(Cmn.Invoice.Delivery.Item, typeof(PeriodType), "Delivery Item not null");
+            InvVm.PrintDump();
+            //Assert.IsInstanceOf<PeriodType>(Cmn.Invoice.Delivery.Item, "Delivery Item not null");
             Assert.AreEqual(DateTime.Parse(FromDateExpected), InvVm.VmLieferDatum, "Check Fromdate in InvoiceView");
 
             // Lieferdatum
@@ -112,7 +202,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.IsNull(fromDate, "Kein Todate im XML");
 
         }
-        [TestMethod()]
+        [Test]
         public void EmptyInvoiceNumberTest()
         {
             InvVm.CurrentSelectedValidation = InvoiceSubtypes.ValidationRuleSet.Industries;
@@ -124,7 +214,7 @@ namespace ebIViewModels.ViewModels.Tests
             result = InvVm.IsInvoiceValid();
             Assert.AreEqual(false, result);
         }
-        [TestMethod()]
+        [Test]
         public void FaelligVorRechnungsDatumTest()
         {
             InvVm.CurrentSelectedValidation = InvoiceSubtypes.ValidationRuleSet.Industries;
@@ -137,7 +227,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(false, result);
         }
 
-        [TestMethod]
+        [Test]
         public void PlzEmptyTest()
         {
             InvVm.VmBillerPlz = "";
@@ -150,7 +240,7 @@ namespace ebIViewModels.ViewModels.Tests
 
         }
         public const string InvTemplateSonderz = @"Daten\Sonderzeichen.xmlt";
-        [TestMethod]
+        [Test]
         public void SonderZeichenLoadTest()
         {
             InvVm.LoadTemplateCommand.Execute(InvTemplateSonderz);
@@ -165,7 +255,7 @@ namespace ebIViewModels.ViewModels.Tests
         public const string InvTemplateSonderzSave = @"Daten\SonderzeichenSave.xmlt";
         private const string Sozei = "Bogad & Partner Consulting OG mt Sonderzeichen < > / ";
 
-        [TestMethod]
+        [Test]
         public void SonderZeichenSaveTest()
         {
             DetailsViewModel dView = Cmn.UContainer.Resolve<DetailsViewModel>(new ParameterOverrides() {
@@ -196,7 +286,7 @@ namespace ebIViewModels.ViewModels.Tests
         }
 
         private const string InvSaveSettingsToTemplate = @"Daten\SaveSettingsToTemplate.xml";
-        [TestMethod]
+        [Test]
         public void SaveSettingsToTemplateTestOk()
         {
             SetupSettings();
@@ -210,7 +300,7 @@ namespace ebIViewModels.ViewModels.Tests
         }
 
         private const string InvSaveBankToTemplate = @"Daten\SaveBankToTemplate.xml";
-        [TestMethod]
+        [Test]
         public void SaveBankToTemplateTestOk()
         {
             InvVm.VmKtoBankName = "TestBank AG";
@@ -221,7 +311,7 @@ namespace ebIViewModels.ViewModels.Tests
             var xName = xDoc.Root.DescendantsAndSelf().First(p => p.Name.LocalName == "BankName");
             Assert.AreEqual("TestBank AG", xName.Value);
             var nspm = new XmlNamespaceManager(new NameTable());
-            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
+            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/5p0/");
             var xOwner =
                 xDoc.XPathSelectElement(
                     "/eb:Invoice/eb:PaymentMethod/eb:UniversalBankTransaction/eb:BeneficiaryAccount/eb:BankAccountOwner",
@@ -229,7 +319,50 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual("Testinhaber", xOwner.Value);
         }
 
-        [TestMethod]
+        [TestCaseSource(nameof(FileNameTestCases), new object[] { "NoVAT", -1, null })]
+        [Test]
+        public void NotVatBerechtigtTest(FileNameTestCase fileNameTestCase)
+        {
+            var dlgMoq = new Mock<IDialogService>();
+            dlgMoq.Setup(dlg => dlg.ShowMessageBox(It.IsAny<string>(),
+                                                  It.IsAny<string>(),
+                                                  It.Is<MessageBoxButtons>(mb => mb == MessageBoxButtons.YesNo),
+                                                  It.IsAny<MessageBoxIcon>())).Returns(DialogResult.OK);
+
+            string invoiceFn = fileNameTestCase.InputFile; //@"Daten\testTemplateInvoiceIndustry.xml";
+            string outFn = fileNameTestCase.OutputFile;    //@"Daten\testInvoiceNotVatBerechtigt.xml";
+
+            PlugInSettings.Default.VStBerechtigt = false;
+            PlugInSettings.Default.VStText = "Ich bin nicht berechtigt";
+            var invVM = Cmn.UContainer.Resolve<InvoiceViewModel>(new ResolverOverride[] {
+                new ParameterOverride("invoice", Cmn.Invoice),
+                new ParameterOverride("dialog", dlgMoq.Object)
+            });
+            invVM.LoadTemplateCommand.Execute(invoiceFn);
+            //Assert.Multiple(() =>
+            //{
+            foreach (var item in invVM.DetailsView)
+            {
+                Assert.That(item.IsVatBerechtigt == false, "Vat berechtigt false");
+                item.VatItem.PrintDump();
+                Assert.AreEqual(item.VatItem, PlugInSettings.Default.MwStDefaultValue, "MwStDefaultValue");
+            }
+            //});
+            Assert.IsTrue(invVM.IsInvoiceValid(), "Invoice IsValid() == false");
+            PlugInSettings.Default.EbInterfaceVersionString = fileNameTestCase.Version; //EbIVersion.V4P3.ToString();
+            invVM.SaveEbinterfaceCommand.Execute(outFn);
+            if (!invVM.Results.IsValid)
+            {
+                foreach (var item in invVM.Results)
+                {
+                    Console.WriteLine(item.Message);
+                }
+            }
+            Assert.IsTrue(invVM.Results.IsValid, "Invoice not valid");
+            Assert.IsTrue(File.Exists(outFn), "Output file not found");
+        }
+
+        [Test]
         public void UpdateFromBillerSettingsMitVatTest()
         {
             BillerSettingsViewModel bs = Cmn.UContainer.Resolve<BillerSettingsViewModel>();
@@ -238,7 +371,7 @@ namespace ebIViewModels.ViewModels.Tests
             InvVm.OnUpdateFromBillerSettings(bs, null);
             Assert.AreEqual("ATU12345678", InvVm.VmBillerVatid);
         }
-        [TestMethod]
+        [Test]
         public void UpdateFromBillerSettingsOhneVatTest()
         {
             BillerSettingsViewModel bs = Cmn.UContainer.Resolve<BillerSettingsViewModel>();
@@ -248,7 +381,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual("ATU12345678", InvVm.VmBillerVatid);
         }
 
-        [TestMethod]
+        [Test]
         public void StornoRechnungOkTest()
         {
             InvVm.VmDocType = "CancelInvoice";
@@ -261,7 +394,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(InvVm.Results);
             Assert.AreEqual(true, InvVm.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void StornoRechnungKeineNotOkTest()
         {
             InvVm.VmDocType = "CancelInvoice";
@@ -274,7 +407,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(InvVm.Results);
             Assert.AreEqual(false, InvVm.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void StornoRechnungVerweisNotOkTest()
         {
             InvVm.VmDocType = "CancelInvoice";
@@ -287,7 +420,7 @@ namespace ebIViewModels.ViewModels.Tests
             Cmn.ListResults(InvVm.Results);
             Assert.AreEqual(false, InvVm.Results.IsValid);
         }
-        [TestMethod]
+        [Test]
         public void StornoGutschriftOkTest()
         {
             InvVm.VmDocType = "CancelCreditMemo";
@@ -301,7 +434,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(true, InvVm.Results.IsValid);
         }
 
-        [TestMethod]
+        [Test]
         public void ClearTestOk()
         {
             SetupSettings();
@@ -312,7 +445,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(PlugInSettings.Default.Kontowortlaut, InvVm.VmKtoOwner);
         }
 
-        [TestMethod()]
+        [Test]
         public void ReplaceTokenTest()
         {
             string result = SharedMethods.ReplaceToken(PlugInSettings.Default.DefaultMailBody, InvVm.VmInvNr, InvVm.VmInvDate, InvVm.VmBillerName,
@@ -322,7 +455,7 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.IsNotNull(result);
         }
 
-        //[TestMethod]
+        //[Test]
         //public void SendMailTestOk()
         //{
         //    InvVm.VmRecMail = "jbogad@hotmail.com";
@@ -333,14 +466,14 @@ namespace ebIViewModels.ViewModels.Tests
 
         const string SaveCommentTest = @"Daten\SaveCommentTest.xml";
         const string Comment = "Das ist mein Kommentar";
-        [TestMethod]
+        [Test]
         public void LoadClearCommentTest()
         {
             InvVm.VmComment = Comment;
             InvVm.SaveTemplateCommand.Execute(SaveCommentTest);
             XDocument xdoc = XDocument.Load(SaveCommentTest);
             var nspm = new XmlNamespaceManager(new NameTable());
-            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/4p2/");
+            nspm.AddNamespace("eb", "http://www.ebinterface.at/schema/5p0/");
             var xCode = xdoc.XPathSelectElement(CommentPath, nspm);
             Assert.AreEqual(Comment, xCode.Value, "Comment has been saved in Template.");
             InvVm.VmComment = "";
@@ -348,14 +481,88 @@ namespace ebIViewModels.ViewModels.Tests
             Assert.AreEqual(null, InvVm.VmComment, "Comment has been reloaded.");
         }
 
-        [TestMethod]
-        public void CheckKontoVerbindungTest()
+
+        [TestCaseSource(nameof(FileNameTestCases), new object[] {"LoadSave",2  ,EbIVersion.V5P0})]
+        [Test]
+        public void LoadSaveInvoiceTest(FileNameTestCase testCase)
         {
-            InvVm.Results = new ValidationResults();
-            PrivateObject privateInv = new PrivateObject(InvVm);
-            privateInv.Invoke("CheckKontoVerbindung", InvVm.Results);
-            Assert.IsTrue(InvVm.Results.IsValid);
+            Console.WriteLine($"{testCase.Version}->{testCase.InputFile}");
+            var ebiList = InvoiceFactory.GetVersionsWithSaveSupported();
+            var dlgMoq = new Mock<IDialogService>();
+            dlgMoq.Setup(dlg => dlg.ShowMessageBox(It.IsAny<string>(),
+                                      It.IsAny<string>(),
+                                      It.Is<MessageBoxButtons>(mb => mb == MessageBoxButtons.YesNo),
+                                      It.IsAny<MessageBoxIcon>())).Returns(DialogResult.OK);
+
+            string iFn = testCase.InputFile;
+            string oFn = testCase.OutputFile;
+            var invVM = Cmn.UContainer.Resolve<InvoiceViewModel>(new ResolverOverride[] {
+                new ParameterOverride("invoice", Cmn.Invoice),
+                new ParameterOverride("dialog", dlgMoq.Object)
+            });
+            invVM.LoadTemplateCommand.Execute(iFn);
+            PlugInSettings.Default.EbInterfaceVersionString = testCase.Version;
+            string oFnTagged = Path.GetFileNameWithoutExtension(oFn);
+            invVM.SaveEbinterfaceCommand.Execute(oFn);
+            if (!invVM.Results.IsValid)
+            {
+                foreach (var item in invVM.Results)
+                {
+                    Console.WriteLine(item.Message);
+                }
+            }
+            Assert.IsTrue(File.Exists(oFn), "Outputfile missing - " + testCase.Version);
+        }
+
+
+        public static IEnumerable<FileNameTestCase> FileNameTestCases(string appendix, int testCaseNr, string version2Select)
+        {
+            List<string> allFiles = new List<string>()
+            {
+                "V4p0-Testrechnung",
+                "V4p1-Testrechnung",
+                "V4p2-Testrechnung",
+                "V4p3-Testrechnung",
+                "V5p0-Testrechnung"
+            };
+            List<string> files = allFiles;
+            if (testCaseNr!=-1)
+            {
+                files = new List<string>() { allFiles[testCaseNr] };
+            }
+            string selectedVersion = version2Select;
+            foreach (string version in InvoiceFactory.GetVersionsWithSaveSupported())
+            {
+
+                if (string.IsNullOrEmpty(selectedVersion) || version == selectedVersion)
+                {
+                    foreach (string file in files)
+                    {
+                        var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+
+                        var outputFile = Path.Combine(dir,"Daten", "Output", file + $"-savedAs-{version}-{appendix}.xml");
+                        if (!Directory.Exists(Path.GetDirectoryName(outputFile)))
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(outputFile));
+                        }
+                        yield return new FileNameTestCase()
+                        {
+                            InputFile = Path.Combine("Daten", file + ".xml"),
+                            OutputFile = outputFile,
+                            Version = version
+                        };
+                    }
+
+                }
+            }
+
         }
     }
 
+    public class FileNameTestCase
+    {
+        public string InputFile { get; set; }
+        public string OutputFile { get; set; }
+        public string Version { get; set; }
+    }
 }

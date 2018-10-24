@@ -57,7 +57,7 @@ namespace ebIViewModels.ViewModels
         }
 
         private IUnityContainer _uc;
-        private bool _bestPosRequired;
+        private readonly bool _bestPosRequired;
         public InvoiceSubtypes.ValidationRuleSet CurrentRuleSet{get;set;}
 
         public DetailsViewModels(IUnityContainer uc, IDialogService dialogService, bool bestPosRequired, 
@@ -156,7 +156,7 @@ namespace ebIViewModels.ViewModels
             {
                 _detailsViewList[(int) parm] = detail;                
                 IsEditable = _detailsViewList.Any();
-                OnPropertyChanged("DetailsViewList");
+                OnPropertyChanged(nameof(DetailsViewList));
             }
         }
 
@@ -172,7 +172,7 @@ namespace ebIViewModels.ViewModels
                 int i = (int) parm;
                 DetailsViewList.RemoveAt(i);
                 IsEditable = DetailsViewList.Any();
-                OnPropertyChanged("DetailsViewList");
+                OnPropertyChanged(nameof(DetailsViewList));
             }
         }
 
@@ -184,7 +184,7 @@ namespace ebIViewModels.ViewModels
             {
                 DetailsViewList.Add(view);
                 IsEditable = DetailsViewList.Any();
-                OnPropertyChanged("DetailsViewList");
+                OnPropertyChanged(nameof(DetailsViewList));
             }
         }
 
@@ -200,7 +200,7 @@ namespace ebIViewModels.ViewModels
                 DetailsViewList.RemoveAt(i);
             }
             IsEditable = DetailsViewList.Any();
-            OnPropertyChanged("DetailsViewList");
+            OnPropertyChanged(nameof(DetailsViewList));
         }
 
         #endregion

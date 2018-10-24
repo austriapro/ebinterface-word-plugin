@@ -5,29 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using ebICommonTestSetup;
 using SettingsEditor.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Microsoft.Practices.Unity;
 using SettingsManager;
 
 namespace SettingsEditor.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class BillerSettingsViewModelTests : Common
     {
-        [TestMethod()]
+        [Test]
         public void IsValidTest()
         {
 
         }
 
-        [TestMethod()]
+        [Test]
         public void BillerSettingsViewModelTestNewOk()
         {
             var bsVm = UContainer.Resolve<BillerSettingsViewModel>();
             Assert.AreEqual("EUR",bsVm.CurrSelected.Code);
         }
 
-        [TestMethod]
+        [Test]
         public void BicIbanOkTests()
         {
             var bsVm = UContainer.Resolve<BillerSettingsViewModel>();
@@ -53,7 +53,7 @@ namespace SettingsEditor.ViewModels.Tests
             ListResults(bsVm.Results);
             Assert.IsTrue(bsRc, "IsValid nach IBAN ist leer");
         }
-        [TestMethod]
+        [Test]
         public void BicIbanNotOkTests()
         {
             var bsVm = UContainer.Resolve<BillerSettingsViewModel>();

@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using ebIViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,28 +9,27 @@ using ebIModels.Models;
 
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class VatViewModelsTests
     {
-        [TestMethod()]
+        [Test]
         public void GetTaxTypeTest()
         {
             VatViewModels vat = new VatViewModels();
             TaxType tax = new TaxType()
             {
-                VAT = new List<VATItemType>()
-                {
-                    new VATItemType()
-                    {
-                        TaxedAmount = new decimal(32.89),
-                        Item = new VATRateType()
-                        {
-                             Value=20
-                        },
-                        Amount = new decimal(6.578)
-
-                    }
-                }
+                 TaxItem = new List<TaxItemType>()
+                 {
+                     new TaxItemType()
+                     { 
+                          TaxPercent = new TaxPercentType()
+                          {
+                               TaxCategoryCode = "S", Value=20
+                          },
+                          TaxAmount = 20,
+                          TaxAmountSpecified = false
+                     }
+                 }
             };
             vat = VatViewModels.Load(tax);
             VatViewModel vatItem = vat.VatViewList.FirstOrDefault();

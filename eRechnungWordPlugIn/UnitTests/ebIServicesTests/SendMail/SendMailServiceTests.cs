@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using ebICommonTestSetup;
 using ebIServices.SendMail;
 using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIServices.SendMail.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class SendMailServiceTests : Common
     {
-        [TestMethod()]
+        [Test]
         public void SendMailTestOk()
         {
             UContainer.RegisterType<ISendMailService, SendMailTestMock>("SendMailTest");

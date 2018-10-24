@@ -121,7 +121,7 @@ namespace ExtensionMethods
 				//To validate the checksum:
 				//1- Check that the total IBAN length is correct as per the country. If not, the IBAN is invalid. 
 				//2- Move the four initial characters to the end of the string. 
-				//3- Replace each letter in the string with two digits, thereby expanding the string, where A=10, B=11, ..., Z=35. 
+				//3- Replace each letter in the string with two digits, thereby expanding the string, where A=10, B=11, .., Z=35. 
 				//4- Interpret the string as a decimal integer and compute the remainder of that number on division by 97. 
 				//The IBAN number can only be valid if the remainder is 1.
 				string modifiedIban = iban.ToUpper().Substring(4) + iban.Substring(0, 4);

@@ -76,6 +76,9 @@ namespace WinFormsMvvm.Controls
             {
                 MessageBox.Show(ex.Message);
                 LogService.Log.LogWrite(LogService.CallerInfo.Create(), LogService.Log.LogPriority.High, "{0} {1}",ex.Message, ex.StackTrace);
+#if DEBUG
+                throw;
+#endif
             }
         }
         #endregion // ICommand Members

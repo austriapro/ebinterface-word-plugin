@@ -77,7 +77,7 @@ namespace ebIViewModels.ViewModels
                     return;
                 _menge = value.FixedFraction(4);
                 OnPropertyChanged();
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
@@ -113,15 +113,15 @@ namespace ebIViewModels.ViewModels
                 _einheit = value;
                 OnPropertyChanged();
                 _uomSelected = _uoMList.FirstOrDefault(p => p.Id == _einheit);
-                OnPropertyChanged("UomSelected");
+                OnPropertyChanged(nameof(UomSelected));
             }
         }
 
-        private decimal? _rabatt;
+        private decimal _rabatt;
         /// <summary>
         /// Rabatt-Prozentsatz. Kann positiv (Rabatt) oder negativ (Zuschlag) sein
         /// </summary>
-        public decimal? Rabatt
+        public decimal Rabatt
         {
             get { return _rabatt; }
             set
@@ -130,7 +130,7 @@ namespace ebIViewModels.ViewModels
                     return;
                 _rabatt = value;
                 OnPropertyChanged();
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
@@ -147,11 +147,11 @@ namespace ebIViewModels.ViewModels
                     return;
                 _einzelPreis = value.FixedFraction(4);
                 OnPropertyChanged();
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
-        private bool _taxexemption;
+        //private bool _taxexemption;
         /// <summary>
         /// Zeigt eine Steuerbefreiung an.
         /// </summary>
@@ -167,21 +167,21 @@ namespace ebIViewModels.ViewModels
         //    }
         //}
 
-        private string _vatCode;
-        /// <summary>
-        /// Code für den MwSt Satz        
-        /// </summary>
-        public string VatCode
-        {
-            get { return _vatCode; }
-            set
-            {
-                if (_vatCode == value)
-                    return;
-                _vatCode = value;
-                OnPropertyChanged();
-            }
-        }
+        //private string _vatCode;
+        ///// <summary>
+        ///// Code für den MwSt Satz        
+        ///// </summary>
+        //public string VatCode
+        //{
+        //    get { return _vatCode; }
+        //    set
+        //    {
+        //        if (_vatCode == value)
+        //            return;
+        //        _vatCode = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         private BindingList<VatDefaultValue> _vatList;
         /// <summary>
@@ -211,12 +211,16 @@ namespace ebIViewModels.ViewModels
                 if (_vatItem == value)
                     return;
                 if (_vatItem == null)
-                    return;
-                _vatItem = value;
+                {
+                    _vatItem = PlugInSettings.Default.MwStDefaultValue;
+
+                }
+                else
+                {
+                    _vatItem = value;
+                }
                 OnPropertyChanged();
-                _vatSatz = _vatItem.MwStSatz;
-                OnPropertyChanged("VatSatz");
-                UpdateTotals();
+                UpdateLineItemTotals();
             }
         }
 
@@ -225,25 +229,25 @@ namespace ebIViewModels.ViewModels
             get { return PlugInSettings.Default.VStBerechtigt; }
         }
 
-        private decimal _vatSatz;
-        /// <summary>
-        /// Mehrwertsteuersatz
-        /// </summary>
-        public decimal VatSatz
-        {
-            get { return _vatSatz; }
-            set
-            {
-                if (_vatSatz == value)
-                    return;
-                // var item = _vatList.First(p => p.MwStSatz == value);
-                _vatSatz = value;
-                OnPropertyChanged();
-                _vatItem = _vatList.FirstOrDefault(p => p.MwStSatz == _vatSatz);
-                OnPropertyChanged("VatItem");
-                UpdateTotals();
-            }
-        }
+        //private decimal _vatSatz;
+        ///// <summary>
+        ///// Mehrwertsteuersatz
+        ///// </summary>
+        //public decimal VatSatz
+        //{
+        //    get { return _vatSatz; }
+        //    set
+        //    {
+        //        if (_vatSatz == value)
+        //            return;
+        //        // var item = _vatList.First(p => p.MwStSatz == value);
+        //        _vatSatz = value;
+        //        OnPropertyChanged();
+        //        _vatItem = _vatList.FirstOrDefault(p => p.MwStSatz == _vatSatz);
+        //        OnPropertyChanged(nameof(VatItem));
+        //        UpdateTotals();
+        //    }
+        //}
 
         private string _bestellBezug;
         /// <summary>
@@ -364,7 +368,7 @@ namespace ebIViewModels.ViewModels
                 _uomSelected = value;
                 OnPropertyChanged();
                 _einheit = _uomSelected.Id;
-                OnPropertyChanged("Einheit");
+                OnPropertyChanged(nameof(Einheit));
             }
         }
 
@@ -416,8 +420,8 @@ namespace ebIViewModels.ViewModels
             }
         }
 
-        private IUnityContainer _uc;
-        private bool _ruleSet;
+        private readonly IUnityContainer _uc;
+        private readonly bool _ruleSet;
 
         public string RuleSet
         {
@@ -438,8 +442,7 @@ namespace ebIViewModels.ViewModels
             BindingList<UnitOfMeasureViewModel> uomViewList = GetUomList();
             _uoMList = new BindingList<UnitOfMeasureViewModel>(uomViewList);
             UomSelected = _uoMList.FirstOrDefault(x => x.Id == PlugInSettings.Default.UnitMeasureDefault); //.Find(x => x.Id == PlugInSettings.Default.UnitMeasureDefault);
-            VatSatz = PlugInSettings.Default.MwStDefault;
-            VatItem = VatList.First(x => x.MwStSatz == VatSatz);
+            VatItem = PlugInSettings.Default.MwStDefaultValue;
 
         }
 
@@ -493,12 +496,12 @@ namespace ebIViewModels.ViewModels
             IsValidForm = Results.IsValid;
         }
 
-        private void UpdateTotals()
+        private void UpdateLineItemTotals()
         {
             NettoBasisBetrag = Menge*EinzelPreis;
-            RabattBetragZeile = NettoBasisBetrag * ((Rabatt ?? 0) / 100);
+            RabattBetragZeile = NettoBasisBetrag * Rabatt / 100;
             NettoBetragZeile = NettoBasisBetrag - RabattBetragZeile;
-            MwStBetragZeile = NettoBetragZeile * (VatSatz / 100);
+            MwStBetragZeile = NettoBetragZeile * (VatItem.MwStSatz / 100);
             BruttoBetragZeile = NettoBetragZeile + MwStBetragZeile;
         }
 

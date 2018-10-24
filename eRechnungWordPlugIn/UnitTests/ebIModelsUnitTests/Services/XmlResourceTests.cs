@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ebIModels.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIModels.Services.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class ResourceServiceTests
     {
-        [TestMethod()]
+        [Test]
         public void ReadResourceServiceTest()
         {
             string file = @"iso_3166-1_laender.xml";

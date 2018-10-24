@@ -1,162 +1,190 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ebIModels.Models;
 using ExtensionMethods;
-using V4P0 = ebIModels.Schema.ebInterface4p0;
+using ebIModels.Models;
+using SRC = ebIModels.Schema.ebInterface4p0;
 using ebIModels.Schema;
+using SettingsManager;
+using LogService;
 
-namespace ebIModels.Mapping
+namespace ebIModels.Mapping.V4p0
 {
-    public static class MappingService4p0ToVm
+    public static partial class MapInvoice
     {
-
-        public static IInvoiceType MapV4p0ToModel(V4P0.InvoiceType source)
+        /// <summary>
+        /// Mapped ebInterface4p1 InvoiceType auf InvoiceType Model
+        /// </summary>
+        /// <param name="source">ebInterface4p1 InvoiceType</param>
+        /// <returns>InvoiceType Model</returns>
+        internal static IInvoiceModel MapV4P0ToVm(SRC.InvoiceType source)
         {
-            IInvoiceType invoice = InvoiceFactory.CreateInvoice();
-            try
-            {
-                #region Rechnungskopf
-                invoice.InvoiceNumber = source.InvoiceNumber;
-                invoice.InvoiceDate = source.InvoiceDate;
-                invoice.GeneratingSystem = source.GeneratingSystem;
-                invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
-                invoice.DocumentTitle = source.DocumentTitle;
-                invoice.InvoiceCurrency = source.InvoiceCurrency.ConvertEnum<CurrencyType>();
-                invoice.Language = source.Language.ConvertEnum<LanguageType>();
-                invoice.LanguageSpecified = source.LanguageSpecified;
-                invoice.IsDuplicateSpecified = false;
-                invoice.CancelledOriginalDocument = null;
-                #endregion
+            IInvoiceModel invoice = InvoiceFactory.CreateInvoice();
+            #region Rechnungskopf
+            invoice.InvoiceNumber = source.InvoiceNumber;
+            invoice.InvoiceDate = source.InvoiceDate;
+            invoice.GeneratingSystem = source.GeneratingSystem;
+            invoice.DocumentTitle = source.DocumentTitle;
+            invoice.DocumentType = source.DocumentType.ConvertEnum<DocumentTypeType>();
+            invoice.InvoiceCurrency = source.InvoiceCurrency.ConvertEnum<CurrencyType>(); // source.InvoiceCurrency.ConvertEnum<CurrencyType>();
+            invoice.Language = source.Language.ConvertEnum<LanguageType>();
 
-                #region Delivery
-                if (source.Delivery.Item is V4P0.PeriodType)
+            if (source.CancelledOriginalDocument == null)
+            {
+                invoice.CancelledOriginalDocument = null;
+            }
+            else
+            {
+                invoice.CancelledOriginalDocument = new CancelledOriginalDocumentType()
                 {
-                    var deliveryType = new PeriodType();
-                    deliveryType.FromDate = ((V4P0.PeriodType)source.Delivery.Item).FromDate;
-                    deliveryType.ToDate = ((V4P0.PeriodType)source.Delivery.Item).ToDate;
+                    DocumentTypeSpecified = false,
+
+                    InvoiceNumber = source.CancelledOriginalDocument
+                };
+            }
+            #endregion
+
+            #region Delivery
+            if (source.Delivery != null)
+            {
+                if (source.Delivery.Item is SRC.PeriodType)
+                {
+                    var deliveryType = new PeriodType
+                    {
+                        FromDate = ((SRC.PeriodType)source.Delivery.Item).FromDate,
+                        ToDate = ((SRC.PeriodType)source.Delivery.Item).ToDate
+                    };
                     invoice.Delivery.Item = deliveryType;
                 }
                 else
                 {
                     var period = new PeriodType();
-                    period.FromDate = (DateTime)source.Delivery.Item;
-                    invoice.Delivery.Item = period;
-                }
-
-                #endregion
-
-                #region Biller
-                if (source.Biller != null)
-                {
-                    invoice.Biller.VATIdentificationNumber = source.Biller.VATIdentificationNumber;
-                    invoice.Biller.InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID;
-                    invoice.Biller.Address = GetAddress(source.Biller.Address);
-                    invoice.Biller.FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification);
-                }
-
-                #endregion
-
-                #region Receipient
-                if (source.InvoiceRecipient != null)
-                {
-                    invoice.InvoiceRecipient.BillersInvoiceRecipientID = source.InvoiceRecipient.BillersInvoiceRecipientID;
-                    invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
-                    invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
-
-                    if (source.InvoiceRecipient.OrderReference != null)
+                    if (source.Delivery.Item != null)
                     {
-                        invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
-                        invoice.InvoiceRecipient.OrderReference.ReferenceDateSpecified = source.InvoiceRecipient.OrderReference.ReferenceDateSpecified;
-                        invoice.InvoiceRecipient.OrderReference.ReferenceDate = source.InvoiceRecipient.OrderReference.ReferenceDate;
+                        period.FromDate = (DateTime)source.Delivery.Item;
                     }
+                    invoice.Delivery.Item = period;    // für das Model immer eine Lieferperiode, damit von/bis leichter abgebildet werden kann
                 }
+            }
+            #endregion
 
-                #endregion
+            #region Biller
+            invoice.Biller.VATIdentificationNumber = source.Biller.VATIdentificationNumber;
+            invoice.Biller.InvoiceRecipientsBillerID = source.Biller.InvoiceRecipientsBillerID;
+            invoice.Biller.Address = GetAddress(source.Biller.Address);
+            invoice.Biller.Contact = GetContact(source.Biller.Address);
+            invoice.Biller.FurtherIdentification = GetFurtherIdentification(source.Biller.FurtherIdentification);
 
-                #region Details
-                if (source.Details != null)
+            #endregion
+
+            #region InvoiceRecipient
+            invoice.InvoiceRecipient.BillersInvoiceRecipientID = source.InvoiceRecipient.BillersInvoiceRecipientID;
+            invoice.InvoiceRecipient.VATIdentificationNumber = source.InvoiceRecipient.VATIdentificationNumber;
+            invoice.InvoiceRecipient.Address = GetAddress(source.InvoiceRecipient.Address);
+            invoice.InvoiceRecipient.Contact = GetContact(source.InvoiceRecipient.Address);
+            if (source.InvoiceRecipient.OrderReference != null)
+            {
+                invoice.InvoiceRecipient.OrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
+                invoice.InvoiceRecipient.OrderReference.ReferenceDateSpecified = source.InvoiceRecipient.OrderReference.ReferenceDateSpecified;
+                invoice.InvoiceRecipient.OrderReference.ReferenceDate = source.InvoiceRecipient.OrderReference.ReferenceDate;
+
+            }
+            invoice.InvoiceRecipient.FurtherIdentification = null;
+            invoice.InvoiceRecipient.SubOrganizationID = source.InvoiceRecipient.SubOrganizationID;
+            invoice.InvoiceRecipient.AccountingArea = source.InvoiceRecipient.AccountingArea;
+            #endregion
+
+            #region Details
+            invoice.Details.HeaderDescription = source.Details.HeaderDescription;
+            invoice.Details.FooterDescription = source.Details.FooterDescription;
+
+            invoice.Details.ItemList = new List<ItemListType>();
+            if (source.Details.ItemList != null)
+                foreach (SRC.ItemListType srcItemList in source.Details.ItemList)
                 {
-                    invoice.Details.HeaderDescription = source.Details.HeaderDescription;
-                    invoice.Details.FooterDescription = source.Details.FooterDescription;
-
-                    var itList = new List<ItemListType>();
-                    if (source.Details.ItemList != null)
+                    ItemListType item = new ItemListType
                     {
-                        foreach (Schema.ebInterface4p0.ItemListType srcItemList in source.Details.ItemList)
+                        ListLineItem = new List<ListLineItemType>()
+                    };
+                    foreach (SRC.ListLineItemType srcLineItem in srcItemList.ListLineItem)
+                    {
+                        ListLineItemType lineItem = new ListLineItemType
                         {
-                            ItemListType item = new ItemListType();
-
-                            item.HeaderDescription = null;
-
-                            var detailsList = GetListLineItems(srcItemList);
-                            item.ListLineItem = detailsList;
-                            itList.Add(item);
+                            AdditionalInformation = null,
+                            PositionNumber = srcLineItem.PositionNumber,
+                            Description = new List<string>()
+                        };
+                        if (srcLineItem.Description != null)
+                        {
+                            lineItem.Description = srcLineItem.Description.ToList();
                         }
+
+                        lineItem.ArticleNumber = GetArtikelList(srcLineItem.ArticleNumber);
+
+                        // Menge
+                        lineItem.Quantity = new UnitType
+                        {
+                            Unit = srcLineItem.Quantity.Unit,
+                            Value = srcLineItem.Quantity.Value
+                        };
+
+                        // Einzelpreis
+                        lineItem.UnitPrice = new UnitPriceType()
+                        {
+                            Value = srcLineItem.UnitPrice
+                        };
+
+                        // Auftragsreferenz
+                        lineItem.InvoiceRecipientsOrderReference.OrderID =
+                            srcLineItem?.InvoiceRecipientsOrderReference?.OrderID;
+                        lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber =
+                            srcLineItem?.InvoiceRecipientsOrderReference?.OrderPositionNumber;
+
+                        // Rabatte / Zuschläge
+                        if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
+                        {
+                            lineItem.ReductionAndSurchargeListLineItemDetails = GetReductionDetails(srcLineItem.ReductionAndSurchargeListLineItemDetails);
+                        }
+                        lineItem.Description = new List<string>();
+                        if (srcLineItem.Description != null)
+                        {
+                            lineItem.Description = srcLineItem.Description.ToList();
+                        }
+
+                        lineItem.LineItemAmount = srcLineItem.LineItemAmount;
+                        
+                        // Steuer
+                        lineItem.TaxItem = MapVatItemType2Vm(srcLineItem.TaxRate, lineItem.LineItemAmount);
+                        lineItem.ReCalcLineItemAmount();
+                        item.ListLineItem.Add(lineItem);
                     }
-                    invoice.Details.ItemList = itList;
+                    invoice.Details.ItemList.Add(item);
                 }
 
-                #endregion
+            #endregion
 
-                #region Tax
-                invoice.Tax = new TaxType();
-                //invoice.Tax.VAT 
-                var vatItemList = new List<VATItemType>();
-                if ((source.Tax != null) && (source.Tax.VAT != null) && (source.Tax.VAT.Items != null))
+            #region Tax
+            invoice.CalculateTotals();
+
+            #endregion
+
+            #region Amount
+            invoice.TotalGrossAmount = source.TotalGrossAmount;
+            invoice.PayableAmount = source.TotalGrossAmount;
+            #endregion
+
+            #region PaymentMethod
+            invoice.PaymentMethod.Comment = source.PaymentMethod.Comment;
+            {
+                SRC.UniversalBankTransactionType txType = source.PaymentMethod as SRC.UniversalBankTransactionType;
+                invoice.PaymentMethod = new PaymentMethodType
                 {
-                foreach (var item in source.Tax.VAT.Items)
-                {
-                    if (item is V4P0.ItemType)
-                    {
-                        V4P0.ItemType srcVat = item as V4P0.ItemType;
-                        VATRateType vat = new VATRateType()
-                        {
-                            TaxCode = srcVat.TaxRate.TaxCode,
-                            Value = srcVat.TaxRate.Value
-                        };
-                        VATItemType vatItem = new VATItemType()
-                        {
-                            Amount = srcVat.Amount,
-                            TaxedAmount = srcVat.TaxedAmount,
-                            Item = vat
-                        };
-                        vatItemList.Add(vatItem);
-                    }
-                    else
-                    {
-                        TaxExemptionType taxExemption = new TaxExemptionType()
-                        {
-                            Value = item as string
-                        };
-                        VATItemType vatItem = new VATItemType()
-                        {
-                            Item = taxExemption
-                        };
-                        vatItemList.Add(vatItem);
-
-                    }
-                }
-                } 
-                invoice.Tax.VAT = vatItemList;//.ToArray();
-
-                #endregion
-
-                #region Amount
-                invoice.TotalGrossAmount = source.TotalGrossAmount;
-                invoice.PayableAmount = source.TotalGrossAmount;
-
-                #endregion
-
-                #region PaymentMethod
-                if (source.PaymentMethod.GetType() == typeof(V4P0.UniversalBankTransactionType))
-                {
-                    V4P0.UniversalBankTransactionType txType = source.PaymentMethod as V4P0.UniversalBankTransactionType;
-                    invoice.PaymentMethod = new PaymentMethodType();
-                    invoice.PaymentMethod.Item = new UniversalBankTransactionType();
-                    ((UniversalBankTransactionType)invoice.PaymentMethod.Item).BeneficiaryAccount = new List<AccountType>()
+                    Item = new UniversalBankTransactionType()
+                };
+                ((UniversalBankTransactionType)invoice.PaymentMethod.Item).BeneficiaryAccount = new List<AccountType>()
                 {
                     new AccountType()
                     {
@@ -167,226 +195,191 @@ namespace ebIModels.Mapping
 
                     },
                 };
-                }
-
-                #endregion
-
-                #region Paymentconditions
-                invoice.PaymentConditions = new PaymentConditionsType()
-                {
-                    DueDate = source.PaymentConditions.DueDate,
-                };
-                if (source.PaymentConditions.Discount != null)
-                {
-                    // invoice.PaymentConditions.Discount = new List<DiscountType>();
-                    var discountList = new List<DiscountType>();
-                    foreach (V4P0.DiscountType srcDiscount in source.PaymentConditions.Discount)
-                    {
-                        DiscountType discount = new DiscountType()
-                        {
-                            Amount = srcDiscount.Amount,
-                            AmountSpecified = srcDiscount.AmountSpecified,
-                            BaseAmount = srcDiscount.BaseAmount,
-                            BaseAmountSpecified = srcDiscount.BaseAmountSpecified,
-                            PaymentDate = srcDiscount.PaymentDate,
-                            Percentage = srcDiscount.Percentage,
-                            PercentageSpecified = srcDiscount.PercentageSpecified
-                        };
-                        discountList.Add(discount);
-                    }
-                    invoice.PaymentConditions.Discount = discountList;
-                }
-                #endregion
             }
-            catch (Exception ex)
+
+            #endregion
+
+            #region Paymentconditions
+            invoice.PaymentConditions.DueDate = source.PaymentConditions.DueDate;
+            if (source.PaymentConditions.Discount != null)
             {
-                // What to do????
-                var ex1 = new FormatException("Fehler beim Erstellen der Invoice", ex);
-                throw ex1;
+                invoice.PaymentConditions.Discount.Clear();
+                foreach (SRC.DiscountType srcDiscount in source.PaymentConditions.Discount)
+                {
+                    DiscountType discount = new DiscountType()
+                    {
+                        Amount = srcDiscount.Amount,
+                        AmountSpecified = srcDiscount.AmountSpecified,
+                        BaseAmount = srcDiscount.BaseAmount,
+                        BaseAmountSpecified = srcDiscount.BaseAmountSpecified,
+                        PaymentDate = srcDiscount.PaymentDate,
+                        Percentage = srcDiscount.Percentage,
+                        PercentageSpecified = srcDiscount.PercentageSpecified
+                    };
+                    invoice.PaymentConditions.Discount.Add(discount);
+                }
             }
-            
+            #endregion
             return invoice;
         }
-
-        private static List<ListLineItemType> GetListLineItems(Schema.ebInterface4p0.ItemListType srcItemList)
+        private static ContactType GetContact(SRC.AddressType address)
         {
-            var detailsList = new List<ListLineItemType>();
-            if (srcItemList.ListLineItem == null)
-                return detailsList;
-            foreach (V4P0.ListLineItemType srcLineItem in srcItemList.ListLineItem)
+            ContactType contact = new ContactType()
             {
-                ListLineItemType lineItem = new ListLineItemType();
-
-                lineItem.PositionNumber = srcLineItem.PositionNumber;
-                lineItem.Description = srcLineItem.Description.ToList();
-                lineItem.AdditionalInformation = null;
-                var artNrList = GetArticleNumberList(srcLineItem);
-                lineItem.ArticleNumber = artNrList;
-                
-                // Menge
-                lineItem.Quantity = new UnitType();
-                lineItem.Quantity.Unit = srcLineItem.Quantity.Unit;
-                lineItem.Quantity.Value = srcLineItem.Quantity.Value;
-
-
-                // Einzelpreis
-                lineItem.UnitPrice = new UnitPriceType()
-                {
-                    Value = srcLineItem.UnitPrice,
-                    // BaseQuantity = 1,
-                    BaseQuantitySpecified = false
-                };
-
-                // Steuer
-                if (srcLineItem.TaxRate != null)
-                {
-                    VATRateType vatRate = new VATRateType()
-                    {
-                        TaxCode = srcLineItem.TaxRate.TaxCode,
-                        Value = srcLineItem.TaxRate.Value
-                    };
-                    lineItem.Item = vatRate;
-                }
-                else
-                {
-                    lineItem.Item = null;
-                }
-
-                // Auftragsreferenz
-                if (srcLineItem.InvoiceRecipientsOrderReference != null)
-                {
-                    lineItem.InvoiceRecipientsOrderReference = new OrderReferenceDetailType();
-                    if (srcLineItem.InvoiceRecipientsOrderReference != null)
-                    {
-                    lineItem.InvoiceRecipientsOrderReference = new OrderReferenceDetailType()
-                    {
-                        OrderID = srcLineItem.InvoiceRecipientsOrderReference.OrderID,
-                        OrderPositionNumber = srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber
-                        
-                    };
-
-                    }
-                }
-                // Rabatte / Zuschläge
-                lineItem.ReductionAndSurchargeListLineItemDetails = new ReductionAndSurchargeListLineItemDetailsType();
-                if (srcLineItem.ReductionAndSurchargeListLineItemDetails != null)
-                {
-                    var redItems = new List<object>();
-                    lineItem.ReductionAndSurchargeListLineItemDetails.ItemsElementName = new List<ItemsChoiceType>();
-                    // new ItemsChoiceType[srcLineItem.ReductionAndSurchargeListLineItemDetails.ItemsElementName.Count()];
-                    foreach (var reduction in srcLineItem.ReductionAndSurchargeListLineItemDetails.Items)
-                    {
-                        ReductionAndSurchargeBaseType red = new ReductionAndSurchargeBaseType()
-                        {
-                            Amount = reduction.Amount,
-                            AmountSpecified = reduction.AmountSpecified,
-                            BaseAmount = reduction.BaseAmount,
-                            Comment = "",
-                            Percentage = reduction.Percentage,
-                            PercentageSpecified = reduction.PercentageSpecified
-                        };
-                        redItems.Add(red);
-                    }
-                    lineItem.ReductionAndSurchargeListLineItemDetails.Items = redItems;
-                    foreach (
-                        V4P0.ItemsChoiceType choiceType in
-                            srcLineItem.ReductionAndSurchargeListLineItemDetails.ItemsElementName)
-                    {
-                        ItemsChoiceType chType = new ItemsChoiceType();
-                        chType = choiceType.ConvertEnum<ItemsChoiceType>();
-                        lineItem.ReductionAndSurchargeListLineItemDetails.ItemsElementName.Add(chType);
-                    }
-                }
-                lineItem.Description = srcLineItem.Description.ToList();
-                lineItem.DiscountFlag = srcLineItem.DiscountFlag;
-                lineItem.DiscountFlagSpecified = srcLineItem.DiscountFlagSpecified;
-                lineItem.LineItemAmount = srcLineItem.LineItemAmount;
-                detailsList.Add(lineItem);
-            }
-            return detailsList;
+                Email = new List<string>() { address.Email },
+                Name = address.Contact,
+                Phone = new List<string>() { address.Phone },
+                Salutation = address.Salutation
+            };
+            return contact;
         }
 
-        private static List<ArticleNumberType> GetArticleNumberList(Schema.ebInterface4p0.ListLineItemType srcLineItem)
-        {
-            var artNrList = new List<ArticleNumberType>();
-            if (srcLineItem.ArticleNumber == null)
-                return artNrList;
-            foreach (
-                Schema.ebInterface4p0.ArticleNumberType numberType in
-                    srcLineItem.ArticleNumber)
-            {
-                artNrList.Add(new ArticleNumberType()
-                {
-                    ArticleNumberType1 =
-                        numberType.ArticleNumberType1.ConvertEnum<ArticleNumberTypeType>(),
-                    Text = numberType.Text.ToList()
-                });
-            }
-            return artNrList;
-        }
-
-        private static AddressType GetAddress(V4P0.AddressType address)
+        private static AddressType GetAddress(SRC.AddressType address)
         {
 
-            AddressType addrNew = new AddressType();
             if (address == null)
             {
-                return addrNew;
+                return null;
             }
-            addrNew.Name = address.Name;
-            addrNew.Contact = address.Contact;
-            addrNew.Email = address.Email;
-            addrNew.Phone = address.Phone;
-            addrNew.Salutation = address.Salutation;
-            addrNew.Street = address.Street;
-            addrNew.Country = GetCountry(address.Country);
-            addrNew.ZIP = address.ZIP;
-            addrNew.Town = address.Town;
-            addrNew.AddressIdentifier = GetAddressIdentifier(address.AddressIdentifier);
+            AddressType addrNew = new AddressType
+            {
+                Name = address.Name,
+                //addrNew.Contact = address.Contact;
+                Phone = address.Phone,
+                POBox = address.POBox,
+                Email = address.Email,
+                //addrNew.Salutation = address.Salutation;
+                Street = address.Street,
+                Country = GetCountry(address.Country),
+                ZIP = address.ZIP,
+                Town = address.Town,
+                AddressIdentifier = GetAddressIdentifier(address.AddressIdentifier)
+            };
             return addrNew;
         }
-
-        private static CountryType GetCountry(Schema.ebInterface4p0.CountryType countryType)
+        private static CountryType GetCountry(SRC.CountryType countryType)
         {
             if (countryType == null)
                 return null;
-            CountryType cty = new CountryType();
-            cty.CountryCode = countryType.CountryCode.ConvertEnum<CountryCodeType>();
-            cty.CountryCodeSpecified = countryType.CountryCodeSpecified;
-            cty.Text = countryType.Text.ToList();
+            CountryType cty = new CountryType(CountryCodeType.AT);
+            if (countryType.Text != null)
+            {
+                cty.CountryCode = countryType.CountryCode.ToString();
+                cty.Value = CountryCodes.GetFromCode(cty.CountryCode.ToString()).Country;
+            }
             return cty;
         }
-
-        private static List<AddressIdentifierType> GetAddressIdentifier(V4P0.AddressIdentifierType adrIn)
+        private static ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(SRC.ReductionAndSurchargeListLineItemDetailsType srcRed)
         {
-            if (adrIn == null)
-            {
+            if (srcRed.Items == null)
                 return null;
+            ReductionAndSurchargeListLineItemDetailsType lineRed = new ReductionAndSurchargeListLineItemDetailsType();
+            //lineRed.Items = new object[srcRed.Items.Length];
 
-            }
-            if (adrIn.AddressIdentifierType1Specified == false)
+            foreach (var item1 in srcRed.Items)
             {
-                return null;
+                if (item1 is SRC.ReductionAndSurchargeBaseType)
+                {
+                    SRC.ReductionAndSurchargeBaseType item = item1 as SRC.ReductionAndSurchargeBaseType;
+                    ReductionAndSurchargeBaseType redBase = new ReductionAndSurchargeBaseType
+                    {
+                        Amount = item.Amount,
+                        AmountSpecified = item.AmountSpecified,
+                        BaseAmount = item.BaseAmount,
+                        Percentage = item.Percentage,
+                        PercentageSpecified = item.PercentageSpecified
+                    };
+                    lineRed.Items.Add(redBase);
+                }
             }
-
-            List<AddressIdentifierType> adIdList = new List<AddressIdentifierType>();
-
-            foreach (string s in adrIn.Text)
+            lineRed.ItemsElementName = new List<ItemsChoiceType>();
+            foreach (
+                SRC.ItemsChoiceType choiceType in
+                    srcRed.ItemsElementName)
             {
-
-                AddressIdentifierType adId = new AddressIdentifierType();
-
-                adId.AddressIdentifierType1 =
-                    (AddressIdentifierTypeType)Enum.Parse(typeof(AddressIdentifierTypeType),
-                        adrIn.AddressIdentifierType1.ToString());
-                adId.AddressIdentifierType1Specified = true;
-                adId.Value = s;
-                adIdList.Add(adId);
+                lineRed.ItemsElementName.Add(choiceType.ConvertEnum<ItemsChoiceType>());
             }
-            return adIdList;
+            return lineRed;
         }
 
-        private static List<FurtherIdentificationType> GetFurtherIdentification(V4P0.FurtherIdentificationType[] furtherID)
+        private static TaxItemType MapVatItemType2Vm(object vatItem, decimal taxableAmount)
+        {
+            if (vatItem == null)
+                return null;
+            if (vatItem.GetType() != typeof(SRC.TaxRateType))
+            {
+                string taxExemption = (string)vatItem;
+                TaxItemType taxItem = new TaxItemType()
+                {
+                    TaxableAmount = taxableAmount,
+                    TaxPercent = new TaxPercentType()
+                    {
+                        TaxCategoryCode = PlugInSettings.VStBefreitCode,
+                        Value = 0
+                    },
+                    Comment = taxExemption
+                };
+                return taxItem;
+            }
+            SRC.TaxRateType vATRate = (SRC.TaxRateType)vatItem;
+            TaxItemType taxItemVat = new TaxItemType()
+            {
+                TaxableAmount = taxableAmount,
+                TaxPercent = new TaxPercentType()
+                {
+                    Value = vATRate.Value,
+                    TaxCategoryCode = PlugInSettings.Default.GetValueFromPercent(vATRate.Value).Code
+                },
+                TaxAmount = (taxableAmount * vATRate.Value / 100).FixedFraction(2)
+            };
+            //Log.DumpToLog(CallerInfo.Create(), vATRate);
+            //Log.DumpToLog(CallerInfo.Create(), taxItemVat);
+            return taxItemVat;
+        }
+
+        private static List<ArticleNumberType> GetArtikelList(SRC.ArticleNumberType[] srcArticle)
+        {
+            List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
+            if (srcArticle == null)
+            {
+                return artNrList;
+            }
+            foreach (SRC.ArticleNumberType articleNumberType in srcArticle)
+            {
+                ArticleNumberType art = new ArticleNumberType
+                {
+                    Value = articleNumberType.Text[0],
+                    ArticleNumberType1Specified = articleNumberType.ArticleNumberType1Specified,
+                    ArticleNumberType1 = articleNumberType.ArticleNumberType1.ConvertEnum<ArticleNumberTypeType>()
+                };
+                artNrList.Add(art);
+
+            }
+            return artNrList;
+        }
+        private static List<AddressIdentifierType> GetAddressIdentifier(SRC.AddressIdentifierType addressIdentifier)
+        {
+            if (addressIdentifier == null)
+            {
+                return null;
+
+            }
+
+            List<AddressIdentifierType> adrOutList = new List<AddressIdentifierType>();
+            AddressIdentifierType adId = new AddressIdentifierType();
+
+            if (addressIdentifier.AddressIdentifierType1Specified)
+            {
+                adId.AddressIdentifierType1 = addressIdentifier.AddressIdentifierType1.ConvertEnum<AddressIdentifierTypeType>();
+                adId.Value = addressIdentifier.Text[0];
+
+            }
+            adId.Value = addressIdentifier.Text[0];
+            adrOutList.Add(adId);
+
+            return adrOutList;
+        }
+        private static List<FurtherIdentificationType> GetFurtherIdentification(SRC.FurtherIdentificationType[] furtherID)
         {
             List<FurtherIdentificationType> fIdList = new List<FurtherIdentificationType>();
             if (furtherID == null)
@@ -395,7 +388,7 @@ namespace ebIModels.Mapping
             }
 
             List<string> supportedIds = Enum.GetNames(typeof(FurtherIdentificationType.SupportedIds)).ToList();
-            foreach (V4P0.FurtherIdentificationType item in furtherID)
+            foreach (SRC.FurtherIdentificationType item in furtherID)
             {
                 if (supportedIds.Contains(item.IdentificationType))
                 {
@@ -409,7 +402,5 @@ namespace ebIModels.Mapping
             }
             return fIdList;
         }
-
     }
-
 }

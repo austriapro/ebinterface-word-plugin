@@ -85,7 +85,9 @@ namespace FileDialogExtenders
         bool _ShowHelp;
         bool _CheckPathExists = true;
         bool _CreatePrompt = true;
+#pragma warning disable CS0414 // The field 'FileDialogControlBase._OverwritePrompt' is assigned but its value is never used
         bool _OverwritePrompt = true;
+#pragma warning restore CS0414 // The field 'FileDialogControlBase._OverwritePrompt' is assigned but its value is never used
         RECT _OpenDialogWindowRect = new RECT();
         IntPtr _hOKButton = IntPtr.Zero;
         private bool _hasRunInitMSDialog;

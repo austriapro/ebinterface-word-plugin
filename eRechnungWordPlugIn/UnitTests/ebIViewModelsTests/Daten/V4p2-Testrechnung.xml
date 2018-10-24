@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eb:Invoice xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sv="http://www.ebinterface.at/schema/4p2/extensions/sv" xmlns:ext="http://www.ebinterface.at/schema/4p2/extensions/ext" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:DocumentTitle="" xmlns:eb="http://www.ebinterface.at/schema/4p2/" eb:GeneratingSystem="ebInterface Word PlugIn an die öffentl. Verwaltung V4p2 V2122e72 (Debug Enterprise, 29.01.2016 09:38:39)">
+  <eb:InvoiceNumber>1</eb:InvoiceNumber>
+  <eb:InvoiceDate>2016-01-29</eb:InvoiceDate>
+  <eb:CancelledOriginalDocument>
+    <eb:InvoiceNumber>123</eb:InvoiceNumber>
+    <eb:InvoiceDate>2014-06-01</eb:InvoiceDate>
+    <eb:DocumentType>Invoice</eb:DocumentType>
+  </eb:CancelledOriginalDocument>
+  <eb:Delivery>
+    <eb:Date>2014-06-03</eb:Date>
+  </eb:Delivery>
+  <eb:Biller>
+    <eb:VATIdentificationNumber>ATU12345678</eb:VATIdentificationNumber>
+    <eb:Address>
+      <eb:Name>Debugging Company</eb:Name>
+      <eb:Street>Hohle Gasse 5</eb:Street>
+      <eb:Town>Purk</eb:Town>
+      <eb:ZIP>3002</eb:ZIP>
+      <eb:Country eb:CountryCode="AT">Österreich</eb:Country>
+      <eb:Email>lohwai@live.at</eb:Email>
+    </eb:Address>
+    <eb:InvoiceRecipientsBillerID>12345678</eb:InvoiceRecipientsBillerID>
+  </eb:Biller>
+  <eb:InvoiceRecipient>
+    <eb:VATIdentificationNumber>00000000</eb:VATIdentificationNumber>
+    <eb:OrderReference>
+      <eb:OrderID>4712345678</eb:OrderID>
+    </eb:OrderReference>
+    <eb:Address>
+      <eb:Name>Bundesministerium</eb:Name>
+      <eb:Street>Platz</eb:Street>
+      <eb:Town>Wien</eb:Town>
+      <eb:ZIP>1010</eb:ZIP>
+      <eb:Country eb:CountryCode="AT">Österreich</eb:Country>
+      <eb:Email>lohwai@live.at</eb:Email>
+    </eb:Address>
+    <eb:BillersInvoiceRecipientID>K100</eb:BillersInvoiceRecipientID>
+  </eb:InvoiceRecipient>
+  <eb:Details>
+    <eb:HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</eb:HeaderDescription>
+    <eb:ItemList>
+      <eb:ListLineItem>
+        <eb:PositionNumber>1</eb:PositionNumber>
+        <eb:Description>A Prod</eb:Description>
+        <eb:ArticleNumber>111</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="NAR">5</eb:Quantity>
+        <eb:UnitPrice>20</eb:UnitPrice>
+        <eb:VATRate>20</eb:VATRate>
+        <eb:ReductionAndSurchargeListLineItemDetails>
+          <eb:ReductionListLineItem>
+            <eb:BaseAmount>100</eb:BaseAmount>
+            <eb:Percentage>10</eb:Percentage>
+          </eb:ReductionListLineItem>
+        </eb:ReductionAndSurchargeListLineItemDetails>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>4712345678</eb:OrderID>
+          <eb:OrderPositionNumber>10</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>90.0</eb:LineItemAmount>
+      </eb:ListLineItem>
+      <eb:ListLineItem>
+        <eb:PositionNumber>2</eb:PositionNumber>
+        <eb:Description>B Prod</eb:Description>
+        <eb:ArticleNumber>200</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="NAR">8</eb:Quantity>
+        <eb:UnitPrice>10</eb:UnitPrice>
+        <eb:VATRate>20</eb:VATRate>
+        <eb:InvoiceRecipientsOrderReference>
+          <eb:OrderID>4712345678</eb:OrderID>
+          <eb:OrderPositionNumber>20</eb:OrderPositionNumber>
+        </eb:InvoiceRecipientsOrderReference>
+        <eb:LineItemAmount>80</eb:LineItemAmount>
+      </eb:ListLineItem>
+    </eb:ItemList>
+    <eb:FooterDescription>Wir danken für Ihren Auftrag.</eb:FooterDescription>
+  </eb:Details>
+  <eb:Tax>
+    <eb:VAT>
+      <eb:VATItem>
+        <eb:TaxedAmount>170.0</eb:TaxedAmount>
+        <eb:VATRate>20</eb:VATRate>
+        <eb:Amount>34.0</eb:Amount>
+      </eb:VATItem>
+    </eb:VAT>
+  </eb:Tax>
+  <eb:TotalGrossAmount>204.0</eb:TotalGrossAmount>
+  <eb:PayableAmount>204.0</eb:PayableAmount>
+  <eb:PaymentMethod>
+    <eb:UniversalBankTransaction>
+      <eb:BeneficiaryAccount>
+        <eb:BankName>Musterbank</eb:BankName>
+        <eb:BIC>NABAATWW</eb:BIC>
+        <eb:IBAN>AT611904300234573201</eb:IBAN>
+        <eb:BankAccountOwner>Musterfirma</eb:BankAccountOwner>
+      </eb:BeneficiaryAccount>
+    </eb:UniversalBankTransaction>
+  </eb:PaymentMethod>
+  <eb:PresentationDetails>
+    <eb:URL>http://www.austriapro.at</eb:URL>
+    <eb:SuppressZero>true</eb:SuppressZero>
+  </eb:PresentationDetails>
+</eb:Invoice>

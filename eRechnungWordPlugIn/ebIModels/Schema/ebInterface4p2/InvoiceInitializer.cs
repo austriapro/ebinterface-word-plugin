@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtensionMethods;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -248,6 +249,18 @@ namespace ebIModels.Schema.ebInterface4p2
             this.quantityField = new UnitType();
             // this\.articleNumberField.=.new.List<ArticleNumberType>();
             // this\.descriptionField.=.new.List<string>();
+        }
+        public void ReCalcLineItemAmount()
+        {
+            decimal baseAmount = UnitPrice.Value * Quantity.Value;
+            decimal netAmount = baseAmount;
+            if (ReductionAndSurchargeListLineItemDetails != null && ReductionAndSurchargeListLineItemDetails.Items.Any())
+            {
+                decimal rabattProzent = ((ReductionAndSurchargeBaseType)ReductionAndSurchargeListLineItemDetails.Items[0]).Percentage;
+                decimal rabatt = (baseAmount * rabattProzent / 100).FixedFraction(2);
+                netAmount = baseAmount - rabatt;
+            }
+            LineItemAmount = netAmount.FixedFraction(2);
         }
     }
 

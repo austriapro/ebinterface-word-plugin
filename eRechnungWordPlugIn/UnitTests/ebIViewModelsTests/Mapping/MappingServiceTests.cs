@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using ebIModels.Models;
 using ebIModels.Schema;
 using ebIViewModels.ViewModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace ebIViewModels.ViewModels.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class MappingServiceTests
     {
-        [TestMethod()]
+        [Test]
         public void MapV4P1ToVmTest()
         {
             string fn = @"Daten\Test-ebInterfaceRechn-2014-500-2014-03-19.xml";
@@ -20,8 +20,8 @@ namespace ebIViewModels.ViewModels.Tests
             // var invVm = DocumentViewModel.MapV4P1ToVm(invoice as ebIModels.Schema.ebInterface4p1.InvoiceType);
             // var inv4p1 = MappingService.MapVMToV4p1(invVm);
             //Assert.AreEqual(new DateTime(2014, 04, 19), invoice.PaymentConditions.DueDate);
-            Assert.AreEqual(CountryCodeType.AT, invoice.Biller.Address.Country.CountryCode);
-            Assert.AreEqual("Österreich", invoice.Biller.Address.Country.Text[0]);
+            Assert.AreEqual(CountryCodeType.AT.ToString(), invoice.Biller.Address.Country.CountryCode);
+            Assert.AreEqual("Österreich", invoice.Biller.Address.Country.Value);
             invoice.SaveTemplate(@"Daten\ConvertedInvoice.xml");
             Assert.IsNotNull(invoice);
         }

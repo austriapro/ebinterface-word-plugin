@@ -10,7 +10,7 @@ namespace ebIModels.Schema
     {
   
         // internal string Uri;
-        internal InvoiceType.ebIVersion Version;
+        internal Models.EbIVersion Version;
         // internal string SchemaPath;
         internal Type VersionType;
         internal bool IsSaveSupported;
