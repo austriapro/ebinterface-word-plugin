@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using LogService;
 using SettingsManager.Properties;
 using SettingsManager.Services;
 
@@ -92,7 +93,7 @@ namespace SettingsManager
 
         public string EbInterfaceVersionString
         {
-            get { return Settings.Default.SetEbIVersion; }
+            get { return "V5P0"; } //Settings.Default.SetEbIVersion; }
             set { Settings.Default.SetEbIVersion = value; }
         }
         #endregion
@@ -437,7 +438,14 @@ namespace SettingsManager
 
         public static PlugInSettings Load()
         {
-            Settings.Default.Reload();
+            if (Settings.Default.UpgradeRequired)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.UpgradeRequired = false;
+                Settings.Default.Save();
+                Log.LogWrite(CallerInfo.Create(), Log.LogPriority.Medium, "Settings Upgraded");
+            }
+            // Settings.Default.Reload();
             // Default = new PlugInSettings();
 
             return new PlugInSettings();

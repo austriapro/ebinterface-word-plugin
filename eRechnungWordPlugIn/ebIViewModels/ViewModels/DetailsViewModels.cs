@@ -57,7 +57,7 @@ namespace ebIViewModels.ViewModels
         }
 
         private IUnityContainer _uc;
-        private bool _bestPosRequired;
+        private readonly bool _bestPosRequired;
         public InvoiceSubtypes.ValidationRuleSet CurrentRuleSet{get;set;}
 
         public DetailsViewModels(IUnityContainer uc, IDialogService dialogService, bool bestPosRequired, 

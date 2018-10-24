@@ -1032,7 +1032,7 @@ namespace ebIViewModels.ViewModels
             }
         }
 
-        private BindingList<DetailsViewModel> _detailsView;
+        //private BindingList<DetailsViewModel> _detailsView;
         /// <summary>
         /// Liste der Detailzeilen der Rechnung
         /// </summary>

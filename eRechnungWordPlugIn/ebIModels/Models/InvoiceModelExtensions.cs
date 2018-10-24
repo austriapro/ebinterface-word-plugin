@@ -131,9 +131,14 @@ namespace ebIModels.Models
                              ustGesamt = g.Sum(x => x.TaxItem.TaxPercent.Value * x.LineItemAmount / 100).FixedFraction(2)
                          };
 
-            decimal nettoBetrag = totals.FirstOrDefault().netto.FixedFraction(2);
-            decimal taxAmount = totals.FirstOrDefault().ustGesamt.FixedFraction(2);
+            decimal nettoBetrag = 0; //            totals.FirstOrDefault().netto.FixedFraction(2);
+            decimal taxAmount = 0;   //            totals.FirstOrDefault().ustGesamt.FixedFraction(2);
+            if (totals.Count()!=0)
+            {
+                nettoBetrag = totals.FirstOrDefault().netto.FixedFraction(2);
+                taxAmount = totals.FirstOrDefault().ustGesamt.FixedFraction(2);
 
+            }
             TotalGrossAmount = nettoBetrag + taxAmount;
             PayableAmount = TotalGrossAmount + PrepaidAmount;
             NetAmount = nettoBetrag;

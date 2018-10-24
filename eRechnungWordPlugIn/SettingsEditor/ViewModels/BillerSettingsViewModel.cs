@@ -33,11 +33,7 @@ namespace SettingsEditor.ViewModels
         public event EventHandler UpdateFromBillerSettingsEvent;
         private void UpdateFromBillerSettingsFire()
         {
-            EventHandler handler = UpdateFromBillerSettingsEvent;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
+            UpdateFromBillerSettingsEvent?.Invoke(this, EventArgs.Empty);
         }
         #region Properties
 
@@ -266,12 +262,12 @@ namespace SettingsEditor.ViewModels
                 if (!newValue)
                 {
                     VatId = PlugInSettings.VatIdDefaultOhneVstBerechtigung;
-                    VatSelected = VatDefaultList.Find(p => p.MwStSatz == 0);
+                    VatSelected = PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
                 }
                 else
                 {
                     VatId = PlugInSettings.VatIdDefaultMitVstBerechtigung;
-                    VatSelected = VatDefaultList.Find(p => p.MwStSatz == 20);
+                    VatSelected = PlugInSettings.Default.IstNichtVStBerechtigtVatValue;
                 }
                 _isVatBerechtigt = value;
                 OnPropertyChanged();
@@ -391,8 +387,8 @@ namespace SettingsEditor.ViewModels
             }
         }
 
-        private List<VatDefaultValue> _vatDefaultList;
-        public List<VatDefaultValue> VatDefaultList
+        private BindingList<VatDefaultValue> _vatDefaultList;
+        public BindingList<VatDefaultValue> VatDefaultList
         {
             get { return _vatDefaultList; }
             set
@@ -563,8 +559,8 @@ namespace SettingsEditor.ViewModels
             _gln = PlugInSettings.Default.BillerGln;
             _save2Form = false;
             _countryCodeSelected = _countryCodes.Find(p => p.Code == PlugInSettings.Default.Land);
-            _vatDefaultList = PlugInSettings.Default.VatDefaultValues;
-            _vatSelected = _vatDefaultList.Find(p => p.MwStSatz == PlugInSettings.Default.MwStDefault);
+            _vatDefaultList = new BindingList<VatDefaultValue> (PlugInSettings.Default.VatDefaultValues);
+            _vatSelected = PlugInSettings.Default.MwStDefaultValue;
             _vatText = PlugInSettings.Default.VStText;
             _isVatBerechtigt = PlugInSettings.Default.VStBerechtigt;
             _currSelected = new CurrencyListViewModel();

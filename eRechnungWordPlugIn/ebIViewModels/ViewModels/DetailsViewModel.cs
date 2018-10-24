@@ -420,8 +420,8 @@ namespace ebIViewModels.ViewModels
             }
         }
 
-        private IUnityContainer _uc;
-        private bool _ruleSet;
+        private readonly IUnityContainer _uc;
+        private readonly bool _ruleSet;
 
         public string RuleSet
         {

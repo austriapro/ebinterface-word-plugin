@@ -11,6 +11,18 @@ using System.Xml.Linq;
 using System.IO;
 namespace SettingsManager.Tests
 {
+    [SetUpFixture]
+    public class CommonSetUpClass
+    {
+        [OneTimeSetUp]
+        public void RunBeforeAnyTests()
+        {
+            var dir = Path.GetDirectoryName(typeof(CommonSetUpClass).Assembly.Location);
+            Environment.CurrentDirectory = dir;
+            Directory.SetCurrentDirectory(dir);
+            Console.WriteLine($"Directory:{dir}");
+        }
+    }
     [TestFixture]
     public class PlugInSettingsTests
     {
@@ -64,6 +76,13 @@ namespace SettingsManager.Tests
         {
             PlugInSettings.Reset();
             Assert.AreEqual("EUR",PlugInSettings.Default.Currency);
+        }
+
+        [Test]
+        public void UpgradeSettingsTest()
+        {
+            var upgrade = PlugInSettings.Load();
+            Assert.IsNotNull(upgrade);
         }
     }
 }

@@ -131,7 +131,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SetEbIVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">V4P3</Value>
+      <Value Profile="(Default)">V5P0</Value>
+    </Setting>
+    <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

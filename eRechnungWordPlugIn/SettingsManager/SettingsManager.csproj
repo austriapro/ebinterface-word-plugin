@@ -112,6 +112,10 @@
       <Project>{e38986b2-3b1b-4d39-9266-eae34d8aa7bd}</Project>
       <Name>ebIServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{7D98E229-22D4-46B2-A09E-30D70426C54E}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

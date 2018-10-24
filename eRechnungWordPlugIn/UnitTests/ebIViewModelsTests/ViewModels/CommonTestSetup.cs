@@ -10,6 +10,7 @@ using Microsoft.Practices.Unity;
 using NUnit.Framework;
 using ebICommonTestSetup;
 using SettingsEditor.ViewModels;
+using SettingsManager;
 
 namespace ebIViewModelsTests.ViewModels
 {
@@ -20,7 +21,7 @@ namespace ebIViewModelsTests.ViewModels
         internal Common Cmn = new Common(Common.InvTemplate);
         internal InvoiceViewModel InvVm;
         internal ErrorActionPaneViewModel ErrorActionPane;
-        private string _testData = @"TestDaten\Billersettings.xml";
+        private readonly string _testData = @"TestDaten\Billersettings.xml";
         internal BillerSettingsViewModel BillerSettings; // 
         internal XmlNamespaceManager Nspc = new XmlNamespaceManager(new NameTable());
 
@@ -76,7 +77,7 @@ namespace ebIViewModelsTests.ViewModels
             BillerSettings.CountryCodeSelected = BillerSettings.CountryCodes.Find(p => p.Code == countryCode);
 
             var vatSelected = decimal.Parse(xEl.Element("VatSelected").Value);
-            BillerSettings.VatSelected = BillerSettings.VatDefaultList.Find(p => p.MwStSatz == vatSelected);
+            BillerSettings.VatSelected = PlugInSettings.Default.GetValueFromPercent(vatSelected);
             var currency = xEl.Element("Currency").Value;
             BillerSettings.CurrSelected = BillerSettings.CurrencyList.FirstOrDefault(p => p.Code == currency);
             BillerSettings.IsVatBerechtigt = bool.Parse(xEl.Element("IsVatBerechtigt").Value);
