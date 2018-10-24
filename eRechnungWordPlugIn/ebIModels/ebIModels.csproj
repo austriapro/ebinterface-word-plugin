@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\Unreferenced.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,15 +34,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEbug32|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\DEbug32\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -57,15 +49,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEbug32|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\DEbug32\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -87,31 +70,33 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms">
       <HintPath>..\packages\EnterpriseLibrary.Validation.Integration.WinForms.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception">
-      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
-      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.Interception.4.0.1\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
-      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.Interception.4.0.1\lib\Net45\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Octokit, Version=0.29.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Octokit.0.29.0\lib\net45\Octokit.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Octokit, Version=0.32.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Octokit.0.32.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -120,22 +105,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\MapInvoice.cs" />
+    <Compile Include="Mapping\MappingError.cs" />
+    <Compile Include="Mapping\ModelConstants.cs" />
     <Compile Include="Mapping\ModelToV4P1.cs" />
     <Compile Include="Mapping\ModelToV4P3.cs" />
+    <Compile Include="Mapping\ModelToV5p0.cs" />
     <Compile Include="Mapping\V4P0ToModel.cs" />
     <Compile Include="Mapping\V4P2ToModel.cs" />
     <Compile Include="Mapping\V4P1ToModel.cs" />
     <Compile Include="Mapping\ModelToV4P2.cs" />
     <Compile Include="Mapping\V4P3ToModel.cs" />
+    <Compile Include="Mapping\V5P0ToModel.cs" />
     <Compile Include="Models\CountryCodes.cs" />
     <Compile Include="Models\DocumentTypeModel.cs" />
     <Compile Include="Models\DocumentTypeModels.cs" />
     <Compile Include="Models\CountryCodeModel.cs" />
     <Compile Include="Models\IDocumentTypes.cs" />
-    <Compile Include="Models\IInvoiceType.cs" />
-    <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\InvoiceExtensions.cs" />
-    <Compile Include="Models\InvoiceHelperMethods.cs" />
+    <Compile Include="Models\IInvoiceModel.cs" />
+    <Compile Include="Models\InvoiceModel.cs" />
+    <Compile Include="Models\InvoiceModelExtensions.cs" />
+    <Compile Include="Models\erbInvoiceValidation.cs" />
     <Compile Include="Models\InvoiceSubtypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -143,19 +133,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Schema\ebInterface.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Schema\ebInterface3p02\invoice.cs">
-      <DependentUpon>Invoice.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Schema\ebInterface3p02\InvoiceHelperMethods.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Schema\ebInterface4p0\invoice.cs">
       <DependentUpon>Invoice.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Schema\ebInterface4p0\InvoiceHelperMethods.cs">
+    <Compile Include="Schema\ebInterface4p0\InvoiceHelperMethods.cs" />
+    <Compile Include="Schema\IInvoiceBase.cs" />
+    <Compile Include="Schema\InvoiceBase.cs" />
+    <Compile Include="Schema\InvoiceXml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Schema\ebInterface4p1\Invoice.cs">
@@ -173,11 +157,13 @@
     <Compile Include="Schema\ebInterface4p3\invoice.cs">
       <DependentUpon>Invoice.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Schema\ebInterface4p3\InvoiceHelperMethods.cs" />
+    <Compile Include="Schema\ebInterface4p3\InvoiceHelperMethods4p3.cs" />
     <Compile Include="Schema\ebInterface4p3\InvoiceInitializer.cs" />
     <Compile Include="Schema\ebInterface5p0\invoice.cs">
       <DependentUpon>Invoice.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Schema\ebInterface5p0\InvoiceHelperMethods5p0.cs" />
+    <Compile Include="Schema\ebInterface5p0\InvoiceInitializer5p0.cs" />
     <Compile Include="Schema\ebInterfaceResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -200,31 +186,11 @@
     <Compile Include="Services\XMLValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schema\ebInterface3p02\Invoice.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <None Include="Schema\ebInterface3p0\Invoice.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Schema\ebInterface3p0\xmldsig-core-schema.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Schema\ebInterface3p0\xmldsig-core-schema.xsx">
-      <DependentUpon>xmldsig-core-schema.xsd</DependentUpon>
-    </None>
-    <EmbeddedResource Include="Schema\ebInterface4p0\ebInterfaceExtension.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schema\ebInterface4p0\ebInterfaceExtension_SV.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Schema\ebInterface4p0\Invoice.xsd">
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Schema\ebInterface4p1\ebInterfaceExtension.xsd">
       <SubType>Designer</SubType>
@@ -257,9 +223,18 @@
     <EmbeddedResource Include="Schema\ebInterface4p3\Invoice.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Schema\ebInterface5p0\Invoice.xsd">
+    <None Include="Schema\ebInterface4p0\ebInterfaceExtension.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Schema\ebInterface4p0\ebInterfaceExtension_SV.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schema\ebInterface4p0\Invoice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <EmbeddedResource Include="Schema\ebInterface5p0\Invoice.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Schema\xmldsig-core-schema.xsx">
       <DependentUpon>xmldsig-core-schema.xsd</DependentUpon>
     </None>
@@ -291,9 +266,6 @@
       <Project>{814080c9-2377-4766-b516-a4e4d66d34a5}</Project>
       <Name>SettingsManager</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XmlData\MwStDefaults.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XmlData\ProductInfo.xml" />
