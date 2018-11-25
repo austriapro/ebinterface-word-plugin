@@ -1636,7 +1636,7 @@ namespace ebIViewModels.ViewModels
                 string filename = _progressView.PayLoad as string;
 
                 WorkerReportProgress(worker);
-                _vmDocType = _invoice.DocumentType.ToString();
+                VmDocType = _invoice.DocumentType.ToString(); 
                 //_invoice.Tax = TaxType.GetTaxTypeList(_invoice.Details.ItemList, !PlugInSettings.Default.VStBerechtigt, PlugInSettings.Default.VStText);
                 _invoice.CalculateTotals();
                 _bankTx = GetBankTx();

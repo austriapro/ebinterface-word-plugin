@@ -27,6 +27,7 @@ namespace ebIModels.Mapping.V5p0
             // GeneratingSystem xs:string
             invoice.GeneratingSystem = source.GeneratingSystem;
             // DocumentType DocumentTypeType
+            invoice.DocumentType = source.DocumentType.ConvertEnum<Model.DocumentTypeType>();
 
             // InvoiceCurrency CurrencyType
             invoice.InvoiceCurrency = source.InvoiceCurrency.ToEnum(Model.CurrencyType.EUR);

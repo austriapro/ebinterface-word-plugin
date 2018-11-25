@@ -22,12 +22,12 @@
     <SolutionID>11fadaeb-6e23-40e8-bb45-a202930c10c1</SolutionID>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
-    <AssemblyVersion>5.0.2.1</AssemblyVersion>
+    <AssemblyVersion>5.0.3.2</AssemblyVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\trash\publish\Codeplex\5p0p2p1\</PublishUrl>
+    <PublishUrl>C:\trash\publish\Codeplex\5p0p3p2\</PublishUrl>
     <InstallUrl />
     <TargetCulture>de</TargetCulture>
-    <ApplicationVersion>5.0.2.1</ApplicationVersion>
+    <ApplicationVersion>5.0.3.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>false</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>

@@ -105,12 +105,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RibbonViewModels\AboutViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RibbonViewModels\AboutViewModel.cs" />
     <Compile Include="RibbonViewModels\DownloadViewModel.cs" />
     <Compile Include="RibbonViews\FrmUpdateDownload.cs">
       <SubType>Form</SubType>
@@ -285,15 +285,20 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ebInterface-Logo.gif" />
+    <None Include="ErrorView\Resources\ebInterface-Logo.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AustriaPro-LOGO-klein.gif" />
+    <None Include="ErrorView\Resources\AustriaPro-LOGO-klein.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ErrorView\Resources\AustriaPro-LOGO.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ebInterface-Logo.gif" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AustriaPro-LOGO.gif" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

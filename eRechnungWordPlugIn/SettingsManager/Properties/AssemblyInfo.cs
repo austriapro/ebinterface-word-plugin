@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 //
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
-// [assembly: AssemblyVersion("5.0.2.1")]
+// [assembly: AssemblyVersion("5.0.3.1")]
 // AssembyVersion triggerd auch das Settings Upgrade
-[assembly: AssemblyVersion("5.0.2.1")]
-[assembly: AssemblyFileVersion("5.0.2.1")]
+[assembly: AssemblyVersion("5.0.3.1")]
+[assembly: AssemblyFileVersion("5.0.3.1")]

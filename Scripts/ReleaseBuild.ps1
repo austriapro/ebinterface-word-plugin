@@ -82,17 +82,21 @@ function UpdateVstoProject([string]$project,[string]$publishDir){
 	[string]$versionDir =("{0}p{1}p{2}p{3}\" -f $xmlVersion.Version.Actual.Release,$xmlVersion.Version.Actual.Major,$xmlVersion.Version.Actual.Minor,$xmlVersion.Version.Actual.Update)
 	[string]$pUrl = $publishDir + $versionDir
 	
-	$proj.Project.PropertyGroup[0].PublishUrl = $pUrl;
-	$proj.Save($project);
-	Write-Host "After Update"
-	Write-Host $proj.Project.PropertyGroup[0]
-	$fileVersion = [Version]$svers
-	# C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\eRechnung\Properties\AssemblyInfo.cs
-	$asmPath = (Split-Path -Path $project)+"\Properties\AssemblyInfo.cs" 
-	Write-Host $asmPath
-	UpdateAssembly -path $asmPath -fileVersion $fileVersion
-	[string]$logAsmPath = $asmPath -replace "\\eRechnung\\", "\Logging\"
-	UpdateAssembly -path $logAsmPath -fileVersion $fileVersion
+	if($Compile -eq "Y")
+	{
+  		$proj.Project.PropertyGroup[0].PublishUrl = $pUrl;
+		$proj.Save($project);
+		Write-Host "After Update"
+		Write-Host $proj.Project.PropertyGroup[0]
+		$fileVersion = [Version]$svers
+		# C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\eRechnung\Properties\AssemblyInfo.cs
+		$asmPath = (Split-Path -Path $project)+"\Properties\AssemblyInfo.cs" 
+		Write-Host $asmPath
+		UpdateAssembly -path $asmPath -fileVersion $fileVersion
+		[string]$logAsmPath = $asmPath -replace "\\eRechnung\\", "\Logging\"
+		UpdateAssembly -path $logAsmPath -fileVersion $fileVersion
+ 
+	}	
 	$pUrl
 	return
 }
@@ -207,25 +211,16 @@ if(Test-Path $publishUrl) {
 }
 [string]$buildDir = $SolutionDir+"\eRechnungWordPlugIn\"+$eRechnung+"\bin\"+$Configuration+"\app.publish\*"
 [string]$manual = $SolutionDir+"eRechnungWordPlugin\Handbuch\Anleitung.pdf"
-[string]$jbArchive =$publishUrl+"jbarchive.zip"
+[string]$jbArchive = $publishUrl+"`\eRechnungPlugIn-V"+$versionDir+".zip"
 [string]$7zip = '"C:\Program Files\7-Zip\7z.exe"'
-[string]$arch1cmdParm= $7zip+ " a "+$jbArchive+" "+$buildDir+" "+$manual+ " -m0=BCJ2 -m1=LZMA:d25:fb255 -m2=LZMA:d19 -m3=LZMA:d19 -mb0:1 -mb0s1:2 -mb0s2:3 -mx"
+[string]$arch1cmdParm= $7zip+ " a "+$jbArchive+" "+$buildDir+" "+$manual # + " -m0=BCJ2 -m1=LZMA:d25:fb255 -m2=LZMA:d19 -m3=LZMA:d19 -mb0:1 -mb0s1:2 -mb0s2:3 -mx"
 
 Write-Host $arch1cmdParm
 Invoke-Expression ('& '+$arch1cmdParm) -Verbose
 
-[string]$installer       = $publishUrl+"`\eRechnungPlugIn-V"+$versionDir+".exe"
-[string]$sfxBuilder      = "C:\Program Files (x86)\7z SFX Builder\3rdParty\Modules\7zsd_LZMA.sfx"
-[string]$sfx      = "C:\Program Files\7-Zip\7z.sfx"
-[string]$sfxConfig = $SolutionDir+"\Scripts\PluginCfg.txt"
-[string]$copy ="copy /b "+ '"C:\Program Files\7-Zip\7z.sfx"' + $jbArchive+" "+ $publishUrl+ "\" + $versionDir+".exe"  #..\Installer%ChangeSet%\eRechnung-CS%ChangeSet%.exe
 
 # Invoke-Expression ('& '+ $copy) -Verbose
-Write-Host $sfxBuilder
-Write-Host $sfxConfig
 Write-Host $jbArchive
-Get-Content $sfxBuilder,$sfxConfig,$jbArchive -Encoding Byte -Read 512  | sc  $installer -Encoding Byte
-Remove-Item -force $jbArchive
 Copy-Item $manual $publishUrl
 [string]$publishOnQ = "Q:\ebInterface-codeplex\V"+$versionDir
 if(Test-Path $publishOnQ){
@@ -235,6 +230,6 @@ if(Test-Path $publishOnQ){
 	md $publishOnQ
 }
 
-Copy-Item $installer $publishOnQ
+Copy-Item $jbArchive $publishOnQ
 Copy-Item $manual $publishOnQ
 Write-Host "Fertig."

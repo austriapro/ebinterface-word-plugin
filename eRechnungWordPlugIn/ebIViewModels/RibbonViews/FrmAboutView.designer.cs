@@ -159,7 +159,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::ebIViewModels.Properties.Resources.ebInterfaceLogo;
+            this.pictureBox2.Image = global::ebIViewModels.Properties.Resources.ebInterface_Logo;
             this.pictureBox2.Location = new System.Drawing.Point(554, 305);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(149, 33);
@@ -168,7 +168,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::ebIViewModels.Properties.Resources.AustriaProLOGO;
+            this.pictureBox1.Image = global::ebIViewModels.Properties.Resources.AustriaPro_LOGO;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(8, 315);
             this.pictureBox1.Name = "pictureBox1";
