@@ -10,8 +10,7 @@ namespace ebIModels.Mapping.V5p0
 {
     public static partial class MapInvoice
     {
-
-        //public static List<MappingError> mappingErrors;
+       
         /// <summary>
         /// Maps ebInterface 5p0 InvoiceType to internal InvoiceType Model
         /// </summary>
@@ -295,6 +294,11 @@ namespace ebIModels.Mapping.V5p0
             return invoice;
         }
 
+        /// <summary>
+        /// Mappping for Contact 
+        /// </summary>
+        /// <param name="contactSource"></param>
+        /// <returns></returns>
         private static Model.ContactType GetContact(SRC.ContactType contactSource)
         {
             if (contactSource == null)
@@ -311,6 +315,11 @@ namespace ebIModels.Mapping.V5p0
             return contact;
         }
 
+        /// <summary>
+        /// Mapping für ReductionAndSurchargeListLineItemDetailsType
+        /// </summary>
+        /// <param name="srcRed"></param>
+        /// <returns></returns>
         private static Model.ReductionAndSurchargeListLineItemDetailsType GetReductionDetails(SRC.ReductionAndSurchargeListLineItemDetailsType srcRed)
         {
             if (srcRed == null)
@@ -349,8 +358,7 @@ namespace ebIModels.Mapping.V5p0
             }
             return lineRed;
         }
-
-
+    
         private static Model.TaxItemType MapTaxItemType(SRC.TaxItemType taxItem)
         {
             TaxItemType tax = new TaxItemType()
@@ -371,6 +379,10 @@ namespace ebIModels.Mapping.V5p0
         private static List<Model.ArticleNumberType> GetArtikelList(SRC.ArticleNumberType[] articleNumbers)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
+            if (articleNumbers==null)
+            {
+                return artNrList;
+            }
             for (int i = 0; i < articleNumbers.Count(); i++)
             {
                 SRC.ArticleNumberType articleNumberType = articleNumbers[i];
@@ -531,6 +543,10 @@ namespace ebIModels.Mapping.V5p0
         /// <returns></returns>
         private static Model.PaymentMethodType MapPaymentMethod(SRC.PaymentMethodType paymentMethod)
         {
+            if (paymentMethod==null)
+            {
+                return new PaymentMethodType();
+            }
             PaymentMethodType paymethod = new PaymentMethodType
             {
                 Comment = paymentMethod.Comment
