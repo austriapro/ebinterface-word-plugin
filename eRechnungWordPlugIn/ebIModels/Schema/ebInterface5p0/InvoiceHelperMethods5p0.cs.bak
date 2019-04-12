@@ -28,7 +28,7 @@ namespace ebIModels.Schema.ebInterface5p0
         internal static List<EbISchema> _schemaInfo = new List<EbISchema>()
         {
                 new EbISchema() {
-                Prefix = "",
+                Prefix = "eb",
                 Url ="http://www.ebinterface.at/schema/5p0/",
                 CacheName = "ebInterface5p0.Invoice.xsd",
                 UseInSchema = true},
@@ -36,7 +36,7 @@ namespace ebIModels.Schema.ebInterface5p0
 
         public override XmlDocument ToXmlDocument()
         {
-
+            
             return base.ToXmlDocument(this);
         }
         public override EbInterfaceResult Save(string file)

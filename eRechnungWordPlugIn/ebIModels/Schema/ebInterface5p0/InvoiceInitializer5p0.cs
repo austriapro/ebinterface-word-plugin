@@ -147,13 +147,6 @@ namespace ebIModels.Schema.ebInterface5p0
         }
     }
 
-    public partial class AbstractPartyType
-    {
+ 
 
-        public AbstractPartyType()
-        {
-            this.addressField = new AddressType();
-            this.orderReferenceField = new OrderReferenceType();
-        }
-    }
 }

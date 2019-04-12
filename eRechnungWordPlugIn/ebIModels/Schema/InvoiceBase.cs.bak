@@ -220,18 +220,19 @@ namespace ebIModels.Schema
                 }
             }
 
-            
-            var nspUriSel = from si in invBase.CurrentSchemas where si.CacheName.EndsWith("Invoice.xsd") select si;
-            string NspUri = nspUriSel.FirstOrDefault().Url;
-            string prefix = nspUriSel.FirstOrDefault().Prefix;
             XmlAttributeCollection attrColl = xDoc.DocumentElement.Attributes;
-            string genSysTag = (string.IsNullOrEmpty(prefix) ? "" : $"{prefix}:") + "GeneratingSystem";
             if (attrColl.GetNamedItem("GeneratingSystem") != null)
             {
-                attrColl.Remove(attrColl[genSysTag]);
-
+                attrColl.Remove(attrColl["GeneratingSystem"]);
+                
             }
-
+            else
+            {
+                attrColl.Remove(attrColl["eb:GeneratingSystem"]);
+            }
+            var nspUriSel = from si in invBase.CurrentSchemas where si.Prefix == "eb" select si;
+            string NspUri = nspUriSel.FirstOrDefault().Url;
+            string prefix = nspUriSel.FirstOrDefault().Prefix;
             XmlAttribute genSys = xDoc.CreateAttribute(prefix, "GeneratingSystem", NspUri);
             genSys.Value = genSystem;
             xDoc.DocumentElement.Attributes.Append(genSys);

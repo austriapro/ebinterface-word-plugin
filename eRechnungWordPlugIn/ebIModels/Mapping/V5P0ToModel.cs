@@ -10,7 +10,7 @@ namespace ebIModels.Mapping.V5p0
 {
     public static partial class MapInvoice
     {
-       
+
         /// <summary>
         /// Maps ebInterface 5p0 InvoiceType to internal InvoiceType Model
         /// </summary>
@@ -226,8 +226,8 @@ namespace ebIModels.Mapping.V5p0
 
 
                         // Auftragsreferenz
-                        
-                        if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber)) 
+
+                        if (!string.IsNullOrEmpty(srcLineItem.InvoiceRecipientsOrderReference.OrderPositionNumber))
                         {
                             lineItem.InvoiceRecipientsOrderReference.OrderID = source.InvoiceRecipient.OrderReference.OrderID;
                             lineItem.InvoiceRecipientsOrderReference.OrderPositionNumber =
@@ -251,7 +251,8 @@ namespace ebIModels.Mapping.V5p0
                     detailsItemList.Add(itemList);
                 }
 
-            } else
+            }
+            else
             {
                 detailsItemList = null;
             }
@@ -303,8 +304,15 @@ namespace ebIModels.Mapping.V5p0
         {
             if (contactSource == null)
             {
-                return null;
-            }
+                return new ContactType()
+                {
+                    Email = new List<string>(),
+                    Name = "",
+                    Phone = new List<string>(),
+                    Salutation = ""
+                };
+            };
+
             ContactType contact = new ContactType
             {
                 Email = contactSource.Email?.ToList(),
@@ -358,7 +366,7 @@ namespace ebIModels.Mapping.V5p0
             }
             return lineRed;
         }
-    
+
         private static Model.TaxItemType MapTaxItemType(SRC.TaxItemType taxItem)
         {
             TaxItemType tax = new TaxItemType()
@@ -379,7 +387,7 @@ namespace ebIModels.Mapping.V5p0
         private static List<Model.ArticleNumberType> GetArtikelList(SRC.ArticleNumberType[] articleNumbers)
         {
             List<ArticleNumberType> artNrList = new List<ArticleNumberType>();
-            if (articleNumbers==null)
+            if (articleNumbers == null)
             {
                 return artNrList;
             }
@@ -543,7 +551,7 @@ namespace ebIModels.Mapping.V5p0
         /// <returns></returns>
         private static Model.PaymentMethodType MapPaymentMethod(SRC.PaymentMethodType paymentMethod)
         {
-            if (paymentMethod==null)
+            if (paymentMethod == null)
             {
                 return new PaymentMethodType();
             }
@@ -581,7 +589,7 @@ namespace ebIModels.Mapping.V5p0
         {
             TaxType tax = new TaxType();
             List<TaxItemType> taxItems = new List<TaxItemType>();
-            if (SourceTax.TaxItem==null)
+            if (SourceTax.TaxItem == null)
             {
                 return null;
             }
