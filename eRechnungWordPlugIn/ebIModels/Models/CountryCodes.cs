@@ -16,6 +16,7 @@ namespace ebIModels.Models
     {
         private static List<CountryCodeModel> _countryCodes;
         private const string CountryCodeXml = "iso_3166-1_laender.xml";
+        private static CountryCodeModel DefaultCountryCode = new CountryCodeModel();
         private static void LoadCountryCodes()
         {
             IResourceService xmlRes = new ResourceService();
@@ -27,6 +28,11 @@ namespace ebIModels.Models
                                  Code = xElement.Element("Shortcut").Value,
                                  Country = getCountry(xElement.Element("Land").Value)
                              }).ToList<CountryCodeModel>();
+            DefaultCountryCode = GetFromCode("AT");
+            if (DefaultCountryCode==null)
+            {
+                DefaultCountryCode = _countryCodes[0];
+            }
         }
         public static List<CountryCodeModel> GetCountryCodeList()
         {
@@ -35,11 +41,11 @@ namespace ebIModels.Models
             return _countryCodes;
         }
         
-        public static CountryCodeModel GetFromCode(string country)
+        public static CountryCodeModel GetFromCode(string countryCode)
         {
             if (_countryCodes == null)
                 LoadCountryCodes();
-            var cText = _countryCodes.FirstOrDefault(p => p.Code == country.ToString());
+            var cText = _countryCodes.FirstOrDefault(p => p.Code == countryCode.ToString());
             return cText;
         }
 

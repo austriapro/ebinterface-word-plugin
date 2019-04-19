@@ -281,20 +281,21 @@ namespace ebIModels.Models
     }
     public partial class CountryType
     {
+        
         // private readonly ICountryCodes _countryCodes = new CountryCodesModels();
         public CountryType(CountryCodeType country)
-        {
+        {            
             var cText = CountryCodes.GetFromCode(country.ToString());
+            countryCodeField = country.ToString();
+            valueField = cText?.Country;
         }
         public string CountryCodeText
         {
             get {
-                return CountryCode?.ToString();
+                return CountryCode;
             }
             set {
-                if (CountryCode.ToString().Equals(value) == true)
-                    return;
-                string val = value;
+                string val = value??"AT";
                 CountryCode = ((CountryCodeType)Enum.Parse(typeof(CountryCodeType), val)).ToString();
             }
         }
