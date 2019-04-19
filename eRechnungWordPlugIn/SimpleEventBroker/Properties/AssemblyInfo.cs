@@ -42,5 +42,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("5.0.4.4")]
-[assembly: AssemblyFileVersion("5.0.4.4")]
+[assembly: AssemblyVersion("5.0.5.0")]
+[assembly: AssemblyFileVersion("5.0.5.0")]
+
+[assembly: AssemblyInformationalVersion("5.0.5+Branch.master.Sha.ccd676fc0b79b0853920604a22a5836f4e99df51")]

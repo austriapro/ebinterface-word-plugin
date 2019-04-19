@@ -32,8 +32,8 @@ using System.Security.Permissions;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("5.0.4.4")]
-[assembly: AssemblyFileVersion("5.0.4.4")]
+[assembly: AssemblyVersion("5.0.5.0")]
+[assembly: AssemblyFileVersion("5.0.5.0")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "FileDialogExtenders")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Scope = "member", Target = "FileDialogExtenders.FileDialogControlBase+DialogWrapper`1..ctor(FileDialogExtenders.FileDialogControlBase,System.Windows.Forms.IWin32Window)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Scope = "member", Target = "FileDialogExtenders.FileDialogControlBase+DialogWrapper`1.AssignDummyWindow(System.Windows.Forms.IWin32Window):System.Void")]
@@ -42,3 +42,5 @@ using System.Security.Permissions;
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", Scope = "member", Target = "FileDialogExtenders.FileDialogControlBase+DialogWrapper`1.FileDialogEnumWindowCallBack(System.IntPtr,System.Int32):System.Boolean", MessageId = "System.String.ToLower")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope = "member", Target = "FileDialogExtenders.FileDialogControlBase+DialogWrapper`1.WndProc(System.Windows.Forms.Message&):System.Void")]
 
+
+[assembly: AssemblyInformationalVersion("5.0.5+Branch.master.Sha.ccd676fc0b79b0853920604a22a5836f4e99df51")]

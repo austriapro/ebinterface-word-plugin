@@ -8,11 +8,14 @@ AUFRUF
 ----------------------------------------------------------------------------------------------------- #>
 param(
 	[string]$Configuration="Debug",
-	[string]$UpdateVersionNumber ="N",
-	[string]$Compile="N",
-	[string]$UpdateVstoVersion = "N",
-	[string]$UpdateAssembly = "N"
+	[string]$Compile="Y"
 )
+$scriptPath  = Split-Path $MyInvocation.MyCommand.Path
+$scriptPath
+Import-Module "C:\GitHub\ebinterface-word-plugin\Scripts\GetCurrentVersion.ps1"
+Get-Command -Module "GetCurrentVersion"
+
+$gitVersion = GetCurrentVersion
 
 function doBuild([string]$targetDir, [string]$project, [string]$config, [string]$target,[string]$OutputPath){
 	$dir = $SolutionDir+$targetDir;
@@ -62,24 +65,12 @@ function Format-XML {Param ([Xml]$InputObject,[string]$FromText="N")
 
 
 function UpdateVstoProject([string]$project,[string]$publishDir){
+	 
 	[xml]$proj=Get-Content($project);
-	Write-Host "Before Update"
-	Write-Host $proj.Project.PropertyGroup[0]
-	[string]$tosplit = [string]$proj.Project.PropertyGroup[0].ApplicationVersion;
-	$vers = $tosplit -split "\.";
 
-	[xml]$xmlVersion = Get-Content($fnVersion);
-	Format-Xml $xmlVersion
-	$vers[0] =$xmlVersion.Version.Actual.Release
-	$vers[1] =$xmlVersion.Version.Actual.Major
-	$vers[2] =$xmlVersion.Version.Actual.Minor
-	$vers[3] =$xmlVersion.Version.Actual.Update
-
-	[string]$svers = $vers -join ".";
-	Write-Host $svers;
-	$proj.Project.PropertyGroup[0].ApplicationVersion = $svers;	
-	$proj.Project.PropertyGroup[0].AssemblyVersion = $svers;
-	[string]$versionDir =("{0}p{1}p{2}p{3}\" -f $xmlVersion.Version.Actual.Release,$xmlVersion.Version.Actual.Major,$xmlVersion.Version.Actual.Minor,$xmlVersion.Version.Actual.Update)
+	$proj.Project.PropertyGroup[0].ApplicationVersion = $gitVersion.Version.VersionFull;	
+	$proj.Project.PropertyGroup[0].AssemblyVersion = $gitVersion.Version.VersionFull;	
+	[string]$versionDir =$gitVersion.Version.VersionFull.Replace(".","p")
 	[string]$pUrl = $publishDir + $versionDir
 	
 	if($Compile -eq "Y")
@@ -90,86 +81,23 @@ function UpdateVstoProject([string]$project,[string]$publishDir){
 		Write-Host $proj.Project.PropertyGroup[0]
 		$fileVersion = [Version]$svers
 		# C:\GitHub\ebinterface-word-plugin\eRechnungWordPlugIn\eRechnung\Properties\AssemblyInfo.cs
-		$asmPath = (Split-Path -Path $project)+"\Properties\AssemblyInfo.cs" 
-		Write-Host $asmPath
-		UpdateAssembly -path $asmPath -fileVersion $fileVersion
-		[string]$logAsmPath = $asmPath -replace "\\eRechnung\\", "\Logging\"
-		UpdateAssembly -path $logAsmPath -fileVersion $fileVersion
- 
+
 	}	
 	$pUrl
 	return
 }
 
-function UpdateAssembly([string]$path, [Version]$fileVersion){
+function UpdateAssembly(){
 			
-	$pattern = '\[assembly: AssemblyVersion\("(.*)"\)\]'
-	(Get-Content $path) | ForEach-Object{
-		if($_ -match $pattern){
-			# We have found the matching line
-			# Edit the version number and put back.
-			#$fileVersion = [version]$matches[1]
-			$newVersion = "{0}.{1}.{2}.{3}" -f $fileVersion.Major, $fileVersion.Minor, $fileVersion.Build, $fileVersion.Revision
-			'[assembly: AssemblyVersion("{0}")]' -f $newVersion
-		} else {
-			# Output line as is
-			$_
-		}
-	} | Set-Content $path
-}
-
-function UpdateVersion(){
-param(
-	[string]$build = "Debug",
-	[string]$versionFile
-	)
-	
-	#"fnVersion="+$fnVersion;
-	[xml]$xmlVersion = Get-Content($versionFile);
-	Format-Xml -InputObject $xmlVersion
-
-	if($build.StartsWith("Release")) {
-			[int]$iUpdate = [Convert]::ToInt32($xmlVersion.Version.Actual.Minor,10);
-		if($updVers.StartsWith("y"))
-		{
-			$iUpdate += 1;
-		}
-		[int]$iPatch = [Convert]::ToInt32($xmlVersion.Version.Actual.Update,10);
-		if($UpdateVstoVersion.ToLower().StartsWith("y")) 
-		{
-			$iPatch += 1;
-		}
-		$xmlVersion.Version.Actual.Minor = [string]$iUpdate;
-		$xmlVersion.Version.Actual.Update = [string]$iPatch
-		$xmlVersion.Save($fnVersion);
-		}
-
-Format-Xml -InputObject $xmlVersion
+# Update all AssemblyInfo.cs
+& gitversion -updateassemblyinfo -ensureassemblyinfo
 
 }
 
-# -----------------------------------------------------------
-# Check parameters
-# -----------------------------------------------------------
 
-# If not executed from Visual Studion Command Prompt, uncomment following lines
-# =============================================================================
-#pushd 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools'    
-#cmd /c "vsvars32.bat&set" |
-#foreach {
-#  if ($_ -match "=") {
-#    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
-#  }
-#}
-#popd
-#write-host "`nVisual Studio 2015 Command Prompt variables set." -ForegroundColor Yellow
+
 
 [string]$SolutionDir = "C:\GitHub\ebinterface-word-plugin\"
-[string]$updVers = $UpdateVersionNumber.ToLower();
-if("y","n","yes","no" -notcontains $updVers)
-{
-	Throw "$($UpdateVersion) is not y or n"
-}
 [string]$BuildLogDir = $SolutionDir+"Buildlog\";
 [string]$eRechnung = "eRechnung"
 [string]$eRechnungProject = "eRechnungWordPlugIn\eRechnung\eRechnung.csproj"
@@ -185,7 +113,7 @@ if($Compile -eq "Y")
  
 }
 # Update Version if UpdateVersionNumber=Y and Configuration=Release
-UpdateVersion -build $Configuration -versionFile $fnVersion
+# UpdateVersion -build $Configuration -versionFile $fnVersion
 
 
 [string]$proj = $SolutionDir + $eRechnungProject
@@ -200,7 +128,8 @@ if($Compile -eq "Y")
 	{
 		Read-Host -Prompt "Token für Signatur anstecken und dann enter drücken"
 	}
-  DoBuild -targetDir $eRechnung -project "eRechnungWordPlugIn.sln" -config $cfg -OutputPath $publishUrl -target "/t:Publish"
+	UpdateAssembly 
+	DoBuild -targetDir $eRechnung -project "eRechnungWordPlugIn.sln" -config $cfg -OutputPath $publishUrl -target "/t:Publish"
  
 }
 if(Test-Path $publishUrl) {

@@ -2,9 +2,9 @@
 <ProductInfo>
   <Title>ebInterface 5.0.3 Word PlugIn</Title>
   <Version>5.0.4+4</Version>
-  <CompileInfo>Debug</CompileInfo>
-  <CompileTime>2019-04-19 09:58:28</CompileTime>
+  <CompileInfo>Release</CompileInfo>
+  <CompileTime>2019-04-19 11:20:23</CompileTime>
   <Branch>TestBuild</Branch>
-  <LastCommit>2019-04-19 09:58:28</LastCommit>
-  <ChangeSetId>e7fb8d0</ChangeSetId>
+  <LastCommit>2019-04-19 11:20:23</LastCommit>
+  <ChangeSetId>ccd676f</ChangeSetId>
 </ProductInfo>
